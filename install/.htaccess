@@ -1,0 +1,14 @@
+Options -MultiViews
+RewriteEngine On
+
+# if request is not for a file
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# if request is not for a directory
+RewriteCond %{REQUEST_FILENAME} !-f
+
+# load index
+RewriteRule ^(.+)?$ index.php?url=$1 [L,QSA]
+
+# Hide directories
+Options -Indexes
