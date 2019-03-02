@@ -44,7 +44,7 @@ class Start {
      * Redirect to the installation page if the install folder exists
      */
     public function checkInstallation() {
-        if (is_dir('install') && !Library::strContains($_GET['url'], 'home')) {
+        if (is_dir('install') && !Library::strContains($_GET['url'], 'main_page')) {
             header('Location: install');
         }
     }
