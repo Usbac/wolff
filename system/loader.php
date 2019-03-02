@@ -81,17 +81,17 @@ class Loader {
      * Load a language in the indicated directory
      * @param dir the language directory
      */
-    public function language($dir) {
+    public function language($dir, $language = LANGUAGE) {
         //Sanitize directory
         $dir = preg_replace('/[^a-zA-Z0-9_\/]/', '', $dir);
-        $file_path = MAIN . 'language/' . LANGUAGE . '/' . $dir . '.php';
+        $file_path = MAIN . 'language/' . $language . '/' . $dir . '.php';
         
         if (Library::languageExists($dir)) {
             include_once($file_path);
         }
 
         if (!isset($data)) {
-            echo "Warning: The " . LANGUAGE . " language for '" . $dir . "' doesn't exists"; 
+            echo "Warning: The " . $language . " language for '" . $dir . "' doesn't exists"; 
         } else {
             return $data;
         }
@@ -158,29 +158,30 @@ class Loader {
      * @return object the view content
      */
     private function formatTemplate($dir, $data) {
-        $file_path = MAIN . 'view/' . $dir . '.html';
+        $file_path = MAIN . 'view/' . $dir;
 
         //Error
-        if (($content = @file_get_contents($file_path)) === false) {
-            return "Error: View '" . $dir . "' doesn't exists";
+        if (($content = @file_get_contents($file_path.'.html')) === false &&
+            ($content = @file_get_contents($file_path.'.php')) === false) {
+                return "Error: View '" . $dir . "' doesn't exists";
         }
-    
-        //Tags
-        $content = str_replace('%}', '?>', str_replace('{%', '<?php', $content));
 
         //Variables in data array
         if (is_array($data)) {
             foreach ($data as $key => $value) {
-                ${$key} = $value; 
+                ${$key} = $value;
 
-                if (!is_array($data[$key])) {
-                    $content = preg_replace('/{{( ?){0,}' . $key . '( ?){0,}}}/', $value, $content);
-                }
+                //Template if
+                $content = preg_replace('/{%(.*){0,}?' . $key . '(.*){0,}?%}\?/', '<?php if ($' . $key . '): ?>', $content);
             }
         }
 
-        //Echoes
-        $content = str_replace('}}', '?>', str_replace('{{', '<?php echo ', $content));
+        $content = preg_replace('/{%(.*){0,}?[a-zA-Z0-9](.*){0,}?%}\?/', '<?php if (false): ?>', $content);
+
+        //Tags
+        $search = array('{{', '}}', '{%', '%}');
+        $replace = array('<?php echo ', '?>', '<?php ', ' ?>');
+        $content = str_replace($search, $replace, $content);
 
         ob_start();
         eval(' ?>' . $content . '<?php ');

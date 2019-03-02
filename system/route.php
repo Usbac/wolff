@@ -25,7 +25,14 @@ class Route {
                 //Set GET value from any {variable} in the url
                 if (preg_match('/\{(.*)?\}/', $route[$i])) {
                     $var = preg_replace('/\{|\}/', '', $route[$i]);
-                    $_GET[$var] = $url[$i];
+                    $_GET[$var] = $url[$i]?? '';
+                }
+
+                //Return route function if last {variable} from url is just empty
+                if ($i+2 == count($route) && $i == count($url)-1 && preg_match('/\{(.*)?\}/', $route[$i+1])) {
+                    $var = preg_replace('/\{|\}/', '', $route[$i+1]);
+                    $_GET[$var] = '';
+                    return $value;
                 }
 
                 //Return route function

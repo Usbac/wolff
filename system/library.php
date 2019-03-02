@@ -49,7 +49,7 @@ class Library {
      * @param dir the directory of the controller
      * @return boolean true if the controller's function exists, false otherwise 
      */
-    public static function ControllerFuncExists($dir) {
+    public static function functionExists($dir) {
         //Remove the function from the url and save the function name
         $dir = explode('/', $dir);
         $function = array_pop($dir);

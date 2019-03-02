@@ -8,7 +8,7 @@ class Index {
         session_start();
         
         $this->loadSystemFiles();
-        $this->checkInstallation();
+        //$this->checkInstallation();
 
         $this->load = new Loader();
         $this->session = new Session();
@@ -23,7 +23,7 @@ class Index {
 
         if (isset($function)) {
             $function();
-        } else if (Library::controllerExists($url) || Library::ControllerFuncExists($url)) {
+        } else if (Library::controllerExists($url) || Library::functionExists($url)) {
             $this->load->controller($url);
         } else {
             $this->load->redirect404();
@@ -36,15 +36,13 @@ class Index {
      * Loads all the php files in the System folder
      */
     public function loadSystemFiles() {
-        $system_folder = 'system/';
-        include_once($system_folder . 'library.php');
-        include_once($system_folder . 'loader.php');
-        include_once($system_folder . 'session.php');
-        include_once($system_folder . 'route.php');
-        include_once($system_folder . 'routes.php');
-        include_once($system_folder . 'connection.php');
-        include_once($system_folder . 'controller.php');
-        include_once($system_folder . 'model.php');
+        $files = glob('system/*.php');
+
+        foreach($files as $file) {
+            if (is_file($file)) {
+                include_once($file);
+            }
+        }
     }
 
 

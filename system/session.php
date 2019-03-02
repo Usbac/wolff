@@ -13,6 +13,7 @@ class Session {
         }
 
         if (!isset($_SESSION['vars_tmp_time'])) {
+            $_SESSION['vars_tmp_time'] = array();
             return;
         }
 
@@ -49,23 +50,50 @@ class Session {
 
 
     /**
-     * Set a live time (in minutes) to a session variable
-     * @param key the variable key 
-     * @param key the variable live time
+     * Add time to the session live time (in minutes)
      */
-    public function setTmpTime($key, $time = 1) {
-        $_SESSION['vars_tmp_time'][$key] = time() + ($time * 60);
+    public function addTime($time) {
+        $_SESSION['end_time'] += $time * 60;
     }
 
 
     /**
      * Get a live time (in minutes) of a session variable
      * @param key the variable key 
+     * @param gmdate return the time in date format 
      * @return integer the variable live time
      */
-    public function getTmpTime($key) {
-        $remaining = $_SESSION['vars_tmp_time'][$key] - time();
-        return gmdate('H:i:s', ($remaining > 0)? $remaining:0);
+    public function getVarTime($key, $gmdate = false) {
+        $remaining = 0;
+        if (isset($_SESSION['vars_tmp_time'][$key])) {
+            $remaining = $_SESSION['vars_tmp_time'][$key] - time();
+        }
+
+        if ($gmdate) {
+            return gmdate('H:i:s', ($remaining > 0)? $remaining:0);
+        }
+        
+        return ($remaining > 0)? $remaining:0;
+    }
+
+
+    /**
+     * Set a live time (in minutes) to a session variable
+     * @param key the variable key 
+     * @param key the variable live time
+     */
+    public function setVarTime($key, $time = 1) {
+        $_SESSION['vars_tmp_time'][$key] = time() + ($time * 60);
+    }
+
+
+    /**
+     * Add more live time (in minutes) to a session variable
+     * @param key the variable key 
+     * @param key the variable time to add
+     */
+    public function addVarTime($key, $time = 1) {
+        $_SESSION['vars_tmp_time'][$key] += ($time * 60);
     }
 
 
@@ -91,28 +119,31 @@ class Session {
 
     /**
      * Get the established session live time (in minutes)
-     * @param float the live time
+     * @param int the live time
+     * @param gmdate return the time in date format
      */
-    public function getTime() {
-        return gmdate('H:i:s', $_SESSION['live_time']);
+    public function getTime($gmdate = false) {
+        if ($gmdate) {
+            return gmdate('H:i:s', $_SESSION['live_time']);
+        }
+        
+        return $_SESSION['live_time'];
     }
 
 
     /**
      * Get the remaining session live time (in minutes)
-     * @param float the remaining session live time
+     * @param int the remaining session live time
+     * @param gmdate return the time in date format
      */
-    public function getRemainingTime() {
+    public function getRemainingTime($gmdate = false) {
         $remaining = @$_SESSION['end_time'] - time();
-        return gmdate('H:i:s', ($remaining > 0)? $remaining:0);
-    }
 
+        if ($gmdate) {
+            return gmdate('H:i:s', ($remaining > 0)? $remaining:0);
+        }
 
-    /**
-     * Add time to the session live time (in minutes)
-     */
-    public function addTime($time) {
-        $_SESSION['end_time'] += $time * 60;
+        return ($remaining > 0)? $remaining:0;
     }
 
 

@@ -4,7 +4,6 @@ class Controller_home extends Controller {
 
     public function index() {
         $data['lang'] = $this->load->language('home');
-        $this->load->model('home');
         $this->load->view('home', $data);
     }
 

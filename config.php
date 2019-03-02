@@ -3,7 +3,7 @@
  
 //Server 
 define('SERVER', 'localhost'); 
-define('DB', 'usbac'); 
+define('DB', ''); 
 define('USER', 'root'); 
 define('PASSWORD', ''); 
  
