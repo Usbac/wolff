@@ -1,5 +1,7 @@
 <?php
 
+namespace System;
+
 /**
  * @property Loader load
  * @property Library library
@@ -9,10 +11,10 @@
 
 class Controller {
 
-    public function __construct() {
-        $this->load = new Loader();
-        $this->library = new Library();
-        $this->session = new Session;
+    public function __construct($loader, $library, $session) {
+        $this->load = $loader;
+        $this->library = $library;
+        $this->session = $session;
         $this->data = array();
     }
 

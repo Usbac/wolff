@@ -1,5 +1,7 @@
 <?php
 
+namespace System;
+
 class Route {
 
     private static $routes = [];
@@ -8,16 +10,18 @@ class Route {
 
     /**
      * Get the function of a route
-     * @param url the url
+     * @param string $url the url
      * @return object the function associated to the route
      */
-    public static function get($url) {
+    public static function get(string $url) {
         $url = explode('/', Library::sanitizeURL($url));
+        $urlLength = count($url);
 
-        foreach (Route::$routes as $key => $value) {
+        foreach (self::$routes as $key => $value) {
             $route = explode('/', $key);
+            $routeLength = count($route);
 
-            for ($i = 0; $i < count($route) && $i < count($url); $i++) {
+            for ($i = 0; $i < $routeLength && $i < $urlLength; $i++) {
                 if ($url[$i] != $route[$i] && !preg_match('/\{(.*)?\}/', $route[$i])) {
                     break;
                 }
@@ -29,14 +33,14 @@ class Route {
                 }
 
                 //Return route function if last {variable} from url is just empty
-                if ($i+2 == count($route) && $i == count($url)-1 && preg_match('/\{(.*)?\}/', $route[$i+1])) {
+                if ($i+2 == $routeLength && $i == $urlLength-1 && preg_match('/\{(.*)?\}/', $route[$i+1])) {
                     $var = preg_replace('/\{|\}/', '', $route[$i+1]);
                     $_GET[$var] = '';
                     return $value;
                 }
 
                 //Return route function
-                if ($i == count($route)-1 && $i == count($url)-1) {
+                if ($i == $routeLength-1 && $i == $urlLength-1) {
                     return $value;
                 }
             }
@@ -48,51 +52,53 @@ class Route {
 
     /**
      * Add a route
-     * @param url the url
-     * @param function the function that must be executed when accessing the route
+     * @param string $url the url
+     * @param function $function the function that must be executed when accessing the route
      */
-    public static function add($url, $function) {
+    public static function add(string $url, $function) {
         $url = Library::sanitizeURL($url);
-        Route::$routes[$url] = $function;
+        self::$routes[$url] = $function;
     }
 
 
     /**
      * Redirect the first url to the second url
-     * @param url the first url
-     * @param url2 the second url
-     * @param status The response http code
+     * @param string $url the first url
+     * @param string $url2 the second url
+     * @param int $status The response http code
      */
-    public static function redirect($url, $url2, $status = 301) {
+    public static function redirect(string $url, string $url2, int $status = 301) {
         http_response_code($status);
         $url = Library::sanitizeURL($url);
         $url2 = Library::sanitizeURL($url2);
-        Route::$routes[$url] = Route::$routes[$url2];
+        self::$routes[$url] = self::$routes[$url2];
     }
 
 
     /**
      * Block an url
-     * @param url the url
+     * @param string $url the url
      */
-    public static function block($url) {
+    public static function block(string $url) {
         $url = Library::sanitizeURL($url);
-        array_push(Route::$blocked, $url);
+        array_push(self::$blocked, $url);
     }
 
 
     /**
      * Check if an url is blocked
-     * @param url the url
+     * @param string $url the url
      * @return boolean true if the url is blocked, false otherwise
      */
-    public static function isBlocked($url) {
+    public static function isBlocked(string $url) {
         $url = explode('/', $url);
+        $urlLength = count($url);
 
-        foreach (Route::$blocked as $key => $value) {
-            $blocked = explode('/', Route::$blocked[$key]);
+        foreach (self::$blocked as $key => $value) {
+            $blocked = explode('/', self::$blocked[$key]);
+            $blockedLength = count($blocked);
 
-            for ($i = 0; $i < count($blocked) && $i < count($url); $i++) {
+            for ($i = 0; $i < $blockedLength && $i < $urlLength; $i++) {
                 if ($url[$i] !== $blocked[$i] && $blocked[$i] !== '*') {
                     return false;
                 }
@@ -101,7 +107,7 @@ class Route {
                     return true;
                 }
 
-                if ($i == count($url)-1 && $i == count($blocked)-1) {
+                if ($i == $urlLength-1 && $i == $blockedLength-1) {
                     return true;
                 }
             }
@@ -113,11 +119,11 @@ class Route {
 
     /**
      * Check if a route exists
-     * @param url the url
+     * @param string $url the url
      * @return boolean true if the route exists, false otherwise
      */
-    public static function exists($url) {
-        return array_key_exists($url, Route::$routes);
+    public static function exists(string $url) {
+        return array_key_exists($url, self::$routes);
     }
 
 }

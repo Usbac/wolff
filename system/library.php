@@ -1,5 +1,7 @@
 <?php
 
+namespace System;
+
 class Library {
 
     private static $benchmark = [];
@@ -10,7 +12,7 @@ class Library {
      * @param url the url
      * @return string the url sanitized
      */
-    public static function sanitizeURL($url) {
+    public static function sanitizeURL(string $url) {
         return filter_var(rtrim(strtolower($url), '/'), FILTER_SANITIZE_URL);
     }
 
@@ -20,8 +22,8 @@ class Library {
      * @param dir the directory of the model
      * @return boolean true if the model exists, false otherwise 
      */
-    public static function modelExists($dir) {
-        $file_path = MAIN . 'model/' . $dir . '.php';
+    public function modelExists(string $dir) {
+        $file_path = 'app/model/' . $dir . '.php';
         return file_exists($file_path);
     }
 
@@ -31,8 +33,8 @@ class Library {
      * @param dir the directory of the model
      * @return string the complete path of the model
      */
-    public static function getModelPath($dir) {
-        return MAIN . 'model/' . $dir . '.php';
+    public function getModelPath(string $dir) {
+        return 'app/model/' . $dir . '.php';
     }
 
 
@@ -41,8 +43,8 @@ class Library {
      * @param dir the directory of the controller
      * @return boolean true if the controller exists, false otherwise 
      */
-    public static function controllerExists($dir) {
-        $file_path = MAIN . 'controller/' . $dir . '.php';
+    public function controllerExists(string $dir) {
+        $file_path = 'app/controller/' . $dir . '.php';
         return file_exists($file_path);
     }
 
@@ -52,19 +54,27 @@ class Library {
      * @param dir the directory of the controller
      * @return boolean true if the controller's function exists, false otherwise 
      */
-    public static function functionExists($dir) {
+    public function functionExists(string $dir) {
         //Remove the function from the url and save the function name
-        $dir = explode('/', $dir);
-        $function = array_pop($dir);
-        $dir = implode('/', $dir);
+        $function = substr($dir, strrpos($dir, '/') + 1);
+        $dir = substr($dir, 0, strrpos($dir, '/'));
 
-        if (!Library::controllerExists($dir)) {
+        if (!$this->controllerExists($dir)) {
             return false;
         }
 
-        include(Library::getControllerPath($dir));
-        $class = 'Controller_' . @end(explode('/', $dir));
-        return method_exists(new $class, $function);
+        $dir = str_replace('/', '\\', $dir);
+        $class = '\\App\\Controller\\' . $dir;
+        $method = null;
+
+        try {
+            $class = new \ReflectionClass($class);
+            $method = $class->getMethod($function);
+        } catch(\Exception $e) {
+            return false;
+        }
+        
+        return $method !== null;
     }
 
 
@@ -73,8 +83,8 @@ class Library {
      * @param dir the directory of the controller
      * @return string the complete path of the controller
      */
-    public static function getControllerPath($dir) {
-        return MAIN . 'controller/' . $dir . '.php';
+    public function getControllerPath(string $dir) {
+        return 'app/controller/' . $dir . '.php';
     }
 
     
@@ -84,8 +94,8 @@ class Library {
      * @param language the language selected (it will take the default language if no language is specified)
      * @return boolean true if the language file exists, false otherwise 
      */
-    public static function languageExists($dir, $language = LANGUAGE) {
-        $file_path = MAIN . 'language/' . $language . '/' . $dir . '.php';
+    public function languageExists(string $dir, string $language = LANGUAGE) {
+        $file_path = 'app/language/' . $language . '/' . $dir . '.php';
         return file_exists($file_path);
     }
 
@@ -95,8 +105,19 @@ class Library {
      * @param dir the directory of the language
      * @return string the complete path of the language
      */
-    public static function getLanguagePath($dir, $language = LANGUAGE) {
-        return MAIN . 'language/' . $language . '/' . $dir . '.php';
+    public function getLanguagePath(string $dir, string $language = LANGUAGE) {
+        return 'app/language/' . $language . '/' . $dir . '.php';
+    }
+
+
+    /**
+     * Checks if the library exists in the indicated directory
+     * @param dir the directory of the library
+     * @return boolean true if the library exists, false otherwise 
+     */
+    public function libraryExists(string $dir) {
+        $file_path = 'app/library/' . $dir . '.php';
+        return file_exists($file_path); 
     }
 
     
@@ -105,8 +126,8 @@ class Library {
      * @param dir the directory of the view
      * @return boolean true if the view exists, false otherwise 
      */
-    public static function viewExists($dir) {
-        $file_path = MAIN . 'view/' . $dir . '.html';
+    public function viewExists(string $dir) {
+        $file_path = 'app/view/' . $dir . '.html';
         return file_exists($file_path); 
     }
 
@@ -116,18 +137,18 @@ class Library {
      * @param dir the directory of the view
      * @return string the complete path of the view
      */
-    public static function getViewPath($dir) {
-        return MAIN . 'view/' . $dir . '.php';
+    public function getViewPath(string $dir) {
+        return 'app/view/' . $dir . '.php';
     }
 
 
     /**
      * Checks if the substring is present in another string
-     * @param str the main string
+     * @param str the rapp/ing
      * @param needle substring you are looking for
      * @return boolean true if the substring is present in the string, false otherwise
      */
-    public static function strContains($str, $needle) {
+    public function strContains(string $str, string $needle) {
         return strpos($str, $needle) !== false;
     }
 
@@ -135,11 +156,10 @@ class Library {
     /**
      * Start the benchmark
      */
-    public static function benchmarkStart() {
+    public function benchmarkStart() {
         Library::$benchmark[0] = array(
             'time'        => microtime(true),
-            'memoryUsed'  => memory_get_usage(),
-            'memoryAlloc' => memory_get_usage(true)
+            'memoryUsed'  => memory_get_usage()
         );
     }
 
@@ -147,11 +167,10 @@ class Library {
     /**
      * End the benchmark
      */
-    public static function benchmarkEnd() {
+    public function benchmarkEnd() {
         Library::$benchmark[1] = array(
             'time'        => microtime(true),
-            'memoryUsed'  => memory_get_usage(),
-            'memoryAlloc' => memory_get_usage(true)
+            'memoryUsed'  => memory_get_usage()
         );
     }
 
@@ -160,7 +179,7 @@ class Library {
      * Return the benchmark result between the start and end benchmark points
      * @return array the benchmark result as an assosiative array
      */
-    public static function getBenchmark() {
+    public function getBenchmark() {
         $result = [];
         foreach (array_keys(Library::$benchmark[0]) as $key) {
             $result[$key] = Library::$benchmark[1][$key] - Library::$benchmark[0][$key];

@@ -3,12 +3,12 @@
 <head>
     <title>{{PAGE_TITLE}} - Home</title>
 
-    <link href="{{DIR.MAIN}}view/css/styles.css" rel="stylesheet" />
+    <link href="{{APP}}view/css/styles.css" rel="stylesheet" />
 </head>
 <body>
     <div class='center'>
         <div class='text-center'>
-            <img class='main-img' src='{{DIR.MAIN}}view/logo.png' width='100px'>
+            <img class='main-img' src='{{APP}}view/logo.png' width='100px'>
             <h1 class='title'>{{ $lang['title'] }}</h1>
         </div>
         <p class='description text-center'>{{ $lang['description'] }}</p>

@@ -9,7 +9,7 @@
 <h4 align="center">Ridiculously small PHP framework.</h4>
 
 <p align="center">
-<img src="https://img.shields.io/badge/stability-experimental-orange.svg"> <img src="https://img.shields.io/badge/version-0.5.0-blue.svg">
+<img src="https://img.shields.io/badge/stability-experimental-orange.svg"> <img src="https://img.shields.io/badge/version-0.6.0-blue.svg">
 </p>
 
 Wolff is a ridiculously small and lightweight PHP framework which follows the MVC pattern while having useful functions and utilities like a template, route, loader, session and language system. 
@@ -31,8 +31,6 @@ It is intended for those who want to build light websites without having to do e
 ## Documentation
 
 First time using it? Read the [Wiki page](https://github.com/Usbac/Wolff/wiki).
-
-Want to install? Read the [Wiki installation page](https://github.com/Usbac/Wolff/wiki/Installation).
 
 ## Contributing
 

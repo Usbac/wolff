@@ -1,6 +1,8 @@
 <?php
 
-class Controller_404 extends Controller {
+namespace App\Controller;
+
+Class _404 extends \System\Controller {
 
     public function index() {
         $data['lang'] = $this->load->language('404');
