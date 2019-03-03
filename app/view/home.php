@@ -13,7 +13,7 @@
         </div>
         <p class='description text-center'>{{ $lang['description'] }}</p>
         <div class='text-center options'>
-            <a target='_blank' href='#'>{{ $lang['documentation'] }}</a>
+            <a target='_blank' href='https://github.com/Usbac/Wolff/wiki'>{{ $lang['documentation'] }}</a>
             <a target='_blank' href='https://github.com/Usbac/Wolff'>GITHUB</a>
             <a target='_blank' href='https://github.com/Usbac'>{{ $lang['creators_page'] }}</a>
         </div>
