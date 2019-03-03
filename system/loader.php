@@ -197,6 +197,10 @@ class Loader {
     private function getCache(string $dir, string $content) {
         $file_path = 'cache/tmp_' . $dir . '.php';
 
+        if (!file_exists('cache')) {
+            mkdir('cache', 0777, true);
+        }
+
         if (!file_exists($file_path)) {
             $file = fopen($file_path, 'w');
             fwrite($file, $content);
