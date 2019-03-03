@@ -2,6 +2,9 @@
 
 class Library {
 
+    private static $benchmark = [];
+
+    
     /**
      * Sanitize an url
      * @param url the url
@@ -126,6 +129,44 @@ class Library {
      */
     public static function strContains($str, $needle) {
         return strpos($str, $needle) !== false;
+    }
+
+
+    /**
+     * Start the benchmark
+     */
+    public static function benchmarkStart() {
+        Library::$benchmark[0] = array(
+            'time'        => microtime(true),
+            'memoryUsed'  => memory_get_usage(),
+            'memoryAlloc' => memory_get_usage(true)
+        );
+    }
+
+
+    /**
+     * End the benchmark
+     */
+    public static function benchmarkEnd() {
+        Library::$benchmark[1] = array(
+            'time'        => microtime(true),
+            'memoryUsed'  => memory_get_usage(),
+            'memoryAlloc' => memory_get_usage(true)
+        );
+    }
+
+
+    /**
+     * Return the benchmark result between the start and end benchmark points
+     * @return array the benchmark result as an assosiative array
+     */
+    public static function getBenchmark() {
+        $result = [];
+        foreach (array_keys(Library::$benchmark[0]) as $key) {
+            $result[$key] = Library::$benchmark[1][$key] - Library::$benchmark[0][$key];
+        }
+        
+        return $result;
     }
 
 }

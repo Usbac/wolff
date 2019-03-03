@@ -6,6 +6,8 @@ class Session {
      * Destroy and unset the session if the live time is zero or less
      */
     public function __construct() {
+        $_SESSION['flash_data'] = array();
+
         if (isset($_SESSION['end_time']) && time() >= $_SESSION['end_time']) {
             $this->empty();
             $this->kill();
@@ -144,6 +146,26 @@ class Session {
         }
 
         return ($remaining > 0)? $remaining:0;
+    }
+
+
+    /**
+     * Set flash variable (will be destroyed on next response)
+     * @param key the variable name
+     * @param value the variable value
+     */
+    public function setFlash($key, $value) {
+        $_SESSION['flash_data'][$key] = $value;
+    }
+
+
+    /**
+     * Get flash variable
+     * @param key the variable name
+     * @return object the variable
+     */
+    public function getFlash($key) {
+        return $_SESSION['flash_data'][$key];
     }
 
 

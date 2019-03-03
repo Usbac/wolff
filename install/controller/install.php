@@ -22,7 +22,6 @@ class Controller_install {
 
 
     public function checkErrors($data) {
-
         if (empty($data['title'])) {
             return 'Error: page title required';
         }
@@ -61,7 +60,7 @@ class Controller_install {
         $content .= "define('MAIN_PAGE', 'home'); \n";
         $content .= "define('LANGUAGE', '" . $data['language'] . "'); \n";
         $content .= "define('DIR', '" . $data['directory'] . "'); \n";
-        $content .= "define('MAIN', 'main/'); \n";
+        $content .= "define('MAIN', 'main/');";
 
         $file_path = $_SERVER['DOCUMENT_ROOT'] . '/' . $data['directory'] . '/config.php';
         $file = fopen($file_path, 'w');
