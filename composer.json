@@ -1,0 +1,52 @@
+{
+    "name": "usbacc/wolff",
+    "description": "Ridiculously small PHP framework",
+    "keywords": ["framework", "php", "small", "fast"],
+    "license": "MIT",
+    "type": "project",
+    "support": {
+        "issues": "https://github.com/Usbac/Wolffissues",
+        "source": "https://github.com/Usbac/Wolff",
+        "wiki": "https://github.com/Usbac/Wolffwiki",
+        "email": "Contacto@usbac.com.ve"
+    },
+    "authors": [{
+        "name": "Alejandro Usbacc",
+        "email": "Contacto@usbac.com.ve",
+        "role": "Developer"
+    }],
+    "require": {
+        "php": ">=7.0.0",
+        "vlucas/phpdotenv": "~3.3.2",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "fzaninotto/faker": "^1.7",
+        "phpunit/phpunit": "~8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "System\\": "system/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "System\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
