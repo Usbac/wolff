@@ -1,14 +1,10 @@
-Options -MultiViews
-RewriteEngine On
+<Directory /var/www/html/wolff-core>
+  AuthType Basic
+  AuthName "Authentication Required"
+  #Change the following to either a single file for all domains or to a different naming scheme if you like
+  AuthUserFile /etc/htpasswds/.htpasswd.example1.com
+  Require valid-user
 
-# if request is not for a file
-RewriteCond %{REQUEST_FILENAME} !-d
-
-# if request is not for a directory
-RewriteCond %{REQUEST_FILENAME} !-f
-
-# load index
-RewriteRule ^(.+)?$ index.php?url=$1 [L,QSA]
-
-# Hide directories
-Options -Indexes
+  Order allow,deny
+  Allow from all
+</Directory>

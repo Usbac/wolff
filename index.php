@@ -1,11 +1,13 @@
 <?php
-session_start();
+ini_set('display_errors', true);
+error_reporting(E_ALL ^ E_NOTICE);
 
-spl_autoload_register(function($name) {
-    require($name . '.php');
-});
+use core\Core;
 
-include('config.php');
-include('system/routes.php');
+include_once 'Core/Core.php';
+include_once 'Routes/routes.php';
 
-$start = new Start();
+    $core = new Core();
+?>
+
+
