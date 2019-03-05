@@ -64,7 +64,7 @@ class Library {
         }
 
         $dir = str_replace('/', '\\', $dir);
-        $class = '\\App\\Controller\\' . $dir;
+        $class = 'Controller\\' . $dir;
         $method = null;
 
         try {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace Controller;
 
 Class _404 extends \System\Controller {
 

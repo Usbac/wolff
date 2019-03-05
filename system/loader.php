@@ -6,11 +6,13 @@ class Loader {
 
     private $library;
     private $session;
+    private $dbms;
 
 
-    public function __construct($library, $session) {
+    public function __construct($library, $session, $dbms) {
         $this->library = $library;
         $this->session = $session;
+        $this->dbms = $dbms;
     }
     
 
@@ -30,9 +32,9 @@ class Loader {
         }
 
         $dir = str_replace('/', '\\', $dir);
-        $class = '\\app\\model\\' . $dir;
+        $class = 'Model\\' . $dir;
 
-        $model = new $class($this, $this->library, $this->session);
+        $model = new $class($this, $this->library, $this->session, $this->dbms);
         $model->index();
 
         return $model;
@@ -77,7 +79,7 @@ class Loader {
      */
     private function getController(string $dir) {
         $dir = str_replace('/', '\\', $dir);
-        $class = '\\app\\controller\\' . $dir;
+        $class = 'Controller\\' . $dir;
         
         $controller = new $class($this, $this->library, $this->session);
         return $controller;
@@ -127,7 +129,7 @@ class Loader {
 
         //Initialize the library for the object which called this function
         $dir = str_replace('/', '\\', $dir);
-        $className = '\\App\\Library\\' . $dir;
+        $className = 'Library\\' . $dir;
         return new $className;
     }
 
@@ -135,10 +137,12 @@ class Loader {
     /**
      * Load a view in the indicated directory
      * @param string $dir the view directory
+     * @param array $data the view data
+     * @param bool $cache use or not the cache system
      */
-    public function view(string $dir, array $data = array()) {
+    public function view(string $dir, array $data = array(), bool $cache = true) {
         $dir = preg_replace('/[^a-zA-Z0-9_\/]/', '', $dir);
-        echo $this->formatTemplate($dir, $data);
+        $this->formatTemplate($dir, $data, $cache);
     }
 
 
@@ -150,7 +154,7 @@ class Loader {
      */
     public function getView(string $dir, array $data = array()) {
         $dir = preg_replace('/[^a-zA-Z0-9_\/]/', '', $dir);
-        return $this->formatTemplate($dir, $data);
+        return $this->formatTemplate($dir, $data, false);
     }
 
 
@@ -158,9 +162,10 @@ class Loader {
      * Apply the template format over a view and renders it
      * @param string $dir the view directory
      * @param array $data the data array present in the view
-     * @return object the view content
+     * @param bool $cache use or not the cache system
+     * @return string the view content
      */
-    private function formatTemplate(string $dir, array $data) {
+    private function formatTemplate(string $dir, array $data, bool $cache) {
         $file_path = 'app/view/' . $dir;
 
         //Error
@@ -170,7 +175,7 @@ class Loader {
             $content = file_get_contents($file_path . '.html');
         } else {
             error_log("Error: View '" . $dir . "' doesn't exists");
-            return;
+            return null;
         }
 
         //Variables in data array
@@ -184,7 +189,16 @@ class Loader {
         $content = str_replace($search, $replace, $content);
         
         //Cache system
-        include_once($this->getCache($dir, $content));
+        if ($cache) {
+            include_once($this->getCache($dir, $content));
+        } else {
+            $temp = tmpfile();
+            fwrite($temp, $content);
+            include(stream_get_meta_data($temp)['uri']);
+            fclose($temp);
+        }
+
+        return $content;
     }
 
     

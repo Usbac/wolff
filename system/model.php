@@ -11,11 +11,11 @@ namespace System;
 
 class Model {
 
-    public function __construct($loader, $library, $session) {
+    public function __construct($loader, $library, $session, $dbms) {
         $this->load = $loader;
         $this->library = $library;
         $this->session = $session;
-        $this->db = Connection::connect();
+        $this->db = Connection::connect($dbms);
     }
 
 }

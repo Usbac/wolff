@@ -1,5 +1,8 @@
 <?php
 
+namespace Root;
+use System as Sys;
+
 class Start {
 
     public $library;
@@ -10,17 +13,17 @@ class Start {
      * Start the loading of the page
      */
     public function __construct() {
-        $this->library = new System\Library();
-        $this->session = new System\Session();
-        $this->load = new System\Loader($this->library, $this->session);
+        $this->library = new Sys\Library();
+        $this->session = new Sys\Session();
+        $this->load = new Sys\Loader($this->library, $this->session, DBMS);
 
-        $url = System\Library::sanitizeURL($_GET['url']?? MAIN_PAGE);
+        $url = Sys\Library::sanitizeURL($_GET['url']?? MAIN_PAGE);
 
-        if (System\Route::isBlocked($url)) {
+        if (Sys\Route::isBlocked($url)) {
             $this->load->redirect404();
         }
 
-        $function = System\Route::get($url);
+        $function = Sys\Route::get($url);
 
         if (isset($function)) {
             call_user_func($function->bindTo($this));

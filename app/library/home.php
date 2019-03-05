@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Library;
+namespace Library;
 
 class home {
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model;
+namespace Model;
 
 class home extends \System\Model {
 
