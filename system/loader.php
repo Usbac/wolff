@@ -7,11 +7,13 @@ class Loader {
     private $library;
     private $session;
     private $dbms;
+    private $cache;
 
 
-    public function __construct($library, $session, $dbms) {
+    public function __construct($library, $session, $cache, $dbms) {
         $this->library = $library;
         $this->session = $session;
+        $this->cache = $cache;
         $this->dbms = $dbms;
     }
     
@@ -34,7 +36,7 @@ class Loader {
         $dir = str_replace('/', '\\', $dir);
         $class = 'Model\\' . $dir;
 
-        $model = new $class($this, $this->library, $this->session, $this->dbms);
+        $model = new $class($this, $this->library, $this->session, $this->dbms, $this->cache);
         $model->index();
 
         return $model;
@@ -81,7 +83,7 @@ class Loader {
         $dir = str_replace('/', '\\', $dir);
         $class = 'Controller\\' . $dir;
         
-        $controller = new $class($this, $this->library, $this->session);
+        $controller = new $class($this, $this->library, $this->session, $this->cache);
         return $controller;
     }
 
@@ -190,7 +192,7 @@ class Loader {
         
         //Cache system
         if ($cache) {
-            include_once($this->getCache($dir, $content));
+            include_once($this->cache->get($dir, $content));
         } else {
             $temp = tmpfile();
             fwrite($temp, $content);
@@ -199,29 +201,6 @@ class Loader {
         }
 
         return $content;
-    }
-
-    
-    /**
-     * Create the cache file if doesn't exists and return it
-     * @param string $dir the view directory
-     * @param string $content the original file content
-     * @return string the cache file path
-     */
-    private function getCache(string $dir, string $content) {
-        $file_path = 'cache/tmp_' . $dir . '.php';
-
-        if (!file_exists('cache')) {
-            mkdir('cache', 0777, true);
-        }
-
-        if (!file_exists($file_path)) {
-            $file = fopen($file_path, 'w');
-            fwrite($file, $content);
-            fclose($file);
-        }
-
-        return $file_path;
     }
 
 

@@ -15,7 +15,8 @@ class Start {
     public function __construct() {
         $this->library = new Sys\Library();
         $this->session = new Sys\Session();
-        $this->load = new Sys\Loader($this->library, $this->session, DBMS);
+        $this->cache = new Sys\Cache();
+        $this->load = new Sys\Loader($this->library, $this->session, $this->cache, DBMS);
 
         $url = Sys\Library::sanitizeURL($_GET['url']?? MAIN_PAGE);
 
