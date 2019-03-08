@@ -8,6 +8,7 @@ namespace System;
  * @property Session session
  * @property Connection db
  * @property Cache cache
+ * @property Easql easql
  */
 
 class Model {
@@ -18,6 +19,7 @@ class Model {
         $this->session = $session;
         $this->db = Connection::connect($dbms);
         $this->cache = $cache;
+        $this->easql = new Easql();
     }
 
 }

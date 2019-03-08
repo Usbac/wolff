@@ -2,12 +2,12 @@
 <html>
 <head>
     <title>{{PAGE_TITLE}} - Home</title>
-    <link href="{{APP}}view/css/styles.css" rel="stylesheet" />
+    <link href="{{APP}}assets/css/styles.css" rel="stylesheet" />
 </head>
 <body>
     <div class='center'>
         <div class='text-center'>
-            <img class='main-img' src='{{APP}}view/logo.png' width='130px'>
+            <img class='main-img' src='{{APP}}assets/images/logo.png' width='130px'>
             <h1 class='title'>{{ $lang['title'] }}</h1>
         </div>
         <p class='description text-center'>{{ $lang['description'] }}</p>
@@ -15,6 +15,9 @@
             <a target='_blank' href='https://github.com/Usbac/Wolff/wiki'>{{ $lang['documentation'] }}</a>
             <a target='_blank' href='https://github.com/Usbac/Wolff'>GITHUB</a>
             <a target='_blank' href='https://github.com/Usbac'>{{ $lang['creators_page'] }}</a>
+        </div>
+        <div class='text-center version'>
+            </i>Version 0.7.2</i>
         </div>
     </div>
 </body>

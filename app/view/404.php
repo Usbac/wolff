@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>{{ PAGE_TITLE }} - 404</title>
-    <link href="{{APP}}view/css/styles.css" rel="stylesheet" />
+    <link href="{{APP}}assets/css/styles.css" rel="stylesheet" />
 </head>
 <body>
 <div class='center' id='content-404'>

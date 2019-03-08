@@ -44,6 +44,10 @@ body {
     border-top: 1px #666666 solid;
 }
 
+.version {
+    opacity: 0.4;
+}
+
 .center {
     margin: 0;
     position: absolute;

@@ -1,5 +1,5 @@
 <?php 
-//Wolff v0.7.1
+//Wolff v0.7.2
 
 //Server 
 define('DBMS', 'mysqli'); 
@@ -7,7 +7,7 @@ define('SERVER', 'localhost');
 define('DB', ''); 
 define('USER', 'root');
 define('PASSWORD', ''); 
- 
+
 //General 
 define('APP', '/wolff/app/');
 define('PAGE_TITLE', 'Wolff'); 

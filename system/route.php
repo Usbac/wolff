@@ -17,31 +17,31 @@ class Route {
         $url = explode('/', Library::sanitizeURL($url));
         $urlLength = count($url);
 
-        foreach (self::$routes as $key => $value) {
+        foreach (self::$routes as $key => $function) {
             $route = explode('/', $key);
             $routeLength = count($route);
 
             for ($i = 0; $i < $routeLength && $i < $urlLength; $i++) {
-                if ($url[$i] != $route[$i] && !preg_match('/\{(.*)?\}/', $route[$i])) {
+                if ($url[$i] != $route[$i] && !self::isGetVariable($route[$i])) {
                     break;
                 }
 
-                //Set GET value from any {variable} in the url
-                if (preg_match('/\{(.*)?\}/', $route[$i])) {
-                    $var = preg_replace('/\{|\}/', '', $route[$i]);
-                    $_GET[$var] = $url[$i]?? '';
+                //Set GET value from {variable} in the url
+                if (self::isGetVariable($route[$i])) {
+                    $name = preg_replace('/\{|\}/', '', $route[$i]);
+                    $_GET[$name] = $url[$i]?? '';
                 }
 
                 //Return route function if last {variable} from url is just empty
-                if ($i+2 == $routeLength && $i == $urlLength-1 && preg_match('/\{(.*)?\}/', $route[$i+1])) {
-                    $var = preg_replace('/\{|\}/', '', $route[$i+1]);
-                    $_GET[$var] = '';
-                    return $value;
+                if ($i+2 == $routeLength && $i == $urlLength-1 && self::isGetVariable($route[$i+1])) {
+                    $name = preg_replace('/\{|\}/', '', $route[$i+1]);
+                    $_GET[$name] = '';
+                    return $function;
                 }
 
                 //Return route function
                 if ($i == $routeLength-1 && $i == $urlLength-1) {
-                    return $value;
+                    return $function;
                 }
             }
         }
@@ -124,6 +124,16 @@ class Route {
      */
     public static function exists(string $url) {
         return array_key_exists($url, self::$routes);
+    }
+
+
+    /**
+     * Check if a string has the format of a route GET variable
+     * @param string $str the string
+     * @return boolean true if the string has the format of a route GET variable, false otherwise
+     */
+    private static function isGetVariable(string $str) {
+        return preg_match('/\{(.*)?\}/', $str);
     }
 
 }
