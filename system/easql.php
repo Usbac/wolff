@@ -4,6 +4,7 @@ namespace System;
 
 class Easql {
 
+    private $db;
     private $table;
     private $delete;
     private $sentence;
@@ -14,6 +15,11 @@ class Easql {
     private $conditional;
     private $order;
     private $sql;
+
+
+    public function __construct($db) {
+        $this->db = &$db;
+    }
 
 
     /**
@@ -195,8 +201,8 @@ class Easql {
      * @param object $db the database
      * @return array the query result
      */
-    public function do($db) {
-        $query = $db->query($this->getSQL());
+    public function do() {
+        $query = $this->db->query($this->getSQL());
         $this->clear();
         
         $result = [];

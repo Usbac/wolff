@@ -19,7 +19,7 @@ class Model {
         $this->session = $session;
         $this->db = Connection::connect($dbms);
         $this->cache = $cache;
-        $this->easql = new Easql();
+        $this->easql = new Easql($this->db);
     }
 
 }
