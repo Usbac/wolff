@@ -164,7 +164,7 @@ class Easql {
      * Get the query constructed
      * @return string the query constructed
      */
-    private function getSQL() {
+    public function getSQL() {
         $this->sentence = empty($this->sentence)? "SELECT *":$this->sentence;
 
         if ($this->delete) {

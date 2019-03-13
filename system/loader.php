@@ -144,7 +144,7 @@ class Loader {
      */
     public function view(string $dir, array $data = array(), bool $cache = true) {
         $dir = preg_replace('/[^a-zA-Z0-9_\/]/', '', $dir);
-        $this->formatTemplate($dir, $data, $cache);
+        $this->formatTemplate($dir, $data, $cache, false);
     }
 
 
@@ -156,7 +156,7 @@ class Loader {
      */
     public function getView(string $dir, array $data = array()) {
         $dir = preg_replace('/[^a-zA-Z0-9_\/]/', '', $dir);
-        return $this->formatTemplate($dir, $data, false);
+        return $this->formatTemplate($dir, $data, false, true);
     }
 
 
@@ -165,9 +165,10 @@ class Loader {
      * @param string $dir the view directory
      * @param array $data the data array present in the view
      * @param bool $cache use or not the cache system
+     * @param bool $returnView if true the view won't be included, only returned
      * @return string the view content
      */
-    private function formatTemplate(string $dir, array $data, bool $cache) {
+    private function formatTemplate(string $dir, array $data, bool $cache, bool $returnView) {
         $file_path = 'app/view/' . $dir;
 
         //Error
@@ -183,12 +184,17 @@ class Loader {
         //Variables in data array
         if (is_array($data)) {
             extract($data);
+            unset($data);
         }
         
         //Tags
         $search = array('{{', '}}', '{%', '%}');
         $replace = array('<?php echo ', '?>', '<?php ', ' ?>');
         $content = str_replace($search, $replace, $content);
+
+        if ($returnView) {
+            return $content;
+        }
         
         //Cache system
         if ($cache) {

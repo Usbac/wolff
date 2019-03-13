@@ -7,6 +7,7 @@ class Start {
 
     public $library;
     public $session;
+    public $cache;
     public $load;
 
     /**
