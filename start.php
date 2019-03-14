@@ -2,6 +2,7 @@
 
 namespace Root;
 use System as Sys;
+use System\Library as Lib;
 
 class Start {
 
@@ -9,6 +10,7 @@ class Start {
     public $session;
     public $cache;
     public $load;
+    public $upload;
 
     /**
      * Start the loading of the page
@@ -17,7 +19,8 @@ class Start {
         $this->library = new Sys\Library();
         $this->session = new Sys\Session();
         $this->cache = new Sys\Cache();
-        $this->load = new Sys\Loader($this->library, $this->session, $this->cache, DBMS);
+        $this->upload = new Lib\Upload();
+        $this->load = new Sys\Loader($this->library, $this->session, $this->cache, $this->upload, DBMS);
 
         $url = Sys\Library::sanitizeURL($_GET['url']?? MAIN_PAGE);
 

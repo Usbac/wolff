@@ -7,7 +7,7 @@
 <body>
     <div class='center'>
         <div class='text-center'>
-            <img class='main-img' src='{{APP}}assets/images/logo.png' width='130px'>
+            <img class='main-img' src='{{PUBLIC_DIR}}logo.png' width='130px'>
             <h1 class='title'>{{ $lang['title'] }}</h1>
         </div>
         <p class='description text-center'>{{ $lang['description'] }}</p>

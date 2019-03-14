@@ -7,7 +7,7 @@
 <body>
 <div class='center' id='content-404'>
     <h1 class='title-404 text-center'>404</h1>
-    <p class='text-center'>{{ $data['lang']['msg'] }}</p>
+    <p class='text-center'>{{ $lang['msg'] }}</p>
 </div>
 
 </body>

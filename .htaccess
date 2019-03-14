@@ -1,6 +1,10 @@
 Options -MultiViews
 RewriteEngine On
 
+# allow public folder
+RewriteCond %{REQUEST_URI} "/public/"
+RewriteRule (.*) $1 [L]
+
 # if request is not for a file
 RewriteCond %{REQUEST_FILENAME} !-d
 
@@ -9,6 +13,9 @@ RewriteCond %{REQUEST_FILENAME} !-f
 
 # load index
 RewriteRule ^(.+)?$ index.php?url=$1 [L,QSA]
+
+# block access to certain files
+RewriteRule \.(wav|swf|jpg|jpeg|gif|png|bmp)$ - [F,NC,L]
 
 # Hide directories
 Options -Indexes

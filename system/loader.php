@@ -8,12 +8,14 @@ class Loader {
     private $session;
     private $dbms;
     private $cache;
+    private $upload;
 
 
-    public function __construct($library, $session, $cache, $dbms) {
+    public function __construct($library, $session, $cache, $upload, $dbms) {
         $this->library = $library;
         $this->session = $session;
         $this->cache = $cache;
+        $this->upload = $upload;
         $this->dbms = $dbms;
     }
     
@@ -83,7 +85,7 @@ class Loader {
         $dir = str_replace('/', '\\', $dir);
         $class = 'Controller\\' . $dir;
         
-        $controller = new $class($this, $this->library, $this->session, $this->cache);
+        $controller = new $class($this, $this->library, $this->session, $this->cache, $this->upload);
         return $controller;
     }
 

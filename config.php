@@ -9,7 +9,9 @@ define('USER', 'root');
 define('PASSWORD', ''); 
 
 //General 
-define('APP', '/wolff/app/');
+define('PROJECT_ROOT', '/wolff/');
+define('APP', PROJECT_ROOT . 'app/');
+define('PUBLIC_DIR', PROJECT_ROOT . 'public/');
 define('PAGE_TITLE', 'Wolff'); 
 define('MAIN_PAGE', 'main_page'); 
 define('LANGUAGE', 'english');

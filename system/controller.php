@@ -8,15 +8,17 @@ namespace System;
  * @property Session session
  * @property Data data
  * @property Cache cache
+ * @property Upload upload
  */
 
 class Controller {
 
-    public function __construct($loader, $library, $session, $cache) {
-        $this->load = $loader;
+    public function __construct($load, $library, $session, $cache, $upload) {
+        $this->load = $load;
         $this->library = $library;
         $this->session = $session;
         $this->cache = $cache;
+        $this->upload = $upload;
         $this->data = array();
     }
 
