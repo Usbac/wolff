@@ -9,7 +9,7 @@
 <h4 align="center">Ridiculously small PHP framework.</h4>
 
 <p align="center">
-<img src="https://img.shields.io/badge/stability-experimental-orange.svg"> <img src="https://img.shields.io/badge/version-0.7.2-blue.svg">
+<img src="https://img.shields.io/badge/stability-experimental-orange.svg"> <img src="https://img.shields.io/badge/version-0.8.0-blue.svg">
 </p>
 
 Wolff is a ridiculously small and lightweight PHP framework which follows the MVC pattern while having useful functions and utilities like a template, route, loader, session and language system. 
@@ -27,6 +27,26 @@ It is intended for those who want to build light websites without having to do e
 * **Clean**: The routes system allows you to have clean and friendly URLs, and the template system makes the php code cleaner while separating the logic from the view.
 
 * **Dynamic**: You can work however you want without strictly following the Wolff design.
+
+## Utilities
+
+* **Cache**: An optional cache system which can increase the overall loading speed of your pages.
+
+* **Route**: A route system that allows you to have clean URLs, make redirections and block certain pages recursively.
+
+* **Template**: With the optional template system you can write cleaner code in your views and avoid things like the php tags.
+
+* **Query builder**: Easql is the small query builder that comes in Wolff which reduces the code repetition and makes easier the process of running queries.
+
+* **Uploader**: Simplify and optimize the process of uploading files with the uploader system of Wolff.
+
+* **Session**: Have cleaner code using the session class instead of managing the php session variables directly.
+
+* **Extension**: An useful and descriptive extension system which gives you more control over your site.
+
+* **Library**: A library system for making your own libraries inside Wolff and use them freely.
+
+* **Language**: For managing multiple languages easily and quickly.
 
 ## Documentation
 
