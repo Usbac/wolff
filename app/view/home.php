@@ -17,7 +17,7 @@
             <a target='_blank' href='https://github.com/Usbac'>{{ $lang['creators_page'] }}</a>
         </div>
         <div class='text-center version'>
-            </i>Version 0.7.2</i>
+            </i>Version 0.8.0</i>
         </div>
     </div>
 </body>

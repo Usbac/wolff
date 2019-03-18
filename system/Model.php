@@ -14,11 +14,11 @@ namespace System;
 class Model {
 
     public function __construct($loader, $library, $session, $dbms, $cache) {
-        $this->load = $loader;
-        $this->library = $library;
-        $this->session = $session;
+        $this->load = &$loader;
+        $this->library = &$library;
+        $this->session = &$session;
         $this->db = Connection::connect($dbms);
-        $this->cache = $cache;
+        $this->cache = &$cache;
         $this->easql = new Library\Easql($this->db);
     }
 

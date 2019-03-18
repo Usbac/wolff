@@ -12,7 +12,7 @@ class Library {
      * @param url the url
      * @return string the url sanitized
      */
-    public static function sanitizeURL(string $url) {
+    public static function sanitizeURL(string $url = MAIN_PAGE) {
         return filter_var(rtrim(strtolower($url), '/'), FILTER_SANITIZE_URL);
     }
 
@@ -63,8 +63,8 @@ class Library {
             return false;
         }
 
-        $dir = str_replace('/', '\\', $dir);
-        $class = 'Controller\\' . $dir;
+        $dir = str_replace('/', DIRECTORY_SEPARATOR, $dir);
+        $class = 'Controller' . DIRECTORY_SEPARATOR . $dir;
         $method = null;
 
         try {

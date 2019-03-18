@@ -9,14 +9,16 @@ class Loader {
     private $dbms;
     private $cache;
     private $upload;
+    private $extension;
 
 
-    public function __construct($library, $session, $cache, $upload, $dbms) {
-        $this->library = $library;
-        $this->session = $session;
-        $this->cache = $cache;
-        $this->upload = $upload;
-        $this->dbms = $dbms;
+    public function __construct($library, $session, $cache, $upload, $extension, $dbms) {
+        $this->library = &$library;
+        $this->session = &$session;
+        $this->cache = &$cache;
+        $this->upload = &$upload;
+        $this->extension = &$extension;
+        $this->dbms = &$dbms;
     }
     
 
@@ -35,8 +37,8 @@ class Loader {
             return null;
         }
 
-        $dir = str_replace('/', '\\', $dir);
-        $class = 'Model\\' . $dir;
+        $dir = str_replace('/', DIRECTORY_SEPARATOR, $dir);
+        $class = 'Model' . DIRECTORY_SEPARATOR . $dir;
 
         $model = new $class($this, $this->library, $this->session, $this->dbms, $this->cache);
         $model->index();
@@ -82,10 +84,10 @@ class Loader {
      * @return object the controller with its main variables initialized
      */
     private function getController(string $dir) {
-        $dir = str_replace('/', '\\', $dir);
-        $class = 'Controller\\' . $dir;
+        $dir = str_replace('/', DIRECTORY_SEPARATOR, $dir);
+        $class = 'Controller' . DIRECTORY_SEPARATOR . $dir;
         
-        $controller = new $class($this, $this->library, $this->session, $this->cache, $this->upload);
+        $controller = new $class($this, $this->library, $this->session, $this->cache, $this->upload, $this->extension);
         return $controller;
     }
 
@@ -132,8 +134,8 @@ class Loader {
         }
 
         //Initialize the library for the object which called this function
-        $dir = str_replace('/', '\\', $dir);
-        $className = 'Library\\' . $dir;
+        $dir = str_replace('/', DIRECTORY_SEPARATOR, $dir);
+        $className = 'Library' . DIRECTORY_SEPARATOR . $dir;
         return new $className;
     }
 
@@ -146,7 +148,7 @@ class Loader {
      */
     public function view(string $dir, array $data = array(), bool $cache = true) {
         $dir = preg_replace('/[^a-zA-Z0-9_\/]/', '', $dir);
-        $this->formatTemplate($dir, $data, $cache, false);
+        $this->template($dir, $data, $cache, false);
     }
 
 
@@ -158,7 +160,7 @@ class Loader {
      */
     public function getView(string $dir, array $data = array()) {
         $dir = preg_replace('/[^a-zA-Z0-9_\/]/', '', $dir);
-        return $this->formatTemplate($dir, $data, false, true);
+        return $this->template($dir, $data, false, true);
     }
 
 
@@ -170,7 +172,7 @@ class Loader {
      * @param bool $returnView if true the view won't be included, only returned
      * @return string the view content
      */
-    private function formatTemplate(string $dir, array $data, bool $cache, bool $returnView) {
+    private function template(string $dir, array $data, bool $cache, bool $returnView) {
         $file_path = 'app/view/' . $dir;
 
         //Error
@@ -216,6 +218,7 @@ class Loader {
      * Load the 404 view page
      */
     public function redirect404() {
+        header("HTTP/1.0 404 Not Found");
         $controller = $this->controller('_404');
         die();
     }

@@ -1,5 +1,5 @@
 <?php 
-//Wolff v0.7.2
+//Wolff v0.8
 
 //Server 
 define('DBMS', 'mysqli'); 
@@ -15,3 +15,4 @@ define('PUBLIC_DIR', PROJECT_ROOT . 'public/');
 define('PAGE_TITLE', 'Wolff'); 
 define('MAIN_PAGE', 'main_page'); 
 define('LANGUAGE', 'english');
+define('EXTENSIONS', true);

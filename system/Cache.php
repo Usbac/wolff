@@ -4,6 +4,14 @@ namespace System;
 
 class Cache {
 
+    private $folder;
+
+    
+    public function __construct() {
+        $this->folder = 'cache' . DIRECTORY_SEPARATOR;
+    }
+
+
     /**
      * Create the cache file if doesn't exists and return its path
      * @param string $dir the view directory
@@ -11,7 +19,7 @@ class Cache {
      * @return string the cache file path
      */
     public function get(string $dir, string $content) {
-        $file_path = 'cache/tmp_' . $dir . '.php';
+        $file_path = $this->folder . $this->getFormat($dir);
 
         $this->createFolder();
 
@@ -42,11 +50,11 @@ class Cache {
      */
     public function exists(string $dir = '') {
         if (!empty($dir)) {
-            $file_path = 'cache/tmp_' . $dir . '.php';
+            $file_path = $this->folder . $this->getFormat($dir);
             return is_file($file_path);
         }
 
-        return !empty(glob('cache/*'));
+        return !empty(glob($this->folder . '*'));
     }
 
 
@@ -56,7 +64,7 @@ class Cache {
      */
     public function clear(string $dir = '') {
         if (!empty($dir)) {
-            $file_path = 'cache/tmp_' . $dir . '.php';
+            $file_path = $this->folder . $this->getFormat($dir);
 
             if (is_file($file_path)) {
                 unlink($file_path);
@@ -64,13 +72,23 @@ class Cache {
             return;
         }
 
-        $files = glob('cache/*');
+        $files = glob($this->folder . '*');
 
         foreach ($files as $file) {
             if (is_file($file)) {
                 unlink($file);
             }
         }
+    }
+
+
+    /**
+     * Get the cache format name of a file
+     * @param string $dir the cache file
+     * @return string the filename with the cache format
+     */
+    public function getFormat(string $dir) {
+        return 'tmp_' . $dir . '.php';
     }
 
 }

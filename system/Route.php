@@ -28,13 +28,13 @@ class Route {
 
                 //Set GET value from {variable} in the url
                 if (self::isGetVariable($route[$i])) {
-                    $name = preg_replace('/\{|\}/', '', $route[$i]);
+                    $name = $this->clearGetVariable($route[$i]);
                     $_GET[$name] = $url[$i]?? '';
                 }
 
                 //Return route function if last {variable} from url is just empty
                 if ($i+2 == $routeLength && $i == $urlLength-1 && self::isGetVariable($route[$i+1])) {
-                    $name = preg_replace('/\{|\}/', '', $route[$i+1]);
+                    $name = $this->clearGetVariable($route[$i+1]);
                     $_GET[$name] = '';
                     return $function;
                 }
@@ -136,4 +136,13 @@ class Route {
         return preg_match('/\{(.*)?\}/', $str);
     }
 
+
+    /**
+     * Clear a GET string
+     * @param string $str the string
+     * @return string the get variable without brackets
+     */
+    private static function clearGetVariable(string $str) {
+        return preg_replace('/\{|\}/', '', $str);
+    }
 }
