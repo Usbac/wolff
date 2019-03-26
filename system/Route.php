@@ -22,20 +22,20 @@ class Route {
             $routeLength = count($route);
 
             for ($i = 0; $i < $routeLength && $i < $urlLength; $i++) {
-                if ($url[$i] != $route[$i] && !self::isGetVariable($route[$i])) {
+                if ($url[$i] != $route[$i] && !empty($route[$i]) && !self::isGetVariable($route[$i])) {
                     break;
                 }
 
                 //Set GET value from {variable} in the url
                 if (self::isGetVariable($route[$i])) {
-                    $name = $this->clearGetVariable($route[$i]);
+                    $name = self::clearGetVariable($route[$i]);
                     $_GET[$name] = $url[$i]?? '';
                 }
 
                 //Return route function if last {variable} from url is just empty
                 if ($i+2 == $routeLength && $i == $urlLength-1 && self::isGetVariable($route[$i+1])) {
-                    $name = $this->clearGetVariable($route[$i+1]);
-                    $_GET[$name] = '';
+                    $name = self::clearGetVariable($route[$i+1]);
+                    $_GET[$name] = $url[$i]?? '';
                     return $function;
                 }
 
