@@ -1,0 +1,19 @@
+<?php
+
+namespace Extension;
+
+class {classname} {
+
+    public $desc = array(
+        'name'        => '{name}',
+        'description' => '{description}',
+        'version'     => '{version}',
+        'author'      => '{author}'
+    );    
+
+
+    public function index() {
+        //Code
+    }
+
+}

@@ -1,0 +1,11 @@
+<?php 
+
+namespace Library{namespace}; 
+
+class {classname} { 
+
+    public function index() { 
+        //Code
+    } 
+
+} 

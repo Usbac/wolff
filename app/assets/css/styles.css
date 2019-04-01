@@ -42,11 +42,13 @@ body {
     opacity: 0.8;
     padding-top: 30px;
     border-top: 1px #666666 solid;
+    margin-bottom: 15px;
+    margin-top: 15px;
 }
 
 .version {
     opacity: 0.4;
-    margin: 4%;
+    margin: 15px;
 }
 
 .center {

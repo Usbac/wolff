@@ -1,4 +1,5 @@
 /vendor/
 /cache/
 /extension/
+/public/
 /out/

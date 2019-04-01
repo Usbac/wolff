@@ -74,7 +74,7 @@ class Easql {
 
     /**
      * Indicate the conditional for the join in the query
-     * @param any $on the conditionals
+     * @param mixed $on the conditionals
      * @return Easql $this
      */
     public function on($on) {
@@ -89,7 +89,7 @@ class Easql {
 
     /**
      * Indicate the selection for the query
-     * @param any $select the selection
+     * @param mixed $select the selection
      * @return Easql $this
      */
     public function select($select = "*") {
@@ -103,8 +103,49 @@ class Easql {
 
 
     /**
+     * Select All query
+     * @param string $table the table for the query
+     * @return array the query result as an assosiative array
+     */
+    public function selectAll(string $table) {
+        $query = $this->db->query("SELECT * FROM $table");
+        $this->clear();
+        
+        $result = [];
+        while ($row = $query->fetch_assoc()) {
+            $result[] = $row;
+        }
+
+        return $result;
+    }
+
+    
+    /**
+     * Count All query
+     * @param string $table the table for the query
+     * @return array the query result as an assosiative array
+     */
+    public function countAll(string $table) {
+        $query = $this->db->query("SELECT COUNT(*) FROM $table");
+        $this->clear();
+
+        return $query->fetch_assoc()['COUNT(*)'];
+    }
+
+    
+    /**
+     * Delete All query
+     * @param string $table the table for the query
+     */
+    public function deleteAll(string $table) {
+        $query = $this->db->query("DELETE FROM $table");
+        $this->clear();
+    }
+
+
+    /**
      * Indicate the table for the delete query
-     * @param any $table the table
+     * @param mixed $table the table
      * @return Easql $this
      */
     public function delete($table) {
@@ -116,7 +157,7 @@ class Easql {
 
     /**
      * Indicate the conditionals for the query
-     * @param any $where the conditionals
+     * @param mixed $where the conditionals
      * @return Easql $this
      */
     public function where($where) {
@@ -165,7 +206,7 @@ class Easql {
      * @return string the query constructed
      */
     public function getSQL() {
-        $this->sentence = empty($this->sentence)? "SELECT *":$this->sentence;
+        $this->sentence = empty($this->sentence)? "SELECT *": $this->sentence;
 
         if ($this->delete) {
             $this->sentence = "DELETE FROM";

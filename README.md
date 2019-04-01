@@ -9,7 +9,7 @@
 <h4 align="center">Ridiculously small PHP framework.</h4>
 
 <p align="center">
-<img src="https://img.shields.io/badge/stability-experimental-orange.svg"> <img src="https://img.shields.io/badge/version-0.8.0-blue.svg">
+<img src="https://img.shields.io/badge/stability-experimental-orange.svg"> <img src="https://img.shields.io/badge/version-0.9.0-blue.svg">
 </p>
 
 Wolff is a ridiculously small and lightweight PHP framework which follows the MVC pattern while having useful functions and utilities like a template, route, loader, session and language system. 
@@ -48,13 +48,22 @@ It is intended for those who want to build light websites without having to do e
 
 * **Language**: For managing multiple languages easily and quickly.
 
+## CLi
+
+Take advantage of the CLI application of Wolff named Wolffie to do a lot of tasks in a fast and easy way using short commands.<br>
+With it you can create controllers, languages, pages, routes, look at the available extensions, change the project configuration, delete languages, libraries and much more.
+
+<p align="center">
+<img src="http://usbac.com.ve/wp-content/uploads/2019/03/wolff-cli.jpg" alt="Wolff cli" width="400">
+</p>
+
 ## Documentation
 
 First time using it? Read the [Wiki page](https://github.com/Usbac/Wolff/wiki).
 
 ## Contributing
 
-Wolff is a work in progress and is NOT completely stable, new features will be added soon and the core structure may change over time.
+Currently Wolff is quite stable but it's still a work in progress, new features will be added soon and the core structure may change a little over time.
 
 Any contribution or support to this project in the form of a pull request or message will be highly appreciated.
 

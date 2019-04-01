@@ -6,6 +6,7 @@ class Upload {
 
     private $maxSize;
     private $directory;
+    private $lastFile;
 
 
     /**
@@ -77,12 +78,32 @@ class Upload {
             return false;
         }
 
-        $dir = $_SERVER['DOCUMENT_ROOT'] . PUBLIC_DIR . $this->directory . '/' . $file['name'];
-        if (!move_uploaded_file($file['tmp_name'], $dir)) {
+        $dir = $_SERVER['DOCUMENT_ROOT'] . PUBLIC_DIR . $this->directory;
+        if (!move_uploaded_file($file['tmp_name'], $dir . DIRECTORY_SEPARATOR . $file['name'])) {
             error_log("Error: Upload of '" . $file['name'] . "' failed");
             return false;
         }
 
+        $this->lastFile = array(
+            'name'        => $file['name'],
+            'type'        => $file['type'],
+            'tmp_name'    => $file['tmp_name'],
+            'error'       => $file['error'],
+            'size'        => $file['size'],
+            'directory'   => $dir,
+            'uploader_ip' => $_SERVER['REMOTE_ADDR'],
+            'date'        => date('Y-m-d H:i:s')
+        );
+
         return true;
+    }
+    
+
+    /**
+     * Get info about the last file uploaded
+     * @return array the info about the last file uploaded as an assosiative array
+     */
+    public function getLastFile() {
+        return $this->lastFile;
     }
 }

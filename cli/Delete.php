@@ -1,0 +1,164 @@
+<?php
+
+namespace Cli;
+
+use System as Sys;
+
+class Delete {
+    private $route;
+    private $extension;
+    private $app_dir;
+    private $args;
+
+
+    public function __construct($route, $extension, $app_dir)  {
+        $this->route = &$route;
+        $this->extension = &$extension;
+        $this->app_dir = $app_dir;
+    }
+
+    
+    public function index($args) {
+        $this->args = $args;
+        $function = $this->args[1];
+
+        if (method_exists($this, $function)) {
+            $this->$function();
+        } else {
+            echo "WARNING: Command doesn't exists \n \n";
+        }
+    }
+
+
+    private function page() {
+        $this->controller();
+        $this->model();
+        echo "Page " . $this->args[2] . " deleted successfully! \n \n";
+    }
+
+
+    private function controller() {
+        $file_dir = $this->app_dir . 'controller' . DIRECTORY_SEPARATOR . $this->args[2] . '.php';
+
+        if (!is_file($file_dir)) {
+            echo "WARNING: the controller '" . $this->args[2] . "' doesn't exists! \n \n"; 
+            return;
+        }
+
+        echo "Are you sure about deleting the " . $this->args[2] . ".php controller? Y/N \n";
+        $response = readline(" -> ");
+        if ($response == 'Y') {
+            unlink($file_dir);
+            echo "Controller " . $this->args[2] . " deleted successfully! \n \n";
+        } else {
+            echo "\n";
+        }
+    }
+    
+
+    private function model() {
+        $file_dir = $this->app_dir . 'model' . DIRECTORY_SEPARATOR . $this->args[2] . '.php';
+
+        if (!is_file($file_dir)) {
+            echo "WARNING: the model '" . $this->args[2] . "' doesn't exists! \n \n"; 
+            return;
+        }
+
+        echo "Are you sure about deleting the " . $this->args[2] . ".php model? Y/N \n";
+        $response = readline(" -> ");
+        if ($response == 'Y') {
+            unlink($file_dir);
+            echo "Model " . $this->args[2] . " deleted successfully! \n \n";
+        } else {
+            echo "\n";
+        }
+    }
+
+
+    private function library() {
+        $file_dir = $this->app_dir . 'library' . DIRECTORY_SEPARATOR . $this->args[2] . '.php';
+
+        if (!is_file($file_dir)) {
+            echo "WARNING: the library '" . $this->args[2] . "' doesn't exists! \n \n"; 
+            return;
+        }
+
+        echo "Are you sure about deleting the " . $this->args[2] . ".php library? Y/N \n";
+        $response = readline(" -> ");
+        if ($response == 'Y') {
+            unlink($file_dir);
+            echo "Library " . $this->args[2] . " deleted successfully! \n \n";
+        } else {
+            echo "\n";
+        }
+    }
+
+
+    private function view() {
+        $file_dir = $this->app_dir . 'view' . DIRECTORY_SEPARATOR . $this->args[2];
+
+        if (!is_file($file_dir)) {
+            echo "WARNING: the view '" . $this->args[2] . "' doesn't exists! \n \n"; 
+            return;
+        }
+
+        echo "Are you sure about deleting the " . $this->args[2] . " view? Y/N \n";
+        $response = readline(" -> ");
+        if ($response == 'Y') {
+            unlink($file_dir);
+            echo "View " . $this->args[2] . " deleted successfully! \n \n";
+        } else {
+            echo "\n";
+        }
+    }
+
+
+    private function extension() {
+        $file_dir = '../extension' . DIRECTORY_SEPARATOR . $this->args[2] . '.php';
+
+        if (!is_file($file_dir)) {
+            echo "WARNING: the extension '" . $this->args[2] . "' doesn't exists! \n \n"; 
+            return;
+        }
+
+        echo "Are you sure about deleting the " . $this->args[2] . " extension? Y/N \n";
+        $response = readline(" -> ");
+        if ($response == 'Y') {
+            unlink($file_dir);
+            echo "Extension " . $this->args[2] . " deleted successfully! \n \n";
+        } else {
+            echo "\n";
+        }
+    }
+
+
+    private function language() {
+        $language_dir = $this->app_dir . 'language' . DIRECTORY_SEPARATOR . $this->args[2];
+        $this->deleteRecursively($language_dir);
+    }
+
+
+    private function deleteRecursively($dir) {
+        if (!is_dir($dir)) {
+            echo "WARNING: the language '" . $this->args[2] . "' doesn't exists! \n \n"; 
+            return;
+        }
+
+        if (substr($dir, strlen($dir) - 1, 1) != DIRECTORY_SEPARATOR) {
+            $dir .= DIRECTORY_SEPARATOR;
+        }
+
+        $files = glob($dir . '*', GLOB_MARK);
+        foreach ($files as $file) {
+            if (is_dir($file)) {
+                $this->deleteRecursively($file);
+            } else {
+                unlink($file);
+            }
+        }
+
+        rmdir($dir);
+        echo "Language " . $this->args[2] . " deleted successfully! \n \n";
+    }
+
+}

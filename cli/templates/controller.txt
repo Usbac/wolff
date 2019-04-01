@@ -1,0 +1,11 @@
+<?php 
+
+namespace Controller{namespace}; 
+
+class {classname} extends \System\Controller { 
+
+    public function index() { 
+        //Code
+    } 
+
+} 

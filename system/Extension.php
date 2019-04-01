@@ -13,8 +13,8 @@ class Extension {
     private $upload;
 
 
-    public function __construct($library, $session, $cache, $upload) {
-        $this->folder = $_SERVER['DOCUMENT_ROOT'] . PROJECT_ROOT . 'extension';
+    public function __construct($library = null, $session = null, $cache = null, $upload = null) {
+        $this->folder = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'extension';
         $this->extensions = [];
         $this->library = $library;
         $this->session = $session;
@@ -48,11 +48,11 @@ class Extension {
             $extension->index();
 
             $this->extensions[] = array(
-                'filename'    => $filename,
                 'name'        => $extension->desc['name']?? '',
                 'description' => $extension->desc['description']?? '',
                 'version'     => $extension->desc['version']?? '',
-                'author'      => $extension->desc['author']?? ''
+                'author'      => $extension->desc['author']?? '',
+                'filename'    => $filename
             );
         }
     }
@@ -72,7 +72,7 @@ class Extension {
      */
     public function makeFolder() {
         if (!$this->folderExists()) {
-            mkdir($this->folder);
+            mkdir($this->getFolder());
         }
     }
 

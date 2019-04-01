@@ -1,0 +1,11 @@
+<?php 
+
+namespace Model{namespace}; 
+
+class {classname} extends \System\Model { 
+
+    public function index() { 
+        //Code
+    } 
+
+} 

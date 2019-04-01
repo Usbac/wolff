@@ -1,6 +1,7 @@
 <?php
 
 namespace Root;
+
 use System as Sys;
 use System\Library as Lib;
 
