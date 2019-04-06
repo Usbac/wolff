@@ -1,6 +1,6 @@
 <?php
 
-namespace System;
+namespace Core;
 
 class Extension {
 
@@ -13,10 +13,9 @@ class Extension {
     private $upload;
 
 
-    public function __construct($library = null, $session = null, $cache = null, $upload = null) {
-        $this->folder = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'extension';
+    public function __construct($session = null, $cache = null, $upload = null) {
+        $this->folder = dirname(__DIR__) . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'extension';
         $this->extensions = [];
-        $this->library = $library;
         $this->session = $session;
         $this->cache = $cache;
         $this->upload = $upload;
@@ -38,10 +37,9 @@ class Extension {
 
         foreach ($files as $file) {
             $filename = basename($file, '.php');
-            $class = 'Extension' . DIRECTORY_SEPARATOR . $filename;
+            $class = 'Extension\\' . $filename;
 
             $extension = new $class;
-            $extension->library = $this->library;
             $extension->session = $this->session;
             $extension->cache = $this->cache;
             $extension->upload = $this->upload;
@@ -87,7 +85,7 @@ class Extension {
 
 
     /**
-     * Activate the extension system
+     * Activate or deactivate the extension system
      * @param bool the extension state
      */
     public function activate(bool $active = true) {

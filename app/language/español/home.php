@@ -5,5 +5,7 @@ $data['description']   = 'Wolff es un framework de PHP ridiculamente pequeño </
                           Puedes empezar creando tu propia página como esta';
 $data['remember']      = 'Recuerda borrar la carpeta <i>install</i>';
 
-$data['documentation'] = 'DOCUMENTACIÓN';
-$data['creators_page'] = 'PÁGINA DEL CREADOR';
+$data['documentation'] = 'documentación';
+$data['creators_page'] = 'página del creador';
+$data['github']        = 'Github';
+$data['version']       = 'Vérsion ' . wolffVersion();

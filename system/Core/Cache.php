@@ -1,6 +1,6 @@
 <?php
 
-namespace System;
+namespace Core;
 
 class Cache {
 
@@ -19,7 +19,7 @@ class Cache {
      * @return string the cache file path
      */
     public function get(string $dir, string $content) {
-        $file_path = $this->folder . $this->getFormat($dir);
+        $file_path = $this->folder . $this->getFilename($dir);
 
         $this->createFolder();
 
@@ -50,7 +50,7 @@ class Cache {
      */
     public function exists(string $dir = '') {
         if (!empty($dir)) {
-            $file_path = $this->folder . $this->getFormat($dir);
+            $file_path = $this->folder . $this->getFilename($dir);
             return is_file($file_path);
         }
 
@@ -64,7 +64,7 @@ class Cache {
      */
     public function clear(string $dir = '') {
         if (!empty($dir)) {
-            $file_path = $this->folder . $this->getFormat($dir);
+            $file_path = $this->folder . $this->getFilename($dir);
 
             if (is_file($file_path)) {
                 unlink($file_path);
@@ -87,7 +87,7 @@ class Cache {
      * @param string $dir the cache file
      * @return string the filename with the cache format
      */
-    public function getFormat(string $dir) {
+    public function getFilename(string $dir) {
         return 'tmp_' . $dir . '.php';
     }
 

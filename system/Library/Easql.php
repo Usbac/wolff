@@ -15,6 +15,7 @@ class Easql {
     private $conditional;
     private $order;
     private $sql;
+    private $lastQuery;
 
 
     public function __construct($db) {
@@ -110,13 +111,8 @@ class Easql {
     public function selectAll(string $table) {
         $query = $this->db->query("SELECT * FROM $table");
         $this->clear();
-        
-        $result = [];
-        while ($row = $query->fetch_assoc()) {
-            $result[] = $row;
-        }
 
-        return $result;
+        return $query->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     
@@ -129,7 +125,7 @@ class Easql {
         $query = $this->db->query("SELECT COUNT(*) FROM $table");
         $this->clear();
 
-        return $query->fetch_assoc()['COUNT(*)'];
+        return $query->fetchAll(\PDO::FETCH_ASSOC)['COUNT(*)'];
     }
 
     
@@ -138,7 +134,7 @@ class Easql {
      * @param string $table the table for the query
      */
     public function deleteAll(string $table) {
-        $query = $this->db->query("DELETE FROM $table");
+        $this->db->query("DELETE FROM $table");
         $this->clear();
     }
 
@@ -238,20 +234,49 @@ class Easql {
 
 
     /**
+     * Get the last query executed by Easql
+     * @return string the query
+     */
+    public function getLastSQL() {
+        return $this->lastQuery;
+    }
+
+
+    /**
+     * Execute the last query executed by Easql
+     * @return array the query result
+     */
+    public function doLastQuery() {
+        $query = $this->db->query($this->getLastSQL());
+        $this->clear();
+        
+        return $query->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+
+    /**
      * Do the query
-     * @param object $db the database
      * @return array the query result
      */
     public function do() {
+        $this->lastQuery = $this->getSQL();
         $query = $this->db->query($this->getSQL());
         $this->clear();
-        
-        $result = [];
-        while ($row = $query->fetch_assoc()) {
-            $result[] = $row;
-        }
 
-        return $result;
+        return $query->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    
+    /**
+     * Do a query
+     * @return array the query result
+     */
+    public function query($sql) {
+        $this->lastQuery = $this->getSQL();
+        $query = $this->db->query($sql);
+        $this->clear();
+
+        return $query->fetchAll(\PDO::FETCH_ASSOC);
     }
 
 }

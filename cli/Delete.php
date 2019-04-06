@@ -33,7 +33,6 @@ class Delete {
     private function page() {
         $this->controller();
         $this->model();
-        echo "Page " . $this->args[2] . " deleted successfully! \n \n";
     }
 
 
@@ -114,7 +113,7 @@ class Delete {
 
 
     private function extension() {
-        $file_dir = '../extension' . DIRECTORY_SEPARATOR . $this->args[2] . '.php';
+        $file_dir = '..' . DIRECTORY_SEPARATOR . 'extension' . DIRECTORY_SEPARATOR . $this->args[2] . '.php';
 
         if (!is_file($file_dir)) {
             echo "WARNING: the extension '" . $this->args[2] . "' doesn't exists! \n \n"; 
@@ -135,6 +134,31 @@ class Delete {
     private function language() {
         $language_dir = $this->app_dir . 'language' . DIRECTORY_SEPARATOR . $this->args[2];
         $this->deleteRecursively($language_dir);
+    }
+
+        
+    private function cache() {
+        $cache_path = '..' . DIRECTORY_SEPARATOR . 'cache';
+
+        if (!is_dir($cache_path)) {
+            echo "WARNING: the cache folder doesn't exists! \n \n"; 
+            return;
+        }
+
+        $files = glob($cache_path . DIRECTORY_SEPARATOR . '*');
+
+        if (count($files) <= 0) {
+            echo "WARNING: the cache folder is already empty! \n \n"; 
+            return;
+        }
+
+        foreach ($files as $file) {
+            if (is_file($file)) {
+                unlink($file);
+            }
+        }
+
+        echo "Cache deleted successfully! \n \n";
     }
 
 

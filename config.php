@@ -1,8 +1,8 @@
 <?php 
-//Wolff v0.9
+//Wolff v0.9.1
 
 //Server 
-define('DBMS', 'mysqli'); 
+define('DBMS', 'mysql'); 
 define('SERVER', 'localhost'); 
 define('DB', ''); 
 define('USER', 'root');

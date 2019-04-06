@@ -2,7 +2,7 @@
 
 namespace Model;
 
-class home extends \System\Model {
+class home extends \Core\Model {
 
     public function index() {
 

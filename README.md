@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <img src="http://usbac.com.ve/wp-content/uploads/2019/03/WolffLogo.png" alt="Wolff logo" width="200">
+  <img src="http://usbac.com.ve/wp-content/uploads/2019/04/wolff-small.png" alt="Wolff logo" width="200">
   <br>
   Wolff
   <br>
@@ -9,7 +9,7 @@
 <h4 align="center">Ridiculously small PHP framework.</h4>
 
 <p align="center">
-<img src="https://img.shields.io/badge/stability-experimental-orange.svg"> <img src="https://img.shields.io/badge/version-0.9.0-blue.svg">
+<img src="https://img.shields.io/badge/stability-stable-green.svg"> <img src="https://img.shields.io/badge/version-0.9.1-blue.svg">
 </p>
 
 Wolff is a ridiculously small and lightweight PHP framework which follows the MVC pattern while having useful functions and utilities like a template, route, loader, session and language system. 

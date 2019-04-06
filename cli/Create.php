@@ -9,12 +9,14 @@ class Create {
     private $extension;
     private $app_dir;
     private $args;
+    private $routes_dir;
 
 
     public function __construct($route, $extension, $app_dir)  {
         $this->route = &$route;
         $this->extension = &$extension;
         $this->app_dir = $app_dir;
+        $this->routes_dir = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'system' . DIRECTORY_SEPARATOR . 'Routes.php';
     }
 
     
@@ -41,21 +43,12 @@ class Create {
         $file_dir = $this->app_dir . 'controller' . DIRECTORY_SEPARATOR . $this->args[2] . '.php';
 
         if (file_exists($file_dir)) {
-            echo "WARNING: Controller " . $this->args[2] . " already exists \n \n";
+            echo "WARNING: controller " . $this->args[2] . " already exists \n \n";
             return;
         }
-
-        $dir = explode('/', $this->args[2]);
-        $file_name = array_pop($dir);
-
-        if (count($dir) > 0) {
-            $this->createDirectoryInApp($dir, 'controller');
-        }
-
-        $namespace = implode('\\', $dir);
-        if (!empty($namespace)) {
-            $namespace = "\\" . $namespace;
-        }
+        
+        $file_name = "";
+        $namespace = $this->createNamespace($dir, $file_name, 'controller');
 
         $file = fopen($file_dir, 'w') or die("WARNING: Cannot create Controller file \n \n");
 
@@ -79,17 +72,8 @@ class Create {
             return;
         }
 
-        $dir = explode('/', $this->args[2]);
-        $file_name = array_pop($dir);
-
-        if (count($dir) > 0) {
-            $this->createDirectoryInApp($dir, 'model');
-        }
-
-        $namespace = implode('\\', $dir);
-        if (!empty($namespace)) {
-            $namespace = "\\" . $namespace;
-        }
+        $file_name = "";
+        $namespace = $this->createNamespace($dir, $file_name, 'model');
 
         $file = fopen($file_dir, 'w') or die("WARNING: Cannot create model file \n \n");
 
@@ -188,18 +172,8 @@ class Create {
             return;
         }
 
-        $dir = explode('/', $this->args[2]);
-        $file_name = array_pop($dir);
-
-        //Create directory if doesn't exists
-        if (count($dir) > 0) {
-            $this->createDirectoryInApp($dir, 'library');
-        }
-
-        $namespace = implode('\\', $dir);
-        if (!empty($namespace)) {
-            $namespace = "\\" . $namespace;
-        }
+        $file_name = "";
+        $namespace = $this->createNamespace($dir, $file_name, 'library');
 
         $file = fopen($file_dir, 'w') or die("WARNING: Cannot create library file \n \n");
 
@@ -216,9 +190,8 @@ class Create {
 
 
     private function route() {
-        $filename = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'system' . DIRECTORY_SEPARATOR . 'Routes.php';
-        $file = fopen($filename, 'r') or die('WARNING: Cannot read Routes file');
-        $content = fread($file, filesize($filename));
+        $file = fopen($this->routes_dir, 'r') or die('WARNING: Cannot read Routes file');
+        $content = fread($file, filesize($this->routes_dir));
         $route = $this->args[2];
 
         if (preg_match("/Route::add\((\s){0,}?[\'\"]" . $route . "[\'\"](\s){0,}?\,/", $content)) {
@@ -233,16 +206,15 @@ class Create {
         $content .= '    $this->load->controller("' . $this->args[3] . '");' . "\n";
         $content .= '});';
 
-        if (file_put_contents($filename, $content, "\r\n" . FILE_APPEND | LOCK_EX)) {
+        if (file_put_contents($this->routes_dir, $content, "\r\n" . FILE_APPEND | LOCK_EX)) {
             echo "Route " . $route . " created successfully! \n \n";
         }
     }
 
 
     private function block() {
-        $filename = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'system' . DIRECTORY_SEPARATOR . 'Routes.php';
-        $file = fopen($filename, 'r') or die('WARNING: Cannot read Routes file');
-        $content = fread($file, filesize($filename));
+        $file = fopen($this->routes_dir, 'r') or die('WARNING: Cannot read Routes file');
+        $content = fread($file, filesize($this->routes_dir));
         $route = $this->args[2];
 
         if (preg_match("/Route::block\((\s){0,}?[\'\"]" . $route . "[\'\"](\s){0,}?\)\;/", $content)) {
@@ -254,16 +226,15 @@ class Create {
 
         $content = PHP_EOL . PHP_EOL . 'Route::block("' . $route . '");';
 
-        if (file_put_contents($filename, $content, "\r\n" . FILE_APPEND | LOCK_EX)) {
+        if (file_put_contents($this->routes_dir, $content, "\r\n" . FILE_APPEND | LOCK_EX)) {
             echo "Route " . $route . " blocked successfully! \n \n";
         }
     }
 
 
     private function redirect() {
-        $filename = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'system' . DIRECTORY_SEPARATOR . 'Routes.php';
-        $file = fopen($filename, 'r') or die('WARNING: Cannot read Routes file');
-        $content = fread($file, filesize($filename));
+        $file = fopen($this->routes_dir, 'r') or die('WARNING: Cannot read Routes file');
+        $content = fread($file, filesize($this->routes_dir));
         $original =  $this->args[2];
         $redirect = $this->args[3];
         $redirect_code = "";
@@ -281,7 +252,7 @@ class Create {
 
         $content = PHP_EOL . PHP_EOL . 'Route::redirect("' . $original . '", "' . $redirect . '"' . $redirect_code . ');';
 
-        if (file_put_contents($filename, $content, "\r\n" . FILE_APPEND | LOCK_EX)) {
+        if (file_put_contents($this->routes_dir, $content, "\r\n" . FILE_APPEND | LOCK_EX)) {
             echo "Redirect " . $original . "->" . $redirect . " created successfully! \n \n";
         }
     }
@@ -293,6 +264,23 @@ class Create {
         if (!is_dir($dir)) {
             mkdir($dir);
         }
+    }
+
+
+    private function createNamespace(&$dir, &$file_name, $type) {
+        $dir = explode('/', $this->args[2]);
+        $file_name = array_pop($dir);
+
+        if (count($dir) > 0) {
+            $this->createDirectoryInApp($dir, $type);
+        }
+
+        $namespace = implode('\\', $dir);
+        if (!empty($namespace)) {
+            return "\\" . $namespace;
+        }
+
+        return $namespace;
     }
 
 }

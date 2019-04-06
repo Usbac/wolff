@@ -12,12 +12,12 @@
         </div>
         <p class='description text-center'>{{ $lang['description'] }}</p>
         <div class='text-center options'>
-            <a target='_blank' href='https://github.com/Usbac/Wolff/wiki'>{{ $lang['documentation'] }}</a>
-            <a target='_blank' href='https://github.com/Usbac/Wolff'>GITHUB</a>
-            <a target='_blank' href='https://github.com/Usbac'>{{ $lang['creators_page'] }}</a>
+            <a target='_blank' href='https://github.com/Usbac/Wolff/wiki'>{{ upper|$lang['documentation'] }}</a>
+            <a target='_blank' href='https://github.com/Usbac/Wolff'>{{ upper|$lang['github'] }}</a>
+            <a target='_blank' href='https://github.com/Usbac'>{{ upper|$lang['creators_page'] }}</a>
         </div>
         <div class='text-center version'>
-            </i>Version 0.9.0</i>
+            </i>{{ $lang['version'] }}</i>
         </div>
     </div>
 </body>

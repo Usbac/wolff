@@ -3,6 +3,7 @@
 namespace Cli;
 
 use System as Sys;
+use Core;
 
 class Wolffie {
 
@@ -10,16 +11,19 @@ class Wolffie {
     private $create;
     private $delete;
     
+    private $command;
     private $args;
     private $route;
     private $extension;
+    private $db;
     private $app_dir;
     private $public_dir;
 
 
     public function __construct() {
-        $this->route = new Sys\Route();
-        $this->extension = new Sys\Extension();
+        $this->route = new Core\Route();
+        $this->extension = new Core\Extension();
+        $this->db = Core\Connection::connect(DBMS);
 
         $root = '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR;
         $this->app_dir = $root . APP;
@@ -31,13 +35,14 @@ class Wolffie {
 
 
     public function mainMenu() {
-        $this->args = explode(' ', readline("command -> "));
+        $this->command = readline("command -> ");
+        $this->args = explode(' ', $this->command);
 
         switch($this->args[0]) {
             case 'ls':
                 $this->list->index($this->args);
                 break;
-            case 'create':
+            case 'mk':
                 $this->create->index($this->args);
                 break;
             case 'rm':
@@ -51,8 +56,14 @@ class Wolffie {
             case 'version':
                 $this->version();
                 break;
+            case 'export':
+                $this->export();
+                break;
             case 'esc':
                 die();
+                break;
+            default:
+                echo "WARNING: Command doesn't exists \n \n";
                 break;
         }
     }
@@ -62,9 +73,10 @@ class Wolffie {
         if (empty($this->args[1])) {
             echo "\nMAIN COMMANDS \n";
             echo "\n ls                      -> List elements";
-            echo "\n create                  -> Create elements";
+            echo "\n mk                      -> Create elements";
             echo "\n rm                      -> Remove elements";
             echo "\n set [constant] [value]  -> Set a configuration constant";
+            echo "\n export [query]          -> Export a query to a csv file";
             echo "\n help [command]          -> Get help";
             echo "\n version                 -> Get the Wolff version";
             echo "\n esc                     -> Escape";
@@ -83,7 +95,7 @@ class Wolffie {
                 echo "\n public      -> List all the files in the public folder.";
                 echo "\n config      -> List the config constants. \n \n";
                 break;
-            case 'create':
+            case 'mk':
                 echo "\nCREATE COMMANDS";
                 echo "\n \nPage related:";
                 echo "\n page [path]                   -> Create a page (view, model and controller).";
@@ -110,6 +122,7 @@ class Wolffie {
                 echo "\n library [path]     -> Delete a library.";
                 echo "\n extension [path]   -> Delete a extension.";
                 echo "\n language [name]    -> Delete a language.";
+                echo "\n cache              -> Delete all the cache files.";
                 echo "\n \n*The file extension must be specified in the [path] only when deleting views. \n \n";
                 break;
             case 'set':
@@ -126,6 +139,24 @@ class Wolffie {
                 echo "WARNING: Command doesn't exists \n \n";
                 break;
         }
+    }
+
+    
+    private function export() {
+        $sql = substr($this->command, strlen($this->args[1])+1);
+
+        if (!$query = $this->db->query($sql)) {
+            echo "WARNING: Error in query \n \n";
+            return;
+        }
+
+        $result = [];
+        while ($row = $query->fetch_assoc()) {
+            $result[] = $row;
+        }
+
+        @arrayToCsv($result, 'sql_' . date('y-m-d'));
+        echo "\n Query exported successfully! \n \n";
     }
 
 

@@ -2,7 +2,7 @@
 
 namespace Model{namespace}; 
 
-class {classname} extends \System\Model { 
+class {classname} extends \Core\Model { 
 
     public function index() { 
         //Code

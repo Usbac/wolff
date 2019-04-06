@@ -1,24 +1,22 @@
 <?php
 
-namespace System;
+namespace Core;
 
 class Loader {
 
     private $library;
     private $session;
-    private $dbms;
     private $cache;
     private $upload;
     private $extension;
 
 
-    public function __construct($library, $session, $cache, $upload, $extension, $dbms) {
-        $this->library = &$library;
+    public function __construct($session, $cache, $upload, $extension) {
+        $this->template = new Template($cache);
         $this->session = &$session;
         $this->cache = &$cache;
         $this->upload = &$upload;
         $this->extension = &$extension;
-        $this->dbms = &$dbms;
     }
     
 
@@ -29,18 +27,18 @@ class Loader {
      */
     public function model(string $dir) {
         //Sanitize directory
-        $dir = preg_replace('/[^a-zA-Z0-9_\/]/', '', $dir);
-        $file_path = 'app/model/' . $dir . '.php';
+        $dir = sanitizePath($dir);
+        $file_path = APP . 'model/' . $dir . '.php';
 
-        if (!$this->library->modelExists($dir)) {
+        if (!modelExists($dir)) {
             error_log("Warning: The model '" . $dir . "' doesn't exists"); 
             return null;
         }
 
-        $dir = str_replace('/', DIRECTORY_SEPARATOR, $dir);
-        $class = 'Model' . DIRECTORY_SEPARATOR . $dir;
+        $dir = str_replace('/', '\\', $dir);
+        $class = 'Model' . '\\' . $dir;
 
-        $model = new $class($this, $this->library, $this->session, $this->dbms, $this->cache);
+        $model = new $class($this, $this->session, $this->cache);
         $model->index();
 
         return $model;
@@ -54,10 +52,10 @@ class Loader {
      */
     public function controller(string $dir) {
         //Sanitize directory
-        $dir = preg_replace('/[^a-zA-Z0-9_\/]/', '', $dir);
+        $dir = sanitizePath($dir);
 
         //load controller default function and return it
-        if ($this->library->controllerExists($dir)) {
+        if (controllerExists($dir)) {
             $controller = $this->getController($dir);
             $controller->index();
             return $controller;
@@ -68,7 +66,7 @@ class Loader {
         $dir = substr($dir, 0, strrpos($dir, '/'));
 
         //load controller indicated function and return it
-        if ($this->library->controllerExists($dir)) {
+        if (controllerExists($dir)) {
             $controller = $this->getController($dir);
             $controller->$function();
             return $controller;
@@ -84,10 +82,10 @@ class Loader {
      * @return object the controller with its main variables initialized
      */
     private function getController(string $dir) {
-        $dir = str_replace('/', DIRECTORY_SEPARATOR, $dir);
-        $class = 'Controller' . DIRECTORY_SEPARATOR . $dir;
+        $dir = str_replace('/', '\\', $dir);
+        $class = 'Controller' . '\\' . $dir;
         
-        $controller = new $class($this, $this->library, $this->session, $this->cache, $this->upload, $this->extension);
+        $controller = new $class($this, $this->session, $this->cache, $this->upload, $this->extension);
         return $controller;
     }
 
@@ -99,10 +97,10 @@ class Loader {
      */
     public function language(string $dir, string $language = LANGUAGE) {
         //Sanitize directory
-        $dir = preg_replace('/[^a-zA-Z0-9_\/]/', '', $dir);
-        $file_path = 'app/language/' . $language . '/' . $dir . '.php';
+        $dir = sanitizePath($dir);
+        $file_path = $_SERVER['DOCUMENT_ROOT'] . APP . 'language' . DIRECTORY_SEPARATOR . $language . DIRECTORY_SEPARATOR . $dir . '.php';
         
-        if ($this->library->languageExists($dir)) {
+        if (languageExists($dir)) {
             include_once($file_path);
         }
 
@@ -120,7 +118,7 @@ class Loader {
      * @param string $dir the library directory
      */
     public function library(string $dir) {
-        $dir = $this->library->sanitizeURL($dir);
+        $dir = sanitizeURL($dir);
         $name = substr($dir, strrpos($dir, '/'));
 
         if ($name == 'library') {
@@ -128,14 +126,14 @@ class Loader {
             return null;
         }
         
-        if (!$this->library->libraryExists($dir)) {
+        if (!libraryExists($dir)) {
             error_log("Warning: The library '" . $dir . "' doesn't exists"); 
             return null;
         }
 
         //Initialize the library for the object which called this function
-        $dir = str_replace('/', DIRECTORY_SEPARATOR, $dir);
-        $className = 'Library' . DIRECTORY_SEPARATOR . $dir;
+        $dir = str_replace('/', '\\', $dir);
+        $className = 'Library' . '\\' . $dir;
         return new $className;
     }
 
@@ -147,8 +145,8 @@ class Loader {
      * @param bool $cache use or not the cache system
      */
     public function view(string $dir, array $data = array(), bool $cache = true) {
-        $dir = preg_replace('/[^a-zA-Z0-9_\/]/', '', $dir);
-        $this->template($dir, $data, $cache, false);
+        $dir = sanitizePath($dir);
+        $this->template->get($dir, $data, $cache, false);
     }
 
 
@@ -159,58 +157,8 @@ class Loader {
      * @return string the view
      */
     public function getView(string $dir, array $data = array()) {
-        $dir = preg_replace('/[^a-zA-Z0-9_\/]/', '', $dir);
-        return $this->template($dir, $data, false, true);
-    }
-
-
-    /**
-     * Apply the template format over a view and renders it
-     * @param string $dir the view directory
-     * @param array $data the data array present in the view
-     * @param bool $cache use or not the cache system
-     * @param bool $returnView if true the view won't be included, only returned
-     * @return string the view content
-     */
-    private function template(string $dir, array $data, bool $cache, bool $returnView) {
-        $file_path = 'app/view/' . $dir;
-
-        //Error
-        if (file_exists($file_path . '.php')) {
-            $content = file_get_contents($file_path . '.php');
-        } else if (file_exists($file_path . '.html')) {
-            $content = file_get_contents($file_path . '.html');
-        } else {
-            error_log("Error: View '" . $dir . "' doesn't exists");
-            return null;
-        }
-
-        //Variables in data array
-        if (is_array($data)) {
-            extract($data);
-            unset($data);
-        }
-        
-        //Tags
-        $search = array('{{', '}}', '{%', '%}');
-        $replace = array('<?php echo ', '?>', '<?php ', ' ?>');
-        $content = str_replace($search, $replace, $content);
-
-        if ($returnView) {
-            return $content;
-        }
-        
-        //Cache system
-        if ($cache) {
-            include_once($this->cache->get($dir, $content));
-        } else {
-            $temp = tmpfile();
-            fwrite($temp, $content);
-            include(stream_get_meta_data($temp)['uri']);
-            fclose($temp);
-        }
-
-        return $content;
+        $dir = sanitizePath($dir);
+        return $this->template->get($dir, $data, false, true);
     }
 
 

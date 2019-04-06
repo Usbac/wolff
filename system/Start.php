@@ -1,9 +1,10 @@
 <?php
 
-namespace Root;
+namespace System;
 
-use System as Sys;
 use System\Library as Lib;
+use Core as Core;
+use Core\Route;
 
 class Start {
 
@@ -21,20 +22,20 @@ class Start {
     public function __construct() {
         $this->initializeProperties();
         
-        $url = Sys\Library::sanitizeURL($_GET['url']?? MAIN_PAGE);
+        $url = sanitizeURL($_GET['url']?? MAIN_PAGE);
 
-        if (Sys\Route::isBlocked($url)) {
+        if (Route::isBlocked($url)) {
             $this->load->redirect404();
         }
 
-        $function = Sys\Route::get($url);
+        $function = Route::get($url);
 
         $this->extension->activate(EXTENSIONS);
 
         if (isset($function)) {
             $this->extension->load();
             call_user_func($function->bindTo($this));
-        } else if ($this->library->controllerExists($url) || $this->library->functionExists($url)) {
+        } else if (controllerExists($url) || functionExists($url)) {
             $this->extension->load();
             $this->load->controller($url);
         } else {
@@ -47,12 +48,11 @@ class Start {
      * Initialize all the properties
      */
     private function initializeProperties() {
-        $this->library = new Sys\Library();
-        $this->session = new Sys\Session();
-        $this->cache = new Sys\Cache();
+        $this->session = new Core\Session();
+        $this->cache = new Core\Cache();
         $this->upload = new Lib\Upload();
-        $this->extension = new Sys\Extension($this->library, $this->session, $this->cache, $this->upload);
-        $this->load = new Sys\Loader($this->library, $this->session, $this->cache, $this->upload, $this->extension, DBMS);
+        $this->extension = new Core\Extension($this->session, $this->cache, $this->upload);
+        $this->load = new Core\Loader($this->session, $this->cache, $this->upload, $this->extension);
     }
 
 }

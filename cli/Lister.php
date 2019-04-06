@@ -45,6 +45,15 @@ class Lister {
             case 'public':
                 $this->public();
                 break;
+            case 'routes':
+                $this->routes();
+                break;
+            case 'redirects':
+                $this->redirects();
+                break;
+            case 'blocked':
+                $this->blocked();
+                break;
             case 'config':
                 $this->config();
                 break;
@@ -184,6 +193,54 @@ class Lister {
         }
 
         return $result;
+    }
+
+
+    private function routes() {
+        $routes = Core\Route::getAvailableRoutes();
+
+        if (count($routes) <= 0) {
+            echo "\n ROUTES: none \n \n";
+            return;
+        } else {
+            foreach ($routes as $key => $value) {
+                echo "\n " . $key;
+            }
+        }
+        
+        echo "\n \n";
+    }
+
+
+    private function blocked() {
+        $blocked = Core\Route::getBlockedRoutes();
+        
+        if (count($blocked) <= 0) {
+            echo "\n BLOCKED: none \n \n";
+            return;
+        } else {
+            foreach ($blocked as $key => $value) {
+                echo "\n " . $key;
+            }
+        }
+
+        echo "\n \n";
+    }
+
+
+    private function redirects() {
+        $redirects = Core\Route::getRedirects();
+        
+        if (count($redirects) <= 0) {
+            echo "\n REDIRECTIONS: none \n \n";
+            return;
+        } else {
+            foreach ($redirects as $key => $value) {
+                echo "\n " . $redirects[$key]['origin'] . " -> " .  $redirects[$key]['destiny'] . " | " .  $redirects[$key]['code'];
+            }
+        }
+
+        echo "\n \n";
     }
 
 

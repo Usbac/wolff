@@ -1,11 +1,12 @@
 <?php
 
-namespace System;
+namespace Core;
 
 class Route {
 
     private static $routes = [];
     private static $blocked = [];
+    private static $redirects = [];
 
 
     /**
@@ -14,7 +15,7 @@ class Route {
      * @return object the function associated to the route
      */
     public static function get(string $url) {
-        $url = explode('/', Library::sanitizeURL($url));
+        $url = explode('/', sanitizeURL($url));
         $urlLength = count($url);
 
         foreach (self::$routes as $key => $function) {
@@ -53,10 +54,10 @@ class Route {
     /**
      * Add a route
      * @param string $url the url
-     * @param function $function the function that must be executed when accessing the route
+     * @param mixed $function the function that must be executed when accessing the route
      */
     public static function add(string $url, $function) {
-        $url = Library::sanitizeURL($url);
+        $url = sanitizeURL($url);
         self::$routes[$url] = $function;
     }
 
@@ -69,9 +70,15 @@ class Route {
      */
     public static function redirect(string $url, string $url2, int $status = 301) {
         http_response_code($status);
-        $url = Library::sanitizeURL($url);
-        $url2 = Library::sanitizeURL($url2);
+        $url = sanitizeURL($url);
+        $url2 = sanitizeURL($url2);
         self::$routes[$url] = self::$routes[$url2];
+        
+        self::$redirects[] = array (
+            'origin'  => $url,
+            'destiny' => $url2,
+            'code'    => $status
+        );
     }
 
 
@@ -80,7 +87,7 @@ class Route {
      * @param string $url the url
      */
     public static function block(string $url) {
-        $url = Library::sanitizeURL($url);
+        $url = sanitizeURL($url);
         array_push(self::$blocked, $url);
     }
 
@@ -144,5 +151,32 @@ class Route {
      */
     private static function clearGetVariable(string $str) {
         return preg_replace('/\{|\}/', '', $str);
+    }
+
+
+    /**
+     * Clear all the available routes
+     * @return array the available routes
+     */
+    public static function getAvailableRoutes() {
+        return self::$routes;
+    }
+    
+    
+    /**
+     * Clear all the available redirections
+     * @return array the available redirections
+     */
+    public static function getRedirects() {
+        return self::$redirects;
+    }
+
+    
+    /**
+     * Clear all the blocked routes
+     * @return array the blocked routes
+     */
+    public static function getBlockedRoutes() {
+        return self::$blocked;
     }
 }

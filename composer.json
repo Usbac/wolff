@@ -3,7 +3,7 @@
     "description": "Ridiculously small PHP framework",
     "keywords": ["framework", "php", "small", "fast", "mvc"],
     "type": "project",
-    "version": "0.9",
+    "version": "0.9.1",
     "license": "MIT",
     "support": {
         "issues": "https://github.com/Usbac/Wolff/issues",
@@ -30,6 +30,7 @@
         "psr-4": {
             "Root\\" : "", 
             "System\\": "system/",
+            "Core\\": "system/core/",
             "Extension\\": "extension/",
             "Library\\": "app/library/",
             "Model\\": "app/model/",

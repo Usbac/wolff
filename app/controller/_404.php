@@ -2,7 +2,7 @@
 
 namespace Controller;
 
-Class _404 extends \System\Controller {
+Class _404 extends \Core\Controller {
 
     public function index() {
         $this->data['lang'] = $this->load->language('404');

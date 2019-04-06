@@ -5,10 +5,10 @@ namespace Extension;
 class {classname} {
 
     public $desc = array(
-        'name'        => '{name}',
-        'description' => '{description}',
-        'version'     => '{version}',
-        'author'      => '{author}'
+        'name'        => "{name}",
+        'description' => "{description}",
+        'version'     => "{version}",
+        'author'      => "{author}"
     );    
 
 

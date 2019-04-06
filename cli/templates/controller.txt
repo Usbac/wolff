@@ -2,7 +2,7 @@
 
 namespace Controller{namespace}; 
 
-class {classname} extends \System\Controller { 
+class {classname} extends \Core\Controller { 
 
     public function index() { 
         //Code
