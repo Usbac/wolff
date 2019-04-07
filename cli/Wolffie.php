@@ -23,9 +23,9 @@ class Wolffie {
     public function __construct() {
         $this->route = new Core\Route();
         $this->extension = new Core\Extension();
-        $this->db = Core\Connection::connect(DBMS);
-
-        $root = '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR;
+        $this->db = Core\Connection::getInstance(DBMS);
+        
+        $root = '..' . DIRECTORY_SEPARATOR;
         $this->app_dir = $root . APP;
         $this->public_dir = $root . PUBLIC_DIR;
         $this->list = new Lister($this->route, $this->extension, $this->app_dir, $this->public_dir);

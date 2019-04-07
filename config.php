@@ -1,5 +1,5 @@
 <?php 
-//Wolff v0.9.1
+//Wolff v0.9.2
 
 //Server 
 define('DBMS', 'mysql'); 
@@ -9,7 +9,7 @@ define('USER', 'root');
 define('PASSWORD', ''); 
 
 //General 
-define('PROJECT_ROOT', '/wolff/');
+define('PROJECT_ROOT', dirname($_SERVER['SCRIPT_NAME']) . DIRECTORY_SEPARATOR);
 define('APP', PROJECT_ROOT . 'app/');
 define('PUBLIC_DIR', PROJECT_ROOT . 'public/');
 define('PAGE_TITLE', 'Wolff'); 

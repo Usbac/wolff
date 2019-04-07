@@ -23,7 +23,6 @@ class Template {
     public function get(string $dir, array $data, bool $cache, bool $returnView) {
         $file_path = $_SERVER['DOCUMENT_ROOT'] . APP . 'view' . DIRECTORY_SEPARATOR . $dir;
 
-        //Error
         if (file_exists($file_path . '.php')) {
             $content = file_get_contents($file_path . '.php');
         } else if (file_exists($file_path . '.html')) {
@@ -70,6 +69,8 @@ class Template {
     private function replaceFunctions($content) {
         $format = '/\{\{( ?){1,}{func}( ?){1,}\|([^\}]{1,})/';
 
+        //Escape
+        $content = preg_replace(str_replace('{func}', 'e', $format), '<?php echo htmlspecialchars(strip_tags($3)); ', $content);
         //HTMLspecialchars
         $content = preg_replace(str_replace('{func}', 'especial', $format), '<?php echo htmlspecialchars($3, ENT_QUOTES, \'UTF-8\'); ', $content);
         //Uppercase
@@ -90,7 +91,11 @@ class Template {
         $content = preg_replace(str_replace('{func}', 'trim', $format), '<?php echo trim($3); ', $content);
         //nl2br
         $content = preg_replace(str_replace('{func}', 'nl2br', $format), '<?php echo nl2br($3); ', $content);
-        
+        //Join
+        $content = preg_replace(str_replace('{func}', 'join\((.*?)\)', $format), '<?php echo implode($2, $4); ', $content);
+        //Repeat
+        $content = preg_replace(str_replace('{func}', 'repeat\((.*?)\)', $format), '<?php echo str_repeat($4, $2); ', $content);
+
         return $content;
     }
 
@@ -127,8 +132,12 @@ class Template {
      * @return string the view content with the cycles formated
      */
     private function replaceCycles($content) {
+        //For
+        $content = preg_replace('/\{( ?){1,}for( ){1,}(.*)( ){1,}in( ){1,}\((.*)( ?){1,},( ?){1,}(.*)( ?){1,}\)( ?){1,}\}/', '<?php for (\$$3=$6; \$$3 <= $9; \$$3++): ?>', $content);
+        $content = preg_replace('/\{( ?){1,}for( ?){1,}\}/', '<?php endfor; ?>', $content);
+        //Foreach
         $content = preg_replace('/\{( ?){1,}for( ?){1,}(.*)( ?){1,}as( ?){1,}(.*)( ?){1,}\}/', '<?php foreach ($3 as $6): ?>', $content);
-        $content = preg_replace('/\{( ?){1,}for( ?){1,}\}/', '<?php endforeach; ?>', $content);
+        $content = preg_replace('/\{( ?){1,}foreach( ?){1,}\}/', '<?php endforeach; ?>', $content);
         return $content;
     }
 }

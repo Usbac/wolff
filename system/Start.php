@@ -20,7 +20,7 @@ class Start {
      * Start the loading of the page
      */
     public function __construct() {
-        $this->initializeProperties();
+        $this->initProperties();
         
         $url = sanitizeURL($_GET['url']?? MAIN_PAGE);
 
@@ -28,9 +28,10 @@ class Start {
             $this->load->redirect404();
         }
 
-        $function = Route::get($url);
-
+        //Activate or deactivate the extensions
         $this->extension->activate(EXTENSIONS);
+
+        $function = Route::get($url);
 
         if (isset($function)) {
             $this->extension->load();
@@ -47,7 +48,7 @@ class Start {
     /**
      * Initialize all the properties
      */
-    private function initializeProperties() {
+    private function initProperties() {
         $this->session = new Core\Session();
         $this->cache = new Core\Cache();
         $this->upload = new Lib\Upload();

@@ -5,6 +5,8 @@ namespace Core;
 class Cache {
 
     private $folder;
+    private $remembered = [];
+    private $time = 1440;
 
     
     public function __construct() {
@@ -23,6 +25,10 @@ class Cache {
 
         $this->createFolder();
 
+        if ($this->expired($dir)) {
+            unlink($file_path);
+        }
+
         if (!file_exists($file_path)) {
             $file = fopen($file_path, 'w');
             fwrite($file, $content);
@@ -30,6 +36,37 @@ class Cache {
         }
 
         return $file_path;
+    }
+
+
+    /**
+     * Returns true if the cache file has expired, false otherwhise
+     * @param string $dir the cache file directory
+     * @return bool true if the cache file has expired, false otherwhise
+     */
+    public function expired($dir) {
+        $file_path = $this->folder . $this->getFilename($dir);
+        if (!file_exists($file_path)) {
+            return false;
+        }
+
+        $file_time = (time() - filemtime($file_path)) / 60;
+
+        if (array_key_exists($dir, $this->remembered)) {
+            return ($file_time > $this->remembered[$dir]);
+        }
+
+        return ($file_time > $this->time);
+    }
+
+
+    /**
+     * Set a cache file life time
+     * @param string $dir the cache file directory
+     * @param int $time the cache file life time
+     */
+    public function remember($dir, $time) {
+        $this->remembered[$dir] = $time;
     }
 
 

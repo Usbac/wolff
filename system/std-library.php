@@ -120,8 +120,17 @@ namespace {
      * @return boolean true if the library exists, false otherwise 
      */
     function libraryExists(string $dir) {
-        $file_path = $_SERVER['DOCUMENT_ROOT'] . APP . 'library/' . $dir . '.php';
-        return file_exists($file_path); 
+        return file_exists(getLibraryPath($file_path)); 
+    }
+
+
+    /**
+     * Returns the complete path of the library
+     * @param dir the directory of the library
+     * @return string the complete path of the library
+     */
+    function getLibraryPath(string $dir) {
+        return $_SERVER['DOCUMENT_ROOT'] . APP . 'library/' . $dir . '.php';
     }
 
     
@@ -131,8 +140,7 @@ namespace {
      * @return boolean true if the view exists, false otherwise 
      */
     function viewExists(string $dir) {
-        $file_path = $_SERVER['DOCUMENT_ROOT'] . APP . 'view/' . $dir . '.html';
-        return file_exists($file_path); 
+        return file_exists(getViewPath($file_path)); 
     }
 
     
@@ -142,7 +150,7 @@ namespace {
      * @return string the complete path of the view
      */
     function getViewPath(string $dir) {
-        return $_SERVER['DOCUMENT_ROOT'] . APP . 'view/' . $dir . '.php';
+        return $_SERVER['DOCUMENT_ROOT'] . APP . 'view/' . $dir;
     }
 
 
