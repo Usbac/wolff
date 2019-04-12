@@ -1,7 +1,7 @@
 {
     "name": "usbac/wolff",
     "description": "Ridiculously small PHP framework",
-    "keywords": ["framework", "php", "small", "fast", "mvc"],
+    "keywords": ["framework", "php", "small", "web", "fast", "mvc"],
     "type": "project",
     "version": "0.9.3",
     "license": "MIT",
@@ -30,7 +30,7 @@
         "psr-4": {
             "Root\\" : "", 
             "System\\": "system/",
-            "Core\\": "system/core/",
+            "Core\\": "system/Core/",
             "Extension\\": "extension/",
             "Library\\": "app/libraries/",
             "Model\\": "app/models/",
