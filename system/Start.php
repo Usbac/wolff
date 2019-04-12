@@ -8,7 +8,6 @@ use Core\Route;
 
 class Start {
 
-    public $library;
     public $session;
     public $cache;
     public $extension;
@@ -22,14 +21,19 @@ class Start {
     public function __construct() {
         $this->initProperties();
         
-        $url = sanitizeURL($_GET['url']?? MAIN_PAGE);
+        $url = sanitizeURL($_GET['url']?? getMainPage());
 
         if (Route::isBlocked($url)) {
             $this->load->redirect404();
         }
 
+        //Check maintenance mode
+        if (maintenanceEnabled() && !Lib\Maintenance::isClientAllowed()) {
+            $this->load->maintenance();
+        }
+
         //Activate or deactivate the extensions
-        $this->extension->activate(EXTENSIONS);
+        $this->extension->activate(extensionsEnabled());
 
         $function = Route::get($url);
 
@@ -52,8 +56,8 @@ class Start {
         $this->session = new Core\Session();
         $this->cache = new Core\Cache();
         $this->upload = new Lib\Upload();
-        $this->extension = new Core\Extension($this->session, $this->cache, $this->upload);
-        $this->load = new Core\Loader($this->session, $this->cache, $this->upload, $this->extension);
+        $this->load = new Core\Loader($this->session, $this->cache, $this->upload);
+        $this->extension = new Core\Extension($this->load, $this->session, $this->cache, $this->upload);
     }
 
 }

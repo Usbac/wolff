@@ -20,41 +20,89 @@ class Template {
      * @param bool $returnView if true the view won't be included, only returned
      * @return string the view content
      */
-    public function get(string $dir, array $data, bool $cache, bool $returnView) {
-        $file_path = $_SERVER['DOCUMENT_ROOT'] . APP . 'view' . DIRECTORY_SEPARATOR . $dir;
-
-        if (file_exists($file_path . '.php')) {
-            $content = file_get_contents($file_path . '.php');
-        } else if (file_exists($file_path . '.html')) {
-            $content = file_get_contents($file_path . '.html');
-        } else {
-            error_log("Error: View '" . $dir . "' doesn't exists");
-            return null;
-        }
-
+    public function get(string $dir, array $data, bool $cache) {
         //Variables in data array
         if (is_array($data)) {
             extract($data);
             unset($data);
         }
-        
-        $content = $this->replaceFunctions($content);
-        $content = $this->replaceTags($content);
-        $content = $this->replaceConditionals($content);
-        $content = $this->replaceCycles($content);
 
-        if ($returnView) {
-            return $content;
-        }
+        $content = $this->replaceAll($this->getContent($dir));
         
         //Cache system
-        if ($cache) {
+        if ($cache && cacheEnabled()) {
             include($this->cache->get($dir, $content));
         } else {
             $temp = tmpfile();
             fwrite($temp, $content);
             include(stream_get_meta_data($temp)['uri']);
             fclose($temp); 
+        }
+
+        return $content;
+    }
+
+
+    /**
+     * Apply the template format over a content and return it
+     * @param string $dir the view directory
+     * @param array $data the data array present in the view
+     * @return string the view content
+     */
+    public function getView(string $dir, array $data) {
+        //Variables in data array
+        if (is_array($data)) {
+            extract($data);
+            unset($data);
+        }
+
+        return $this->replaceAll($this->getContent($dir));
+    }
+
+
+    /**
+     * Get the content of a view file
+     * @param string $dir the view directory
+     * @return string the view content
+     */
+    private function getContent($dir) {
+        $file_path = $_SERVER['DOCUMENT_ROOT'] . WOLFF_APP_DIR . 'views' . DIRECTORY_SEPARATOR . $dir;
+
+        if (file_exists($file_path . '.php')) {
+            return file_get_contents($file_path . '.php');
+        } else if (file_exists($file_path . '.html')) {
+            return file_get_contents($file_path . '.html');
+        } else {
+            error_log("Error: View '" . $dir . "' doesn't exists");
+            return null;
+        }
+    }
+
+    
+    /**
+     * Apply all the replace methods of the template
+     * @param string $content the view content
+     * @return string the view content with the template replaced
+     */
+    private function replaceAll(string $content) {
+        $content = $this->replaceInclude($content);
+        $content = $this->replaceFunctions($content);
+        $content = $this->replaceTags($content);
+        $content = $this->replaceConditionals($content);
+        return $this->replaceCycles($content);
+    }
+
+
+    /**
+     * Apply the template includes
+     * @param string $content the view content
+     * @return string the view content with the includes formated
+     */
+    private function replaceInclude($content) {
+        preg_match_all('/@load\(( ?){1,}(.*)(.php|.html)( ?){1,}\)/', $content, $matches, PREG_OFFSET_CAPTURE);
+
+        foreach ($matches[1] as $key => $value) {
+            $content = str_replace($matches[0][$key][0], $this->getContent($matches[2][$key][0]), $content);
         }
 
         return $content;

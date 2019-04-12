@@ -2,14 +2,13 @@
 
 namespace {
 
-    static $benchmarkResult = [];
     
     /**
      * Sanitize an url
      * @param string url the url
      * @return string the url sanitized
      */
-    function sanitizeURL(string $url = MAIN_PAGE) {
+    function sanitizeURL(string $url = WOLFF_MAIN_PAGE) {
         return filter_var(rtrim(strtolower($url), '/'), FILTER_SANITIZE_URL);
     }
 
@@ -40,7 +39,7 @@ namespace {
      * @return string the complete path of the model
      */
     function getModelPath(string $dir) {
-        return $_SERVER['DOCUMENT_ROOT'] . APP . 'model/' . $dir . '.php';
+        return $_SERVER['DOCUMENT_ROOT'] . WOLFF_APP_DIR . 'models/' . $dir . '.php';
     }
 
 
@@ -51,6 +50,16 @@ namespace {
      */
     function controllerExists(string $dir) {
         return file_exists(getControllerPath($dir));
+    }
+
+    
+    /**
+     * Returns the complete path of the controller
+     * @param dir the directory of the controller
+     * @return string the complete path of the controller
+     */
+    function getControllerPath(string $dir) {
+        return $_SERVER['DOCUMENT_ROOT'] . WOLFF_APP_DIR . 'controllers/' . $dir . '.php';
     }
 
 
@@ -82,16 +91,6 @@ namespace {
         return $method !== null;
     }
 
-
-    /**
-     * Returns the complete path of the controller
-     * @param dir the directory of the controller
-     * @return string the complete path of the controller
-     */
-    function getControllerPath(string $dir) {
-        return $_SERVER['DOCUMENT_ROOT'] . APP . 'controller/' . $dir . '.php';
-    }
-
     
     /**
      * Checks if the language file exists in the indicated directory
@@ -99,7 +98,7 @@ namespace {
      * @param language the language selected (it will take the default language if no language is specified)
      * @return boolean true if the language file exists, false otherwise 
      */
-    function languageExists(string $dir, string $language = LANGUAGE) {
+    function languageExists(string $dir, string $language = WOLFF_LANGUAGE) {
         return file_exists(getLanguagePath($dir, $language));
     }
 
@@ -109,8 +108,8 @@ namespace {
      * @param dir the directory of the language
      * @return string the complete path of the language
      */
-    function getLanguagePath(string $dir, string $language = LANGUAGE) {
-        return $_SERVER['DOCUMENT_ROOT'] . APP . 'language/' . $language . '/' . $dir . '.php';
+    function getLanguagePath(string $dir, string $language = WOLFF_LANGUAGE) {
+        return $_SERVER['DOCUMENT_ROOT'] . WOLFF_APP_DIR . 'languages/' . $language . '/' . $dir . '.php';
     }
 
 
@@ -120,7 +119,7 @@ namespace {
      * @return boolean true if the library exists, false otherwise 
      */
     function libraryExists(string $dir) {
-        return file_exists(getLibraryPath($file_path)); 
+        return file_exists(getLibraryPath($dir)); 
     }
 
 
@@ -130,7 +129,7 @@ namespace {
      * @return string the complete path of the library
      */
     function getLibraryPath(string $dir) {
-        return $_SERVER['DOCUMENT_ROOT'] . APP . 'library/' . $dir . '.php';
+        return $_SERVER['DOCUMENT_ROOT'] . WOLFF_APP_DIR . 'libraries/' . $dir . '.php';
     }
 
     
@@ -140,7 +139,7 @@ namespace {
      * @return boolean true if the view exists, false otherwise 
      */
     function viewExists(string $dir) {
-        return file_exists(getViewPath($file_path)); 
+        return file_exists(getViewPath($dir)); 
     }
 
     
@@ -150,7 +149,7 @@ namespace {
      * @return string the complete path of the view
      */
     function getViewPath(string $dir) {
-        return $_SERVER['DOCUMENT_ROOT'] . APP . 'view/' . $dir;
+        return $_SERVER['DOCUMENT_ROOT'] . WOLFF_APP_DIR . 'views/' . $dir;
     }
 
 
@@ -197,28 +196,10 @@ namespace {
 
 
     /**
-     * Returns true if the extensions are enabled, false otherwise
-     * @return bool true if the extensions are enabled, false otherwise
-     */
-    function extensionsEnabled() {
-        return EXTENSIONS;
-    }
-
-
-    /**
-     * Returns the language currently used by the project
-     * @return string the language name
-     */
-    function currentLanguage() {
-        return LANGUAGE;
-    }
-
-
-    /**
      * Var dump a variable and then die
-     * @param mixed $var the variable
+     * @param $var the variable
      */
-    function dumpd(mixed $var) {
+    function dumpd($var) {
         var_dump($var);
         die();
     }
@@ -271,38 +252,106 @@ namespace {
 
 
     /**
-     * Start the benchmark
+     * Returns the current client IP
+     * @return string the current client IP
      */
-    function benchmarkStart() {
-        $benchmarkResult[0] = array(
-            'time'        => microtime(true),
-            'memoryUsed'  => memory_get_usage()
-        );
-    }
+    function getClientIP() {
+        $http_client_ip = filter_var($_SERVER['HTTP_CLIENT_IP']?? "", FILTER_VALIDATE_IP);
+        $http_forwarded = filter_var($_SERVER['HTTP_X_FORWARDED_FOR']?? "", FILTER_VALIDATE_IP);
 
-
-    /**
-     * End the benchmark
-     */
-    function benchmarkEnd() {
-        $benchmarkResult[1] = array(
-            'time'        => microtime(true),
-            'memoryUsed'  => memory_get_usage()
-        );
-    }
-
-
-    /**
-     * Return the benchmark result between the start and end benchmark points
-     * @return array the benchmark result as an assosiative array
-     */
-    function getBenchmark() {
-        $result = [];
-        foreach (array_keys($benchmarkResult[0]) as $key) {
-            $result[$key] = $benchmarkResult[1][$key] - $benchmarkResult[0][$key];
+        if (!empty($http_client_ip)) {
+            return $http_client_ip;
+        } elseif (!empty($http_forwarded)) {
+            return $http_forwarded;
         }
         
-        return $result;
+        return $_SERVER['REMOTE_ADDR'];
+    }
+    
+    
+    /**
+     *  ---> CONSTANTS <---
+     */
+
+
+    /**
+     * Returns true if the extensions are enabled, false otherwise
+     * @return bool true if the extensions are enabled, false otherwise
+     */
+    function extensionsEnabled() {
+        return WOLFF_EXTENSIONS_ON;
+    }
+
+
+    /**
+     * Returns true if the cache is enabled, false otherwise
+     * @return bool true if the cache is enabled, false otherwise
+     */
+    function cacheEnabled() {
+        return WOLFF_CACHE_ON;
+    }
+
+    
+    /**
+     * Returns true if the maintenance mode is enabled, false otherwise
+     * @return bool true if the maintenance mode is enabled, false otherwise
+     */
+    function maintenanceEnabled() {
+        return WOLFF_MAINTENANCE_ON;
+    }
+
+
+    /**
+     * Returns the language currently used by the project
+     * @return string the language name
+     */
+    function getLanguage() {
+        return WOLFF_LANGUAGE;
+    }
+
+
+    /**
+     * Returns the root directory of the project
+     * @return string the root directory of the project
+     */
+    function getDirectory() {
+        return WOLFF_SYS_DIR;
+    }
+
+
+    /**
+     * Returns the app directory of the project
+     * @return string the app directory of the project
+     */
+    function getAppDirectory() {
+        return WOLFF_APP_DIR;
+    }
+
+
+    /**
+     * Returns the public directory of the project
+     * @return string the public directory of the project
+     */
+    function getPublicDirectory() {
+        return WOLFF_PUBLIC_DIR;
+    }
+
+    
+    /**
+     * Returns the title of the project
+     * @return string the title of the project
+     */
+    function getPageTitle() {
+        return WOLFF_PAGE_TITLE;
+    }
+
+    
+    /**
+     * Returns the main page of the project
+     * @return string the main page of the project
+     */
+    function getMainPage() {
+        return WOLFF_MAIN_PAGE;
     }
 
 }

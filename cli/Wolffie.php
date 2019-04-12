@@ -3,6 +3,7 @@
 namespace Cli;
 
 use System as Sys;
+use Library as Lib;
 use Core;
 
 class Wolffie {
@@ -23,11 +24,11 @@ class Wolffie {
     public function __construct() {
         $this->route = new Core\Route();
         $this->extension = new Core\Extension();
-        $this->db = Core\Connection::getInstance(DBMS);
+        $this->db = Core\Connection::getInstance(WOLFF_DBMS);
         
         $root = '..' . DIRECTORY_SEPARATOR;
-        $this->app_dir = $root . APP;
-        $this->public_dir = $root . PUBLIC_DIR;
+        $this->app_dir = $root . WOLFF_APP_DIR;
+        $this->public_dir = $root . WOLFF_PUBLIC_DIR;
         $this->list = new Lister($this->route, $this->extension, $this->app_dir, $this->public_dir);
         $this->create = new Create($this->route, $this->extension, $this->app_dir);
         $this->delete = new Delete($this->route, $this->extension, $this->app_dir);
@@ -59,7 +60,7 @@ class Wolffie {
             case 'export':
                 $this->export();
                 break;
-            case 'esc':
+            case 'e':
                 die();
                 break;
             default:
@@ -79,7 +80,7 @@ class Wolffie {
             echo "\n export [query]          -> Export a query to a csv file";
             echo "\n help [command]          -> Get help";
             echo "\n version                 -> Get the Wolff version";
-            echo "\n esc                     -> Escape";
+            echo "\n e                       -> Escape";
             echo "\n \n*Run help followed by one of the commands showed above for more information. \n \n";
             return;
         }
@@ -93,6 +94,7 @@ class Wolffie {
                 echo "\n languages   -> List the available languages.";
                 echo "\n extensions  -> List the available extensions.";
                 echo "\n public      -> List all the files in the public folder.";
+                echo "\n ip          -> List all the allowed IPs for maintenance mode.";
                 echo "\n config      -> List the config constants. \n \n";
                 break;
             case 'mk':
@@ -105,6 +107,7 @@ class Wolffie {
                 echo "\n library [path]                -> Create a library.";
                 echo "\n language [name]               -> Create a language.";
                 echo "\n extension [name]              -> Create a extension.";
+                echo "\n ip [name]                     -> Add an IP to the maintenance mode whitelist.";
                 echo "\n \n*If the [path] includes folders that doesn't exists, those folders will be created automatically.";
 
                 echo "\n \nRoutes related:";
@@ -121,6 +124,7 @@ class Wolffie {
                 echo "\n controller [path]  -> Delete a controller.";
                 echo "\n library [path]     -> Delete a library.";
                 echo "\n extension [path]   -> Delete a extension.";
+                echo "\n ip [name]          -> Remove an IP from the maintenance mode whitelist.";
                 echo "\n language [name]    -> Delete a language.";
                 echo "\n cache              -> Delete all the cache files.";
                 echo "\n \n*The file extension must be specified in the [path] only when deleting views. \n \n";

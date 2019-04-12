@@ -13,12 +13,13 @@ class Extension {
     private $upload;
 
 
-    public function __construct($session = null, $cache = null, $upload = null) {
+    public function __construct($load = null, $session = null, $cache = null, $upload = null) {
         $this->folder = dirname(__DIR__) . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'extension';
         $this->extensions = [];
-        $this->session = $session;
-        $this->cache = $cache;
-        $this->upload = $upload;
+        $this->load = &$load;
+        $this->session = &$session;
+        $this->cache = &$cache;
+        $this->upload = &$upload;
         $this->active = true;
     }
     
@@ -40,6 +41,7 @@ class Extension {
             $class = 'Extension\\' . $filename;
 
             $extension = new $class;
+            $extension->load = $this->load;
             $extension->session = $this->session;
             $extension->cache = $this->cache;
             $extension->upload = $this->upload;

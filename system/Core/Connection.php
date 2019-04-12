@@ -15,7 +15,7 @@ class Connection {
         $type = strtolower($type);
 
         try {
-            self::$connection = new \PDO($type . ":host=" . SERVER . "; dbname=" . DB . "", USER, PASSWORD);
+            self::$connection = new \PDO($type . ":host=" . WOLFF_SERVER . "; dbname=" . WOLFF_DB . "", WOLFF_USERNAME, WOLFF_DBPASSWORD);
         } catch (\PDOException $e) {
             echo $e->getMessage();
         }
@@ -55,13 +55,23 @@ class Connection {
      */
     public function run(string $sql, $args = []) {
         if (!$args) {
-            return self::$connection->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
+            $result = self::$connection->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
+            if (count($result) <= 1) {
+                return $result[0];
+            }
+    
+            return $result;
         }
         
         $stmt = self::$connection->prepare($sql);
         $stmt->execute($args);
 
-        return $stmt->fetch();
+        $result = $stmt->fetch();
+        if (count($result) <= 1) {
+            return $result[0];
+        }
+
+        return $result[0];
     }
     
 

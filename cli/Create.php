@@ -3,6 +3,7 @@
 namespace Cli;
 
 use System as Sys;
+use System\Library as Lib;
 
 class Create {
     private $route;
@@ -40,7 +41,7 @@ class Create {
 
 
     private function controller() {
-        $file_dir = $this->app_dir . 'controller' . DIRECTORY_SEPARATOR . $this->args[2] . '.php';
+        $file_dir = $this->app_dir . 'controllers' . DIRECTORY_SEPARATOR . $this->args[2] . '.php';
 
         if (file_exists($file_dir)) {
             echo "WARNING: controller " . $this->args[2] . " already exists \n \n";
@@ -65,7 +66,7 @@ class Create {
     
 
     private function model() {
-        $file_dir = $this->app_dir . 'model' . DIRECTORY_SEPARATOR . $this->args[2] . '.php';
+        $file_dir = $this->app_dir . 'models' . DIRECTORY_SEPARATOR . $this->args[2] . '.php';
 
         if (file_exists($file_dir)) {
             echo "WARNING: model " . $this->args[2] . " already exists \n \n";
@@ -90,7 +91,7 @@ class Create {
     
 
     private function view() {
-        $file_dir = $this->app_dir . 'view' . DIRECTORY_SEPARATOR . $this->args[2] . '.php';
+        $file_dir = $this->app_dir . 'views' . DIRECTORY_SEPARATOR . $this->args[2] . '.php';
 
         if (file_exists($file_dir)) {
             echo "WARNING: view " . $this->args[2] . " already exists \n \n";
@@ -145,7 +146,7 @@ class Create {
 
 
     private function language() {
-        $dir = $this->app_dir . 'language' . DIRECTORY_SEPARATOR . $this->args[2];
+        $dir = $this->app_dir . 'languages' . DIRECTORY_SEPARATOR . $this->args[2];
 
         if (!is_dir($dir)) {
             mkdir($dir);
@@ -165,7 +166,7 @@ class Create {
             return;
         }
 
-        $file_dir = $this->app_dir . 'library' . DIRECTORY_SEPARATOR . $this->args[2] . '.php';
+        $file_dir = $this->app_dir . 'libraries' . DIRECTORY_SEPARATOR . $this->args[2] . '.php';
 
         if (file_exists($file_dir)) {
             echo "WARNING: Library " . $this->args[2] . " already exists \n \n";
@@ -254,6 +255,15 @@ class Create {
 
         if (file_put_contents($this->routes_dir, $content, "\r\n" . FILE_APPEND | LOCK_EX)) {
             echo "Redirect " . $original . "->" . $redirect . " created successfully! \n \n";
+        }
+    }
+
+
+    private function ip() {
+        if (Lib\Maintenance::addAllowedIP($this->args[2])) {
+            echo "IP " . $this->args[2] . " added successfully! \n \n";
+        } else {
+            echo "WARNING: IP " . $this->args[2] . " not added! \n \n";
         }
     }
 

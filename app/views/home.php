@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{PAGE_TITLE}} - Home</title>
-    <link href="{{APP}}assets/css/styles.css" rel="stylesheet" />
+    <title>{{WOLFF_PAGE_TITLE}} - Home</title>
+    <link href="{{WOLFF_APP_DIR}}assets/css/styles.css" rel="stylesheet" />
 </head>
 <body>
     <div class='center'>
         <div class='text-center'>
-            <img class='main-img' src='{{PUBLIC_DIR}}logo.png' width='130px'>
+            <img class='main-img' src='{{WOLFF_PUBLIC_DIR}}logo.png' width='130px'>
             <h1 class='title'>{{ $lang['title'] }}</h1>
         </div>
         <p class='description text-center'>{{ $lang['description'] }}</p>

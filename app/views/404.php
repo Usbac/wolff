@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ PAGE_TITLE }} - 404</title>
-    <link href="{{APP}}assets/css/styles.css" rel="stylesheet" />
+    <title>{{ WOLFF_PAGE_TITLE }} - 404</title>
+    <link href="{{WOLFF_APP_DIR}}assets/css/styles.css" rel="stylesheet" />
 </head>
 <body>
 <div class='center' id='content-404'>

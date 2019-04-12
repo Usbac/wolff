@@ -17,7 +17,7 @@ class Model {
         $this->load = &$loader;
         $this->session = &$session;
         $this->cache = &$cache;
-        $this->db = Connection::getInstance(DBMS);
+        $this->db = Connection::getInstance(WOLFF_DBMS);
         $this->easql = new Easql($this->db);
     }
 

@@ -3,6 +3,7 @@
 namespace Cli;
 
 use System as Sys;
+use System\Library as Lib;
 
 class Delete {
     private $route;
@@ -37,7 +38,7 @@ class Delete {
 
 
     private function controller() {
-        $file_dir = $this->app_dir . 'controller' . DIRECTORY_SEPARATOR . $this->args[2] . '.php';
+        $file_dir = $this->app_dir . 'controllers' . DIRECTORY_SEPARATOR . $this->args[2] . '.php';
 
         if (!is_file($file_dir)) {
             echo "WARNING: the controller '" . $this->args[2] . "' doesn't exists! \n \n"; 
@@ -56,7 +57,7 @@ class Delete {
     
 
     private function model() {
-        $file_dir = $this->app_dir . 'model' . DIRECTORY_SEPARATOR . $this->args[2] . '.php';
+        $file_dir = $this->app_dir . 'models' . DIRECTORY_SEPARATOR . $this->args[2] . '.php';
 
         if (!is_file($file_dir)) {
             echo "WARNING: the model '" . $this->args[2] . "' doesn't exists! \n \n"; 
@@ -75,7 +76,7 @@ class Delete {
 
 
     private function library() {
-        $file_dir = $this->app_dir . 'library' . DIRECTORY_SEPARATOR . $this->args[2] . '.php';
+        $file_dir = $this->app_dir . 'libraries' . DIRECTORY_SEPARATOR . $this->args[2] . '.php';
 
         if (!is_file($file_dir)) {
             echo "WARNING: the library '" . $this->args[2] . "' doesn't exists! \n \n"; 
@@ -94,7 +95,7 @@ class Delete {
 
 
     private function view() {
-        $file_dir = $this->app_dir . 'view' . DIRECTORY_SEPARATOR . $this->args[2];
+        $file_dir = $this->app_dir . 'views' . DIRECTORY_SEPARATOR . $this->args[2];
 
         if (!is_file($file_dir)) {
             echo "WARNING: the view '" . $this->args[2] . "' doesn't exists! \n \n"; 
@@ -131,8 +132,17 @@ class Delete {
     }
 
 
+    private function ip() {
+        if (Lib\Maintenance::removeAllowedIP($this->args[2])) {
+            echo "IP " . $this->args[2] . " removed successfully! \n \n";
+        } else {
+            echo "WARNING: IP " . $this->args[2] . " not removed! \n \n";
+        }
+    }
+
+
     private function language() {
-        $language_dir = $this->app_dir . 'language' . DIRECTORY_SEPARATOR . $this->args[2];
+        $language_dir = $this->app_dir . 'languages' . DIRECTORY_SEPARATOR . $this->args[2];
         $this->deleteRecursively($language_dir);
     }
 

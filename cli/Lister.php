@@ -3,6 +3,7 @@
 namespace Cli;
 
 use System as Sys;
+use System\Library as Lib;
 
 class Lister {
     private $route;
@@ -57,6 +58,9 @@ class Lister {
             case 'config':
                 $this->config();
                 break;
+            case 'ip':
+                $this->ip();
+                break;
             default:
                 echo "WARNING: Command doesn't exists \n \n";
                 break;
@@ -81,7 +85,7 @@ class Lister {
 
 
     private function views() {
-        $views = $this->listViewFiles($this->app_dir . 'view');
+        $views = $this->listViewFiles($this->app_dir . 'views');
 
         foreach ($views as $view) {
             echo "\n" . $view;
@@ -91,7 +95,7 @@ class Lister {
 
 
     private function controllers() {
-        $controllers = $this->listPHPFiles($this->app_dir . 'controller');
+        $controllers = $this->listPHPFiles($this->app_dir . 'controllers');
 
         foreach ($controllers as $controller) {
             echo "\n" . $controller;
@@ -101,7 +105,7 @@ class Lister {
 
 
     private function models() {
-        $models = $this->listPHPFiles($this->app_dir . 'model');
+        $models = $this->listPHPFiles($this->app_dir . 'models');
 
         foreach ($models as $model) {
             echo "\n" . $model;
@@ -111,7 +115,7 @@ class Lister {
 
 
     private function libraries() {
-        $libraries = $this->listPHPFiles($this->app_dir . 'library');
+        $libraries = $this->listPHPFiles($this->app_dir . 'libraries');
 
         foreach ($libraries as $library) {
             echo "\n" . $library;
@@ -121,7 +125,7 @@ class Lister {
 
 
     private function languages() {
-        $languages = glob($this->app_dir . 'language' . DIRECTORY_SEPARATOR . '*', GLOB_ONLYDIR);
+        $languages = glob($this->app_dir . 'languages' . DIRECTORY_SEPARATOR . '*', GLOB_ONLYDIR);
 
         foreach ($languages as $language) {
             echo "\n" . substr($language, strrpos($language, DIRECTORY_SEPARATOR)+1);
@@ -244,22 +248,38 @@ class Lister {
     }
 
 
+    private function ip() {
+        $ips = Lib\Maintenance::getAllowedIPs();
+
+        if ($ips === false || count($ips) <= 0) {
+            echo "\n Allowed IPs: none \n \n";
+            return;
+        } else {
+            foreach ($ips as $ip) {
+                echo "\n " . $ip;
+            }
+        }
+
+        echo "\n \n"; 
+    }
+
+
     private function config() {
-        echo "\n -> SERVER CONFIG: ";
-        echo "\n DBMS: " . DBMS;
-        echo "\n Server: " . SERVER;
-        echo "\n Database: " . DB;
-        echo "\n User: " . USER;
-        echo "\n Password: " . PASSWORD;
+        echo "\n -> WOLFF_SERVER CONFIG: ";
+        echo "\n WOLFF_DBMS: " . WOLFF_DBMS;
+        echo "\n Server: " . WOLFF_SERVER;
+        echo "\n Database: " . WOLFF_DB;
+        echo "\n User: " . DB_USER;
+        echo "\n Password: " . WOLFF_DBPASSWORD;
         echo "\n";
         echo "\n -> GENERAL CONFIG: ";
-        echo "\n Project folder: " . PROJECT_ROOT;
-        echo "\n App folder: " . APP;
-        echo "\n Public folder: " . PUBLIC_DIR;
-        echo "\n Page title: " . PAGE_TITLE;
-        echo "\n Main page: " . MAIN_PAGE;
-        echo "\n Language: " . LANGUAGE;
-        echo "\n Extensions enabled: " . (EXTENSIONS? "yes":"no");
+        echo "\n Project folder: " . WOLFF_SYS_DIR;
+        echo "\n App folder: " . WOLFF_APP_DIR;
+        echo "\n Public folder: " . WOLFF_PUBLIC_DIR;
+        echo "\n Page title: " . WOLFF_PAGE_TITLE;
+        echo "\n Main page: " . WOLFF_MAIN_PAGE;
+        echo "\n Language: " . WOLFF_LANGUAGE;
+        echo "\n Extensions enabled: " . (SYS_EXTENSIONS? "yes":"no");
         echo "\n \n";
     }
 

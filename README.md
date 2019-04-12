@@ -9,7 +9,7 @@
 <h4 align="center">Ridiculously small PHP framework.</h4>
 
 <p align="center">
-<img src="https://img.shields.io/badge/stability-stable-green.svg"> <img src="https://img.shields.io/badge/version-0.9.1-blue.svg">
+<img src="https://img.shields.io/badge/stability-stable-green.svg"> <img src="https://img.shields.io/badge/version-0.9.3-blue.svg">
 </p>
 
 Wolff is a ridiculously small and lightweight PHP framework which follows the MVC pattern while having useful functions and utilities like a template, route, loader, session and language system. 
@@ -48,10 +48,10 @@ It is intended for those who want to build light websites without having to do e
 
 * **Language**: For managing multiple languages easily and quickly.
 
-## CLi
+## CLI
 
 Take advantage of the CLI application of Wolff named Wolffie to do a lot of tasks in a fast and easy way using short commands.<br>
-With it you can create controllers, languages, pages, routes, look at the available extensions, change the project configuration, delete languages, libraries and much more.
+With it you can create controllers, languages, pages, routes, export queries to csv files, look at the available extensions, change the project configuration, delete languages, libraries and much more.
 
 <p align="center">
 <img src="http://usbac.com.ve/wp-content/uploads/2019/03/wolff-cli.jpg" alt="Wolff cli" width="400">
@@ -68,3 +68,7 @@ Currently Wolff is quite stable but it's still a work in progress, new features 
 Any contribution or support to this project in the form of a pull request or message will be highly appreciated.
 
 Don't be shy :)
+
+## License
+
+Wolff is open-source software licensed under the [MIT license](https://github.com/Usbac/Wolff/blob/master/LICENSE).

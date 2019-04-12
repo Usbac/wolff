@@ -8,17 +8,15 @@ class Loader {
     private $session;
     private $cache;
     private $upload;
-    private $extension;
 
 
-    public function __construct($session, $cache, $upload, $extension) {
+    public function __construct($session, $cache, $upload) {
         $this->template = new Template($cache);
         $this->session = &$session;
         $this->cache = &$cache;
         $this->upload = &$upload;
-        $this->extension = &$extension;
     }
-    
+
 
     /**
      * Load a model in the indicated directory
@@ -28,15 +26,14 @@ class Loader {
     public function model(string $dir) {
         //Sanitize directory
         $dir = sanitizePath($dir);
-        $file_path = APP . 'model/' . $dir . '.php';
+        $file_path = WOLFF_APP_DIR . 'models/' . $dir . '.php';
 
         if (!modelExists($dir)) {
             error_log("Warning: The model '" . $dir . "' doesn't exists"); 
             return null;
         }
 
-        $dir = str_replace('/', '\\', $dir);
-        $class = 'Model' . '\\' . $dir;
+        $class = 'Model' . '\\' . str_replace('/', '\\', $dir);
 
         $model = new $class($this, $this->session, $this->cache);
         $model->index();
@@ -62,10 +59,11 @@ class Loader {
         }
 
         //Get a possible function from the url
-        $function = substr($dir, strrpos($dir, '/') + 1);
-        $dir = substr($dir, 0, strrpos($dir, '/'));
+        $lastSlash = strrpos($dir, '/');
+        $function = substr($dir, $lastSlash + 1);
+        $dir = substr($dir, 0, $lastSlash);
 
-        //load controller indicated function and return it
+        //load a controller function and return it
         if (controllerExists($dir)) {
             $controller = $this->getController($dir);
             $controller->$function();
@@ -85,7 +83,7 @@ class Loader {
         $dir = str_replace('/', '\\', $dir);
         $class = 'Controller' . '\\' . $dir;
         
-        $controller = new $class($this, $this->session, $this->cache, $this->upload, $this->extension);
+        $controller = new $class($this, $this->session, $this->cache, $this->upload);
         return $controller;
     }
 
@@ -95,10 +93,10 @@ class Loader {
      * @param string $dir the language directory
      * @param string $language the language selected
      */
-    public function language(string $dir, string $language = LANGUAGE) {
+    public function language(string $dir, string $language = WOLFF_LANGUAGE) {
         //Sanitize directory
         $dir = sanitizePath($dir);
-        $file_path = $_SERVER['DOCUMENT_ROOT'] . APP . 'language' . DIRECTORY_SEPARATOR . $language . DIRECTORY_SEPARATOR . $dir . '.php';
+        $file_path = $_SERVER['DOCUMENT_ROOT'] . WOLFF_APP_DIR . 'languages' . DIRECTORY_SEPARATOR . $language . DIRECTORY_SEPARATOR . $dir . '.php';
         
         if (languageExists($dir)) {
             include_once($file_path);
@@ -120,11 +118,6 @@ class Loader {
     public function library(string $dir) {
         $dir = sanitizeURL($dir);
         $name = substr($dir, strrpos($dir, '/'));
-
-        if ($name == 'library') {
-            error_log("Warning: The library shouldn't be named library"); 
-            return null;
-        }
         
         if (!libraryExists($dir)) {
             error_log("Warning: The library '" . $dir . "' doesn't exists"); 
@@ -146,7 +139,7 @@ class Loader {
      */
     public function view(string $dir, array $data = array(), bool $cache = true) {
         $dir = sanitizePath($dir);
-        $this->template->get($dir, $data, $cache, false);
+        $this->template->get($dir, $data, $cache);
     }
 
 
@@ -158,7 +151,7 @@ class Loader {
      */
     public function getView(string $dir, array $data = array()) {
         $dir = sanitizePath($dir);
-        return $this->template->get($dir, $data, false, true);
+        return $this->template->getView($dir, $data);
     }
 
 
@@ -168,6 +161,16 @@ class Loader {
     public function redirect404() {
         header("HTTP/1.0 404 Not Found");
         $controller = $this->controller('_404');
+        die();
+    }
+
+    
+    /**
+     * Load the maintenance view page
+     */
+    public function maintenance() {
+        header("HTTP/1.0 404 Not Found");
+        $controller = $this->controller('_maintenance');
         die();
     }
 

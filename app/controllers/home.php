@@ -2,7 +2,7 @@
 
 namespace Controller;
 
-Class home extends \Core\Controller {
+class Home extends \Core\Controller {
 
     public function index() {
         $this->data['lang'] = $this->load->language('home');

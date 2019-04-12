@@ -2,10 +2,10 @@
 
 namespace Model;
 
-class home extends \Core\Model {
+class Home extends \Core\Model {
 
     public function index() {
-
+        
     }
 
 }
