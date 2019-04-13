@@ -69,8 +69,13 @@ class Lister {
 
     
     private function extensions() {
-        $this->extension->load();
+        $this->extension->load(true);
         $extensions = $this->extension->get();
+
+        if (empty($extensions)) {
+            echo "Extensions: none \n \n";
+            return;
+        }
 
         foreach ($extensions as $ext) {
             echo "\n -> " . $ext['name'];
@@ -265,11 +270,11 @@ class Lister {
 
 
     private function config() {
-        echo "\n -> WOLFF_SERVER CONFIG: ";
+        echo "\n -> SERVER CONFIG: ";
         echo "\n WOLFF_DBMS: " . WOLFF_DBMS;
         echo "\n Server: " . WOLFF_SERVER;
         echo "\n Database: " . WOLFF_DB;
-        echo "\n User: " . DB_USER;
+        echo "\n User: " . WOLFF_DBUSERNAME;
         echo "\n Password: " . WOLFF_DBPASSWORD;
         echo "\n";
         echo "\n -> GENERAL CONFIG: ";
@@ -279,7 +284,11 @@ class Lister {
         echo "\n Page title: " . WOLFF_PAGE_TITLE;
         echo "\n Main page: " . WOLFF_MAIN_PAGE;
         echo "\n Language: " . WOLFF_LANGUAGE;
-        echo "\n Extensions enabled: " . (SYS_EXTENSIONS? "yes":"no");
+        echo "\n";
+        echo "\n -> EXTRA CONFIG: ";
+        echo "\n Cache enabled: " . (WOLFF_CACHE_ON? "yes":"no");
+        echo "\n Extensions enabled: " . (WOLFF_EXTENSIONS_ON? "yes":"no");
+        echo "\n Maintenance mode enabled: " . (WOLFF_MAINTENANCE_ON? "yes":"no");
         echo "\n \n";
     }
 

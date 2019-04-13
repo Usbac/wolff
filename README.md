@@ -9,12 +9,12 @@
 <h4 align="center">Ridiculously small PHP framework.</h4>
 
 <p align="center">
-<img src="https://img.shields.io/badge/stability-stable-green.svg"> <img src="https://img.shields.io/badge/version-0.9.3-blue.svg">
+<img src="https://img.shields.io/badge/stability-stable-green.svg"> <img src="https://img.shields.io/badge/version-0.9.4-blue.svg"> <img src="https://img.shields.io/badge/license-MIT-orange.svg">
 </p>
 
-Wolff is a ridiculously small and lightweight PHP framework which follows the MVC pattern while having useful functions and utilities like a template, route, loader, session and language system. 
+Wolff is a ridiculously small and lightweight PHP framework with useful functions and utilities like a template, route, session and language system. 
 
-It is intended for those who want to build light websites without having to do everything from scratch or using too large frameworks and libraries.
+It is intended for those who want to build light websites without having to do everything from scratch or using too large/complicated frameworks and libraries.
 
 ## Features
 
@@ -22,7 +22,7 @@ It is intended for those who want to build light websites without having to do e
 
 * **Simple**: It’s not only small, but simple as well; with a clean documentation and easy way to use.
 
-* **Extensible**: Take advantage of the custom libraries you can make in Wolff and its language system to expand your page.
+* **Extensible**: Take advantage of the custom libraries you can make in Wolff to expand your page.
 
 * **Clean**: The routes system allows you to have clean and friendly URLs, and the template system makes the php code cleaner while separating the logic from the view.
 

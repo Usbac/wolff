@@ -4,13 +4,11 @@ namespace Core;
 
 class Cache {
 
-    private $folder;
     private $remembered = [];
     private $time = 1440;
 
     
     public function __construct() {
-        $this->folder = 'cache' . DIRECTORY_SEPARATOR;
     }
 
 
@@ -21,7 +19,7 @@ class Cache {
      * @return string the cache file path
      */
     public function get(string $dir, string $content) {
-        $file_path = $this->folder . $this->getFilename($dir);
+        $file_path = getServerRoot() . getCacheDirectory() . $this->getFilename($dir);
 
         $this->createFolder();
 
@@ -45,7 +43,7 @@ class Cache {
      * @return bool true if the cache file has expired, false otherwhise
      */
     public function expired($dir) {
-        $file_path = $this->folder . $this->getFilename($dir);
+        $file_path = getServerRoot() . getCacheDirectory() . $this->getFilename($dir);
         if (!file_exists($file_path)) {
             return false;
         }
@@ -87,11 +85,11 @@ class Cache {
      */
     public function exists(string $dir = '') {
         if (!empty($dir)) {
-            $file_path = $this->folder . $this->getFilename($dir);
+            $file_path = getServerRoot() . getCacheDirectory() . $this->getFilename($dir);
             return is_file($file_path);
         }
 
-        return !empty(glob($this->folder . '*'));
+        return !empty(glob(getServerRoot() . getCacheDirectory() . '*'));
     }
 
 
@@ -101,7 +99,7 @@ class Cache {
      */
     public function clear(string $dir = '') {
         if (!empty($dir)) {
-            $file_path = $this->folder . $this->getFilename($dir);
+            $file_path = getServerRoot() . getCacheDirectory() . $this->getFilename($dir);
 
             if (is_file($file_path)) {
                 unlink($file_path);
@@ -109,7 +107,7 @@ class Cache {
             return;
         }
 
-        $files = glob($this->folder . '*');
+        $files = glob(getServerRoot() . getCacheDirectory() . '*');
 
         foreach ($files as $file) {
             if (is_file($file)) {

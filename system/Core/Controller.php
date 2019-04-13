@@ -10,11 +10,11 @@ class Controller {
     protected $cache;
     protected $upload;
 
-    public function __construct($load, $session, $cache, $upload) {
+    public function __construct($load) {
         $this->load = &$load;
-        $this->session = &$session;
-        $this->cache = &$cache;
-        $this->upload = &$upload;
+        $this->session = $this->load->getSession();
+        $this->cache = $this->load->getCache();
+        $this->upload = $this->load->getUpload();
         $this->data = array();
     }
 

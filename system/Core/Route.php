@@ -18,7 +18,7 @@ class Route {
         $url = explode('/', sanitizeURL($url));
         $urlLength = count($url);
 
-        foreach (self::$routes as $key => $function) {
+        foreach (self::$routes as $key => &$function) {
             $route = explode('/', $key);
             $routeLength = count($route);
 
@@ -34,14 +34,14 @@ class Route {
                 }
 
                 //Return route function if last {variable} from url is just empty
-                if ($i+2 == $routeLength && $i == $urlLength-1 && self::isGetVariable($route[$i+1])) {
+                if ($i+2 === $routeLength && $i === $urlLength-1 && self::isGetVariable($route[$i+1])) {
                     $name = self::clearGetVariable($route[$i+1]);
                     $_GET[$name] = $url[$i]?? '';
                     return $function;
                 }
 
                 //Return route function
-                if ($i == $routeLength-1 && $i == $urlLength-1) {
+                if ($i === $routeLength-1 && $i === $urlLength-1) {
                     return $function;
                 }
             }
@@ -101,8 +101,8 @@ class Route {
         $url = explode('/', $url);
         $urlLength = count($url);
 
-        foreach (self::$blocked as $key => $value) {
-            $blocked = explode('/', self::$blocked[$key]);
+        foreach (self::$blocked as $blocked) {
+            $blocked = explode('/', $blocked);
             $blockedLength = count($blocked);
 
             for ($i = 0; $i < $blockedLength && $i < $urlLength; $i++) {
@@ -110,11 +110,11 @@ class Route {
                     return false;
                 }
 
-                if ($blocked[$i] == '*') {
+                if ($blocked[$i] === '*') {
                     return true;
                 }
 
-                if ($i == $urlLength-1 && $i == $blockedLength-1) {
+                if ($i === $urlLength-1 && $i === $blockedLength-1) {
                     return true;
                 }
             }

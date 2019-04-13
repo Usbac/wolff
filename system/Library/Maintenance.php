@@ -37,7 +37,7 @@ class Maintenance {
             return false;
         }
 
-        self::createAllowedIPsFile();
+        self::createFile();
 
         if (!$content = file_get_contents(self::$filename)) {
             if (is_writable(self::$filename)) {
@@ -67,7 +67,7 @@ class Maintenance {
             return false;
         }
 
-        self::createAllowedIPsFile();
+        self::createFile();
 
         if (!$content = file_get_contents(self::$filename)) {
             error_log(self::READ_ERROR);
@@ -88,7 +88,7 @@ class Maintenance {
     /**
      * Create the text file with the IP whitelist 
      */
-    public function createAllowedIPsFile() {
+    public function createFile() {
         if (!is_file(self::$filename)) {
             file_put_contents(self::$filename, '');
         }

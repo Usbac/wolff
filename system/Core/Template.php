@@ -66,7 +66,7 @@ class Template {
      * @return string the view content
      */
     private function getContent($dir) {
-        $file_path = $_SERVER['DOCUMENT_ROOT'] . WOLFF_APP_DIR . 'views' . DIRECTORY_SEPARATOR . $dir;
+        $file_path = getServerRoot() . WOLFF_APP_DIR . 'views' . DIRECTORY_SEPARATOR . $dir;
 
         if (file_exists($file_path . '.php')) {
             return file_get_contents($file_path . '.php');

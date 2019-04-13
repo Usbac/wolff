@@ -5,19 +5,17 @@ namespace Core;
 class Connection {
 
     protected static $instance;
-    protected static $connection;
+    protected $connection;
     
 
     /**
      * Connects with the database using the constants present in config.php
      */
     public function __construct(string $type) {
-        $type = strtolower($type);
-
         try {
-            self::$connection = new \PDO($type . ":host=" . WOLFF_SERVER . "; dbname=" . WOLFF_DB . "", WOLFF_USERNAME, WOLFF_DBPASSWORD);
+            $this->connection = new \PDO(strtolower($type) . ":host=" . WOLFF_SERVER . "; dbname=" . WOLFF_DB . "", WOLFF_DBUSERNAME, WOLFF_DBPASSWORD);
         } catch (\PDOException $e) {
-            echo $e->getMessage();
+            error_log($e->getMessage());
         }
     }
 
@@ -28,8 +26,8 @@ class Connection {
      * @return Connection the instance
      */
     public static function getInstance(string $type = 'mysql') {
-        if (self::$instance == null) {
-            self::$instance = new Connection($type);
+        if (!self::$instance) {
+            self::$instance = new self($type);
         }
 
         return self::$instance;
@@ -54,6 +52,7 @@ class Connection {
      * @return array the query result
      */
     public function run(string $sql, $args = []) {
+        //Query without args
         if (!$args) {
             $result = self::$connection->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
             if (count($result) <= 1) {
@@ -62,7 +61,8 @@ class Connection {
     
             return $result;
         }
-        
+
+        //Query with args
         $stmt = self::$connection->prepare($sql);
         $stmt->execute($args);
 
@@ -71,7 +71,7 @@ class Connection {
             return $result[0];
         }
 
-        return $result[0];
+        return $result;
     }
     
 
@@ -82,7 +82,7 @@ class Connection {
      * @param mixed $args the arguments
      */
     public function toCsv(string $filename, string $sql, $args = []) {
-        arrayToCsv(self::run($sql, $args), $filename);
+        arrayToCsv($filename, self::run($sql, $args));
     }
 
 }

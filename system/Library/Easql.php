@@ -14,7 +14,6 @@ class Easql {
     private $distinct;
     private $conditional;
     private $order;
-    private $sql;
     private $lastQuery;
 
 

@@ -3,7 +3,7 @@
     "description": "Ridiculously small PHP framework",
     "keywords": ["framework", "php", "small", "web", "fast", "mvc"],
     "type": "project",
-    "version": "0.9.3",
+    "version": "0.9.4",
     "license": "MIT",
     "support": {
         "issues": "https://github.com/Usbac/Wolff/issues",

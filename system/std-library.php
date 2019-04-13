@@ -39,7 +39,7 @@ namespace {
      * @return string the complete path of the model
      */
     function getModelPath(string $dir) {
-        return $_SERVER['DOCUMENT_ROOT'] . WOLFF_APP_DIR . 'models/' . $dir . '.php';
+        return getServerRoot() . WOLFF_APP_DIR . 'models/' . $dir . '.php';
     }
 
 
@@ -59,36 +59,32 @@ namespace {
      * @return string the complete path of the controller
      */
     function getControllerPath(string $dir) {
-        return $_SERVER['DOCUMENT_ROOT'] . WOLFF_APP_DIR . 'controllers/' . $dir . '.php';
+        return getServerRoot() . WOLFF_APP_DIR . 'controllers/' . $dir . '.php';
     }
 
 
     /**
-     * Checks if the controller's function exists
+     * Returns true if the controller's function exists, false otherwise
      * @param dir the directory of the controller
      * @return boolean true if the controller's function exists, false otherwise 
      */
     function functionExists(string $dir) {
         //Remove the function from the url and save the function name
-        $function = substr($dir, strrpos($dir, '/') + 1);
-        $dir = substr($dir, 0, strrpos($dir, '/'));
+        $lastSlash = strrpos($dir, '/');
+        $function = substr($dir, $lastSlash + 1);
+        $dir = substr($dir, 0, $lastSlash);
 
-        if (!controllerExists($dir)) {
-            return false;
-        }
-
-        $dir = str_replace('/', '\\', $dir);
-        $class = 'Controller\\' . $dir;
-        $method = null;
+        $class = 'Controller\\' . str_replace('/', '\\', $dir);
 
         try {
             $class = new \ReflectionClass($class);
-            $method = $class->getMethod($function);
+            $class->getMethod($function);
         } catch(\Exception $e) {
+            error_log($e->getMessage());
             return false;
         }
-        
-        return $method !== null;
+
+        return true;
     }
 
     
@@ -109,7 +105,7 @@ namespace {
      * @return string the complete path of the language
      */
     function getLanguagePath(string $dir, string $language = WOLFF_LANGUAGE) {
-        return $_SERVER['DOCUMENT_ROOT'] . WOLFF_APP_DIR . 'languages/' . $language . '/' . $dir . '.php';
+        return getServerRoot() . WOLFF_APP_DIR . 'languages/' . $language . '/' . $dir . '.php';
     }
 
 
@@ -129,7 +125,7 @@ namespace {
      * @return string the complete path of the library
      */
     function getLibraryPath(string $dir) {
-        return $_SERVER['DOCUMENT_ROOT'] . WOLFF_APP_DIR . 'libraries/' . $dir . '.php';
+        return getServerRoot() . WOLFF_APP_DIR . 'libraries/' . $dir . '.php';
     }
 
     
@@ -149,7 +145,7 @@ namespace {
      * @return string the complete path of the view
      */
     function getViewPath(string $dir) {
-        return $_SERVER['DOCUMENT_ROOT'] . WOLFF_APP_DIR . 'views/' . $dir;
+        return getServerRoot() . WOLFF_APP_DIR . 'views/' . $dir;
     }
 
 
@@ -166,9 +162,9 @@ namespace {
 
     /**
      * Print a string and then die
-     * @param string $str the string to print
+     * @param $str the string to print
      */
-    function echod(string $str) {
+    function echod($str) {
         echo $str;
         die();
     }
@@ -227,20 +223,18 @@ namespace {
 
     /**
      * Convert an array content into a csv file and download it
-     * @param array $array the array
      * @param string $filename the desired filename without extension
+     * @param array $array the array
      */
-    function arrayToCsv(array $array, string $filename) {
+    function arrayToCsv(string $filename, array $array) {
         $filename .= ".csv";
         $fp = fopen($filename, 'w');
 
         fputcsv($fp, array_keys(arrayFirst($array)));
-        foreach ($array as $key => $value) {
-            fputcsv($fp, $array[$key]);
+        foreach ($array as $row) {
+            fputcsv($fp, $row);
         }
         
-        rewind($fp); 
-        $csv_contents = stream_get_contents($fp);
         fclose($fp);
 
         header('Content-Description: File Transfer'); 
@@ -266,6 +260,15 @@ namespace {
         }
         
         return $_SERVER['REMOTE_ADDR'];
+    }
+
+
+    /**
+     * Returns the server root directory
+     * @return string the server root directory
+     */
+    function getServerRoot() {
+        return $_SERVER['DOCUMENT_ROOT'];
     }
     
     
@@ -334,6 +337,24 @@ namespace {
      */
     function getPublicDirectory() {
         return WOLFF_PUBLIC_DIR;
+    }
+
+
+    /**
+     * Returns the extension directory of the project
+     * @return string the extension directory of the project
+     */
+    function getExtensionDirectory() {
+        return WOLFF_EXTENSION_DIR;
+    }
+
+
+    /**
+     * Returns the cache directory of the project
+     * @return string the cache directory of the project
+     */
+    function getCacheDirectory() {
+        return WOLFF_CACHE_DIR;
     }
 
     

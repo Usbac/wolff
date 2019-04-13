@@ -159,7 +159,7 @@ class Wolffie {
             $result[] = $row;
         }
 
-        @arrayToCsv($result, 'sql_' . date('y-m-d'));
+        @arrayToCsv('sql_' . date('y-m-d'), $result);
         echo "\n Query exported successfully! \n \n";
     }
 

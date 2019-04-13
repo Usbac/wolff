@@ -3,6 +3,7 @@
 <head>
     <title>{{WOLFF_PAGE_TITLE}} - Home</title>
     <link href="{{WOLFF_APP_DIR}}assets/css/styles.css" rel="stylesheet" />
+    <link rel="icon" href="{{WOLFF_PUBLIC_DIR}}logo.png">
 </head>
 <body>
     <div class='center'>
