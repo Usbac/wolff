@@ -16,27 +16,30 @@ class Start {
      */
     public function __construct() {
         $this->load = new Loader(new Session(), new Cache(), new Upload());
-        $this->extension = new Extension($this->load);
-        
-        $url = sanitizeURL($_GET['url']?? getMainPage());
 
         //Check maintenance mode
         if (maintenanceEnabled() && !Maintenance::isClientAllowed()) {
             $this->load->maintenance();
         }
         
-        //Check block
+        $url = sanitizeURL($_GET['url']?? getMainPage());
+        
+        //Check blocked route
         if (Route::isBlocked($url)) {
             $this->load->redirect404();
+        }
+
+        //Load extensions
+        if (extensionsEnabled()) {
+            $this->extension = new Extension($this->load);
+            $this->extension->load();
         }
 
         $function = Route::get($url);
 
         if (isset($function)) {
-            $this->extension->load();
             $function->call($this);
         } else if (controllerExists($url) || functionExists($url)) {
-            $this->extension->load();
             $this->load->controller($url);
         } else {
             $this->load->redirect404();

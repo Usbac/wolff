@@ -9,14 +9,14 @@ class Model {
     protected $load;
     protected $library;
     protected $session;
-    protected $db;
     protected $cache;
+    protected $db;
     protected $easql;
 
-    public function __construct($loader, $session, $cache) {
+    public function __construct($loader) {
         $this->load = &$loader;
-        $this->session = &$session;
-        $this->cache = &$cache;
+        $this->session = $this->load->getSession();
+        $this->cache = $this->load->getCache();
         $this->db = Connection::getInstance(WOLFF_DBMS);
         $this->easql = new Easql($this->db);
     }

@@ -155,16 +155,16 @@ class Route {
 
 
     /**
-     * Clear all the available routes
+     * Returns all the available routes
      * @return array the available routes
      */
-    public static function getAvailableRoutes() {
+    public static function getRoutes() {
         return self::$routes;
     }
     
     
     /**
-     * Clear all the available redirections
+     * Returns all the available redirections
      * @return array the available redirections
      */
     public static function getRedirects() {
@@ -173,10 +173,10 @@ class Route {
 
     
     /**
-     * Clear all the blocked routes
+     * Returns all the blocked routes
      * @return array the blocked routes
      */
-    public static function getBlockedRoutes() {
+    public static function getBlocked() {
         return self::$blocked;
     }
 }

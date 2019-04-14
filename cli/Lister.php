@@ -206,7 +206,7 @@ class Lister {
 
 
     private function routes() {
-        $routes = Core\Route::getAvailableRoutes();
+        $routes = Core\Route::getRoutes();
 
         if (count($routes) <= 0) {
             echo "\n ROUTES: none \n \n";
@@ -222,7 +222,7 @@ class Lister {
 
 
     private function blocked() {
-        $blocked = Core\Route::getBlockedRoutes();
+        $blocked = Core\Route::getBlocked();
         
         if (count($blocked) <= 0) {
             echo "\n BLOCKED: none \n \n";

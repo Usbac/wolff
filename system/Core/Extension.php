@@ -19,7 +19,7 @@ class Extension {
      */
     public function load($ignore = false) {
         if (!$ignore && !extensionsEnabled()) {
-            return;
+            return false;
         }
 
         $this->makeFolder();
@@ -49,6 +49,8 @@ class Extension {
                 'filename'    => $filename
             );
         }
+
+        return true;
     }
 
 
@@ -90,5 +92,7 @@ class Extension {
                 return $extension;
             }
         }
+
+        return false;
     }
 }

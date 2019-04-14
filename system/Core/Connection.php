@@ -5,7 +5,7 @@ namespace Core;
 class Connection {
 
     protected static $instance;
-    protected $connection;
+    protected static $connection;
     
 
     /**
@@ -13,7 +13,7 @@ class Connection {
      */
     public function __construct(string $type) {
         try {
-            $this->connection = new \PDO(strtolower($type) . ":host=" . WOLFF_SERVER . "; dbname=" . WOLFF_DB . "", WOLFF_DBUSERNAME, WOLFF_DBPASSWORD);
+            self::$connection = new \PDO(strtolower($type) . ":host=" . WOLFF_SERVER . "; dbname=" . WOLFF_DB . "", WOLFF_DBUSERNAME, WOLFF_DBPASSWORD);
         } catch (\PDOException $e) {
             error_log($e->getMessage());
         }
@@ -43,7 +43,7 @@ class Connection {
     public function __call($method, $args) {
         return call_user_func_array(array(self::$connection, $method), $args);
     }
-    
+
 
     /**
      * Run a query

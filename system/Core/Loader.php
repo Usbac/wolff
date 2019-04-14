@@ -76,7 +76,7 @@ class Loader {
      */
     private function getModel(string $dir) {
         $class = 'Model\\' . str_replace('/', '\\', $dir);
-        return new $class($this, $this->session, $this->cache);
+        return new $class($this);
     }
 
 
