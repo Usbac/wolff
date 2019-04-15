@@ -13,11 +13,12 @@ class Loader {
     const HEADER_503 = "HTTP/1.1 503 Service Temporarily Unavailable";
 
 
-    public function __construct($session, $cache, $upload) {
+    public function __construct($session, $cache, $upload, $db) {
         $this->template = new Template($cache);
         $this->session = &$session;
         $this->cache = &$cache;
         $this->upload = &$upload;
+        $this->db = &$db;
     }
 
 
@@ -45,6 +46,15 @@ class Loader {
      */
     public function getUpload() {
         return $this->upload;
+    }
+
+
+    /**
+     * Returns the database connection
+     * @return Core\Connection the database connection
+     */
+    public function getDB() {
+        return $this->db;
     }
 
 

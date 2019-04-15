@@ -8,6 +8,9 @@ class Route {
     private static $blocked = [];
     private static $redirects = [];
 
+    const STATUS_OK = 200;
+    const STATUS_REDIRECT = 301;
+
 
     /**
      * Get the function of a route
@@ -16,38 +19,55 @@ class Route {
      */
     public static function get(string $url) {
         $url = explode('/', sanitizeURL($url));
-        $urlLength = count($url);
+        $urlLength = count($url)-1;
+        $finished = false;
 
-        foreach (self::$routes as $key => &$function) {
+        if (self::$routes == []) {
+            return null;
+        }
+
+        foreach (self::$routes as $key => $value) {
             $route = explode('/', $key);
-            $routeLength = count($route);
+            $routeLength = count($route)-1;
 
-            for ($i = 0; $i < $routeLength && $i < $urlLength; $i++) {
+            for ($i = 0; $i <= $routeLength && $i <= $urlLength; $i++) {
                 if ($url[$i] != $route[$i] && !empty($route[$i]) && !self::isGetVariable($route[$i])) {
                     break;
                 }
 
-                //Set GET value from {variable} in the url
+                //Set GET variable from the url
                 if (self::isGetVariable($route[$i])) {
-                    $name = self::clearGetVariable($route[$i]);
-                    $_GET[$name] = $url[$i]?? '';
+                    self::setGetVariable($route[$i], $url[$i]);
                 }
 
-                //Return route function if last {variable} from url is just empty
-                if ($i+2 === $routeLength && $i === $urlLength-1 && self::isGetVariable($route[$i+1])) {
-                    $name = self::clearGetVariable($route[$i+1]);
-                    $_GET[$name] = $url[$i]?? '';
-                    return $function;
+                //Finish if last GET variable from url is empty
+                if ($i+1 === $routeLength && $i === $urlLength && self::isGetVariable($route[$i+1])) {
+                    self::setGetVariable($route[$i], $url[$i]);
+                    $finished = true;
                 }
 
-                //Return route function
-                if ($i === $routeLength-1 && $i === $urlLength-1) {
-                    return $function;
+                //Process the route and return its function
+                if ($finished || ($i === $routeLength && $i === $urlLength)) {
+                    self::processRoute($key);
+                    return self::$routes[$key]['function'];
                 }
             }
         }
 
         return null;
+    }
+
+
+    /**
+     * Apply the response code and content type of a route
+     * @param string $key the route key
+     */
+    private static function processRoute($key) {
+        if (!self::$routes[$key]) {
+            return;
+        }
+
+        http_response_code(self::$routes[$key]['status']);
     }
 
 
@@ -58,7 +78,10 @@ class Route {
      */
     public static function add(string $url, $function) {
         $url = sanitizeURL($url);
-        self::$routes[$url] = $function;
+        self::$routes[$url] = array(
+            'function' => $function,
+            'status'   => self::STATUS_OK
+        );
     }
 
 
@@ -68,11 +91,15 @@ class Route {
      * @param string $url2 the second url
      * @param int $status The response http code
      */
-    public static function redirect(string $url, string $url2, int $status = 301) {
-        http_response_code($status);
+    public static function redirect(string $url, string $url2, int $status = self::STATUS_REDIRECT) {
         $url = sanitizeURL($url);
         $url2 = sanitizeURL($url2);
-        self::$routes[$url] = self::$routes[$url2];
+
+        self::$routes[$url] = array(
+            'function' => self::$routes[$url2]['function'],
+            'api'      => self::$routes[$url2]['api'],
+            'status'   => $status
+        );
         
         self::$redirects[] = array (
             'origin'  => $url,
@@ -130,7 +157,13 @@ class Route {
      * @return boolean true if the route exists, false otherwise
      */
     public static function exists(string $url) {
-        return array_key_exists($url, self::$routes);
+        $url = preg_replace('/\{(.*)\}/', '{}', $url);
+        $routes = [];
+        foreach (array_keys(self::$routes) as $key) {
+            $routes[] = preg_replace('/\{(.*)\}/', '{}', $key);
+        }
+
+        return in_array($url, $routes);
     }
 
 
@@ -151,6 +184,17 @@ class Route {
      */
     private static function clearGetVariable(string $str) {
         return preg_replace('/\{|\}/', '', $str);
+    }
+
+
+    /**
+     * Set a GET variable
+     * @param string $key the variable key
+     * @param string $value the variable value
+     */
+    private static function setGetVariable(string $key, $value = '') {
+        $key = self::clearGetVariable($key);
+        $_GET[$key] = $value?? '';
     }
 
 

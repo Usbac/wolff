@@ -255,7 +255,9 @@ namespace {
 
         if (!empty($http_client_ip)) {
             return $http_client_ip;
-        } elseif (!empty($http_forwarded)) {
+        } 
+        
+        if (!empty($http_forwarded)) {
             return $http_forwarded;
         }
         

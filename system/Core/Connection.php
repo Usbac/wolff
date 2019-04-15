@@ -13,7 +13,7 @@ class Connection {
      */
     public function __construct(string $type) {
         try {
-            self::$connection = new \PDO(strtolower($type) . ":host=" . WOLFF_SERVER . "; dbname=" . WOLFF_DB . "", WOLFF_DBUSERNAME, WOLFF_DBPASSWORD);
+            self::$connection = new \PDO(strtolower($type) . ":host=" . WOLFF_SERVER . "; dbname=" . WOLFF_DB . "", WOLFF_DBUSERNAME, WOLFF_DBPASSWORD, array(\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
         } catch (\PDOException $e) {
             error_log($e->getMessage());
         }
@@ -46,10 +46,10 @@ class Connection {
 
 
     /**
-     * Run a query
+     * Returns a query result as an associative array
      * @param string $sql the query
      * @param mixed $args the arguments
-     * @return array the query result
+     * @return array the query result as an associative array
      */
     public function run(string $sql, $args = []) {
         //Query without args
@@ -62,16 +62,29 @@ class Connection {
             return $result;
         }
 
+        $args = is_array($args)? $args: array($args);
+
         //Query with args
         $stmt = self::$connection->prepare($sql);
         $stmt->execute($args);
 
-        $result = $stmt->fetch();
+        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         if (count($result) <= 1) {
             return $result[0];
         }
 
         return $result;
+    }
+
+
+    /**
+     * Returns a query result as a json
+     * @param string $sql the query
+     * @param mixed $args the arguments
+     * @return array the query result as a json
+     */
+    public function runJson(string $sql, $args = []) {
+        return json_encode(self::run($sql, $args));
     }
     
 
