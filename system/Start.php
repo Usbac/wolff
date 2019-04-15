@@ -19,7 +19,6 @@ class Start {
      * Start the loading of the page
      */
     public function __construct() {
-        //$start = microtime(true);
         $this->initComponents();
 
         //Check maintenance mode
@@ -49,7 +48,6 @@ class Start {
         } else {
             $this->load->redirect404();
         }
-        //echod(microtime(true) - $start);
     }
 
 

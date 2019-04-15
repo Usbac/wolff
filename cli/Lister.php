@@ -2,6 +2,7 @@
 
 namespace Cli;
 
+use Core as Core;
 use System as Sys;
 use System\Library as Lib;
 
