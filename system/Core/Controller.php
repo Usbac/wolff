@@ -5,38 +5,38 @@ namespace Core;
 class Controller {
 
     /**
-	 * Loader.
-	 *
-	 * @var Core\Loader
-	 */
+     * Loader.
+     *
+     * @var Core\Loader
+     */
     protected $load;
 
     /**
-	 * Session manager.
-	 *
-	 * @var Core\Session
-	 */
+     * Session manager.
+     *
+     * @var Core\Session
+     */
     protected $session;
 
     /**
-	 * General data of the controller.
-	 *
-	 * @var array
-	 */
+     * General data of the controller.
+     *
+     * @var array
+     */
     protected $data;
 
     /**
-	 * Cache system.
-	 *
-	 * @var Core\Cache
-	 */
+     * Cache system.
+     *
+     * @var Core\Cache
+     */
     protected $cache;
 
     /**
-	 * File uploader utility.
-	 *
-	 * @var System\Library\Upload
-	 */
+     * File uploader utility.
+     *
+     * @var System\Library\Upload
+     */
     protected $upload;
     
 

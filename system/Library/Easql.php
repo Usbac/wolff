@@ -5,81 +5,81 @@ namespace System\Library;
 class Easql {
 
     /**
-	 * Static instance of the connection.
-	 *
-	 * @var Core\Connection
-	 */
+     * Static instance of the connection.
+     *
+     * @var Core\Connection
+     */
     private $db;
 
     /**
-	 * The query table.
-	 *
-	 * @var string
-	 */
+     * The query table.
+     *
+     * @var string
+     */
     private $table;
 
     /**
-	 * If true make a delete query, if false don't.
-	 *
-	 * @var bool
-	 */
+     * If true make a delete query, if false don't.
+     *
+     * @var bool
+     */
     private $delete;
 
     /**
-	 * Main query sentence.
-	 *
-	 * @var string
-	 */
+     * Main query sentence.
+     *
+     * @var string
+     */
     private $sentence;
 
     /**
-	 * On statement for a join.
-	 *
-	 * @var string
-	 */
+     * On statement for a join.
+     *
+     * @var string
+     */
     private $on;
 
     /**
-	 * Join statement.
-	 *
-	 * @var string
-	 */
+     * Join statement.
+     *
+     * @var string
+     */
     private $join;
 
     /**
-	 * If true make a count query, if false don't.
-	 *
-	 * @var bool
-	 */
+     * If true make a count query, if false don't.
+     *
+     * @var bool
+     */
     private $count;
 
     /**
-	 * If true make a select distinct query, if false don't.
-	 *
-	 * @var bool
-	 */
+     * If true make a select distinct query, if false don't.
+     *
+     * @var bool
+     */
     private $distinct;
 
     /**
-	 * Conditionals for the query.
-	 *
-	 * @var string
-	 */
+     * Conditionals for the query.
+     *
+     * @var string
+     */
     private $conditional;
 
     /**
-	 * Query order by.
-	 *
-	 * @var string
-	 */
+     * Query order by.
+     *
+     * @var string
+     */
     private $order;
 
 
     /**
-	 * Last query executed by Easql.
-	 *
-	 * @var string
-	 */
+     * Last query executed by Easql.
+     *
+     * @var string
+     */
     private $lastQuery;
 
 

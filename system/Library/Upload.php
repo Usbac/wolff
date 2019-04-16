@@ -5,24 +5,24 @@ namespace System\Library;
 class Upload {
 
     /**
-	 * Maximum size for files in kB.
-	 *
-	 * @var int
-	 */
+     * Maximum size for files in kB.
+     *
+     * @var int
+     */
     private $maxSize;
 
     /**
-	 * File upload directory.
-	 *
-	 * @var string
-	 */
+     * File upload directory.
+     *
+     * @var string
+     */
     private $directory;
 
     /**
-	 * Data about the last file uploaded.
-	 *
-	 * @var array
-	 */
+     * Data about the last file uploaded.
+     *
+     * @var array
+     */
     private $lastFile;
 
 

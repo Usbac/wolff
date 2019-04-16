@@ -5,24 +5,24 @@ namespace Core;
 class Route {
 
 	/**
-	 * List of routes.
-	 *
-	 * @var array
-	 */
+     * List of routes.
+     *
+     * @var array
+     */
     private static $routes = [];
 
     /**
-	 * List of blocked routes.
-	 *
-	 * @var array
-	 */
+     * List of blocked routes.
+     *
+     * @var array
+     */
     private static $blocked = [];
 
     /**
-	 * List of redirections.
-	 *
-	 * @var array
-	 */
+     * List of redirections.
+     *
+     * @var array
+     */
     private static $redirects = [];
 
     

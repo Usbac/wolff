@@ -7,39 +7,39 @@ use System\Library\Easql;
 class Model {
 
     /**
-	 * Loader.
-	 *
-	 * @var Core\Loader
-	 */
+     * Loader.
+     *
+     * @var Core\Loader
+     */
     protected $load;
     protected $library;
 
     /**
-	 * Session manager.
-	 *
-	 * @var Core\Session
-	 */
+     * Session manager.
+     *
+     * @var Core\Session
+     */
     protected $session;
 
     /**
-	 * Cache system.
-	 *
-	 * @var Core\Cache
-	 */
+     * Cache system.
+     *
+     * @var Core\Cache
+     */
     protected $cache;
 
     /**
-	 * Static instance of the connection.
-	 *
-	 * @var Core\Connection
-	 */
+     * Static instance of the connection.
+     *
+     * @var Core\Connection
+     */
     protected $db;
 
     /**
-	 * Query builder utility.
-	 *
-	 * @var System\Library\Easql
-	 */
+     * Query builder utility.
+     *
+     * @var System\Library\Easql
+     */
     protected $easql;
 
     public function __construct($loader) {

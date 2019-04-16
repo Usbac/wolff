@@ -6,10 +6,10 @@ class Maintenance {
 
 
     /**
-	 * Filename of the ip whitelist file.
-	 *
-	 * @var string
-	 */
+     * Filename of the ip whitelist file.
+     *
+     * @var string
+     */
     private static $filename = __DIR__ . DIRECTORY_SEPARATOR . 'maintenance_whitelist.txt';
 
     
