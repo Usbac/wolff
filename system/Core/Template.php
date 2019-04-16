@@ -2,7 +2,8 @@
 
 namespace Core;
 
-class Template {
+class Template
+{
 
     /**
      * Cache system.
@@ -15,14 +16,13 @@ class Template {
     public function __construct($cache) {
         $this->cache = &$cache;
     }
-    
+
 
     /**
      * Apply the template format over a content and render it
      * @param string $dir the view directory
      * @param array $data the data array present in the view
      * @param bool $cache use or not the cache system
-     * @param bool $returnView if true the view won't be included, only returned
      * @return string the view content
      */
     public function get(string $dir, array $data, bool $cache) {
@@ -33,7 +33,7 @@ class Template {
         }
 
         $content = $this->replaceAll($this->getContent($dir));
-        
+
         //Cache system
         if ($cache && cacheEnabled()) {
             include($this->cache->get($dir, $content));
@@ -41,7 +41,7 @@ class Template {
             $temp = tmpfile();
             fwrite($temp, $content);
             include(stream_get_meta_data($temp)['uri']);
-            fclose($temp); 
+            fclose($temp);
         }
 
         return $content;
@@ -75,15 +75,17 @@ class Template {
 
         if (file_exists($file_path . '.php')) {
             return file_get_contents($file_path . '.php');
-        } else if (file_exists($file_path . '.html')) {
-            return file_get_contents($file_path . '.html');
         } else {
-            error_log("Error: View '" . $dir . "' doesn't exists");
-            return null;
+            if (file_exists($file_path . '.html')) {
+                return file_get_contents($file_path . '.html');
+            } else {
+                error_log("Error: View '" . $dir . "' doesn't exists");
+                return null;
+            }
         }
     }
 
-    
+
     /**
      * Apply all the replace methods of the template
      * @param string $content the view content
@@ -123,9 +125,11 @@ class Template {
         $format = '/\{\{( ?){1,}{func}( ?){1,}\|([^\}]{1,})/';
 
         //Escape
-        $content = preg_replace(str_replace('{func}', 'e', $format), '<?php echo htmlspecialchars(strip_tags($3)); ', $content);
+        $content = preg_replace(str_replace('{func}', 'e', $format), '<?php echo htmlspecialchars(strip_tags($3)); ',
+            $content);
         //HTMLspecialchars
-        $content = preg_replace(str_replace('{func}', 'especial', $format), '<?php echo htmlspecialchars($3, ENT_QUOTES, \'UTF-8\'); ', $content);
+        $content = preg_replace(str_replace('{func}', 'especial', $format),
+            '<?php echo htmlspecialchars($3, ENT_QUOTES, \'UTF-8\'); ', $content);
         //Uppercase
         $content = preg_replace(str_replace('{func}', 'upper', $format), '<?php echo strtoupper($3); ', $content);
         //Lowercase
@@ -139,15 +143,18 @@ class Template {
         //MD5
         $content = preg_replace(str_replace('{func}', 'md5', $format), '<?php echo md5($3); ', $content);
         //Count words
-        $content = preg_replace(str_replace('{func}', 'countwords', $format), '<?php echo str_word_count($3); ', $content);
+        $content = preg_replace(str_replace('{func}', 'countwords', $format), '<?php echo str_word_count($3); ',
+            $content);
         //Trim
         $content = preg_replace(str_replace('{func}', 'trim', $format), '<?php echo trim($3); ', $content);
         //nl2br
         $content = preg_replace(str_replace('{func}', 'nl2br', $format), '<?php echo nl2br($3); ', $content);
         //Join
-        $content = preg_replace(str_replace('{func}', 'join\((.*?)\)', $format), '<?php echo implode($2, $4); ', $content);
+        $content = preg_replace(str_replace('{func}', 'join\((.*?)\)', $format), '<?php echo implode($2, $4); ',
+            $content);
         //Repeat
-        $content = preg_replace(str_replace('{func}', 'repeat\((.*?)\)', $format), '<?php echo str_repeat($4, $2); ', $content);
+        $content = preg_replace(str_replace('{func}', 'repeat\((.*?)\)', $format), '<?php echo str_repeat($4, $2); ',
+            $content);
 
         return $content;
     }
@@ -178,7 +185,7 @@ class Template {
         return $content;
     }
 
-    
+
     /**
      * Apply the template format over the cycles of a content
      * @param string $content the view content
@@ -186,10 +193,12 @@ class Template {
      */
     private function replaceCycles($content) {
         //For
-        $content = preg_replace('/\{( ?){1,}for( ){1,}(.*)( ){1,}in( ){1,}\((.*)( ?){1,},( ?){1,}(.*)( ?){1,}\)( ?){1,}\}/', '<?php for (\$$3=$6; \$$3 <= $9; \$$3++): ?>', $content);
+        $content = preg_replace('/\{( ?){1,}for( ){1,}(.*)( ){1,}in( ){1,}\((.*)( ?){1,},( ?){1,}(.*)( ?){1,}\)( ?){1,}\}/',
+            '<?php for (\$$3=$6; \$$3 <= $9; \$$3++): ?>', $content);
         $content = preg_replace('/\{( ?){1,}for( ?){1,}\}/', '<?php endfor; ?>', $content);
         //Foreach
-        $content = preg_replace('/\{( ?){1,}for( ?){1,}(.*)( ?){1,}as( ?){1,}(.*)( ?){1,}\}/', '<?php foreach ($3 as $6): ?>', $content);
+        $content = preg_replace('/\{( ?){1,}for( ?){1,}(.*)( ?){1,}as( ?){1,}(.*)( ?){1,}\}/',
+            '<?php foreach ($3 as $6): ?>', $content);
         $content = preg_replace('/\{( ?){1,}foreach( ?){1,}\}/', '<?php endforeach; ?>', $content);
         return $content;
     }

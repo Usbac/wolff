@@ -2,7 +2,8 @@
 
 namespace Core;
 
-class Cache {
+class Cache
+{
 
     /**
      * List of specific cache life times in minutes.
@@ -18,7 +19,7 @@ class Cache {
      */
     private $time = 1440;
 
-    
+
     public function __construct() {
     }
 
@@ -49,9 +50,9 @@ class Cache {
 
 
     /**
-     * Returns true if the cache file has expired, false otherwhise
+     * Returns true if the cache file has expired, false otherwise
      * @param string $dir the cache file directory
-     * @return bool true if the cache file has expired, false otherwhise
+     * @return bool true if the cache file has expired, false otherwise
      */
     public function expired($dir) {
         $file_path = getServerRoot() . getCacheDirectory() . $this->getFilename($dir);

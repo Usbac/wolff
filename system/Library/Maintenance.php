@@ -2,7 +2,8 @@
 
 namespace System\Library;
 
-class Maintenance {
+class Maintenance
+{
 
 
     /**
@@ -12,7 +13,7 @@ class Maintenance {
      */
     private static $filename = __DIR__ . DIRECTORY_SEPARATOR . 'maintenance_whitelist.txt';
 
-    
+
     const READ_ERROR = "Warning: Couldn't read the maintenance whitelist file";
 
 
@@ -93,7 +94,7 @@ class Maintenance {
 
 
     /**
-     * Create the text file with the IP whitelist 
+     * Create the text file with the IP whitelist
      */
     public function createFile() {
         if (!is_file(self::$filename)) {
@@ -110,7 +111,7 @@ class Maintenance {
         if (self::getAllowedIPs() === false) {
             return false;
         }
-        
+
         return in_array(getClientIP(), self::getAllowedIPs());
     }
 

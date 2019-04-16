@@ -2,7 +2,8 @@
 
 namespace System\Library;
 
-class Easql {
+class Easql
+{
 
     /**
      * Static instance of the connection.
@@ -106,7 +107,7 @@ class Easql {
      * @return Easql $this
      */
     public function inner(string $table, string $name = null) {
-        $name = $name?? $table;
+        $name = $name ?? $table;
         $this->join .= " INNER JOIN $table as $name";
         return $this;
     }
@@ -119,7 +120,7 @@ class Easql {
      * @return Easql $this
      */
     public function left(string $table, string $name = null) {
-        $name = $name?? $table;
+        $name = $name ?? $table;
         $this->join .= " LEFT JOIN $table as $name";
         return $this;
     }
@@ -132,7 +133,7 @@ class Easql {
      * @return Easql $this
      */
     public function right(string $table, string $name = null) {
-        $name = $name?? $table;
+        $name = $name ?? $table;
         $this->join .= " RIGHT JOIN $table as $name";
         return $this;
     }
@@ -180,7 +181,7 @@ class Easql {
         return $query->fetchAll(\PDO::FETCH_ASSOC);
     }
 
-    
+
     /**
      * Count All query
      * @param string $table the table for the query
@@ -193,7 +194,7 @@ class Easql {
         return $query->fetchAll(\PDO::FETCH_ASSOC)['COUNT(*)'];
     }
 
-    
+
     /**
      * Delete All query
      * @param string $table the table for the query
@@ -250,7 +251,7 @@ class Easql {
         $this->count = true;
         return $this;
     }
-    
+
 
     /**
      * Indicate the distinct for the selection of the query
@@ -267,7 +268,7 @@ class Easql {
      * @return string the query constructed
      */
     public function getSQL() {
-        $this->sentence = empty($this->sentence)? "SELECT *": $this->sentence;
+        $this->sentence = empty($this->sentence) ? "SELECT *" : $this->sentence;
 
         if ($this->delete) {
             $this->sentence = "DELETE FROM";
@@ -281,8 +282,8 @@ class Easql {
             $this->sentence = "SELECT count(*)";
         }
 
-        $this->conditional = empty($this->conditional)? "": "WHERE $this->conditional";
-        $this->order = empty($this->order)? "": "ORDER BY $this->order";
+        $this->conditional = empty($this->conditional) ? "" : "WHERE $this->conditional";
+        $this->order = empty($this->order) ? "" : "ORDER BY $this->order";
 
         return "$this->sentence $this->table $this->join $this->on $this->conditional $this->order";
     }
@@ -292,7 +293,7 @@ class Easql {
      * Clear all the query variables
      */
     public function clear() {
-        foreach($this as $key => $value) {
+        foreach ($this as $key => $value) {
             $this->$key = null;
         }
     }
@@ -314,7 +315,7 @@ class Easql {
     public function doLastQuery() {
         $query = $this->db->query($this->getLastSQL());
         $this->clear();
-        
+
         return $query->fetchAll(\PDO::FETCH_ASSOC);
     }
 
@@ -331,7 +332,7 @@ class Easql {
         return $query->fetchAll(\PDO::FETCH_ASSOC);
     }
 
-    
+
     /**
      * Do a query
      * @return array the query result

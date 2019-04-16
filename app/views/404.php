@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>{{ WOLFF_PAGE_TITLE }} - 404</title>
-    <link href="{{WOLFF_APP_DIR}}assets/css/styles.css" rel="stylesheet" />
+    <link href="{{WOLFF_APP_DIR}}assets/css/styles.css" rel="stylesheet"/>
 </head>
 <body>
 <div class='center' id='content-404'>

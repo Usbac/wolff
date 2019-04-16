@@ -2,10 +2,11 @@
 
 namespace System;
 
-use Core\{Session, Route, Cache, Loader, Extension, Connection};
-use System\Library\{Upload, Maintenance};
+use Core\{Cache, Connection, Extension, Loader, Route, Session};
+use System\Library\{Maintenance, Upload};
 
-class Start {
+class Start
+{
 
     public $extension;
 
@@ -56,7 +57,7 @@ class Start {
             $this->load->maintenance();
         }
 
-        $url = sanitizeURL($_GET['url']?? getMainPage());
+        $url = sanitizeURL($_GET['url'] ?? getMainPage());
 
         //Check blocked route
         if (Route::isBlocked($url)) {

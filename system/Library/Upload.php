@@ -2,7 +2,8 @@
 
 namespace System\Library;
 
-class Upload {
+class Upload
+{
 
     /**
      * Maximum size for files in kB.
@@ -28,7 +29,8 @@ class Upload {
 
     /**
      * Set the files maximum size
-     * @param string $maxSize the files maximum size
+     * @param float $maxSize the files maximum size
+     * @return self this
      */
     public function setMaxSize(float $maxSize) {
         $this->maxSize = $maxSize * 1024;
@@ -48,6 +50,7 @@ class Upload {
     /**
      * Set the file upload directory
      * @param string $directory the file upload directory
+     * @return self this
      */
     public function setDirectory(string $directory) {
         $this->directory = $directory;
@@ -66,7 +69,7 @@ class Upload {
 
     /**
      * Check if a file matches one or more formats
-     * @param $file the file
+     * @param $filename the file name
      * @param $formats the formats for comparision
      * @return bool true if the file matches the formats, false otherwise
      */
@@ -83,8 +86,7 @@ class Upload {
 
     /**
      * Upload a file
-     * @param $filename the file name
-     * @param $dir the directory
+     * @param string $filename the file name
      * @return bool true if the file has been uploaded successfully, false otherwise
      */
     public function file(string $filename) {
@@ -102,19 +104,19 @@ class Upload {
         }
 
         $this->lastFile = array(
-            'name'        => $file['name'],
-            'type'        => $file['type'],
-            'tmp_name'    => $file['tmp_name'],
-            'error'       => $file['error'],
-            'size'        => $file['size'],
-            'directory'   => $dir,
+            'name' => $file['name'],
+            'type' => $file['type'],
+            'tmp_name' => $file['tmp_name'],
+            'error' => $file['error'],
+            'size' => $file['size'],
+            'directory' => $dir,
             'uploader_ip' => $_SERVER['REMOTE_ADDR'],
-            'date'        => date('Y-m-d H:i:s')
+            'date' => date('Y-m-d H:i:s')
         );
 
         return true;
     }
-    
+
 
     /**
      * Get info about the last file uploaded

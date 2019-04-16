@@ -2,7 +2,8 @@
 
 namespace Core;
 
-class Extension {
+class Extension
+{
 
 
     public function __construct($load = null) {
@@ -12,7 +13,7 @@ class Extension {
 
         $this->load = &$load;
     }
-    
+
 
     /**
      * Load all the php files in the extension folder
@@ -42,11 +43,11 @@ class Extension {
             }
 
             $this->extensions[] = array(
-                'name'        => $extension->desc['name']?? '',
-                'description' => $extension->desc['description']?? '',
-                'version'     => $extension->desc['version']?? '',
-                'author'      => $extension->desc['author']?? '',
-                'filename'    => $filename
+                'name' => $extension->desc['name'] ?? '',
+                'description' => $extension->desc['description'] ?? '',
+                'version' => $extension->desc['version'] ?? '',
+                'author' => $extension->desc['author'] ?? '',
+                'filename' => $filename
             );
         }
 
@@ -82,12 +83,12 @@ class Extension {
         if (empty($this->extensions)) {
             return array();
         }
-        
+
         if (empty($name)) {
             return $this->extensions;
         }
-        
-        foreach($this->extensions as $extension) {
+
+        foreach ($this->extensions as $extension) {
             if ($extension['filename'] === $name) {
                 return $extension;
             }

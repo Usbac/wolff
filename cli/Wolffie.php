@@ -2,16 +2,15 @@
 
 namespace Cli;
 
-use System as Sys;
-use Library as Lib;
 use Core;
 
-class Wolffie {
+class Wolffie
+{
 
     private $list;
     private $create;
     private $delete;
-    
+
     private $command;
     private $args;
     private $route;
@@ -25,7 +24,7 @@ class Wolffie {
         $this->route = new Core\Route();
         $this->extension = new Core\Extension();
         $this->db = Core\Connection::getInstance(WOLFF_DBMS);
-        
+
         $root = '..' . DIRECTORY_SEPARATOR;
         $this->app_dir = $root . WOLFF_APP_DIR;
         $this->public_dir = $root . WOLFF_PUBLIC_DIR;
@@ -39,7 +38,7 @@ class Wolffie {
         $this->command = readline("command -> ");
         $this->args = explode(' ', $this->command);
 
-        switch($this->args[0]) {
+        switch ($this->args[0]) {
             case 'ls':
                 $this->list->index($this->args);
                 break;
@@ -85,7 +84,7 @@ class Wolffie {
             return;
         }
 
-        switch($this->args[1]) {
+        switch ($this->args[1]) {
             case 'ls':
                 echo "\nLIST COMMANDS \n";
                 echo "\n views       -> List the available views.";
@@ -145,9 +144,9 @@ class Wolffie {
         }
     }
 
-    
+
     private function export() {
-        $sql = substr($this->command, strlen($this->args[1])+1);
+        $sql = substr($this->command, strlen($this->args[1]) + 1);
 
         if (!$query = $this->db->query($sql)) {
             echo "WARNING: Error in query \n \n";
@@ -168,7 +167,7 @@ class Wolffie {
         $file = '../config.php';
         $original = "/define\((\s){0,}?[\'\"]" . strtoupper($this->args[1]) . "[\'\"](\s){0,}?,(.*?)\)\;/";
         $replacement = "define('" . strtoupper($this->args[1]) . "', " . $this->args[2] . ");";
-        
+
 
         if (!$content = file_get_contents($file)) {
             echo "WARNING: Couldn't read the config file \n \n";

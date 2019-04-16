@@ -5,7 +5,8 @@ namespace Cli;
 use Core as Core;
 use System\Library as Lib;
 
-class Lister {
+class Lister
+{
     private $route;
     private $extension;
     private $app_dir;
@@ -13,18 +14,18 @@ class Lister {
     private $args;
 
 
-    public function __construct($route, $extension, $app_dir, $public_dir)  {
+    public function __construct($route, $extension, $app_dir, $public_dir) {
         $this->route = &$route;
         $this->extension = &$extension;
         $this->app_dir = $app_dir;
         $this->public_dir = $public_dir;
     }
 
-    
+
     public function index($args) {
         $this->args = $args;
 
-        switch($this->args[1]) {
+        switch ($this->args[1]) {
             case 'extensions':
                 $this->extensions();
                 break;
@@ -67,7 +68,7 @@ class Lister {
         }
     }
 
-    
+
     private function extensions() {
         $this->extension->load(true);
         $extensions = $this->extension->get();
@@ -133,7 +134,7 @@ class Lister {
         $languages = glob($this->app_dir . 'languages' . DIRECTORY_SEPARATOR . '*', GLOB_ONLYDIR);
 
         foreach ($languages as $language) {
-            echo "\n" . substr($language, strrpos($language, DIRECTORY_SEPARATOR)+1);
+            echo "\n" . substr($language, strrpos($language, DIRECTORY_SEPARATOR) + 1);
         }
         echo "\n \n";
     }
@@ -152,15 +153,17 @@ class Lister {
     private function listViewFiles($dir, $folder = '', &$result = array()) {
         $folder = substr($dir, strrpos(str_replace('/', DIRECTORY_SEPARATOR, $dir), DIRECTORY_SEPARATOR) + 1);
         $files = scandir($dir);
-        
+
         foreach ($files as $value) {
             $path = realpath($dir . DIRECTORY_SEPARATOR . $value);
 
             if (!is_dir($path) && in_array(pathinfo($path)['extension'], array('php', 'html', 'phtml'))) {
                 $file_path = substr($path, strpos($path, $folder) + strlen($folder) + 1);
                 $result[] = $file_path;
-            } else if ($value != "." && $value != "..") {
-                $this->listFiles($path, $result);
+            } else {
+                if ($value != "." && $value != "..") {
+                    $this->listFiles($path, $result);
+                }
             }
         }
 
@@ -171,15 +174,17 @@ class Lister {
     private function listPHPFiles($dir, $folder = '', &$result = array()) {
         $folder = substr($dir, strrpos(str_replace('/', DIRECTORY_SEPARATOR, $dir), DIRECTORY_SEPARATOR) + 1);
         $files = scandir($dir);
-        
+
         foreach ($files as $value) {
             $path = realpath($dir . DIRECTORY_SEPARATOR . $value);
 
             if (!is_dir($path) && pathinfo($path)['extension'] == 'php') {
                 $file_path = substr($path, strpos($path, $folder) + strlen($folder) + 1);
                 $result[] = $file_path;
-            } else if ($value != "." && $value != "..") {
-                $this->listPHPFiles($path, $folder, $result);
+            } else {
+                if ($value != "." && $value != "..") {
+                    $this->listPHPFiles($path, $folder, $result);
+                }
             }
         }
 
@@ -196,8 +201,10 @@ class Lister {
             if (!is_dir($path)) {
                 $file_path = $path;
                 $result[] = $file_path;
-            } else if ($value != "." && $value != "..") {
-                $this->listAnyFiles($path,  $result);
+            } else {
+                if ($value != "." && $value != "..") {
+                    $this->listAnyFiles($path, $result);
+                }
             }
         }
 
@@ -216,14 +223,14 @@ class Lister {
                 echo "\n " . $key;
             }
         }
-        
+
         echo "\n \n";
     }
 
 
     private function blocked() {
         $blocked = Core\Route::getBlocked();
-        
+
         if (count($blocked) <= 0) {
             echo "\n BLOCKED: none \n \n";
             return;
@@ -239,13 +246,13 @@ class Lister {
 
     private function redirects() {
         $redirects = Core\Route::getRedirects();
-        
+
         if (count($redirects) <= 0) {
             echo "\n REDIRECTIONS: none \n \n";
             return;
         } else {
             foreach ($redirects as $key => $value) {
-                echo "\n " . $redirects[$key]['origin'] . " -> " .  $redirects[$key]['destiny'] . " | " .  $redirects[$key]['code'];
+                echo "\n " . $redirects[$key]['origin'] . " -> " . $redirects[$key]['destiny'] . " | " . $redirects[$key]['code'];
             }
         }
 
@@ -265,7 +272,7 @@ class Lister {
             }
         }
 
-        echo "\n \n"; 
+        echo "\n \n";
     }
 
 
@@ -286,9 +293,9 @@ class Lister {
         echo "\n Language: " . WOLFF_LANGUAGE;
         echo "\n";
         echo "\n -> EXTRA CONFIG: ";
-        echo "\n Cache enabled: " . (WOLFF_CACHE_ON? "yes":"no");
-        echo "\n Extensions enabled: " . (WOLFF_EXTENSIONS_ON? "yes":"no");
-        echo "\n Maintenance mode enabled: " . (WOLFF_MAINTENANCE_ON? "yes":"no");
+        echo "\n Cache enabled: " . (WOLFF_CACHE_ON ? "yes" : "no");
+        echo "\n Extensions enabled: " . (WOLFF_EXTENSIONS_ON ? "yes" : "no");
+        echo "\n Maintenance mode enabled: " . (WOLFF_MAINTENANCE_ON ? "yes" : "no");
         echo "\n \n";
     }
 

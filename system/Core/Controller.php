@@ -2,7 +2,8 @@
 
 namespace Core;
 
-class Controller {
+class Controller
+{
 
     /**
      * Loader.
@@ -38,7 +39,7 @@ class Controller {
      * @var System\Library\Upload
      */
     protected $upload;
-    
+
 
     public function __construct($load) {
         $this->load = &$load;

@@ -2,7 +2,8 @@
 
 namespace Core;
 
-class Session {
+class Session
+{
 
     /**
      * Destroy and unset the session if the live time is zero or less
@@ -21,7 +22,7 @@ class Session {
             return;
         }
 
-        foreach($_SESSION['vars_tmp_time'] as $key => $value) {
+        foreach ($_SESSION['vars_tmp_time'] as $key => $value) {
             if (time() >= $value) {
                 $this->delete($key);
             }
@@ -31,22 +32,22 @@ class Session {
 
     /**
      * Get a session variable
-     * @param string $key the variable key 
+     * @param string $key the variable key
      * @return object the variable
      */
     public function get(string $key = null) {
         if (!isset($key)) {
             return $_SESSION;
         }
-        
+
         return $_SESSION[$key];
     }
 
 
     /**
      * Set a session variable
-     * @param string $key the variable key 
-     * @param string $key the variable value
+     * @param string $key the variable key
+     * @param string value the variable value
      */
     public function set(string $key, $value) {
         $_SESSION[$key] = $value;
@@ -64,8 +65,8 @@ class Session {
 
     /**
      * Get a live time (in minutes) of a session variable
-     * @param string $key the variable key 
-     * @param bool $gmdate return the time in date format 
+     * @param string $key the variable key
+     * @param bool $gmdate return the time in date format
      * @return int the variable live time
      */
     public function getVarTime(string $key, bool $gmdate = false) {
@@ -75,16 +76,16 @@ class Session {
         }
 
         if ($gmdate) {
-            return gmdate('H:i:s', ($remaining > 0)? $remaining:0);
+            return gmdate('H:i:s', ($remaining > 0) ? $remaining : 0);
         }
-        
-        return ($remaining > 0)? $remaining:0;
+
+        return ($remaining > 0) ? $remaining : 0;
     }
 
 
     /**
      * Set a live time (in minutes) to a session variable
-     * @param string $key the variable key 
+     * @param string $key the variable key
      * @param int $time the variable live time
      */
     public function setVarTime(string $key, int $time = 1) {
@@ -94,7 +95,7 @@ class Session {
 
     /**
      * Add more live time (in minutes) to a session variable
-     * @param string $key the variable key 
+     * @param string $key the variable key
      * @param int $time the variable time to add
      */
     public function addVarTime(string $key, int $time = 1) {
@@ -112,7 +113,7 @@ class Session {
 
 
     /**
-     * Set the session live time (in minutes) starting from 
+     * Set the session live time (in minutes) starting from
      * the moment this function is called
      * @param time $time the time
      */
@@ -123,31 +124,33 @@ class Session {
 
 
     /**
-     * Get the established session live time (in minutes)
+     * Returns the established session live time (in minutes)
      * @param bool $gmdate format the time in H:i:s
+     * @return mixed the established session live time (in minutes)
      */
     public function getTime(bool $gmdate = false) {
         if ($gmdate) {
             return gmdate('H:i:s', $_SESSION['live_time']);
         }
-        
+
         return $_SESSION['live_time'];
     }
 
 
     /**
-     * Get the remaining session live time (in minutes)
+     * Returns the remaining session live time (in minutes)
      * @param bool $gmdate format the time in H:i:s
+     * @return mixed the remaining session live time (in minutes)
      */
     public function getRemainingTime(bool $gmdate = false) {
-        $end = $_SESSION['end_time']?? 0;
+        $end = $_SESSION['end_time'] ?? 0;
         $remaining = $end - time();
 
         if ($gmdate) {
-            return gmdate('H:i:s', ($remaining > 0)? $remaining:0);
+            return gmdate('H:i:s', ($remaining > 0) ? $remaining : 0);
         }
 
-        return ($remaining > 0)? $remaining:0;
+        return ($remaining > 0) ? $remaining : 0;
     }
 
 

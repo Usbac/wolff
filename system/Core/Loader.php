@@ -2,7 +2,8 @@
 
 namespace Core;
 
-class Loader {
+class Loader
+{
 
     /**
      * Template manager.
@@ -82,8 +83,8 @@ class Loader {
 
 
     /**
-     * Load a model in the indicated directory
-     * @param dir the model directory
+     * Load a model in the indicated directory and return it
+     * @param string dir the model directory
      * @return object the model
      */
     public function model(string $dir) {
@@ -91,7 +92,7 @@ class Loader {
         $dir = sanitizePath($dir);
 
         if (!modelExists($dir)) {
-            error_log("Warning: The model '" . $dir . "' doesn't exists"); 
+            error_log("Warning: The model '" . $dir . "' doesn't exists");
             return null;
         }
 
@@ -114,7 +115,7 @@ class Loader {
 
 
     /**
-     * Load a controller in the indicated directory
+     * Load a controller in the indicated directory and return it
      * @param string $dir the controller directory
      * @return object the controller
      */
@@ -157,38 +158,39 @@ class Loader {
 
 
     /**
-     * Load a language in the indicated directory
+     * Load a language in the indicated directory and return its content
      * @param string $dir the language directory
      * @param string $language the language selected
+     * @return mixed the language content or false if an error happens
      */
     public function language(string $dir, string $language = WOLFF_LANGUAGE) {
         //Sanitize directory
         $dir = sanitizePath($dir);
         $file_path = getServerRoot() . WOLFF_APP_DIR . 'languages' . DIRECTORY_SEPARATOR . $language . DIRECTORY_SEPARATOR . $dir . '.php';
-        
+
         if (file_exists($file_path)) {
             include_once($file_path);
         }
 
         if (!isset($data)) {
-            error_log("Warning: The " . $language . " language for '" . $dir . "' doesn't exists"); 
+            error_log("Warning: The " . $language . " language for '" . $dir . "' doesn't exists");
             return false;
         } else {
             return $data;
         }
-
     }
 
 
     /**
-     * Load a library in the indicated directory
+     * Load a library in the indicated directory and return it
      * @param string $dir the library directory
+     * @return object the library class or null if an error happens
      */
     public function library(string $dir) {
         $dir = sanitizeURL($dir);
-        
+
         if (!libraryExists($dir)) {
-            error_log("Warning: The library '" . $dir . "' doesn't exists"); 
+            error_log("Warning: The library '" . $dir . "' doesn't exists");
             return null;
         }
 
@@ -197,7 +199,7 @@ class Loader {
         return new $className;
     }
 
-    
+
     /**
      * Load a view in the indicated directory
      * @param string $dir the view directory
@@ -231,7 +233,7 @@ class Loader {
         die();
     }
 
-    
+
     /**
      * Load the maintenance view page
      */

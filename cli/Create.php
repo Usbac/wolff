@@ -2,10 +2,10 @@
 
 namespace Cli;
 
-use System as Sys;
 use System\Library as Lib;
 
-class Create {
+class Create
+{
     private $route;
     private $extension;
     private $app_dir;
@@ -13,14 +13,14 @@ class Create {
     private $routes_dir;
 
 
-    public function __construct($route, $extension, $app_dir)  {
+    public function __construct($route, $extension, $app_dir) {
         $this->route = &$route;
         $this->extension = &$extension;
         $this->app_dir = $app_dir;
         $this->routes_dir = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'system' . DIRECTORY_SEPARATOR . 'Routes.php';
     }
 
-    
+
     public function index($args) {
         $this->args = $args;
         $function = $this->args[1];
@@ -47,7 +47,7 @@ class Create {
             echo "WARNING: controller " . $this->args[2] . " already exists \n \n";
             return;
         }
-        
+
         $file_name = "";
         $namespace = $this->createNamespace($dir, $file_name, 'controller');
 
@@ -60,10 +60,10 @@ class Create {
 
         fwrite($file, $content);
         fclose($file);
-        
+
         echo "Controller " . $this->args[2] . " created successfully! \n \n";
     }
-    
+
 
     private function model() {
         $file_dir = $this->app_dir . 'models' . DIRECTORY_SEPARATOR . $this->args[2] . '.php';
@@ -88,7 +88,7 @@ class Create {
 
         echo "Model " . $this->args[2] . " created successfully! \n \n";
     }
-    
+
 
     private function view() {
         $file_dir = $this->app_dir . 'views' . DIRECTORY_SEPARATOR . $this->args[2] . '.php';
@@ -106,10 +106,10 @@ class Create {
         }
 
         $file = fopen($file_dir, 'w') or die("WARNING: Cannot create view file \n \n");
-        
+
         $content = file_get_contents('templates/view.txt');
         $content = str_replace('{title}', $this->args[2], $content);
-        
+
         fwrite($file, $content);
         fclose($file);
 
@@ -134,10 +134,10 @@ class Create {
 
         $original = array('{classname}', '{name}', '{description}', '{version}', '{author}');
         $replacement = array($this->args[2], $name, $description, $version, $author);
-        
+
         $content = file_get_contents('templates/extension.txt');
         $content = str_replace($original, $replacement, $content);
-        
+
         fwrite($file, $content);
         fclose($file);
 
@@ -236,7 +236,7 @@ class Create {
     private function redirect() {
         $file = fopen($this->routes_dir, 'r') or die('WARNING: Cannot read Routes file');
         $content = fread($file, filesize($this->routes_dir));
-        $original =  $this->args[2];
+        $original = $this->args[2];
         $redirect = $this->args[3];
         $redirect_code = "";
 
@@ -246,7 +246,7 @@ class Create {
             return;
         }
         fclose($file);
-        
+
         if (isset($this->args[4]) && is_numeric($this->args[4])) {
             $redirect_code = ", " . $this->args[4];
         }

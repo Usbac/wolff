@@ -2,7 +2,7 @@
 
 namespace {
 
-    
+
     /**
      * Sanitize an url
      * @param string url the url
@@ -24,9 +24,9 @@ namespace {
 
 
     /**
-     * Checks if the model exists in the indicated directory
-     * @param dir the directory of the model
-     * @return boolean true if the model exists, false otherwise 
+     * Returns true if the model exists in the indicated directory, false otherwise
+     * @param string $dir the directory of the model
+     * @return boolean true if the model exists, false otherwise
      */
     function modelExists(string $dir) {
         return file_exists(getModelPath($dir));
@@ -35,7 +35,7 @@ namespace {
 
     /**
      * Returns the complete path of the model
-     * @param dir the directory of the model
+     * @param string $dir the directory of the model
      * @return string the complete path of the model
      */
     function getModelPath(string $dir) {
@@ -45,17 +45,17 @@ namespace {
 
     /**
      * Checks if the controller exists in the indicated directory
-     * @param dir the directory of the controller
-     * @return boolean true if the controller exists, false otherwise 
+     * @param string $dir the directory of the controller
+     * @return boolean true if the controller exists, false otherwise
      */
     function controllerExists(string $dir) {
         return file_exists(getControllerPath($dir));
     }
 
-    
+
     /**
      * Returns the complete path of the controller
-     * @param dir the directory of the controller
+     * @param string $dir the directory of the controller
      * @return string the complete path of the controller
      */
     function getControllerPath(string $dir) {
@@ -65,8 +65,8 @@ namespace {
 
     /**
      * Returns true if the controller's function exists, false otherwise
-     * @param dir the directory of the controller
-     * @return boolean true if the controller's function exists, false otherwise 
+     * @param string $dir the directory of the controller
+     * @return boolean true if the controller's function exists, false otherwise
      */
     function functionExists(string $dir) {
         //Remove the function from the url and save the function name
@@ -79,7 +79,7 @@ namespace {
         try {
             $class = new \ReflectionClass($class);
             $class->getMethod($function);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             error_log($e->getMessage());
             return false;
         }
@@ -87,21 +87,21 @@ namespace {
         return true;
     }
 
-    
+
     /**
      * Checks if the language file exists in the indicated directory
-     * @param dir the directory of the language file
-     * @param language the language selected (it will take the default language if no language is specified)
-     * @return boolean true if the language file exists, false otherwise 
+     * @param string $dir the directory of the language file
+     * @param string $language the language selected (it will take the default language if no language is specified)
+     * @return boolean true if the language file exists, false otherwise
      */
     function languageExists(string $dir, string $language = WOLFF_LANGUAGE) {
         return file_exists(getLanguagePath($dir, $language));
     }
 
-    
+
     /**
      * Returns the complete path of the language
-     * @param dir the directory of the language
+     * @param string $dir the directory of the language
      * @return string the complete path of the language
      */
     function getLanguagePath(string $dir, string $language = WOLFF_LANGUAGE) {
@@ -111,37 +111,37 @@ namespace {
 
     /**
      * Checks if the library exists in the indicated directory
-     * @param dir the directory of the library
-     * @return boolean true if the library exists, false otherwise 
+     * @param string $dir the directory of the library
+     * @return boolean true if the library exists, false otherwise
      */
     function libraryExists(string $dir) {
-        return file_exists(getLibraryPath($dir)); 
+        return file_exists(getLibraryPath($dir));
     }
 
 
     /**
      * Returns the complete path of the library
-     * @param dir the directory of the library
+     * @param string $dir the directory of the library
      * @return string the complete path of the library
      */
     function getLibraryPath(string $dir) {
         return getServerRoot() . WOLFF_APP_DIR . 'libraries/' . $dir . '.php';
     }
 
-    
+
     /**
      * Checks if the view exists in the indicated directory
-     * @param dir the directory of the view
-     * @return boolean true if the view exists, false otherwise 
+     * @param string $dir the directory of the view
+     * @return boolean true if the view exists, false otherwise
      */
     function viewExists(string $dir) {
-        return file_exists(getViewPath($dir)); 
+        return file_exists(getViewPath($dir));
     }
 
-    
+
     /**
      * Returns the complete path of the view
-     * @param dir the directory of the view
+     * @param string $dir the directory of the view
      * @return string the complete path of the view
      */
     function getViewPath(string $dir) {
@@ -151,8 +151,8 @@ namespace {
 
     /**
      * Checks if the substring is present in another string
-     * @param str the string
-     * @param needle substring you are looking for
+     * @param string $str the string
+     * @param string $needle substring you are looking for
      * @return boolean true if the substring is present in the string, false otherwise
      */
     function strContains(string $str, string $needle) {
@@ -169,7 +169,7 @@ namespace {
         die();
     }
 
-    
+
     /**
      * Print an array in a nice looking way
      * @param array $array the array to print
@@ -207,7 +207,7 @@ namespace {
      * @return mixed The first element of an array, or false if it's empty
      */
     function arrayFirst($array) {
-        return array_values($array)[0]?? false;
+        return array_values($array)[0] ?? false;
     }
 
 
@@ -234,17 +234,17 @@ namespace {
         if (count($array) == count($array, COUNT_RECURSIVE)) {
             fputcsv($file, array_keys($array));
             fputcsv($file, $array);
-        //Multidimensional array
+            //Multidimensional array
         } else {
             fputcsv($file, array_keys(arrayFirst($array)));
             foreach ($array as $row) {
                 fputcsv($file, $row);
             }
         }
-        
+
         fclose($file);
 
-        header('Content-Description: File Transfer'); 
+        header('Content-Description: File Transfer');
         header('Content-Type: text/csv; charset=utf-8');
         header('Content-Disposition: attachment; filename=' . basename($filename));
         header('Content-Length: ' . filesize($filename));
@@ -257,17 +257,17 @@ namespace {
      * @return string the current client IP
      */
     function getClientIP() {
-        $http_client_ip = filter_var($_SERVER['HTTP_CLIENT_IP']?? "", FILTER_VALIDATE_IP);
-        $http_forwarded = filter_var($_SERVER['HTTP_X_FORWARDED_FOR']?? "", FILTER_VALIDATE_IP);
+        $http_client_ip = filter_var($_SERVER['HTTP_CLIENT_IP'] ?? "", FILTER_VALIDATE_IP);
+        $http_forwarded = filter_var($_SERVER['HTTP_X_FORWARDED_FOR'] ?? "", FILTER_VALIDATE_IP);
 
         if (!empty($http_client_ip)) {
             return $http_client_ip;
-        } 
-        
+        }
+
         if (!empty($http_forwarded)) {
             return $http_forwarded;
         }
-        
+
         return $_SERVER['REMOTE_ADDR'];
     }
 
@@ -279,8 +279,8 @@ namespace {
     function getServerRoot() {
         return $_SERVER['DOCUMENT_ROOT'];
     }
-    
-    
+
+
     /**
      *  ---> CONSTANTS <---
      */
@@ -303,7 +303,7 @@ namespace {
         return WOLFF_CACHE_ON;
     }
 
-    
+
     /**
      * Returns true if the maintenance mode is enabled, false otherwise
      * @return bool true if the maintenance mode is enabled, false otherwise
@@ -366,7 +366,7 @@ namespace {
         return WOLFF_CACHE_DIR;
     }
 
-    
+
     /**
      * Returns the title of the project
      * @return string the title of the project
@@ -375,7 +375,7 @@ namespace {
         return WOLFF_PAGE_TITLE;
     }
 
-    
+
     /**
      * Returns the main page of the project
      * @return string the main page of the project
@@ -383,5 +383,4 @@ namespace {
     function getMainPage() {
         return WOLFF_MAIN_PAGE;
     }
-
 }

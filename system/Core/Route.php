@@ -2,9 +2,10 @@
 
 namespace Core;
 
-class Route {
+class Route
+{
 
-	/**
+    /**
      * List of routes.
      *
      * @var array
@@ -25,7 +26,7 @@ class Route {
      */
     private static $redirects = [];
 
-    
+
     const STATUS_OK = 200;
     const STATUS_REDIRECT = 301;
 
@@ -37,7 +38,7 @@ class Route {
      */
     public static function get(string $url) {
         $url = explode('/', sanitizeURL($url));
-        $urlLength = count($url)-1;
+        $urlLength = count($url) - 1;
         $finished = false;
 
         if (self::$routes == []) {
@@ -46,7 +47,7 @@ class Route {
 
         foreach (self::$routes as $key => $value) {
             $route = explode('/', $key);
-            $routeLength = count($route)-1;
+            $routeLength = count($route) - 1;
 
             for ($i = 0; $i <= $routeLength && $i <= $urlLength; $i++) {
                 if ($url[$i] != $route[$i] && !empty($route[$i]) && !self::isGetVariable($route[$i])) {
@@ -59,7 +60,7 @@ class Route {
                 }
 
                 //Finish if last GET variable from url is empty
-                if ($i+1 === $routeLength && $i === $urlLength && self::isGetVariable($route[$i+1])) {
+                if ($i + 1 === $routeLength && $i === $urlLength && self::isGetVariable($route[$i + 1])) {
                     self::setGetVariable($route[$i], $url[$i]);
                     $finished = true;
                 }
@@ -98,7 +99,7 @@ class Route {
         $url = sanitizeURL($url);
         self::$routes[$url] = array(
             'function' => $function,
-            'status'   => self::STATUS_OK
+            'status' => self::STATUS_OK
         );
     }
 
@@ -115,13 +116,13 @@ class Route {
 
         self::$routes[$url] = array(
             'function' => self::$routes[$url2]['function'],
-            'status'   => $status
+            'status' => $status
         );
-        
-        self::$redirects[] = array (
-            'origin'  => $url,
+
+        self::$redirects[] = array(
+            'origin' => $url,
             'destiny' => $url2,
-            'code'    => $status
+            'code' => $status
         );
     }
 
@@ -158,7 +159,7 @@ class Route {
                     return true;
                 }
 
-                if ($i === $urlLength-1 && $i === $blockedLength-1) {
+                if ($i === $urlLength - 1 && $i === $blockedLength - 1) {
                     return true;
                 }
             }
@@ -211,7 +212,7 @@ class Route {
      */
     private static function setGetVariable(string $key, $value = '') {
         $key = self::clearGetVariable($key);
-        $_GET[$key] = $value?? '';
+        $_GET[$key] = $value ?? '';
     }
 
 
@@ -222,8 +223,8 @@ class Route {
     public static function getRoutes() {
         return self::$routes;
     }
-    
-    
+
+
     /**
      * Returns all the available redirections
      * @return array the available redirections
@@ -232,7 +233,7 @@ class Route {
         return self::$redirects;
     }
 
-    
+
     /**
      * Returns all the blocked routes
      * @return array the blocked routes

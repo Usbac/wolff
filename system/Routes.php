@@ -9,6 +9,6 @@ use Core\Route;
  *
  */
 
-Route::add('main_page', function() {
+Route::add('main_page', function () {
     $this->load->controller('home');
 });

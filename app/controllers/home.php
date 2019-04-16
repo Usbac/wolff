@@ -2,12 +2,13 @@
 
 namespace Controller;
 
-class Home extends \Core\Controller {
+class Home extends \Core\Controller
+{
 
     public function index() {
         $this->data['lang'] = $this->load->language('home');
         $model = $this->load->model('home');
-        
+
         $this->load->view('home', $this->data);
     }
 

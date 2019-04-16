@@ -4,7 +4,8 @@ namespace Core;
 
 use System\Library\Easql;
 
-class Model {
+class Model
+{
 
     /**
      * Loader.

@@ -1,41 +1,48 @@
 {
-    "name": "usbac/wolff",
-    "description": "Ridiculously small PHP framework",
-    "keywords": ["framework", "php", "small", "web", "fast", "mvc"],
-    "type": "project",
-    "version": "0.9.4.2",
-    "license": "MIT",
-    "support": {
-        "issues": "https://github.com/Usbac/Wolff/issues",
-        "source": "https://github.com/Usbac/Wolff",
-        "wiki": "https://github.com/Usbac/Wolff/wiki",
-        "email": "Contacto@usbac.com.ve"
+  "name": "usbac/wolff",
+  "description": "Ridiculously small PHP framework",
+  "keywords": [
+    "framework",
+    "php",
+    "small",
+    "web",
+    "fast",
+    "mvc"
+  ],
+  "type": "project",
+  "version": "0.9.4.2",
+  "license": "MIT",
+  "support": {
+    "issues": "https://github.com/Usbac/Wolff/issues",
+    "source": "https://github.com/Usbac/Wolff",
+    "wiki": "https://github.com/Usbac/Wolff/wiki",
+    "email": "Contacto@usbac.com.ve"
+  },
+  "authors": [
+    {
+      "name": "Usbac",
+      "homepage": "http://www.usbac.com.ve",
+      "email": "Contacto@usbac.com.ve"
     },
-    "authors": [
-        {
-            "name": "Usbac",
-            "homepage": "http://www.usbac.com.ve",
-            "email": "Contacto@usbac.com.ve"
-        },
-        {
-            "name": "Franklin Moreno",
-            "email": "Cfranklinmoreno@gmail.com"
-        }
-    ],
-    "minimum-stability": "dev",
-    "require": {
-        "php": ">=7.0.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "Root\\" : "", 
-            "System\\": "system/",
-            "Core\\": "system/Core/",
-            "Extension\\": "extension/",
-            "Library\\": "app/libraries/",
-            "Model\\": "app/models/",
-            "Controller\\": "app/controllers/",
-            "Cli\\": "cli/"
-        }
+    {
+      "name": "Franklin Moreno",
+      "email": "Cfranklinmoreno@gmail.com"
     }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php": ">=7.0.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Root\\": "",
+      "System\\": "system/",
+      "Core\\": "system/Core/",
+      "Extension\\": "extension/",
+      "Library\\": "app/libraries/",
+      "Model\\": "app/models/",
+      "Controller\\": "app/controllers/",
+      "Cli\\": "cli/"
+    }
+  }
 }

@@ -2,7 +2,8 @@
 
 namespace Core;
 
-class Connection {
+class Connection
+{
 
     /**
      * Static instance of the connection.
@@ -17,14 +18,15 @@ class Connection {
      * @var \PDO
      */
     protected static $connection;
-    
+
 
     /**
      * Connects with the database using the constants present in config.php
      */
     public function __construct(string $type) {
         try {
-            self::$connection = new \PDO(strtolower($type) . ":host=" . WOLFF_SERVER . "; dbname=" . WOLFF_DB . "", WOLFF_DBUSERNAME, WOLFF_DBPASSWORD, array(\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+            self::$connection = new \PDO(strtolower($type) . ":host=" . WOLFF_SERVER . "; dbname=" . WOLFF_DB . "",
+                WOLFF_DBUSERNAME, WOLFF_DBPASSWORD, array(\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
         } catch (\PDOException $e) {
             error_log($e->getMessage());
         }
@@ -69,11 +71,11 @@ class Connection {
             if (count($result) <= 1) {
                 return $result[0];
             }
-    
+
             return $result;
         }
 
-        $args = is_array($args)? $args: array($args);
+        $args = is_array($args) ? $args : array($args);
 
         //Query with args
         $stmt = self::$connection->prepare($sql);
@@ -97,7 +99,7 @@ class Connection {
     public function runJson(string $sql, $args = []) {
         return json_encode(self::run($sql, $args));
     }
-    
+
 
     /**
      * Export a query to a csv

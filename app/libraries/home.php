@@ -2,7 +2,8 @@
 
 namespace Library;
 
-class Home {
+class Home
+{
 
     public function helloWorld() {
         echo 'Hello world';
