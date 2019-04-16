@@ -4,10 +4,28 @@ namespace Core;
 
 class Route {
 
+	/**
+	 * List of routes.
+	 *
+	 * @var array
+	 */
     private static $routes = [];
+
+    /**
+	 * List of blocked routes.
+	 *
+	 * @var array
+	 */
     private static $blocked = [];
+
+    /**
+	 * List of redirections.
+	 *
+	 * @var array
+	 */
     private static $redirects = [];
 
+    
     const STATUS_OK = 200;
     const STATUS_REDIRECT = 301;
 
@@ -97,7 +115,6 @@ class Route {
 
         self::$routes[$url] = array(
             'function' => self::$routes[$url2]['function'],
-            'api'      => self::$routes[$url2]['api'],
             'status'   => $status
         );
         

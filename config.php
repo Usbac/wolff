@@ -1,5 +1,5 @@
 <?php 
-//Wolff v0.9.4.1
+//Wolff v0.9.4.2
 
 //Server 
 define('WOLFF_DBMS', 'mysql'); 
@@ -20,7 +20,7 @@ define('WOLFF_PAGE_TITLE', 'Wolff');
 define('WOLFF_MAIN_PAGE', 'main_page'); 
 define('WOLFF_LANGUAGE', 'english');
 
-//Others
+//Extra
 define('WOLFF_CACHE_ON', true);
 define('WOLFF_EXTENSIONS_ON', true);
 define('WOLFF_MAINTENANCE_ON', false);

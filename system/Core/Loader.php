@@ -4,9 +4,32 @@ namespace Core;
 
 class Loader {
 
+    /**
+	 * Template manager.
+	 *
+	 * @var Core\Template
+	 */
     private $template;
+
+    /**
+	 * Session manager.
+	 *
+	 * @var Core\Session
+	 */
     private $session;
+
+    /**
+	 * Cache system.
+	 *
+	 * @var Core\Cache
+	 */
     private $cache;
+
+    /**
+	 * File uploader utility.
+	 *
+	 * @var System\Library\Upload
+	 */
     private $upload;
 
     const HEADER_404 = "HTTP/1.0 404 Not Found";

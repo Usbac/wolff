@@ -2,7 +2,7 @@
 
 namespace Cli;
 
-use System as Sys;
+use Core as Core;
 use System\Library as Lib;
 
 class Lister {
@@ -153,7 +153,7 @@ class Lister {
         $folder = substr($dir, strrpos(str_replace('/', DIRECTORY_SEPARATOR, $dir), DIRECTORY_SEPARATOR) + 1);
         $files = scandir($dir);
         
-        foreach ($files as $key => $value) {
+        foreach ($files as $value) {
             $path = realpath($dir . DIRECTORY_SEPARATOR . $value);
 
             if (!is_dir($path) && in_array(pathinfo($path)['extension'], array('php', 'html', 'phtml'))) {
@@ -172,7 +172,7 @@ class Lister {
         $folder = substr($dir, strrpos(str_replace('/', DIRECTORY_SEPARATOR, $dir), DIRECTORY_SEPARATOR) + 1);
         $files = scandir($dir);
         
-        foreach ($files as $key => $value) {
+        foreach ($files as $value) {
             $path = realpath($dir . DIRECTORY_SEPARATOR . $value);
 
             if (!is_dir($path) && pathinfo($path)['extension'] == 'php') {
@@ -190,7 +190,7 @@ class Lister {
     private function listAnyFiles($dir, &$result = array()) {
         $files = scandir($dir);
 
-        foreach ($files as $key => $value) {
+        foreach ($files as $value) {
             $path = realpath($dir . DIRECTORY_SEPARATOR . $value);
 
             if (!is_dir($path)) {

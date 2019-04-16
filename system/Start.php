@@ -8,10 +8,40 @@ use System\Library\{Upload, Maintenance};
 class Start {
 
     public $extension;
+
+    /**
+	 * Loader.
+	 *
+	 * @var Core\Loader
+	 */
     public $load;
+
+    /**
+	 * Static instance of the connection.
+	 *
+	 * @var Core\Connection
+	 */
     public $db;
+
+    /**
+	 * Session manager.
+	 *
+	 * @var Core\Session
+	 */
     public $session;
+
+    /**
+	 * Cache system.
+	 *
+	 * @var Core\Cache
+	 */
     public $cache;
+
+    /**
+	 * File uploader utility.
+	 *
+	 * @var System\Library\Upload
+	 */
     public $upload;
 
 
@@ -19,8 +49,21 @@ class Start {
      * Start the loading of the page
      */
     public function __construct() {
-        //$start = microtime(true);
         $this->initComponents();
+
+        $test = array(
+            array(
+                'nombre'  => 'Alejandro',
+                'apellido'=> 'castillo',
+                'edad'    => 21
+            ), array(
+                'nombre'  => 'Jose',
+                'apellido'=> 'lmao',
+                'edad'    => 19
+            )
+        );
+
+        arrayToCsv('testing', $test);
 
         //Check maintenance mode
         if (maintenanceEnabled() && !Maintenance::isClientAllowed()) {
@@ -49,7 +92,6 @@ class Start {
         } else {
             $this->load->redirect404();
         }
-        //echod(microtime(true) - $start);
     }
 
 

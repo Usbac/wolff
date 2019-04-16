@@ -228,14 +228,21 @@ namespace {
      */
     function arrayToCsv(string $filename, array $array) {
         $filename .= ".csv";
-        $fp = fopen($filename, 'w');
+        $file = fopen($filename, 'w');
 
-        fputcsv($fp, array_keys(arrayFirst($array)));
-        foreach ($array as $row) {
-            fputcsv($fp, $row);
+        //Single array
+        if (count($array) == count($array, COUNT_RECURSIVE)) {
+            fputcsv($file, array_keys($array));
+            fputcsv($file, $array);
+        //Multidimensional array
+        } else {
+            fputcsv($file, array_keys(arrayFirst($array)));
+            foreach ($array as $row) {
+                fputcsv($file, $row);
+            }
         }
         
-        fclose($fp);
+        fclose($file);
 
         header('Content-Description: File Transfer'); 
         header('Content-Type: text/csv; charset=utf-8');

@@ -4,7 +4,18 @@ namespace Core;
 
 class Cache {
 
+    /**
+	 * List of specific cache life times in minutes.
+	 *
+	 * @var array
+	 */
     private $remembered = [];
+
+    /**
+	 * General cache life time in minutes.
+	 *
+	 * @var int
+	 */
     private $time = 1440;
 
     

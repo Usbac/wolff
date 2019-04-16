@@ -4,7 +4,18 @@ namespace Core;
 
 class Connection {
 
+    /**
+	 * Static instance of the connection.
+	 *
+	 * @var Core\Connection
+	 */
     protected static $instance;
+
+    /**
+	 * DB connection.
+	 *
+	 * @var \PDO
+	 */
     protected static $connection;
     
 

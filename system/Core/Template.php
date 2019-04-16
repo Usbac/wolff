@@ -4,6 +4,11 @@ namespace Core;
 
 class Template {
 
+    /**
+	 * Cache system.
+	 *
+	 * @var Core\Cache
+	 */
     private $cache;
 
 
