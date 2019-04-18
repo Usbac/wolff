@@ -280,6 +280,15 @@ namespace {
         return $_SERVER['DOCUMENT_ROOT'];
     }
 
+    
+    /**
+     * Returns the current page relative to the project url
+     * @return string the current page relative to the project url
+     */
+    function getCurrentPage() {
+        return substr($_SERVER['REQUEST_URI'], strlen(getDirectory()));
+    }
+
 
     /**
      *  ---> CONSTANTS <---

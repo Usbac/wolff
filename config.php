@@ -1,5 +1,5 @@
 <?php
-//Wolff v0.9.4.2
+//Wolff v0.9.5
 
 //Server 
 define('WOLFF_DBMS', 'mysql');

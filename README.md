@@ -9,7 +9,7 @@
 <h4 align="center">Ridiculously small PHP framework.</h4>
 
 <p align="center">
-<img src="https://img.shields.io/badge/stability-stable-green.svg"> <img src="https://img.shields.io/badge/version-0.9.4.2-blue.svg"> <img src="https://img.shields.io/badge/license-MIT-orange.svg">
+<img src="https://img.shields.io/badge/stability-stable-green.svg"> <img src="https://img.shields.io/badge/version-0.9.5-blue.svg"> <img src="https://img.shields.io/badge/license-MIT-orange.svg">
 </p>
 
 Wolff is a ridiculously small and lightweight PHP framework with useful functions and utilities like a template, route, session and language system. 
@@ -56,6 +56,11 @@ With it you can create controllers, languages, pages, routes, export queries to 
 <p align="center">
 <img src="http://usbac.com.ve/wp-content/uploads/2019/03/wolff-cli.jpg" alt="Wolff cli" width="400">
 </p>
+
+## Requirements
+
+PHP version 7.0 or higher is required.
+You can see how to install Wolff in the [Wiki - install](https://github.com/Usbac/Wolff/wiki/Installation) page.
 
 ## Documentation
 

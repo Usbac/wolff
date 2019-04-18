@@ -122,38 +122,38 @@ class Template
      * @return string the view content with the functions formated
      */
     private function replaceFunctions($content) {
-        $format = '/\{\{( ?){1,}{func}( ?){1,}\|([^\}]{1,})/';
+        $format = '/{func}( ?){1,}\|([^\}]{1,})/';
 
         //Escape
-        $content = preg_replace(str_replace('{func}', 'e', $format), '<?php echo htmlspecialchars(strip_tags($3)); ',
+        $content = preg_replace(str_replace('{func}', 'e', $format), 'htmlspecialchars(strip_tags($2))',
             $content);
         //HTMLspecialchars
         $content = preg_replace(str_replace('{func}', 'especial', $format),
-            '<?php echo htmlspecialchars($3, ENT_QUOTES, \'UTF-8\'); ', $content);
+            'htmlspecialchars($2, ENT_QUOTES, \'UTF-8\')', $content);
         //Uppercase
-        $content = preg_replace(str_replace('{func}', 'upper', $format), '<?php echo strtoupper($3); ', $content);
+        $content = preg_replace(str_replace('{func}', 'upper', $format), 'strtoupper($2)', $content);
         //Lowercase
-        $content = preg_replace(str_replace('{func}', 'lower', $format), '<?php echo strtolower($3); ', $content);
+        $content = preg_replace(str_replace('{func}', 'lower', $format), 'strtolower($2)', $content);
         //First uppercase
-        $content = preg_replace(str_replace('{func}', 'upperf', $format), '<?php echo ucfirst($3); ', $content);
+        $content = preg_replace(str_replace('{func}', 'upperf', $format), 'ucfirst($2)', $content);
         //Length
-        $content = preg_replace(str_replace('{func}', 'length', $format), '<?php echo strlen($3); ', $content);
+        $content = preg_replace(str_replace('{func}', 'length', $format), 'strlen($2)', $content);
         //Title case
-        $content = preg_replace(str_replace('{func}', 'title', $format), '<?php echo ucwords($3); ', $content);
+        $content = preg_replace(str_replace('{func}', 'title', $format), 'ucwords($2)', $content);
         //MD5
-        $content = preg_replace(str_replace('{func}', 'md5', $format), '<?php echo md5($3); ', $content);
+        $content = preg_replace(str_replace('{func}', 'md5', $format), 'md5($2)', $content);
         //Count words
-        $content = preg_replace(str_replace('{func}', 'countwords', $format), '<?php echo str_word_count($3); ',
+        $content = preg_replace(str_replace('{func}', 'countwords', $format), 'str_word_count($2)',
             $content);
         //Trim
-        $content = preg_replace(str_replace('{func}', 'trim', $format), '<?php echo trim($3); ', $content);
+        $content = preg_replace(str_replace('{func}', 'trim', $format), 'trim($2)', $content);
         //nl2br
-        $content = preg_replace(str_replace('{func}', 'nl2br', $format), '<?php echo nl2br($3); ', $content);
+        $content = preg_replace(str_replace('{func}', 'nl2br', $format), 'nl2br($2)', $content);
         //Join
-        $content = preg_replace(str_replace('{func}', 'join\((.*?)\)', $format), '<?php echo implode($2, $4); ',
+        $content = preg_replace(str_replace('{func}', 'join\((.*?)\)', $format), 'implode($1, $3)',
             $content);
         //Repeat
-        $content = preg_replace(str_replace('{func}', 'repeat\((.*?)\)', $format), '<?php echo str_repeat($4, $2); ',
+        $content = preg_replace(str_replace('{func}', 'repeat\((.*?)\)', $format), 'str_repeat($3, $1)',
             $content);
 
         return $content;
@@ -166,9 +166,8 @@ class Template
      * @return string the view content with the tags formated
      */
     private function replaceTags($content) {
-        $search = array('{{', '}}', '{%', '%}');
-        $replace = array('<?php echo ', '?>', '<?php ', ' ?>');
-        return str_replace($search, $replace, $content);
+        $content = preg_replace('/\{\{(.*?)\}\}/', '<?php echo $1; ?>', $content);
+        return preg_replace('/\{%(.*?)%\}/', '<?php $1 ?>', $content);
     }
 
 

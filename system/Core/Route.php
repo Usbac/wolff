@@ -86,6 +86,10 @@ class Route
             return;
         }
 
+        if (self::$routes[$key]['api']) {
+            header('Content-Type: application/json');
+        }
+
         http_response_code(self::$routes[$key]['status']);
     }
 
@@ -99,7 +103,24 @@ class Route
         $url = sanitizeURL($url);
         self::$routes[$url] = array(
             'function' => $function,
+            'api' => false,
             'status' => self::STATUS_OK
+        );
+    }
+
+
+    /**
+     * Add an API
+     * @param string $url the url
+     * @param int $status the http response code
+     * @param mixed $function the function that must be executed when accessing the API
+     */
+    public static function api(string $url, int $status, $function) {
+        $url = sanitizeURL($url);
+        self::$routes[$url] = array(
+            'function' => $function,
+            'api' => true,
+            'status' => $status
         );
     }
 
@@ -116,6 +137,7 @@ class Route
 
         self::$routes[$url] = array(
             'function' => self::$routes[$url2]['function'],
+            'api' => false,
             'status' => $status
         );
 
@@ -190,7 +212,7 @@ class Route
      * @param string $str the string
      * @return boolean true if the string has the format of a route GET variable, false otherwise
      */
-    private static function isGetVariable(string $str) {
+    public static function isGetVariable(string $str) {
         return preg_match('/\{(.*)?\}/', $str);
     }
 
@@ -200,7 +222,7 @@ class Route
      * @param string $str the string
      * @return string the get variable without brackets
      */
-    private static function clearGetVariable(string $str) {
+    public static function clearGetVariable(string $str) {
         return preg_replace('/\{|\}/', '', $str);
     }
 
