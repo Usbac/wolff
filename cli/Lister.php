@@ -83,6 +83,7 @@ class Lister
             echo "\nDescription: " . $ext['description'];
             echo "\nVersion: " . $ext['version'];
             echo "\nAuthor: " . $ext['author'];
+            echo "\nDirectory: " . $ext['directory'];
             echo "\nFilename: " . $ext['filename'];
             echo "\n";
         }
@@ -285,7 +286,7 @@ class Lister
         echo "\n Password: " . WOLFF_DBPASSWORD;
         echo "\n";
         echo "\n -> GENERAL CONFIG: ";
-        echo "\n Project folder: " . WOLFF_SYS_DIR;
+        echo "\n Project folder: " . WOLFF_ROOT_DIR;
         echo "\n App folder: " . WOLFF_APP_DIR;
         echo "\n Public folder: " . WOLFF_PUBLIC_DIR;
         echo "\n Page title: " . WOLFF_PAGE_TITLE;

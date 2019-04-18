@@ -29,16 +29,23 @@
       "email": "Cfranklinmoreno@gmail.com"
     }
   ],
-  "minimum-stability": "dev",
   "require": {
     "php": ">=7.0.0"
   },
   "autoload": {
+    "files": [
+      "config.php",
+      "system/stdlib/config.php",
+      "system/stdlib/mvc.php",
+      "system/stdlib/sanitizer.php",
+      "system/stdlib/utilities.php",
+      "system/routes.php"
+    ],
     "psr-4": {
       "Root\\": "",
       "System\\": "system/",
       "Core\\": "system/Core/",
-      "Extension\\": "extension/",
+      "Extension\\": "system/Extension/",
       "Library\\": "app/libraries/",
       "Model\\": "app/models/",
       "Controller\\": "app/controllers/",
