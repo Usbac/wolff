@@ -98,7 +98,7 @@ class Upload
         }
 
         $dir = getServerRoot() . WOLFF_PUBLIC_DIR . $this->directory;
-        if (!move_uploaded_file($file['tmp_name'], $dir . DIRECTORY_SEPARATOR . $file['name'])) {
+        if (!move_uploaded_file($file['tmp_name'], $dir . '/' . $file['name'])) {
             error_log("Error: Upload of '" . $file['name'] . "' failed");
             return false;
         }

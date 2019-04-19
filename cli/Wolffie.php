@@ -25,7 +25,7 @@ class Wolffie
         $this->extension = new Core\Extension();
         $this->db = Core\Connection::getInstance(WOLFF_DBMS);
 
-        $root = '..' . DIRECTORY_SEPARATOR;
+        $root = '../';
         $this->app_dir = $root . WOLFF_APP_DIR;
         $this->public_dir = $root . WOLFF_PUBLIC_DIR;
         $this->list = new Lister($this->route, $this->extension, $this->app_dir, $this->public_dir);
@@ -50,6 +50,7 @@ class Wolffie
                 break;
             case 'set':
                 $this->set();
+                break;
             case 'help':
                 $this->help();
                 break;
@@ -63,7 +64,7 @@ class Wolffie
                 die();
                 break;
             default:
-                echo "WARNING: Command doesn't exists \n \n";
+                echo "\e[1;31m WARNING: Command doesn't exists!\e[0m \n \n";
                 break;
         }
     }
@@ -72,61 +73,61 @@ class Wolffie
     private function help() {
         if (empty($this->args[1])) {
             echo "\nMAIN COMMANDS \n";
-            echo "\n ls                      -> List elements";
-            echo "\n mk                      -> Create elements";
-            echo "\n rm                      -> Remove elements";
-            echo "\n set [constant] [value]  -> Set a configuration constant";
-            echo "\n export [query]          -> Export a query to a csv file";
-            echo "\n help [command]          -> Get help";
-            echo "\n version                 -> Get the Wolff version";
-            echo "\n e                       -> Escape";
-            echo "\n \n*Run help followed by one of the commands showed above for more information. \n \n";
+            echo "\n\e[32m ls \e[0m                     -> List elements";
+            echo "\n\e[32m mk \e[0m                     -> Create elements";
+            echo "\n\e[32m rm \e[0m                     -> Remove elements";
+            echo "\n\e[32m set [constant] [value] \e[0m -> Set a configuration constant";
+            echo "\n\e[32m export [query] \e[0m         -> Export a query to a csv file";
+            echo "\n\e[32m help [command] \e[0m         -> Get help";
+            echo "\n\e[32m version \e[0m                -> Get the Wolff version";
+            echo "\n\e[32m e \e[0m                      -> Escape";
+            echo "\n \n\e[1;30m Run help followed by one of the commands showed above for more information.\e[0m \n \n";
             return;
         }
 
         switch ($this->args[1]) {
             case 'ls':
                 echo "\nLIST COMMANDS \n";
-                echo "\n views       -> List the available views.";
-                echo "\n models      -> List the available models.";
-                echo "\n controllers -> List the available controllers.";
-                echo "\n languages   -> List the available languages.";
-                echo "\n extensions  -> List the available extensions.";
-                echo "\n public      -> List all the files in the public folder.";
-                echo "\n ip          -> List all the allowed IPs for maintenance mode.";
-                echo "\n config      -> List the config constants. \n \n";
+                echo "\n\e[32m views \e[0m       -> List the available views.";
+                echo "\n\e[32m models \e[0m      -> List the available models.";
+                echo "\n\e[32m controllers \e[0m -> List the available controllers.";
+                echo "\n\e[32m languages \e[0m   -> List the available languages.";
+                echo "\n\e[32m extensions \e[0m  -> List the available extensions.";
+                echo "\n\e[32m public \e[0m      -> List all the files in the public folder.";
+                echo "\n\e[32m ip \e[0m          -> List all the allowed IPs for maintenance mode.";
+                echo "\n\e[32m config \e[0m      -> List the config constants. \n \n";
                 break;
             case 'mk':
                 echo "\nCREATE COMMANDS";
                 echo "\n \nPage related:";
-                echo "\n page [path]                   -> Create a page (view, model and controller).";
-                echo "\n view [path]                   -> Create a view.";
-                echo "\n model [path]                  -> Create a model.";
-                echo "\n controller [path]             -> Create a controller.";
-                echo "\n library [path]                -> Create a library.";
-                echo "\n language [name]               -> Create a language.";
-                echo "\n extension [name]              -> Create a extension.";
-                echo "\n ip [name]                     -> Add an IP to the maintenance mode whitelist.";
-                echo "\n \n*If the [path] includes folders that doesn't exists, those folders will be created automatically.";
+                echo "\n\e[32m page [path] \e[0m                   -> Create a page (view, model and controller).";
+                echo "\n\e[32m view [path] \e[0m                   -> Create a view.";
+                echo "\n\e[32m model [path] \e[0m                  -> Create a model.";
+                echo "\n\e[32m controller [path] \e[0m             -> Create a controller.";
+                echo "\n\e[32m library [path] \e[0m                -> Create a library.";
+                echo "\n\e[32m language [name] \e[0m               -> Create a language.";
+                echo "\n\e[32m extension [name] \e[0m              -> Create a extension.";
+                echo "\n\e[32m ip [name] \e[0m                     -> Add an IP to the maintenance mode whitelist.";
+                echo "\n \n\e[1;30m If the [path] includes folders that doesn't exists, those folders will be created automatically.\e[0m";
 
                 echo "\n \nRoutes related:";
-                echo "\n route [url] [controller path] -> Create a route.";
-                echo "\n redirect [orig] [dest] [code] -> Create a redirect.";
-                echo "\n block [route]                 -> Block a route.";
-                echo "\n \n*These changes will be applied to the routes.php file inside the system folder. \n \n";
+                echo "\n\e[32m route [url] [controller path] \e[0m -> Create a route.";
+                echo "\n\e[32m redirect [orig] [dest] [code] \e[0m -> Create a redirect.";
+                echo "\n\e[32m block [route] \e[0m                 -> Block a route.";
+                echo "\n \n\e[1;30m These changes will be applied to the routes.php file inside the system folder.\e[0m \n \n";
                 break;
             case 'rm':
                 echo "\nREMOVE COMMANDS \n";
-                echo "\n page [path]        -> Delete a page (model and controller).";
-                echo "\n view [path]        -> Delete a view.";
-                echo "\n model [path]       -> Delete a model.";
-                echo "\n controller [path]  -> Delete a controller.";
-                echo "\n library [path]     -> Delete a library.";
-                echo "\n extension [path]   -> Delete a extension.";
-                echo "\n ip [name]          -> Remove an IP from the maintenance mode whitelist.";
-                echo "\n language [name]    -> Delete a language.";
-                echo "\n cache              -> Delete all the cache files.";
-                echo "\n \n*The file extension must be specified in the [path] only when deleting views. \n \n";
+                echo "\n\e[32m page [path] \e[0m        -> Delete a page (model and controller).";
+                echo "\n\e[32m view [path] \e[0m        -> Delete a view.";
+                echo "\n\e[32m model [path] \e[0m       -> Delete a model.";
+                echo "\n\e[32m controller [path] \e[0m  -> Delete a controller.";
+                echo "\n\e[32m library [path] \e[0m     -> Delete a library.";
+                echo "\n\e[32m extension [path] \e[0m   -> Delete a extension.";
+                echo "\n\e[32m ip [name] \e[0m          -> Remove an IP from the maintenance mode whitelist.";
+                echo "\n\e[32m language [name] \e[0m    -> Delete a language.";
+                echo "\n\e[32m cache \e[0m              -> Delete all the cache files.";
+                echo "\n \n\e[1;30m The file extension must be specified in the [path] only when deleting views.\e[0m \n \n";
                 break;
             case 'set':
                 echo "\nModify a constant defined in the config.php file. \n";
@@ -138,8 +139,14 @@ class Wolffie
             case 'version':
                 echo "\nShow the current version of Wolff \n \n";
                 break;
+            case 'e':
+                echo "\nEscape from Wolffie \n \n";
+                break;
+            case 'export':
+                echo "\nExport a query result to a .csv file in the project root folder \n \n";
+                break;
             default:
-                echo "WARNING: Command doesn't exists \n \n";
+                echo "\e[1;31m WARNING: Command doesn't exists!\e[0m \n \n";
                 break;
         }
     }
@@ -170,12 +177,12 @@ class Wolffie
 
 
         if (!$content = file_get_contents($file)) {
-            echo "WARNING: Couldn't read the config file \n \n";
+            echo "\e[1;31m WARNING: Couldn't read the config file!\e[0m \n \n";
             return;
         }
 
         if (!preg_match($original, $content)) {
-            echo "WARNING: Constant doesn't exists \n \n";
+            echo "\e[1;31m WARNING: Constant doesn't exists!\e[0m \n \n";
             return;
         }
 

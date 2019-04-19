@@ -26,7 +26,7 @@ class Delete
         if (method_exists($this, $function)) {
             $this->$function();
         } else {
-            echo "WARNING: Command doesn't exists \n \n";
+            echo "\e[1;31m WARNING: Command doesn't exists!\e[0m \n \n";
         }
     }
 
@@ -38,10 +38,10 @@ class Delete
 
 
     private function controller() {
-        $file_dir = $this->app_dir . 'controllers' . DIRECTORY_SEPARATOR . $this->args[2] . '.php';
+        $file_dir = $this->app_dir . 'controllers/' . $this->args[2] . '.php';
 
         if (!is_file($file_dir)) {
-            echo "WARNING: the controller '" . $this->args[2] . "' doesn't exists! \n \n";
+            echo "\e[1;31m WARNING: the controller '" . $this->args[2] . "' doesn't exists!\e[0m \n \n";
             return;
         }
 
@@ -57,10 +57,10 @@ class Delete
 
 
     private function model() {
-        $file_dir = $this->app_dir . 'models' . DIRECTORY_SEPARATOR . $this->args[2] . '.php';
+        $file_dir = $this->app_dir . 'models/' . $this->args[2] . '.php';
 
         if (!is_file($file_dir)) {
-            echo "WARNING: the model '" . $this->args[2] . "' doesn't exists! \n \n";
+            echo "\e[1;31m WARNING: the model '" . $this->args[2] . "' doesn't exists!\e[0m \n \n";
             return;
         }
 
@@ -76,10 +76,10 @@ class Delete
 
 
     private function library() {
-        $file_dir = $this->app_dir . 'libraries' . DIRECTORY_SEPARATOR . $this->args[2] . '.php';
+        $file_dir = $this->app_dir . 'libraries/' . $this->args[2] . '.php';
 
         if (!is_file($file_dir)) {
-            echo "WARNING: the library '" . $this->args[2] . "' doesn't exists! \n \n";
+            echo "\e[1;31m WARNING: the library '" . $this->args[2] . "' doesn't exists!\e[0m \n \n";
             return;
         }
 
@@ -95,10 +95,10 @@ class Delete
 
 
     private function view() {
-        $file_dir = $this->app_dir . 'views' . DIRECTORY_SEPARATOR . $this->args[2];
+        $file_dir = $this->app_dir . 'views/' . $this->args[2];
 
         if (!is_file($file_dir)) {
-            echo "WARNING: the view '" . $this->args[2] . "' doesn't exists! \n \n";
+            echo "\e[1;31m WARNING: the view '" . $this->args[2] . "' doesn't exists!\e[0m \n \n";
             return;
         }
 
@@ -114,10 +114,10 @@ class Delete
 
 
     private function extension() {
-        $file_dir = '..' . DIRECTORY_SEPARATOR . 'extension' . DIRECTORY_SEPARATOR . $this->args[2] . '.php';
+        $file_dir = '../extension/' . $this->args[2] . '.php';
 
         if (!is_file($file_dir)) {
-            echo "WARNING: the extension '" . $this->args[2] . "' doesn't exists! \n \n";
+            echo "\e[1;31m WARNING: the extension '" . $this->args[2] . "' doesn't exists!\e[0m \n \n";
             return;
         }
 
@@ -136,29 +136,29 @@ class Delete
         if (Lib\Maintenance::removeAllowedIP($this->args[2])) {
             echo "IP " . $this->args[2] . " removed successfully! \n \n";
         } else {
-            echo "WARNING: IP " . $this->args[2] . " not removed! \n \n";
+            echo "\e[1;31m WARNING: IP " . $this->args[2] . " not removed!\e[0m \n \n";
         }
     }
 
 
     private function language() {
-        $language_dir = $this->app_dir . 'languages' . DIRECTORY_SEPARATOR . $this->args[2];
+        $language_dir = $this->app_dir . 'languages/' . $this->args[2];
         $this->deleteRecursively($language_dir);
     }
 
 
     private function cache() {
-        $cache_path = '..' . DIRECTORY_SEPARATOR . 'cache';
+        $cache_path = '../cache';
 
         if (!is_dir($cache_path)) {
-            echo "WARNING: the cache folder doesn't exists! \n \n";
+            echo "\e[1;31m WARNING: the cache folder doesn't exists!\e[0m \n \n";
             return;
         }
 
-        $files = glob($cache_path . DIRECTORY_SEPARATOR . '*');
+        $files = glob($cache_path . '/*');
 
         if (count($files) <= 0) {
-            echo "WARNING: the cache folder is already empty! \n \n";
+            echo "\e[1;31m WARNING: the cache folder is already empty!\e[0m \n \n";
             return;
         }
 
@@ -174,12 +174,12 @@ class Delete
 
     private function deleteRecursively($dir) {
         if (!is_dir($dir)) {
-            echo "WARNING: the language '" . $this->args[2] . "' doesn't exists! \n \n";
+            echo "\e[1;31m WARNING: the language '" . $this->args[2] . "' doesn't exists!\e[0m \n \n";
             return;
         }
 
-        if (substr($dir, strlen($dir) - 1, 1) != DIRECTORY_SEPARATOR) {
-            $dir .= DIRECTORY_SEPARATOR;
+        if (substr($dir, strlen($dir) - 1, 1) != '/') {
+            $dir .= '/';
         }
 
         $files = glob($dir . '*', GLOB_MARK);

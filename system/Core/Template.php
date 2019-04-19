@@ -71,7 +71,7 @@ class Template
      * @return string the view content
      */
     private function getContent($dir) {
-        $file_path = getServerRoot() . WOLFF_APP_DIR . 'views' . DIRECTORY_SEPARATOR . $dir;
+        $file_path = getServerRoot() . WOLFF_APP_DIR . 'views/' . $dir;
 
         if (file_exists($file_path . '.php')) {
             return file_get_contents($file_path . '.php');
@@ -128,8 +128,7 @@ class Template
         $content = preg_replace(str_replace('{func}', 'e', $format), 'htmlspecialchars(strip_tags($2))',
             $content);
         //HTMLspecialchars
-        $content = preg_replace(str_replace('{func}', 'especial', $format),
-            'htmlspecialchars($2, ENT_QUOTES, \'UTF-8\')', $content);
+        $content = preg_replace(str_replace('{func}', 'especial', $format), 'htmlspecialchars($2, ENT_QUOTES, \'UTF-8\')', $content);
         //Uppercase
         $content = preg_replace(str_replace('{func}', 'upper', $format), 'strtoupper($2)', $content);
         //Lowercase
@@ -143,18 +142,15 @@ class Template
         //MD5
         $content = preg_replace(str_replace('{func}', 'md5', $format), 'md5($2)', $content);
         //Count words
-        $content = preg_replace(str_replace('{func}', 'countwords', $format), 'str_word_count($2)',
-            $content);
+        $content = preg_replace(str_replace('{func}', 'countwords', $format), 'str_word_count($2)', $content);
         //Trim
         $content = preg_replace(str_replace('{func}', 'trim', $format), 'trim($2)', $content);
         //nl2br
         $content = preg_replace(str_replace('{func}', 'nl2br', $format), 'nl2br($2)', $content);
         //Join
-        $content = preg_replace(str_replace('{func}', 'join\((.*?)\)', $format), 'implode($1, $3)',
-            $content);
+        $content = preg_replace(str_replace('{func}', 'join\((.*?)\)', $format), 'implode($1, $3)', $content);
         //Repeat
-        $content = preg_replace(str_replace('{func}', 'repeat\((.*?)\)', $format), 'str_repeat($3, $1)',
-            $content);
+        $content = preg_replace(str_replace('{func}', 'repeat\((.*?)\)', $format), 'str_repeat($3, $1)', $content);
 
         return $content;
     }

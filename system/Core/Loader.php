@@ -166,7 +166,7 @@ class Loader
     public function language(string $dir, string $language = WOLFF_LANGUAGE) {
         //Sanitize directory
         $dir = sanitizePath($dir);
-        $file_path = getServerRoot() . WOLFF_APP_DIR . 'languages' . DIRECTORY_SEPARATOR . $language . DIRECTORY_SEPARATOR . $dir . '.php';
+        $file_path = getServerRoot() . WOLFF_APP_DIR . 'languages/' . $language . '/' . $dir . '.php';
 
         if (file_exists($file_path)) {
             include_once($file_path);

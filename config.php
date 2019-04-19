@@ -1,5 +1,5 @@
 <?php
-//Wolff v0.9.5
+//Wolff v0.9.6
 
 //Server 
 define('WOLFF_DBMS', 'mysql');
@@ -9,13 +9,14 @@ define('WOLFF_DBUSERNAME', '');
 define('WOLFF_DBPASSWORD', '');
 
 //Directories
-define('WOLFF_ROOT_DIR', dirname($_SERVER['SCRIPT_NAME']) . DIRECTORY_SEPARATOR);
-define('WOLFF_APP_DIR', WOLFF_ROOT_DIR . 'app' . DIRECTORY_SEPARATOR);
-define('WOLFF_PUBLIC_DIR', WOLFF_ROOT_DIR . 'public' . DIRECTORY_SEPARATOR);
-define('WOLFF_EXTENSION_DIR', WOLFF_ROOT_DIR . 'system/Extension' . DIRECTORY_SEPARATOR);
-define('WOLFF_CACHE_DIR', WOLFF_ROOT_DIR . 'cache' . DIRECTORY_SEPARATOR);
+define('WOLFF_ROOT_DIR', dirname($_SERVER['SCRIPT_NAME']) . '/');
+define('WOLFF_APP_DIR', WOLFF_ROOT_DIR . 'app/');
+define('WOLFF_PUBLIC_DIR', WOLFF_ROOT_DIR . 'public/');
+define('WOLFF_EXTENSION_DIR', WOLFF_ROOT_DIR . 'system/Extension/');
+define('WOLFF_CACHE_DIR', WOLFF_ROOT_DIR . 'cache/');
 
 //General
+define('WOLFF_START', microtime(true));
 define('WOLFF_PAGE_TITLE', 'Wolff');
 define('WOLFF_MAIN_PAGE', 'main_page');
 define('WOLFF_LANGUAGE', 'english');

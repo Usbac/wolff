@@ -17,7 +17,7 @@ class Create
         $this->route = &$route;
         $this->extension = &$extension;
         $this->app_dir = $app_dir;
-        $this->routes_dir = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'system' . DIRECTORY_SEPARATOR . 'Routes.php';
+        $this->routes_dir = dirname(__DIR__) . '/system/Routes.php';
     }
 
 
@@ -28,7 +28,7 @@ class Create
         if (method_exists($this, $function)) {
             $this->$function();
         } else {
-            echo "WARNING: Command doesn't exists \n \n";
+            echo "\e[1;31m WARNING: Command doesn't exists!\e[0m \n \n";
         }
     }
 
@@ -41,15 +41,15 @@ class Create
 
 
     private function controller() {
-        $file_dir = $this->app_dir . 'controllers' . DIRECTORY_SEPARATOR . $this->args[2] . '.php';
+        $file_dir = $this->app_dir . 'controllers/' . $this->args[2] . '.php';
 
         if (file_exists($file_dir)) {
-            echo "WARNING: controller " . $this->args[2] . " already exists \n \n";
+            echo "\e[1;31m WARNING: controller " . $this->args[2] . " already exists!\e[0m \n \n";
             return;
         }
 
         $file_name = "";
-        $namespace = $this->createNamespace($dir, $file_name, 'controller');
+        $namespace = $this->createNamespace($file_dir, $file_name, 'controllers');
 
         $file = fopen($file_dir, 'w') or die("WARNING: Cannot create Controller file \n \n");
 
@@ -66,15 +66,15 @@ class Create
 
 
     private function model() {
-        $file_dir = $this->app_dir . 'models' . DIRECTORY_SEPARATOR . $this->args[2] . '.php';
+        $file_dir = $this->app_dir . 'models/' . $this->args[2] . '.php';
 
         if (file_exists($file_dir)) {
-            echo "WARNING: model " . $this->args[2] . " already exists \n \n";
+            echo "\e[1;31m WARNING: model " . $this->args[2] . " already exists!\e[0m \n \n";
             return;
         }
 
         $file_name = "";
-        $namespace = $this->createNamespace($dir, $file_name, 'model');
+        $namespace = $this->createNamespace($file_dir, $file_name, 'models');
 
         $file = fopen($file_dir, 'w') or die("WARNING: Cannot create model file \n \n");
 
@@ -91,18 +91,18 @@ class Create
 
 
     private function view() {
-        $file_dir = $this->app_dir . 'views' . DIRECTORY_SEPARATOR . $this->args[2] . '.php';
+        $file_dir = $this->app_dir . 'views/' . $this->args[2] . '.php';
 
         if (file_exists($file_dir)) {
-            echo "WARNING: view " . $this->args[2] . " already exists \n \n";
+            echo "\e[1;31m WARNING: view " . $this->args[2] . " already exists!\e[0m \n \n";
             return;
         }
 
         $dir = explode('/', $this->args[2]);
-        $file_name = array_pop($dir);
 
         if (count($dir) > 0) {
-            $this->createDirectoryInApp($dir, 'view');
+            array_pop($dir);
+            $this->createDirectoryInApp($dir, 'views');
         }
 
         $file = fopen($file_dir, 'w') or die("WARNING: Cannot create view file \n \n");
@@ -118,10 +118,10 @@ class Create
 
 
     private function extension() {
-        $file_dir = '..' . DIRECTORY_SEPARATOR . 'extension' . DIRECTORY_SEPARATOR . $this->args[2] . '.php';
+        $file_dir = '../system/Extension/' . $this->args[2] . '.php';
 
         if (file_exists($file_dir)) {
-            echo "WARNING: extension " . $this->args[2] . " already exists \n \n";
+            echo "\e[1;31m WARNING: extension " . $this->args[2] . " already exists!\e[0m \n \n";
             return;
         }
 
@@ -130,10 +130,11 @@ class Create
         $name = readline("Name -> ");
         $description = readline("Description -> ");
         $version = readline("Version -> ");
+        $directory = readline("Directory -> ");
         $author = readline("Author -> ");
 
-        $original = array('{classname}', '{name}', '{description}', '{version}', '{author}');
-        $replacement = array($this->args[2], $name, $description, $version, $author);
+        $original = array('{classname}', '{name}', '{description}', '{version}', '{directory}', '{author}');
+        $replacement = array($this->args[2], $name, $description, $version, $directory, $author);
 
         $content = file_get_contents('templates/extension.txt');
         $content = str_replace($original, $replacement, $content);
@@ -146,7 +147,7 @@ class Create
 
 
     private function language() {
-        $dir = $this->app_dir . 'languages' . DIRECTORY_SEPARATOR . $this->args[2];
+        $dir = $this->app_dir . 'languages/' . $this->args[2];
 
         if (!is_dir($dir)) {
             mkdir($dir);
@@ -156,25 +157,25 @@ class Create
             }
         }
 
-        echo "WARNING: Language " . $this->args[2] . " already exists \n \n";
+        echo "\e[1;31m WARNING: Language " . $this->args[2] . " already exists!\e[0m \n \n";
     }
 
 
     private function library() {
         if (empty($this->args[2])) {
-            echo "WARNING: Library name is empty \n \n";
+            echo "\e[1;31m WARNING: Library name is empty!\e[0m \n \n";
             return;
         }
 
-        $file_dir = $this->app_dir . 'libraries' . DIRECTORY_SEPARATOR . $this->args[2] . '.php';
+        $file_dir = $this->app_dir . 'libraries/' . $this->args[2] . '.php';
 
         if (file_exists($file_dir)) {
-            echo "WARNING: Library " . $this->args[2] . " already exists \n \n";
+            echo "\e[1;31m WARNING: Library " . $this->args[2] . " already exists!\e[0m \n \n";
             return;
         }
 
         $file_name = "";
-        $namespace = $this->createNamespace($dir, $file_name, 'library');
+        $namespace = $this->createNamespace($file_dir, $file_name, 'libraries');
 
         $file = fopen($file_dir, 'w') or die("WARNING: Cannot create library file \n \n");
 
@@ -196,7 +197,7 @@ class Create
         $route = $this->args[2];
 
         if (preg_match("/Route::add\((\s){0,}?[\'\"]" . $route . "[\'\"](\s){0,}?\,/", $content)) {
-            echo "WARNING: Route already exists \n \n";
+            echo "\e[1;31m WARNING: Route already exists!\e[0m \n \n";
             fclose($file);
             return;
         }
@@ -219,7 +220,7 @@ class Create
         $route = $this->args[2];
 
         if (preg_match("/Route::block\((\s){0,}?[\'\"]" . $route . "[\'\"](\s){0,}?\)\;/", $content)) {
-            echo "WARNING: Block already exists \n";
+            echo "\e[1;31m WARNING: Block already exists!\e[0m \n";
             fclose($file);
             return;
         }
@@ -241,7 +242,7 @@ class Create
         $redirect_code = "";
 
         if (preg_match("/Route::redirect\((\s){0,}?[\'\"]" . $original . "[\'\"]\,(\s){0,}?[\'\"]" . $redirect . "[\'\"]/", $content)) {
-            echo "WARNING: Redirect already exists \n \n";
+            echo "\e[1;31m WARNING: Redirect already exists!\e[0m \n \n";
             fclose($file);
             return;
         }
@@ -263,21 +264,21 @@ class Create
         if (Lib\Maintenance::addAllowedIP($this->args[2])) {
             echo "IP " . $this->args[2] . " added successfully! \n \n";
         } else {
-            echo "WARNING: IP " . $this->args[2] . " not added! \n \n";
+            echo "\e[1;31m WARNING: IP " . $this->args[2] . " not added!\e[0m \n \n";
         }
     }
 
 
     private function createDirectoryInApp($dir, $folder) {
-        $dir = $this->app_dir . $folder . DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, $dir);
+        $dir = $this->app_dir . $folder . '/' . implode('/', $dir);
 
         if (!is_dir($dir)) {
-            mkdir($dir);
+            mkdir($dir, 0755, true);
         }
     }
 
 
-    private function createNamespace(&$dir, &$file_name, $type) {
+    private function createNamespace($dir, &$file_name, $type) {
         $dir = explode('/', $this->args[2]);
         $file_name = array_pop($dir);
 

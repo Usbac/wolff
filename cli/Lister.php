@@ -63,7 +63,7 @@ class Lister
                 $this->ip();
                 break;
             default:
-                echo "WARNING: Command doesn't exists \n \n";
+                echo "\e[1;31m WARNING: Command doesn't exists\e[0m \n \n";
                 break;
         }
     }
@@ -132,10 +132,10 @@ class Lister
 
 
     private function languages() {
-        $languages = glob($this->app_dir . 'languages' . DIRECTORY_SEPARATOR . '*', GLOB_ONLYDIR);
+        $languages = glob($this->app_dir . 'languages/*', GLOB_ONLYDIR);
 
         foreach ($languages as $language) {
-            echo "\n" . substr($language, strrpos($language, DIRECTORY_SEPARATOR) + 1);
+            echo "\n" . substr($language, strrpos($language, '/') + 1);
         }
         echo "\n \n";
     }
@@ -152,11 +152,11 @@ class Lister
 
 
     private function listViewFiles($dir, $folder = '', &$result = array()) {
-        $folder = substr($dir, strrpos(str_replace('/', DIRECTORY_SEPARATOR, $dir), DIRECTORY_SEPARATOR) + 1);
+        $folder = substr($dir, strrpos($dir, '/') + 1);
         $files = scandir($dir);
 
         foreach ($files as $value) {
-            $path = realpath($dir . DIRECTORY_SEPARATOR . $value);
+            $path = realpath($dir . '/' . $value);
 
             if (!is_dir($path) && in_array(pathinfo($path)['extension'], array('php', 'html', 'phtml'))) {
                 $file_path = substr($path, strpos($path, $folder) + strlen($folder) + 1);
@@ -173,11 +173,11 @@ class Lister
 
 
     private function listPHPFiles($dir, $folder = '', &$result = array()) {
-        $folder = substr($dir, strrpos(str_replace('/', DIRECTORY_SEPARATOR, $dir), DIRECTORY_SEPARATOR) + 1);
+        $folder = substr($dir, strrpos($dir, '/') + 1);
         $files = scandir($dir);
 
         foreach ($files as $value) {
-            $path = realpath($dir . DIRECTORY_SEPARATOR . $value);
+            $path = realpath($dir . '/' . $value);
 
             if (!is_dir($path) && pathinfo($path)['extension'] == 'php') {
                 $file_path = substr($path, strpos($path, $folder) + strlen($folder) + 1);
@@ -197,7 +197,7 @@ class Lister
         $files = scandir($dir);
 
         foreach ($files as $value) {
-            $path = realpath($dir . DIRECTORY_SEPARATOR . $value);
+            $path = realpath($dir . '/' . $value);
 
             if (!is_dir($path)) {
                 $file_path = $path;

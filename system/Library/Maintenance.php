@@ -11,7 +11,7 @@ class Maintenance
      *
      * @var string
      */
-    private static $filename = __DIR__ . DIRECTORY_SEPARATOR . 'maintenance_whitelist.txt';
+    private static $filename = __DIR__ . '/maintenance_whitelist.txt';
 
 
     const READ_ERROR = "Warning: Couldn't read the maintenance whitelist file";

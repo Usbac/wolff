@@ -133,4 +133,12 @@ namespace {
         return substr($_SERVER['REQUEST_URI'], strlen(getDirectory()));
     }
 
+
+    /**
+     * Returns the time between the page load start and the current time
+     * @return float the time between the page load start and the current time
+     */
+    function getBenchmark() {
+        return microtime(true) - WOLFF_START;
+    }
 }
