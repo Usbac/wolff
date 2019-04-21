@@ -7,13 +7,21 @@ use Core\Route;
 class Extension
 {
 
+    /**
+     * The server root directory 
+     * or the system directory if from a CLI.
+     *
+     * @var string
+     */
+    private $directory;
 
-    public function __construct($load = null) {
-        if (!isset($load)) {
-            return;
+
+    public function __construct($load = null, $root = null) {
+        if (isset($load)) {
+            $this->load = &$load;
         }
 
-        $this->load = &$load;
+        $this->directory = ($root ?? getServerRoot()) .  getExtensionDirectory(); 
     }
 
 
@@ -27,7 +35,8 @@ class Extension
 
         $this->makeFolder();
 
-        $files = glob(getServerRoot() . getExtensionDirectory() . '*.php');
+        
+        $files = glob($this->directory . '*.php');
         $this->extensions = [];
 
         foreach ($files as $file) {
@@ -38,7 +47,6 @@ class Extension
             if (!$ignore && isset($this->load) && $this->matchesDirectory($extension->desc['directory'])) {
                 $extension->load = $this->load;
                 $extension->session = $this->load->getSession();
-                $extension->cache = $this->load->getCache();
                 $extension->upload = $this->load->getUpload();
                 $extension->index();
             }
@@ -103,7 +111,7 @@ class Extension
      * @return bool true if the extension folder exists, false otherwise
      */
     public function folderExists() {
-        return file_exists(getServerRoot() . getExtensionDirectory());
+        return file_exists($this->directory);
     }
 
 
@@ -112,7 +120,7 @@ class Extension
      */
     public function makeFolder() {
         if (!$this->folderExists()) {
-            mkdir(getServerRoot() . getExtensionDirectory());
+            mkdir($this->directory);
         }
     }
 

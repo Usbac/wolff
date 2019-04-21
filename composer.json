@@ -10,7 +10,7 @@
     "mvc"
   ],
   "type": "project",
-  "version": "0.9.6",
+  "version": "0.9.7",
   "license": "MIT",
   "support": {
     "issues": "https://github.com/Usbac/Wolff/issues",
@@ -36,20 +36,21 @@
     "files": [
       "config.php",
       "system/stdlib/config.php",
-      "system/stdlib/mvc.php",
+      "system/stdlib/pages.php",
       "system/stdlib/sanitizer.php",
       "system/stdlib/utilities.php",
       "system/routes.php"
     ],
     "psr-4": {
       "Root\\": "",
+      "App\\": "app/",
       "System\\": "system/",
       "Core\\": "system/Core/",
-      "Extension\\": "system/Extension/",
+      "Utilities\\": "system/Utilities/",
+      "Extension\\": "system/Extensions/",
       "Library\\": "app/libraries/",
-      "Model\\": "app/models/",
       "Controller\\": "app/controllers/",
-      "Cli\\": "cli/"
+      "Cli\\": "system/CLI/"
     }
   }
 }

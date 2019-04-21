@@ -20,16 +20,9 @@ class Loader
     private $session;
 
     /**
-     * Cache system.
-     *
-     * @var Core\Cache
-     */
-    private $cache;
-
-    /**
      * File uploader utility.
      *
-     * @var System\Library\Upload
+     * @var Utilities\Upload
      */
     private $upload;
 
@@ -37,12 +30,10 @@ class Loader
     const HEADER_503 = "HTTP/1.1 503 Service Temporarily Unavailable";
 
 
-    public function __construct($session, $cache, $upload, $db) {
-        $this->template = new Template($cache);
+    public function __construct($session, $upload) {
+        $this->template = new Template();
         $this->session = &$session;
-        $this->cache = &$cache;
         $this->upload = &$upload;
-        $this->db = &$db;
     }
 
 
@@ -56,61 +47,11 @@ class Loader
 
 
     /**
-     * Returns the cache manager
-     * @return Core\Cache the cache
-     */
-    public function getCache() {
-        return $this->cache;
-    }
-
-
-    /**
      * Returns the uploader
      * @return Lib\Upload the uploader
      */
     public function getUpload() {
         return $this->upload;
-    }
-
-
-    /**
-     * Returns the database connection
-     * @return Core\Connection the database connection
-     */
-    public function getDB() {
-        return $this->db;
-    }
-
-
-    /**
-     * Load a model in the indicated directory and return it
-     * @param string dir the model directory
-     * @return object the model
-     */
-    public function model(string $dir) {
-        //Sanitize directory
-        $dir = sanitizePath($dir);
-
-        if (!modelExists($dir)) {
-            error_log("Warning: The model '" . $dir . "' doesn't exists");
-            return null;
-        }
-
-        $model = $this->getModel($dir);
-        $model->index();
-
-        return $model;
-    }
-
-
-    /**
-     * Get a model
-     * @param string $dir the model directory
-     * @return object the model
-     */
-    private function getModel(string $dir) {
-        $class = 'Model\\' . str_replace('/', '\\', $dir);
-        return new $class($this);
     }
 
 
@@ -152,7 +93,7 @@ class Loader
      * @return object the controller with its main variables initialized
      */
     private function getController(string $dir) {
-        $class = 'Controller\\' . str_replace('/', '\\', $dir);
+        $class = 'Controller\\' . pathToNamespace($dir);
         return new $class($this);
     }
 
@@ -195,8 +136,8 @@ class Loader
         }
 
         //Initialize the library for the object which called this function
-        $className = 'Library\\' . str_replace('/', '\\', $dir);
-        return new $className;
+        $class = 'Library\\' . pathToNamespace($dir);
+        return new $class($this);
     }
 
 

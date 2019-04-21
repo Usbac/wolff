@@ -1,6 +1,6 @@
 <?php
 
-namespace System\Library;
+namespace Utilities;
 
 class Maintenance
 {

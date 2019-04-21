@@ -2,7 +2,8 @@
 
 namespace Extension;
 
-class {classname} {
+class {classname} 
+{
 
     public $desc = array(
         'name'        => "{name}",

@@ -2,7 +2,7 @@
 
 namespace Cli;
 
-use System\Library as Lib;
+use Utilities\Maintenance;
 
 class Create
 {
@@ -17,7 +17,7 @@ class Create
         $this->route = &$route;
         $this->extension = &$extension;
         $this->app_dir = $app_dir;
-        $this->routes_dir = dirname(__DIR__) . '/system/Routes.php';
+        $this->routes_dir = 'Routes.php';
     }
 
 
@@ -34,13 +34,22 @@ class Create
 
 
     private function page() {
+        if (!isset($this->args[2]) || empty($this->args[2])) {
+            echo "\e[1;31m WARNING: No name specified!\e[0m \n \n";
+            return;
+        }
+        
         $this->controller();
-        $this->model();
         $this->view();
     }
 
 
     private function controller() {
+        if (!isset($this->args[2]) || empty($this->args[2])) {
+            echo "\e[1;31m WARNING: No name specified!\e[0m \n \n";
+            return;
+        }
+
         $file_dir = $this->app_dir . 'controllers/' . $this->args[2] . '.php';
 
         if (file_exists($file_dir)) {
@@ -53,7 +62,7 @@ class Create
 
         $file = fopen($file_dir, 'w') or die("WARNING: Cannot create Controller file \n \n");
 
-        $content = file_get_contents('templates/controller.txt');
+        $content = file_get_contents('CLI/templates/controller.txt');
         $original = array('{namespace}', '{classname}');
         $replacement = array($namespace, $file_name);
         $content = str_replace($original, $replacement, $content);
@@ -65,32 +74,12 @@ class Create
     }
 
 
-    private function model() {
-        $file_dir = $this->app_dir . 'models/' . $this->args[2] . '.php';
-
-        if (file_exists($file_dir)) {
-            echo "\e[1;31m WARNING: model " . $this->args[2] . " already exists!\e[0m \n \n";
+    private function view() {
+        if (!isset($this->args[2]) || empty($this->args[2])) {
+            echo "\e[1;31m WARNING: No name specified!\e[0m \n \n";
             return;
         }
-
-        $file_name = "";
-        $namespace = $this->createNamespace($file_dir, $file_name, 'models');
-
-        $file = fopen($file_dir, 'w') or die("WARNING: Cannot create model file \n \n");
-
-        $content = file_get_contents('templates/model.txt');
-        $original = array('{namespace}', '{classname}');
-        $replacement = array($namespace, $file_name);
-        $content = str_replace($original, $replacement, $content);
-
-        fwrite($file, $content);
-        fclose($file);
-
-        echo "Model " . $this->args[2] . " created successfully! \n \n";
-    }
-
-
-    private function view() {
+        
         $file_dir = $this->app_dir . 'views/' . $this->args[2] . '.php';
 
         if (file_exists($file_dir)) {
@@ -107,7 +96,7 @@ class Create
 
         $file = fopen($file_dir, 'w') or die("WARNING: Cannot create view file \n \n");
 
-        $content = file_get_contents('templates/view.txt');
+        $content = file_get_contents('CLI/templates/view.txt');
         $content = str_replace('{title}', $this->args[2], $content);
 
         fwrite($file, $content);
@@ -118,7 +107,12 @@ class Create
 
 
     private function extension() {
-        $file_dir = '../system/Extension/' . $this->args[2] . '.php';
+        if (!isset($this->args[2]) || empty($this->args[2])) {
+            echo "\e[1;31m WARNING: No name specified!\e[0m \n \n";
+            return;
+        }
+        
+        $file_dir = 'Extensions/' . $this->args[2] . '.php';
 
         if (file_exists($file_dir)) {
             echo "\e[1;31m WARNING: extension " . $this->args[2] . " already exists!\e[0m \n \n";
@@ -136,7 +130,7 @@ class Create
         $original = array('{classname}', '{name}', '{description}', '{version}', '{directory}', '{author}');
         $replacement = array($this->args[2], $name, $description, $version, $directory, $author);
 
-        $content = file_get_contents('templates/extension.txt');
+        $content = file_get_contents('CLI/templates/extension.txt');
         $content = str_replace($original, $replacement, $content);
 
         fwrite($file, $content);
@@ -147,6 +141,11 @@ class Create
 
 
     private function language() {
+        if (!isset($this->args[2]) || empty($this->args[2])) {
+            echo "\e[1;31m WARNING: No name specified!\e[0m \n \n";
+            return;
+        }
+
         $dir = $this->app_dir . 'languages/' . $this->args[2];
 
         if (!is_dir($dir)) {
@@ -162,7 +161,7 @@ class Create
 
 
     private function library() {
-        if (empty($this->args[2])) {
+        if (!isset($this->args[2]) || empty($this->args[2])) {
             echo "\e[1;31m WARNING: Library name is empty!\e[0m \n \n";
             return;
         }
@@ -179,7 +178,7 @@ class Create
 
         $file = fopen($file_dir, 'w') or die("WARNING: Cannot create library file \n \n");
 
-        $content = file_get_contents('templates/library.txt');
+        $content = file_get_contents('CLI/templates/library.txt');
         $original = array('{namespace}', '{classname}');
         $replacement = array($namespace, $file_name);
         $content = str_replace($original, $replacement, $content);
@@ -261,7 +260,12 @@ class Create
 
 
     private function ip() {
-        if (Lib\Maintenance::addAllowedIP($this->args[2])) {
+        if (!isset($this->args[2]) || empty($this->args[2])) {
+            echo "\e[1;31m WARNING: No IP address specified!\e[0m \n \n";
+            return;
+        }
+
+        if (Maintenance::addAllowedIP($this->args[2])) {
             echo "IP " . $this->args[2] . " added successfully! \n \n";
         } else {
             echo "\e[1;31m WARNING: IP " . $this->args[2] . " not added!\e[0m \n \n";

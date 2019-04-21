@@ -49,7 +49,7 @@ namespace {
      * @return string the path sanitized
      */
     function sanitizePath(string $path) {
-        return preg_replace('/[^a-zA-Z0-9_\/]/', '', $path);
+        return preg_replace('/[^a-zA-Z0-9_\-\/. ]/', '', $path);
     }
 
 }

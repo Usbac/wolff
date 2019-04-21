@@ -1,18 +1,18 @@
 <?php
-//Wolff v0.9.6
+//Wolff v0.9.7
 
 //Server 
 define('WOLFF_DBMS', 'mysql');
 define('WOLFF_SERVER', 'localhost');
-define('WOLFF_DB', '');
-define('WOLFF_DBUSERNAME', '');
+define('WOLFF_DB', 'usbac');
+define('WOLFF_DBUSERNAME', 'root');
 define('WOLFF_DBPASSWORD', '');
 
 //Directories
 define('WOLFF_ROOT_DIR', dirname($_SERVER['SCRIPT_NAME']) . '/');
 define('WOLFF_APP_DIR', WOLFF_ROOT_DIR . 'app/');
 define('WOLFF_PUBLIC_DIR', WOLFF_ROOT_DIR . 'public/');
-define('WOLFF_EXTENSION_DIR', WOLFF_ROOT_DIR . 'system/Extension/');
+define('WOLFF_EXTENSION_DIR', WOLFF_ROOT_DIR . 'system/Extensions/');
 define('WOLFF_CACHE_DIR', WOLFF_ROOT_DIR . 'cache/');
 
 //General

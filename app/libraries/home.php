@@ -2,11 +2,11 @@
 
 namespace Library;
 
-class Home
+class Home extends \Core\Library
 {
 
     public function helloWorld() {
-        echo 'Hello world';
+        println('Hello world');
     }
 
 }

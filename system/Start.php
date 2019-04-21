@@ -2,12 +2,17 @@
 
 namespace System;
 
-use Core\{Cache, Connection, Extension, Loader, Route, Session};
-use System\Library\{Maintenance, Upload};
+use Core\{DB, Extension, Loader, Route, Session};
+use Utilities\{Maintenance, Upload};
 
 class Start
 {
 
+    /**
+     * Extension.
+     *
+     * @var Core\Extension
+     */
     public $extension;
 
     /**
@@ -18,13 +23,6 @@ class Start
     public $load;
 
     /**
-     * Static instance of the connection.
-     *
-     * @var Core\Connection
-     */
-    public $db;
-
-    /**
      * Session manager.
      *
      * @var Core\Session
@@ -32,16 +30,9 @@ class Start
     public $session;
 
     /**
-     * Cache system.
-     *
-     * @var Core\Cache
-     */
-    public $cache;
-
-    /**
      * File uploader utility.
      *
-     * @var System\Library\Upload
+     * @var Utilities\Upload
      */
     public $upload;
 
@@ -86,11 +77,10 @@ class Start
      * Initialize the main components
      */
     public function initComponents() {
+        DB::initialize();
         $this->session = new Session();
-        $this->cache = new Cache();
         $this->upload = new Upload();
-        $this->db = Connection::getInstance(WOLFF_DBMS);
-        $this->load = new Loader($this->session, $this->cache, $this->upload, $this->db);
+        $this->load = new Loader($this->session, $this->upload);
     }
 
 }

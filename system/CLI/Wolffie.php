@@ -3,6 +3,7 @@
 namespace Cli;
 
 use Core;
+use Core\DB;
 
 class Wolffie
 {
@@ -15,15 +16,14 @@ class Wolffie
     private $args;
     private $route;
     private $extension;
-    private $db;
     private $app_dir;
     private $public_dir;
 
 
     public function __construct() {
+        DB::initialize();
         $this->route = new Core\Route();
-        $this->extension = new Core\Extension();
-        $this->db = Core\Connection::getInstance(WOLFF_DBMS);
+        $this->extension = new Core\Extension(null, "../");
 
         $root = '../';
         $this->app_dir = $root . WOLFF_APP_DIR;
@@ -80,7 +80,7 @@ class Wolffie
             echo "\n\e[32m export [query] \e[0m         -> Export a query to a csv file";
             echo "\n\e[32m help [command] \e[0m         -> Get help";
             echo "\n\e[32m version \e[0m                -> Get the Wolff version";
-            echo "\n\e[32m e \e[0m                      -> Escape";
+            echo "\n\e[32m e \e[0m                      -> Exit";
             echo "\n \n\e[1;30m Run help followed by one of the commands showed above for more information.\e[0m \n \n";
             return;
         }
@@ -89,7 +89,6 @@ class Wolffie
             case 'ls':
                 echo "\nLIST COMMANDS \n";
                 echo "\n\e[32m views \e[0m       -> List the available views.";
-                echo "\n\e[32m models \e[0m      -> List the available models.";
                 echo "\n\e[32m controllers \e[0m -> List the available controllers.";
                 echo "\n\e[32m languages \e[0m   -> List the available languages.";
                 echo "\n\e[32m extensions \e[0m  -> List the available extensions.";
@@ -100,9 +99,8 @@ class Wolffie
             case 'mk':
                 echo "\nCREATE COMMANDS";
                 echo "\n \nPage related:";
-                echo "\n\e[32m page [path] \e[0m                   -> Create a page (view, model and controller).";
+                echo "\n\e[32m page [path] \e[0m                   -> Create a page (view and controller).";
                 echo "\n\e[32m view [path] \e[0m                   -> Create a view.";
-                echo "\n\e[32m model [path] \e[0m                  -> Create a model.";
                 echo "\n\e[32m controller [path] \e[0m             -> Create a controller.";
                 echo "\n\e[32m library [path] \e[0m                -> Create a library.";
                 echo "\n\e[32m language [name] \e[0m               -> Create a language.";
@@ -118,9 +116,7 @@ class Wolffie
                 break;
             case 'rm':
                 echo "\nREMOVE COMMANDS \n";
-                echo "\n\e[32m page [path] \e[0m        -> Delete a page (model and controller).";
                 echo "\n\e[32m view [path] \e[0m        -> Delete a view.";
-                echo "\n\e[32m model [path] \e[0m       -> Delete a model.";
                 echo "\n\e[32m controller [path] \e[0m  -> Delete a controller.";
                 echo "\n\e[32m library [path] \e[0m     -> Delete a library.";
                 echo "\n\e[32m extension [path] \e[0m   -> Delete a extension.";
@@ -131,7 +127,7 @@ class Wolffie
                 break;
             case 'set':
                 echo "\nModify a constant defined in the config.php file. \n";
-                echo "Example changing the language to english: set language 'english'. \n \n";
+                echo "Example changing the language to english: set wolff_language 'english'. \n \n";
                 break;
             case 'help':
                 echo "\nIs this recursion? \n \n";
@@ -155,17 +151,12 @@ class Wolffie
     private function export() {
         $sql = substr($this->command, strlen($this->args[1]) + 1);
 
-        if (!$query = $this->db->query($sql)) {
+        if (!$query = DB::run($sql)) {
             echo "WARNING: Error in query \n \n";
             return;
         }
 
-        $result = [];
-        while ($row = $query->fetch_assoc()) {
-            $result[] = $row;
-        }
-
-        @arrayToCsv('sql_' . date('y-m-d'), $result);
+        @arrayToCsv('sql_' . date('y-m-d'), $query);
         echo "\n Query exported successfully! \n \n";
     }
 
@@ -195,7 +186,7 @@ class Wolffie
 
     private function version() {
         $data = json_decode(file_get_contents('../composer.json'), true);
-        echo "WOLFF v" . $data['version'] . "\n \n";
+        echo "\e[32m WOLFF v" . $data['version'] . "\e[0m \n \n";
     }
 
 }

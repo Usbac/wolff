@@ -3,7 +3,7 @@
 namespace Cli;
 
 use Core as Core;
-use System\Library as Lib;
+use Utilities\Maintenance;
 
 class Lister
 {
@@ -34,9 +34,6 @@ class Lister
                 break;
             case 'controllers':
                 $this->controllers();
-                break;
-            case 'models':
-                $this->models();
                 break;
             case 'libraries':
                 $this->libraries();
@@ -79,7 +76,7 @@ class Lister
         }
 
         foreach ($extensions as $ext) {
-            echo "\n -> " . $ext['name'];
+            echo "\n ->\e[32m " . $ext['name'] . "\e[0m";
             echo "\nDescription: " . $ext['description'];
             echo "\nVersion: " . $ext['version'];
             echo "\nAuthor: " . $ext['author'];
@@ -106,16 +103,6 @@ class Lister
 
         foreach ($controllers as $controller) {
             echo "\n" . $controller;
-        }
-        echo "\n \n";
-    }
-
-
-    private function models() {
-        $models = $this->listPHPFiles($this->app_dir . 'models');
-
-        foreach ($models as $model) {
-            echo "\n" . $model;
         }
         echo "\n \n";
     }
@@ -262,7 +249,7 @@ class Lister
 
 
     private function ip() {
-        $ips = Lib\Maintenance::getAllowedIPs();
+        $ips = Maintenance::getAllowedIPs();
 
         if ($ips === false || count($ips) <= 0) {
             echo "\n Allowed IPs: none \n \n";
@@ -279,11 +266,11 @@ class Lister
 
     private function config() {
         echo "\n -> SERVER CONFIG: ";
-        echo "\n WOLFF_DBMS: " . WOLFF_DBMS;
-        echo "\n Server: " . WOLFF_SERVER;
-        echo "\n Database: " . WOLFF_DB;
-        echo "\n User: " . WOLFF_DBUSERNAME;
-        echo "\n Password: " . WOLFF_DBPASSWORD;
+        echo "\n getDBMS(): " . getDBMS();
+        echo "\n Server: " . getServer();
+        echo "\n Database: " . getDB();
+        echo "\n User: " . getDBUser();
+        echo "\n Password: " . getDBPass();
         echo "\n";
         echo "\n -> GENERAL CONFIG: ";
         echo "\n Project folder: " . WOLFF_ROOT_DIR;

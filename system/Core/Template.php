@@ -5,16 +5,8 @@ namespace Core;
 class Template
 {
 
-    /**
-     * Cache system.
-     *
-     * @var Core\Cache
-     */
-    private $cache;
 
-
-    public function __construct($cache) {
-        $this->cache = &$cache;
+    public function __construct() {
     }
 
 
@@ -36,7 +28,7 @@ class Template
 
         //Cache system
         if ($cache && cacheEnabled()) {
-            include($this->cache->get($dir, $content));
+            include(Cache::get($dir, $content));
         } else {
             $temp = tmpfile();
             fwrite($temp, $content);

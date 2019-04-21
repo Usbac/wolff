@@ -4,26 +4,6 @@ namespace {
 
 
     /**
-     * Returns true if the model exists in the indicated directory, false otherwise
-     * @param string $dir the directory of the model
-     * @return boolean true if the model exists, false otherwise
-     */
-    function modelExists(string $dir) {
-        return file_exists(getModelPath($dir));
-    }
-
-
-    /**
-     * Returns the complete path of the model
-     * @param string $dir the directory of the model
-     * @return string the complete path of the model
-     */
-    function getModelPath(string $dir) {
-        return getServerRoot() . WOLFF_APP_DIR . 'models/' . $dir . '.php';
-    }
-
-
-    /**
      * Checks if the controller exists in the indicated directory
      * @param string $dir the directory of the controller
      * @return boolean true if the controller exists, false otherwise
@@ -54,7 +34,7 @@ namespace {
         $function = substr($dir, $lastSlash + 1);
         $dir = substr($dir, 0, $lastSlash);
 
-        $class = 'Controller\\' . str_replace('/', '\\', $dir);
+        $class = 'Controller\\' . pathToNamespace($dir);
 
         try {
             $class = new \ReflectionClass($class);

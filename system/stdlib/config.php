@@ -2,41 +2,59 @@
 
 namespace {
 
+    /**
+     *  SERVER
+     */
+
 
     /**
-     * Returns true if the extensions are enabled, false otherwise
-     * @return bool true if the extensions are enabled, false otherwise
+     * Returns the current server
+     * @return string the current server
      */
-    function extensionsEnabled() {
-        return WOLFF_EXTENSIONS_ON;
+    function getServer() {
+        return WOLFF_SERVER;
     }
 
 
     /**
-     * Returns true if the cache is enabled, false otherwise
-     * @return bool true if the cache is enabled, false otherwise
+     * Returns the current database
+     * @return string the current database
      */
-    function cacheEnabled() {
-        return WOLFF_CACHE_ON;
+    function getDB() {
+        return WOLFF_DB;
     }
 
 
     /**
-     * Returns true if the maintenance mode is enabled, false otherwise
-     * @return bool true if the maintenance mode is enabled, false otherwise
+     * Returns the current database managment system
+     * @return string the current database managment system
      */
-    function maintenanceEnabled() {
-        return WOLFF_MAINTENANCE_ON;
+    function getDBMS() {
+        return WOLFF_DBMS;
     }
 
 
     /**
-     * Returns the language currently used by the project
-     * @return string the language name
+     * Returns the current database username
+     * @return string the current database username
      */
-    function getLanguage() {
-        return WOLFF_LANGUAGE;
+    function getDBUser() {
+        return WOLFF_DBUSERNAME;
     }
+
+
+    /**
+     * Returns the current database username password
+     * @return string the current database username password
+     */
+    function getDBPass() {
+        return WOLFF_DBPASSWORD;
+    }
+
+    
+    /**
+     *  DIRECTORIES
+     */
 
 
     /**
@@ -85,6 +103,11 @@ namespace {
 
 
     /**
+     *  GENERAL
+     */
+
+
+    /**
      * Returns the title of the project
      * @return string the title of the project
      */
@@ -101,6 +124,15 @@ namespace {
         return WOLFF_MAIN_PAGE;
     }
 
+
+    /**
+     * Returns the language currently used by the project
+     * @return string the language name
+     */
+    function getLanguage() {
+        return WOLFF_LANGUAGE;
+    }
+
     
     /**
      * Returns the current version of Wolff defined in the composer.json file
@@ -110,4 +142,37 @@ namespace {
         $data = json_decode(file_get_contents('composer.json'), true);
         return $data['version'];
     }
+
+    
+    /**
+     *  EXTRA
+     */
+
+
+    /**
+     * Returns true if the extensions are enabled, false otherwise
+     * @return bool true if the extensions are enabled, false otherwise
+     */
+    function extensionsEnabled() {
+        return WOLFF_EXTENSIONS_ON;
+    }
+
+
+    /**
+     * Returns true if the cache is enabled, false otherwise
+     * @return bool true if the cache is enabled, false otherwise
+     */
+    function cacheEnabled() {
+        return WOLFF_CACHE_ON;
+    }
+
+
+    /**
+     * Returns true if the maintenance mode is enabled, false otherwise
+     * @return bool true if the maintenance mode is enabled, false otherwise
+     */
+    function maintenanceEnabled() {
+        return WOLFF_MAINTENANCE_ON;
+    }
+    
 }

@@ -2,7 +2,7 @@
 
 namespace Core;
 
-class Connection
+class DB
 {
 
     /**
@@ -23,10 +23,10 @@ class Connection
     /**
      * Connects with the database using the constants present in config.php
      */
-    public function __construct(string $type) {
+    public function __construct() {
         try {
-            self::$connection = new \PDO(strtolower($type) . ":host=" . WOLFF_SERVER . "; dbname=" . WOLFF_DB . "",
-                WOLFF_DBUSERNAME, WOLFF_DBPASSWORD, array(\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+            self::$connection = new \PDO(strtolower(getDBMS()) . ":host=" . getServer() . "; dbname=" . getDB() . "",
+                getDBUser(), getDBPass(), array(\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
         } catch (\PDOException $e) {
             error_log($e->getMessage());
         }
@@ -34,16 +34,12 @@ class Connection
 
 
     /**
-     * Get a static instance
-     * @param string $type the dbms
-     * @return Connection the instance
+     * Initializes the database connection
      */
-    public static function getInstance(string $type = 'mysql') {
+    public static function initialize() {
         if (!self::$instance) {
-            self::$instance = new self($type);
+            self::$instance = new self();
         }
-
-        return self::$instance;
     }
 
 
@@ -53,8 +49,17 @@ class Connection
      * @param mixed $args the method arguments
      * @return mixed the function result
      */
-    public function __call($method, $args) {
+    public static function __callStatic($method, $args) {
         return call_user_func_array(array(self::$connection, $method), $args);
+    }
+
+
+    /**
+     * Returns the last inserted id in the database
+     * @return string the last inserted id in the database
+     */
+    public static function getLastId() {
+        return self::$connection->lastInsertId();
     }
 
 
@@ -64,7 +69,7 @@ class Connection
      * @param mixed $args the arguments
      * @return array the query result as an associative array
      */
-    public function run(string $sql, $args = []) {
+    public static function run(string $sql, $args = []) {
         //Query without args
         if (!$args) {
             $result = self::$connection->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
@@ -75,9 +80,8 @@ class Connection
             return $result;
         }
 
-        $args = is_array($args) ? $args : array($args);
-
         //Query with args
+        $args = is_array($args) ? $args : array($args);
         $stmt = self::$connection->prepare($sql);
         $stmt->execute($args);
 
@@ -96,7 +100,7 @@ class Connection
      * @param mixed $args the arguments
      * @return array the query result as a json
      */
-    public function runJson(string $sql, $args = []) {
+    public static function runJson(string $sql, $args = []) {
         return json_encode(self::run($sql, $args));
     }
 
@@ -107,7 +111,7 @@ class Connection
      * @param string $sql the query
      * @param mixed $args the arguments
      */
-    public function toCsv(string $filename, string $sql, $args = []) {
+    public static function runCsv(string $filename, string $sql, $args = []) {
         arrayToCsv($filename, self::run($sql, $args));
     }
 

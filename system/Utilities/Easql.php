@@ -1,79 +1,74 @@
 <?php
 
-namespace System\Library;
+namespace Utilities;
+
+use \Core\DB;
 
 class Easql
 {
-
-    /**
-     * Static instance of the connection.
-     *
-     * @var Core\Connection
-     */
-    private $db;
 
     /**
      * The query table.
      *
      * @var string
      */
-    private $table;
+    private static $table;
 
     /**
      * If true make a delete query, if false don't.
      *
      * @var bool
      */
-    private $delete;
+    private static $delete;
 
     /**
      * Main query sentence.
      *
      * @var string
      */
-    private $sentence;
+    private static $sentence;
 
     /**
      * On statement for a join.
      *
      * @var string
      */
-    private $on;
+    private static $on;
 
     /**
      * Join statement.
      *
      * @var string
      */
-    private $join;
+    private static $join;
 
     /**
      * If true make a count query, if false don't.
      *
      * @var bool
      */
-    private $count;
+    private static $count;
 
     /**
      * If true make a select distinct query, if false don't.
      *
      * @var bool
      */
-    private $distinct;
+    private static $distinct;
 
     /**
      * Conditionals for the query.
      *
      * @var string
      */
-    private $conditional;
+    private static $conditional;
 
     /**
      * Query order by.
      *
      * @var string
      */
-    private $order;
+    private static $order;
 
 
     /**
@@ -81,12 +76,7 @@ class Easql
      *
      * @var string
      */
-    private $lastQuery;
-
-
-    public function __construct($db) {
-        $this->db = &$db;
-    }
+    private static $lastQuery;
 
 
     /**
@@ -94,9 +84,9 @@ class Easql
      * @param string $table the table
      * @return Easql $this
      */
-    public function table(string $table) {
-        $this->table = "FROM $table";
-        return $this;
+    public static function table(string $table) {
+        self::$table = "FROM $table";
+        return new static();
     }
 
 
@@ -106,10 +96,10 @@ class Easql
      * @param string $name the table name for the join
      * @return Easql $this
      */
-    public function inner(string $table, string $name = null) {
+    public static function inner(string $table, string $name = null) {
         $name = $name ?? $table;
-        $this->join .= " INNER JOIN $table as $name";
-        return $this;
+        self::$join .= " INNER JOIN $table as $name";
+        return new static();
     }
 
 
@@ -119,10 +109,10 @@ class Easql
      * @param string $name the table name for the join
      * @return Easql $this
      */
-    public function left(string $table, string $name = null) {
+    public static function left(string $table, string $name = null) {
         $name = $name ?? $table;
-        $this->join .= " LEFT JOIN $table as $name";
-        return $this;
+        self::$join .= " LEFT JOIN $table as $name";
+        return new static();
     }
 
 
@@ -132,10 +122,10 @@ class Easql
      * @param string $name the table name for the join
      * @return Easql $this
      */
-    public function right(string $table, string $name = null) {
+    public static function right(string $table, string $name = null) {
         $name = $name ?? $table;
-        $this->join .= " RIGHT JOIN $table as $name";
-        return $this;
+        self::$join .= " RIGHT JOIN $table as $name";
+        return new static();
     }
 
 
@@ -144,13 +134,13 @@ class Easql
      * @param mixed $on the conditionals
      * @return Easql $this
      */
-    public function on($on) {
+    public static function on($on) {
         if (is_array($on)) {
             $on = implode(' AND ', $on);
         }
 
-        $this->on = "ON $on";
-        return $this;
+        self::$on = "ON $on";
+        return new static();
     }
 
 
@@ -159,13 +149,13 @@ class Easql
      * @param mixed $select the selection
      * @return Easql $this
      */
-    public function select($select = "*") {
+    public static function select($select = "*") {
         if (is_array($select)) {
             $select = implode(', ', $select);
         }
 
-        $this->sentence = "SELECT $select";
-        return $this;
+        self::$sentence = "SELECT $select";
+        return new static();
     }
 
 
@@ -174,11 +164,11 @@ class Easql
      * @param string $table the table for the query
      * @return array the query result as an assosiative array
      */
-    public function selectAll(string $table) {
-        $query = $this->db->query("SELECT * FROM $table");
-        $this->clear();
+    public static function selectAll(string $table) {
+        $query = DB::run("SELECT * FROM $table");
+        self::clear();
 
-        return $query->fetchAll(\PDO::FETCH_ASSOC);
+        return $query;
     }
 
 
@@ -187,11 +177,11 @@ class Easql
      * @param string $table the table for the query
      * @return array the query result as an assosiative array
      */
-    public function countAll(string $table) {
-        $query = $this->db->query("SELECT COUNT(*) FROM $table");
-        $this->clear();
+    public static function countAll(string $table) {
+        $query = DB::run("SELECT COUNT(*) FROM $table");
+        self::clear();
 
-        return $query->fetchAll(\PDO::FETCH_ASSOC)['COUNT(*)'];
+        return $query['COUNT(*)'];
     }
 
 
@@ -199,9 +189,9 @@ class Easql
      * Delete All query
      * @param string $table the table for the query
      */
-    public function deleteAll(string $table) {
-        $this->db->query("DELETE FROM $table");
-        $this->clear();
+    public static function deleteAll(string $table) {
+        DB::run("DELETE FROM $table");
+        self::clear();
     }
 
 
@@ -210,10 +200,10 @@ class Easql
      * @param mixed $table the table
      * @return Easql $this
      */
-    public function delete($table) {
-        $this->table = $table;
-        $this->delete = true;
-        return $this;
+    public static function delete($table) {
+        self::$table = $table;
+        self::$delete = true;
+        return new static();
     }
 
 
@@ -222,13 +212,13 @@ class Easql
      * @param mixed $where the conditionals
      * @return Easql $this
      */
-    public function where($where) {
+    public static function where($where) {
         if (is_array($where)) {
             $where = implode(' AND ', $where);
         }
 
-        $this->conditional = $where;
-        return $this;
+        self::$conditional = $where;
+        return new static();
     }
 
 
@@ -237,9 +227,9 @@ class Easql
      * @param string $order the order by
      * @return Easql $this
      */
-    public function order(string $order) {
-        $this->order = $order;
-        return $this;
+    public static function order(string $order) {
+        self::$order = $order;
+        return new static();
     }
 
 
@@ -247,9 +237,9 @@ class Easql
      * Indicate the count(*) as selection
      * @return Easql $this
      */
-    public function count() {
-        $this->count = true;
-        return $this;
+    public static function count() {
+        self::$count = true;
+        return new static();
     }
 
 
@@ -257,9 +247,9 @@ class Easql
      * Indicate the distinct for the selection of the query
      * @return Easql $this
      */
-    public function distinct() {
-        $this->distinct = true;
-        return $this;
+    public static function distinct() {
+        self::$distinct = true;
+        return new static();
     }
 
 
@@ -267,35 +257,42 @@ class Easql
      * Get the query constructed
      * @return string the query constructed
      */
-    public function getSQL() {
-        $this->sentence = empty($this->sentence) ? "SELECT *" : $this->sentence;
+    public static function getSQL() {
+        self::$sentence = empty(self::$sentence) ? "SELECT *" : self::$sentence;
 
-        if ($this->delete) {
-            $this->sentence = "DELETE FROM";
+        if (self::$delete) {
+            self::$sentence = "DELETE FROM";
         }
 
-        if ($this->distinct) {
-            $this->sentence = str_replace("SELECT", "SELECT DISTINCT", $this->sentence);
+        if (self::$distinct) {
+            self::$sentence = str_replace("SELECT", "SELECT DISTINCT", self::$sentence);
         }
 
-        if ($this->count) {
-            $this->sentence = "SELECT count(*)";
+        if (self::$count) {
+            self::$sentence = "SELECT count(*)";
         }
 
-        $this->conditional = empty($this->conditional) ? "" : "WHERE $this->conditional";
-        $this->order = empty($this->order) ? "" : "ORDER BY $this->order";
+        self::$conditional = empty(self::$conditional) ? "" : "WHERE " . self::$conditional;
+        self::$order = empty(self::$order) ? "" : "ORDER BY" . self::$order;
 
-        return "$this->sentence $this->table $this->join $this->on $this->conditional $this->order";
+        return self::$sentence . self::$table . self::$join . self::$on . self::$conditional . self::$order;
     }
 
 
     /**
      * Clear all the query variables
      */
-    public function clear() {
-        foreach ($this as $key => $value) {
-            $this->$key = null;
-        }
+    public static function clear() {
+        self::$table = '';
+        self::$delete = '';
+        self::$sentence = '';
+        self::$on = '';
+        self::$join = '';
+        self::$count = '';
+        self::$distinct = '';
+        self::$conditional = '';
+        self::$order = '';
+        self::$lastQuery = '';
     }
 
 
@@ -303,8 +300,8 @@ class Easql
      * Get the last query executed by Easql
      * @return string the query
      */
-    public function getLastSQL() {
-        return $this->lastQuery;
+    public static function getLastSQL() {
+        return self::$lastQuery;
     }
 
 
@@ -312,11 +309,11 @@ class Easql
      * Execute the last query executed by Easql
      * @return array the query result
      */
-    public function doLastQuery() {
-        $query = $this->db->query($this->getLastSQL());
-        $this->clear();
+    public static function doLastQuery() {
+        $query = DB::run(self::getLastSQL());
+        self::clear();
 
-        return $query->fetchAll(\PDO::FETCH_ASSOC);
+        return $query;
     }
 
 
@@ -324,12 +321,12 @@ class Easql
      * Do the query
      * @return array the query result
      */
-    public function do() {
-        $this->lastQuery = $this->getSQL();
-        $query = $this->db->query($this->getSQL());
-        $this->clear();
+    public static function do() {
+        self::$lastQuery = self::getSQL();
+        $query = DB::run(self::getSQL());
+        self::clear();
 
-        return $query->fetchAll(\PDO::FETCH_ASSOC);
+        return $query;
     }
 
 
@@ -337,12 +334,12 @@ class Easql
      * Do a query
      * @return array the query result
      */
-    public function query($sql) {
-        $this->lastQuery = $this->getSQL();
-        $query = $this->db->query($sql);
-        $this->clear();
+    public static function query($sql) {
+        self::$lastQuery = self::getSQL();
+        $query = DB::run($sql);
+        self::clear();
 
-        return $query->fetchAll(\PDO::FETCH_ASSOC);
+        return $query;
     }
 
 }

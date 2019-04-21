@@ -5,6 +5,8 @@ namespace Core;
 class Session
 {
 
+    const DATE_FORMAT = 'Y-m-d H:i:s';
+
     /**
      * Destroy and unset the session if the live time is zero or less
      */
@@ -17,9 +19,8 @@ class Session
             return;
         }
 
-        if (!isset($_SESSION['vars_tmp_time'])) {
-            $_SESSION['vars_tmp_time'] = array();
-            return;
+        if (!$this->isValid()) {
+            $this->start();
         }
 
         foreach ($_SESSION['vars_tmp_time'] as $key => $value) {
@@ -29,6 +30,42 @@ class Session
         }
     }
 
+
+    /**
+     * Initialize all the session variables
+     */
+    private function start() {
+        $this->empty();
+
+        $_SESSION['IPaddress'] = getClientIP();
+        $_SESSION['userAgent'] = getUserAgent();
+        $_SESSION['start_time'] = microtime(true);
+        $_SESSION['vars_tmp_time'] = array();
+    }
+
+
+    /**
+     * Returns true if the current IP and the userAgent are the same 
+     * than the IP and userAgent of the previous connection.
+     * This is done for preventing session hijacking.
+     * @return bool true if the current IP address and the userAgent are the same 
+     * than the IP address and userAgent of the previous connection.
+     */
+    private function isValid() {
+        if (!isset($_SESSION['IPaddress']) || !isset($_SESSION['userAgent'])) {
+            return false;
+        }
+
+        if ($_SESSION['IPaddress'] != getClientIP()) {
+            return false;
+        }
+
+        if ($_SESSION['userAgent'] != getUserAgent()) {
+            return false;
+        }
+
+        return true;
+    }
 
     /**
      * Get a session variable
@@ -76,7 +113,7 @@ class Session
         }
 
         if ($gmdate) {
-            return gmdate('H:i:s', ($remaining > 0) ? $remaining : 0);
+            return gmdate(self::DATE_FORMAT, ($remaining > 0) ? $remaining : 0);
         }
 
         return ($remaining > 0) ? $remaining : 0;
@@ -124,13 +161,36 @@ class Session
 
 
     /**
+     * Returns the session creation time
+     * @param bool $gmdate format the time in H:i:s
+     * @return mixed the session creation time
+     */
+    public function getTime(bool $gmdate = false) {
+        if ($gmdate) {
+            return gmdate(self::DATE_FORMAT, $_SESSION['start_time']);
+        }
+
+        return $_SESSION['start_time'];
+    }
+
+
+    /**
+     * Returns the transcurrent time since the session was created in seconds
+     * @return mixed the transcurrent time since the session was created in seconds
+     */
+    public function getPassedTime() {
+        return microtime(true) - $_SESSION['start_time'];
+    }
+
+
+    /**
      * Returns the established session live time (in minutes)
      * @param bool $gmdate format the time in H:i:s
      * @return mixed the established session live time (in minutes)
      */
-    public function getTime(bool $gmdate = false) {
+    public function getLiveTime(bool $gmdate = false) {
         if ($gmdate) {
-            return gmdate('H:i:s', $_SESSION['live_time']);
+            return gmdate(self::DATE_FORMAT, $_SESSION['live_time']);
         }
 
         return $_SESSION['live_time'];
@@ -147,7 +207,7 @@ class Session
         $remaining = $end - time();
 
         if ($gmdate) {
-            return gmdate('H:i:s', ($remaining > 0) ? $remaining : 0);
+            return gmdate(self::DATE_FORMAT, ($remaining > 0) ? $remaining : 0);
         }
 
         return ($remaining > 0) ? $remaining : 0;

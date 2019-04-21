@@ -2,7 +2,7 @@
 
 namespace Core;
 
-class Controller
+class Library
 {
 
     /**
@@ -20,7 +20,7 @@ class Controller
     protected $session;
 
     /**
-     * General data of the controller.
+     * General data of the library.
      *
      * @var array
      */

@@ -4,13 +4,27 @@ namespace {
 
     
     /**
-     * Checks if the substring is present in another string
+     * Returns true if a substring is present in another string
+     * or false otherwise
+     * 
      * @param string $str the string
      * @param string $needle substring you are looking for
-     * @return boolean true if the substring is present in the string, false otherwise
+     * @return boolean true if the substring is present in the other string, false otherwise
      */
     function strContains(string $str, string $needle) {
         return strpos($str, $needle) !== false;
+    }
+
+
+    /**
+     * Returns a string with the indicated substring removed
+     * 
+     * @param string $str the string
+     * @param string $needle substring to remove
+     * @return string the string with the indicated substring removed
+     */
+    function strRemove(string $str, string $needle) {
+        return str_replace($needle, '', $str);
     }
 
 
@@ -21,6 +35,15 @@ namespace {
     function echod($str) {
         echo $str;
         die();
+    }
+
+
+    /**
+     * Print a string with a new line
+     * @param $str the string to print
+     */
+    function println($str) {
+        echo "$str\n";
     }
 
 
@@ -56,6 +79,18 @@ namespace {
 
 
     /**
+     * Var dump all the variables
+     */
+    function dumpAll() {
+        $all = print_r(var_dump($GLOBALS), 1);  
+
+        echo '<pre>';
+        echo htmlspecialchars($all);
+        echo '</pre>';
+    }
+
+    
+    /**
      * Returns the first element of an array, or false if it's empty
      * @param array $array
      * @return mixed The first element of an array, or false if it's empty
@@ -69,18 +104,25 @@ namespace {
      * Convert an array content into a csv file and download it
      * @param string $filename the desired filename without extension
      * @param array $array the array
+     * @param bool $printKeys print the array keys or not
      */
-    function arrayToCsv(string $filename, array $array) {
+    function arrayToCsv(string $filename, array $array, bool $printKeys = true) {
         $filename .= ".csv";
         $file = fopen($filename, 'w');
 
         //Single array
         if (count($array) == count($array, COUNT_RECURSIVE)) {
-            fputcsv($file, array_keys($array));
+            if ($printKeys) {
+                fputcsv($file, array_keys($array));
+            }
+
             fputcsv($file, $array);
-            //Multidimensional array
+        //Multidimensional array
         } else {
-            fputcsv($file, array_keys(arrayFirst($array)));
+            if ($printKeys) {
+                fputcsv($file, array_keys(arrayFirst($array)));
+            }
+            
             foreach ($array as $row) {
                 fputcsv($file, $row);
             }
@@ -115,6 +157,15 @@ namespace {
         return $_SERVER['REMOTE_ADDR'];
     }
 
+    
+    /**
+     * Returns the HTTP user agent
+     * @return string the HTTP user agent
+     */
+    function getUserAgent() {
+        return $_SERVER['HTTP_USER_AGENT'];
+    }
+
 
     /**
      * Returns the server root directory
@@ -141,4 +192,24 @@ namespace {
     function getBenchmark() {
         return microtime(true) - WOLFF_START;
     }
+
+    
+    /**
+     * Returns true if running from command line interface, false otherwise
+     * @return bool true if running from command line interface, false otherwise
+     */
+    function inCLI() {
+        return (php_sapi_name() === 'cli');
+    }
+
+
+    /**
+     * Returns the directory path with the slashes replaced by backslashes
+     * @param string $path the directory path
+     * @return string the directory path with the slashes replaced by backslashes
+     */
+    function pathToNamespace(string $path) {
+        return str_replace('/', '\\', $path);
+    }
+    
 }

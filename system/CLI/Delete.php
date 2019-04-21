@@ -2,7 +2,7 @@
 
 namespace Cli;
 
-use System\Library as Lib;
+use Utilities\Maintenance;
 
 class Delete
 {
@@ -29,13 +29,7 @@ class Delete
             echo "\e[1;31m WARNING: Command doesn't exists!\e[0m \n \n";
         }
     }
-
-
-    private function page() {
-        $this->controller();
-        $this->model();
-    }
-
+    
 
     private function controller() {
         $file_dir = $this->app_dir . 'controllers/' . $this->args[2] . '.php';
@@ -50,25 +44,6 @@ class Delete
         if ($response == 'Y') {
             unlink($file_dir);
             echo "Controller " . $this->args[2] . " deleted successfully! \n \n";
-        } else {
-            echo "\n";
-        }
-    }
-
-
-    private function model() {
-        $file_dir = $this->app_dir . 'models/' . $this->args[2] . '.php';
-
-        if (!is_file($file_dir)) {
-            echo "\e[1;31m WARNING: the model '" . $this->args[2] . "' doesn't exists!\e[0m \n \n";
-            return;
-        }
-
-        echo "Are you sure about deleting the " . $this->args[2] . ".php model? Y/N \n";
-        $response = readline(" -> ");
-        if ($response == 'Y') {
-            unlink($file_dir);
-            echo "Model " . $this->args[2] . " deleted successfully! \n \n";
         } else {
             echo "\n";
         }
@@ -133,7 +108,7 @@ class Delete
 
 
     private function ip() {
-        if (Lib\Maintenance::removeAllowedIP($this->args[2])) {
+        if (Maintenance::removeAllowedIP($this->args[2])) {
             echo "IP " . $this->args[2] . " removed successfully! \n \n";
         } else {
             echo "\e[1;31m WARNING: IP " . $this->args[2] . " not removed!\e[0m \n \n";

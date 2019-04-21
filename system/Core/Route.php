@@ -29,6 +29,7 @@ class Route
 
     const STATUS_OK = 200;
     const STATUS_REDIRECT = 301;
+    const GET_FORMAT = '/\{(.*)\}/';
 
 
     /**
@@ -197,10 +198,10 @@ class Route
      * @return boolean true if the route exists, false otherwise
      */
     public static function exists(string $url) {
-        $url = preg_replace('/\{(.*)\}/', '{}', $url);
+        $url = preg_replace(GET_FORMAT, '{}', $url);
         $routes = [];
         foreach (array_keys(self::$routes) as $key) {
-            $routes[] = preg_replace('/\{(.*)\}/', '{}', $key);
+            $routes[] = preg_replace(GET_FORMAT, '{}', $key);
         }
 
         return in_array($url, $routes);
