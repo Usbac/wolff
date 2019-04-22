@@ -67,6 +67,15 @@ namespace {
 
 
     /**
+     * Returns the absolute root directory of the project
+     * @return string the absolute root directory of the project
+     */
+   function getAbsoluteDirectory() {
+       return getServerRoot() . getDirectory();
+   }
+
+
+    /**
      * Returns the app directory of the project
      * @return string the app directory of the project
      */
@@ -139,8 +148,7 @@ namespace {
      * @return string The current version of Wolff defined in the composer.json file
      */
     function wolffVersion() {
-        $data = json_decode(file_get_contents('composer.json'), true);
-        return $data['version'];
+        return WOLFF_VERSION;
     }
 
     

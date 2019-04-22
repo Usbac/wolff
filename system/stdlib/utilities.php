@@ -29,6 +29,30 @@ namespace {
 
 
     /**
+     * Returns everything after the specified substring
+     * 
+     * @param string $str the string
+     * @param string $needle substring
+     * @return string a string with everything after the specified subtring in it
+     */
+    function strAfter(string $str, string $needle) {
+        return substr($str, strpos($str, $needle) + strlen($needle));
+    }
+
+
+    /**
+     * Returns everything before the specified substring
+     * 
+     * @param string $str the string
+     * @param string $needle the substring
+     * @return string a string with everything before the specified substring in it
+     */
+    function strBefore(string $str, string $needle) {
+        return substr($str, 0, strpos($str, $needle));
+    }
+
+
+    /**
      * Print a string and then die
      * @param $str the string to print
      */

@@ -19,7 +19,7 @@ namespace {
      * @return string the complete path of the controller
      */
     function getControllerPath(string $dir) {
-        return getServerRoot() . WOLFF_APP_DIR . 'controllers/' . $dir . '.php';
+        return getServerRoot() . getAppDirectory() . 'controllers/' . $dir . '.php';
     }
 
 
@@ -65,7 +65,7 @@ namespace {
      * @return string the complete path of the language
      */
     function getLanguagePath(string $dir, string $language = WOLFF_LANGUAGE) {
-        return getServerRoot() . WOLFF_APP_DIR . 'languages/' . $language . '/' . $dir . '.php';
+        return getServerRoot() . getAppDirectory() . 'languages/' . $language . '/' . $dir . '.php';
     }
 
 
@@ -85,7 +85,7 @@ namespace {
      * @return string the complete path of the library
      */
     function getLibraryPath(string $dir) {
-        return getServerRoot() . WOLFF_APP_DIR . 'libraries/' . $dir . '.php';
+        return getServerRoot() . getAppDirectory() . 'libraries/' . $dir . '.php';
     }
 
 
@@ -105,7 +105,7 @@ namespace {
      * @return string the complete path of the view
      */
     function getViewPath(string $dir) {
-        return getServerRoot() . WOLFF_APP_DIR . 'views/' . $dir;
+        return getServerRoot() . getAppDirectory() . 'views/' . $dir;
     }
 
 }

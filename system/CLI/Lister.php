@@ -67,7 +67,6 @@ class Lister
 
 
     private function extensions() {
-        $this->extension->load(true);
         $extensions = $this->extension->get();
 
         if (empty($extensions)) {

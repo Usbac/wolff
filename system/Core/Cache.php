@@ -84,8 +84,9 @@ class Cache
      * Create the cache folder if it doesn't exists
      */
     public static function createFolder() {
-        if (!file_exists('cache')) {
-            mkdir('cache', 0777, true);
+        $folder_path = getServerRoot() . getCacheDirectory();
+        if (!file_exists($folder_path)) {
+            mkdir($folder_path, 0777, true);
         }
     }
 
@@ -96,12 +97,14 @@ class Cache
      * @return bool true if the cache exists, false otherwise
      */
     public static function exists(string $dir = '') {
+        $folder_path = getServerRoot() . getCacheDirectory();
+
         if (!empty($dir)) {
-            $file_path = getServerRoot() . getCacheDirectory() . self::getFilename($dir);
+            $file_path = $folder_path . self::getFilename($dir);
             return is_file($file_path);
         }
 
-        return !empty(glob(getServerRoot() . getCacheDirectory() . '*'));
+        return !empty(glob($folder_path . '*'));
     }
 
 
@@ -110,8 +113,10 @@ class Cache
      * @param string $dir the cache to delete, if its empty all the cache will be deleted
      */
     public static function clear(string $dir = '') {
+        $folder_path = getServerRoot() . getCacheDirectory();
+
         if (!empty($dir)) {
-            $file_path = getServerRoot() . getCacheDirectory() . self::getFilename($dir);
+            $file_path = $folder_path . self::getFilename($dir);
 
             if (is_file($file_path)) {
                 unlink($file_path);
@@ -119,7 +124,7 @@ class Cache
             return;
         }
 
-        $files = glob(getServerRoot() . getCacheDirectory() . '*');
+        $files = glob($folder_path . '*');
 
         foreach ($files as $file) {
             if (is_file($file)) {

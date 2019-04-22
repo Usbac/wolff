@@ -114,6 +114,8 @@ class Create
         
         $file_dir = 'Extensions/' . $this->args[2] . '.php';
 
+        $this->extension->makeFolder();
+
         if (file_exists($file_dir)) {
             echo "\e[1;31m WARNING: extension " . $this->args[2] . " already exists!\e[0m \n \n";
             return;

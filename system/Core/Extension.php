@@ -26,39 +26,28 @@ class Extension
 
 
     /**
-     * Load all the php files in the extension folder
+     * Load all the extensions files that matches the current route
      */
-    public function load($ignore = false) {
+    public function load() {
         if (!extensionsEnabled()) {
             return false;
         }
 
         $this->makeFolder();
-
         
         $files = glob($this->directory . '*.php');
         $this->extensions = [];
 
         foreach ($files as $file) {
-            $filename = basename($file, '.php');
-            $class = 'Extension\\' . $filename;
+            $class = 'Extension\\' . basename($file, '.php');
             $extension = new $class;
 
-            if (!$ignore && isset($this->load) && $this->matchesDirectory($extension->desc['directory'])) {
+            if ($this->matchesDirectory($extension->desc['directory'])) {
                 $extension->load = $this->load;
                 $extension->session = $this->load->getSession();
                 $extension->upload = $this->load->getUpload();
                 $extension->index();
             }
-
-            $this->extensions[] = array(
-                'name' => $extension->desc['name'] ?? '',
-                'description' => $extension->desc['description'] ?? '',
-                'version' => $extension->desc['version'] ?? '',
-                'author' => $extension->desc['author'] ?? '',
-                'directory' => $extension->desc['directory'] ?? '',
-                'filename' => $filename
-            );
         }
 
         return true;
@@ -131,20 +120,36 @@ class Extension
      * @return array the extensions list if the name is empty or the specified extension otherwise
      */
     public function get(string $name = '') {
-        if (empty($this->extensions)) {
-            return array();
-        }
+        //Specified extension
+        if (!empty($name)) {
+            $class = 'Extension\\' . $name;
 
-        if (empty($name)) {
-            return $this->extensions;
-        }
-
-        foreach ($this->extensions as $extension) {
-            if ($extension['filename'] === $name) {
-                return $extension;
+            if (class_exists($class)) {
+                return (new $class)->desc;
             }
+            
+            return false;
         }
 
-        return false;
+        //All the extensions
+        $files = glob($this->directory . '*.php');
+        $this->extensions = [];
+        
+        foreach ($files as $file) {
+            $filename = basename($file, '.php');
+            $class = 'Extension\\' . $filename;
+            $extension = new $class;
+
+            $this->extensions[] = array(
+                'name' => $extension->desc['name'] ?? '',
+                'description' => $extension->desc['description'] ?? '',
+                'version' => $extension->desc['version'] ?? '',
+                'author' => $extension->desc['author'] ?? '',
+                'directory' => $extension->desc['directory'] ?? '',
+                'filename' => $filename
+            );
+        }
+
+        return $this->extensions;
     }
 }
