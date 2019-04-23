@@ -30,7 +30,7 @@ class Cache
      * @param string $content the original file content
      * @return string the cache file path
      */
-    public function get(string $dir, string $content) {
+    public static function get(string $dir, string $content) {
         $file_path = getServerRoot() . getCacheDirectory() . self::getFilename($dir);
 
         self::createFolder();
@@ -54,7 +54,7 @@ class Cache
      * @param string $dir the cache file directory
      * @return bool true if the cache file has expired, false otherwise
      */
-    public function expired($dir) {
+    public static function expired($dir) {
         $file_path = getServerRoot() . getCacheDirectory() . self::getFilename($dir);
         if (!file_exists($file_path)) {
             return false;

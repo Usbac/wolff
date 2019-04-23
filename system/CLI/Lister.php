@@ -2,21 +2,19 @@
 
 namespace Cli;
 
-use Core as Core;
 use Utilities\Maintenance;
+use Core\{Extension, Route};
 
 class Lister
 {
     private $route;
-    private $extension;
     private $app_dir;
     private $public_dir;
     private $args;
 
 
-    public function __construct($route, $extension, $app_dir, $public_dir) {
+    public function __construct($route, $app_dir, $public_dir) {
         $this->route = &$route;
-        $this->extension = &$extension;
         $this->app_dir = $app_dir;
         $this->public_dir = $public_dir;
     }
@@ -67,7 +65,8 @@ class Lister
 
 
     private function extensions() {
-        $extensions = $this->extension->get();
+        Extension::setDirectory('../' . getExtensionDirectory());
+        $extensions = Extension::get();
 
         if (empty($extensions)) {
             echo "Extensions: none \n \n";
@@ -79,7 +78,6 @@ class Lister
             echo "\nDescription: " . $ext['description'];
             echo "\nVersion: " . $ext['version'];
             echo "\nAuthor: " . $ext['author'];
-            echo "\nDirectory: " . $ext['directory'];
             echo "\nFilename: " . $ext['filename'];
             echo "\n";
         }
@@ -200,7 +198,7 @@ class Lister
 
 
     private function routes() {
-        $routes = Core\Route::getRoutes();
+        $routes = Route::getRoutes();
 
         if (count($routes) <= 0) {
             echo "\n ROUTES: none \n \n";
@@ -216,7 +214,7 @@ class Lister
 
 
     private function blocked() {
-        $blocked = Core\Route::getBlocked();
+        $blocked = Route::getBlocked();
 
         if (count($blocked) <= 0) {
             echo "\n BLOCKED: none \n \n";
@@ -232,7 +230,7 @@ class Lister
 
 
     private function redirects() {
-        $redirects = Core\Route::getRedirects();
+        $redirects = Route::getRedirects();
 
         if (count($redirects) <= 0) {
             echo "\n REDIRECTIONS: none \n \n";

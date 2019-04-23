@@ -39,7 +39,8 @@
       "system/stdlib/pages.php",
       "system/stdlib/sanitizer.php",
       "system/stdlib/utilities.php",
-      "system/routes.php"
+      "system/Routes.php",
+      "system/Extensions.php"
     ],
     "psr-4": {
       "Root\\": "",

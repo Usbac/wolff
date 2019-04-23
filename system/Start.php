@@ -50,15 +50,14 @@ class Start
 
         $url = sanitizeURL($_GET['url'] ?? getMainPage());
 
+        //Load extensions of type before
+        if (extensionsEnabled()) {
+            Extension::load('before', $this->load);
+        }
+
         //Check blocked route
         if (Route::isBlocked($url)) {
             $this->load->redirect404();
-        }
-
-        //Load extensions
-        if (extensionsEnabled()) {
-            $this->extension = new Extension($this->load);
-            $this->extension->load();
         }
 
         $function = Route::get($url);
@@ -69,6 +68,11 @@ class Start
             $this->load->controller($url);
         } else {
             $this->load->redirect404();
+        }
+
+        //Load extensions of type after
+        if (extensionsEnabled()) {
+            Extension::load('after', $this->load);
         }
     }
 

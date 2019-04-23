@@ -7,14 +7,12 @@ use Utilities\Maintenance;
 class Delete
 {
     private $route;
-    private $extension;
     private $app_dir;
     private $args;
 
 
-    public function __construct($route, $extension, $app_dir) {
+    public function __construct($route, $app_dir) {
         $this->route = &$route;
-        $this->extension = &$extension;
         $this->app_dir = $app_dir;
     }
 

@@ -3,7 +3,7 @@
 namespace Cli;
 
 use Core;
-use Core\DB;
+use Core\{DB, Route, Extension};
 
 class Wolffie
 {
@@ -15,22 +15,20 @@ class Wolffie
     private $command;
     private $args;
     private $route;
-    private $extension;
     private $app_dir;
     private $public_dir;
 
 
     public function __construct() {
         DB::initialize();
-        $this->route = new Core\Route();
-        $this->extension = new Core\Extension(null, "../");
+        $this->route = new Route();
 
         $root = '../';
         $this->app_dir = $root . WOLFF_APP_DIR;
         $this->public_dir = $root . WOLFF_PUBLIC_DIR;
-        $this->list = new Lister($this->route, $this->extension, $this->app_dir, $this->public_dir);
-        $this->create = new Create($this->route, $this->extension, $this->app_dir);
-        $this->delete = new Delete($this->route, $this->extension, $this->app_dir);
+        $this->list = new Lister($this->route, $this->app_dir, $this->public_dir);
+        $this->create = new Create($this->route, $this->app_dir);
+        $this->delete = new Delete($this->route, $this->app_dir);
     }
 
 

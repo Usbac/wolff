@@ -3,19 +3,18 @@
 namespace Cli;
 
 use Utilities\Maintenance;
+use Core\Extension;
 
 class Create
 {
     private $route;
-    private $extension;
     private $app_dir;
     private $args;
     private $routes_dir;
 
 
-    public function __construct($route, $extension, $app_dir) {
+    public function __construct($route, $app_dir) {
         $this->route = &$route;
-        $this->extension = &$extension;
         $this->app_dir = $app_dir;
         $this->routes_dir = 'Routes.php';
     }
@@ -112,9 +111,10 @@ class Create
             return;
         }
         
-        $file_dir = 'Extensions/' . $this->args[2] . '.php';
+        $file_dir = '../' . getExtensionDirectory() . $this->args[2] . '.php';
 
-        $this->extension->makeFolder();
+        Extension::setDirectory('../' . getExtensionDirectory());
+        Extension::makeFolder();
 
         if (file_exists($file_dir)) {
             echo "\e[1;31m WARNING: extension " . $this->args[2] . " already exists!\e[0m \n \n";
@@ -126,11 +126,10 @@ class Create
         $name = readline("Name -> ");
         $description = readline("Description -> ");
         $version = readline("Version -> ");
-        $directory = readline("Directory -> ");
         $author = readline("Author -> ");
 
-        $original = array('{classname}', '{name}', '{description}', '{version}', '{directory}', '{author}');
-        $replacement = array($this->args[2], $name, $description, $version, $directory, $author);
+        $original = array('{classname}', '{name}', '{description}', '{version}', '{author}');
+        $replacement = array($this->args[2], $name, $description, $version, $author);
 
         $content = file_get_contents('CLI/templates/extension.txt');
         $content = str_replace($original, $replacement, $content);

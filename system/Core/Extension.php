@@ -13,39 +13,57 @@ class Extension
      *
      * @var string
      */
-    private $directory;
+    private static $directory;
+
+    /**
+     * List of extensions
+     *
+     * @var array
+     */
+    private static $extensions;
 
 
-    public function __construct($load = null, $root = null) {
-        if (isset($load)) {
-            $this->load = &$load;
-        }
+    const CLASS_ERROR = "Warning: Extension class %s doesn't exists";
 
-        $this->directory = ($root ?? getServerRoot()) .  getExtensionDirectory(); 
+
+    /**
+     * Set the extensions folder path (only for CLI)
+     * @param string $dir the desired folder path
+     */
+    public static function setDirectory(string $dir) {
+        self::$directory = $dir;
     }
 
 
     /**
      * Load all the extensions files that matches the current route
+     * @param string $type the type of extensions to load
+     * @param mixed $loader the loader class
      */
-    public function load() {
+    public static function load(string $type, $loader = null) {
         if (!extensionsEnabled()) {
             return false;
         }
 
-        $this->makeFolder();
-        
-        $files = glob($this->directory . '*.php');
-        $this->extensions = [];
+        self::makeFolder();
 
-        foreach ($files as $file) {
-            $class = 'Extension\\' . basename($file, '.php');
-            $extension = new $class;
+        if (empty(self::$extensions)) {
+            return false;
+        }
 
-            if ($this->matchesDirectory($extension->desc['directory'])) {
-                $extension->load = $this->load;
-                $extension->session = $this->load->getSession();
-                $extension->upload = $this->load->getUpload();
+        foreach (self::$extensions as $extension) {
+            if ($extension['type'] == $type && self::matchesRoute($extension['route'])) {
+                $class = 'Extension\\' . $extension['name'];
+
+                if (!class_exists($class)) {
+                    error_log(sprintf(self::CLASS_ERROR, $extension['name']));
+                    continue;
+                }
+
+                $extension = new $class;
+                $extension->load = $loader;
+                $extension->session = $loader->getSession();
+                $extension->upload = $loader->getUpload();
                 $extension->index();
             }
         }
@@ -59,18 +77,16 @@ class Extension
      * @param string $dir the directory
      * @return bool true if the directory matches the current url, false otherwise
      */
-    private function matchesDirectory(string $dir) {
+    private static function matchesRoute(string $dir) {
         if (empty($dir)) {
-            return true;
+            return false;
         }
+        
+        $dir = explode('/', sanitizeURL($dir));
+        $dirLength = count($dir) - 1;
 
         $url = explode('/', sanitizeURL(getCurrentPage()));
-        $url = array_values(array_filter($url));
         $urlLength = count($url) - 1;
-
-        $dir = explode('/', sanitizeURL($dir));
-        $dir = array_values(array_filter($dir));
-        $dirLength = count($dir) - 1;
 
         for ($i = 0; $i <= $dirLength && $i <= $urlLength; $i++) {
             if ($dir[$i] == '*') {
@@ -86,6 +102,7 @@ class Extension
                 return true;
             }
 
+            //Finish if in the end of the route
             if ($i === $dirLength && $i === $urlLength) {
                 return true;
             }
@@ -99,18 +116,54 @@ class Extension
      * Returns true if the extension folder exists, false otherwise
      * @return bool true if the extension folder exists, false otherwise
      */
-    public function folderExists() {
-        return file_exists($this->directory);
+    public static function folderExists() {
+        if (!self::$directory) {
+            self::$directory = getServerRoot() . getExtensionDirectory();
+        }
+        
+        return file_exists(self::$directory);
     }
 
 
     /**
      * Make the extension folder directory if doesn't exists
      */
-    public function makeFolder() {
-        if (!$this->folderExists()) {
-            mkdir($this->directory);
+    public static function makeFolder() {
+        if (!self::$directory) {
+            self::$directory = getServerRoot() . getExtensionDirectory();
         }
+
+        if (!self::folderExists()) {
+            mkdir(self::$directory);
+        }
+    }
+
+
+    /**
+     * Add an extension of type after
+     * @param string $route the desired route where it will work
+     * @param string $extension_name the extension name
+     */
+    public static function after(string $route, string $extension_name) {
+        self::$extensions[] = array(
+            'name' => $extension_name,
+            'route' => $route,
+            'type' => 'after'
+        );
+    }
+
+
+    /**
+     * Add an extension of type before
+     * @param string $route the desired route where it will work
+     * @param string $extension_name the extension name
+     */
+    public static function before(string $route, string $extension_name) {
+        self::$extensions[] = array(
+            'name' => $extension_name,
+            'route' => $route,
+            'type' => 'before'
+        );
     }
 
 
@@ -119,7 +172,7 @@ class Extension
      * @param string the extensions filename
      * @return array the extensions list if the name is empty or the specified extension otherwise
      */
-    public function get(string $name = '') {
+    public static function get(string $name = '') {
         //Specified extension
         if (!empty($name)) {
             $class = 'Extension\\' . $name;
@@ -132,24 +185,23 @@ class Extension
         }
 
         //All the extensions
-        $files = glob($this->directory . '*.php');
-        $this->extensions = [];
+        $files = glob(self::$directory . '*.php');
+        $extensions = [];
         
         foreach ($files as $file) {
             $filename = basename($file, '.php');
             $class = 'Extension\\' . $filename;
             $extension = new $class;
 
-            $this->extensions[] = array(
+            $extensions[] = array(
                 'name' => $extension->desc['name'] ?? '',
                 'description' => $extension->desc['description'] ?? '',
                 'version' => $extension->desc['version'] ?? '',
                 'author' => $extension->desc['author'] ?? '',
-                'directory' => $extension->desc['directory'] ?? '',
                 'filename' => $filename
             );
         }
 
-        return $this->extensions;
+        return $extensions;
     }
 }

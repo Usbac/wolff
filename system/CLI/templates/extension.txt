@@ -9,7 +9,6 @@ class {classname}
         'name'        => "{name}",
         'description' => "{description}",
         'version'     => "{version}",
-        'directory'   => "{directory}",
         'author'      => "{author}"
     );    
 
