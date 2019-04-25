@@ -6,18 +6,22 @@ class Template
 {
 
 
-    public function __construct() {
+    public function __construct()
+    {
     }
 
 
     /**
      * Apply the template format over a content and render it
-     * @param string $dir the view directory
-     * @param array $data the data array present in the view
-     * @param bool $cache use or not the cache system
+     *
+     * @param  string  $dir  the view directory
+     * @param  array  $data  the data array present in the view
+     * @param  bool  $cache  use or not the cache system
+     *
      * @return string the view content
      */
-    public function get(string $dir, array $data, bool $cache) {
+    public function get(string $dir, array $data, bool $cache)
+    {
         //Variables in data array
         if (is_array($data)) {
             extract($data);
@@ -42,11 +46,14 @@ class Template
 
     /**
      * Apply the template format over a content and return it
-     * @param string $dir the view directory
-     * @param array $data the data array present in the view
+     *
+     * @param  string  $dir  the view directory
+     * @param  array  $data  the data array present in the view
+     *
      * @return string the view content
      */
-    public function getView(string $dir, array $data) {
+    public function getView(string $dir, array $data)
+    {
         //Variables in data array
         if (is_array($data)) {
             extract($data);
@@ -59,10 +66,13 @@ class Template
 
     /**
      * Get the content of a view file
-     * @param string $dir the view directory
+     *
+     * @param  string  $dir  the view directory
+     *
      * @return string the view content
      */
-    private function getContent($dir) {
+    private function getContent($dir)
+    {
         $file_path = getServerRoot() . WOLFF_APP_DIR . 'views/' . $dir;
 
         if (file_exists($file_path . '.php')) {
@@ -71,6 +81,7 @@ class Template
             return file_get_contents($file_path . '.html');
         } else {
             error_log("Error: View '" . $dir . "' doesn't exists");
+
             return null;
         }
     }
@@ -78,24 +89,31 @@ class Template
 
     /**
      * Apply all the replace methods of the template
-     * @param string $content the view content
+     *
+     * @param  string  $content  the view content
+     *
      * @return string the view content with the template replaced
      */
-    private function replaceAll(string $content) {
+    private function replaceAll(string $content)
+    {
         $content = $this->replaceInclude($content);
         $content = $this->replaceFunctions($content);
         $content = $this->replaceTags($content);
         $content = $this->replaceConditionals($content);
+
         return $this->replaceCycles($content);
     }
 
 
     /**
      * Apply the template includes
-     * @param string $content the view content
-     * @return string the view content with the includes formated
+     *
+     * @param  string  $content  the view content
+     *
+     * @return string the view content with the includes formatted
      */
-    private function replaceInclude($content) {
+    private function replaceInclude($content)
+    {
         preg_match_all('/@load\(( ?){1,}(.*)(.php|.html)( ?){1,}\)/', $content, $matches, PREG_OFFSET_CAPTURE);
 
         foreach ($matches[1] as $key => $value) {
@@ -108,17 +126,21 @@ class Template
 
     /**
      * Apply the template functions
-     * @param string $content the view content
-     * @return string the view content with the functions formated
+     *
+     * @param  string  $content  the view content
+     *
+     * @return string the view content with the functions formatted
      */
-    private function replaceFunctions($content) {
+    private function replaceFunctions($content)
+    {
         $format = '/{func}( ?){1,}\|([^\}]{1,})/';
 
         //Escape
         $content = preg_replace(str_replace('{func}', 'e', $format), 'htmlspecialchars(strip_tags($2))',
             $content);
         //HTMLspecialchars
-        $content = preg_replace(str_replace('{func}', 'especial', $format), 'htmlspecialchars($2, ENT_QUOTES, \'UTF-8\')', $content);
+        $content = preg_replace(str_replace('{func}', 'especial', $format),
+            'htmlspecialchars($2, ENT_QUOTES, \'UTF-8\')', $content);
         //Uppercase
         $content = preg_replace(str_replace('{func}', 'upper', $format), 'strtoupper($2)', $content);
         //Lowercase
@@ -148,35 +170,46 @@ class Template
 
     /**
      * Apply the template format over the tags of a content
-     * @param string $content the view content
-     * @return string the view content with the tags formated
+     *
+     * @param  string  $content  the view content
+     *
+     * @return string the view content with the tags formatted
      */
-    private function replaceTags($content) {
+    private function replaceTags($content)
+    {
         $content = preg_replace('/\{\{(.*?)\}\}/', '<?php echo $1; ?>', $content);
+
         return preg_replace('/\{%(.*?)%\}/', '<?php $1 ?>', $content);
     }
 
 
     /**
      * Apply the template format over the conditionals of a content
-     * @param string $content the view content
-     * @return string the view content with the conditionals formated
+     *
+     * @param  string  $content  the view content
+     *
+     * @return string the view content with the conditionals formatted
      */
-    private function replaceConditionals($content) {
+    private function replaceConditionals($content)
+    {
         $content = preg_replace('/\{\?\}/', '<?php endif; ?>', $content);
         $content = preg_replace('/\{(\s?){1,}(.*)\?(\s?){1,}\}/', '<?php if ($2): ?>', $content);
         $content = preg_replace('/\{(\s?){1,}else(\s?){1,}\}/', '<?php else: ?>', $content);
         $content = preg_replace('/\{(\s?){1,}else(\s?){1,}(.*)(\s?){1,}\}/', '<?php elseif ($3): ?>', $content);
+
         return $content;
     }
 
 
     /**
      * Apply the template format over the cycles of a content
-     * @param string $content the view content
-     * @return string the view content with the cycles formated
+     *
+     * @param  string  $content  the view content
+     *
+     * @return string the view content with the cycles formatted
      */
-    private function replaceCycles($content) {
+    private function replaceCycles($content)
+    {
         //For
         $content = preg_replace('/\{( ?){1,}for( ){1,}(.*)( ){1,}in( ){1,}\((.*)( ?){1,},( ?){1,}(.*)( ?){1,}\)( ?){1,}\}/',
             '<?php for (\$$3=$6; \$$3 <= $9; \$$3++): ?>', $content);
@@ -185,6 +218,7 @@ class Template
         $content = preg_replace('/\{( ?){1,}for( ?){1,}(.*)( ?){1,}as( ?){1,}(.*)( ?){1,}\}/',
             '<?php foreach ($3 as $6): ?>', $content);
         $content = preg_replace('/\{( ?){1,}foreach( ?){1,}\}/', '<?php endforeach; ?>', $content);
+
         return $content;
     }
 }

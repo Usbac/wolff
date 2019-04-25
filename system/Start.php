@@ -37,12 +37,24 @@ class Start
     public $upload;
 
 
+    public function __construct()
+    {
+        DB::initialize();
+        $this->session = new Session();
+
+        if (class_exists('Utilities\Upload')) {
+            $this->upload = new Upload();
+        }
+
+        $this->load = new Loader($this->session, $this->upload);
+    }
+
+
     /**
      * Start the loading of the page
      */
-    public function __construct() {
-        $this->initComponents();
-
+    public function load()
+    {
         //Check maintenance mode
         if (maintenanceEnabled() && !Maintenance::isClientAllowed()) {
             $this->load->maintenance();
@@ -74,17 +86,6 @@ class Start
         if (extensionsEnabled()) {
             Extension::load('after', $this->load);
         }
-    }
-
-
-    /**
-     * Initialize the main components
-     */
-    public function initComponents() {
-        DB::initialize();
-        $this->session = new Session();
-        $this->upload = new Upload();
-        $this->load = new Loader($this->session, $this->upload);
     }
 
 }

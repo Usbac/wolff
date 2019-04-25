@@ -34,11 +34,12 @@ class Library
     protected $upload;
 
 
-    public function __construct($load) {
-        $this->load = &$load;
+    public function __construct($load)
+    {
+        $this->load    = &$load;
         $this->session = $this->load->getSession();
-        $this->upload = $this->load->getUpload();
-        $this->data = [];
+        $this->upload  = $this->load->getUpload();
+        $this->data    = [];
     }
 
 }

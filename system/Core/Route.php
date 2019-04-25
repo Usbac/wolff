@@ -20,7 +20,7 @@ class Route
     private static $blocked = [];
 
     /**
-     * List of redirections.
+     * List of redirects.
      *
      * @var array
      */
@@ -34,20 +34,23 @@ class Route
 
     /**
      * Get the function of a route
-     * @param string $url the url
+     *
+     * @param  string  $url  the url
+     *
      * @return object the function associated to the route
      */
-    public static function get(string $url) {
-        $url = explode('/', sanitizeURL($url));
+    public static function get(string $url)
+    {
+        $url       = explode('/', sanitizeURL($url));
         $urlLength = count($url) - 1;
-        $finished = false;
+        $finished  = false;
 
         if (self::$routes === []) {
             return null;
         }
 
         foreach (self::$routes as $key => $value) {
-            $route = explode('/', $key);
+            $route       = explode('/', $key);
             $routeLength = count($route) - 1;
 
             for ($i = 0; $i <= $routeLength && $i <= $urlLength; $i++) {
@@ -69,6 +72,7 @@ class Route
                 //Process the route and return its function
                 if ($finished || ($i === $routeLength && $i === $urlLength)) {
                     self::processRoute($key);
+
                     return self::$routes[$key]['function'];
                 }
             }
@@ -80,9 +84,11 @@ class Route
 
     /**
      * Apply the response code and content type of a route
-     * @param string $key the route key
+     *
+     * @param  string  $key  the route key
      */
-    private static function processRoute($key) {
+    private static function processRoute($key)
+    {
         if (!self::$routes[$key]) {
             return;
         }
@@ -97,64 +103,80 @@ class Route
 
     /**
      * Add a route
-     * @param string $url the url
-     * @param mixed $function the function that must be executed when accessing the route
+     *
+     * @param  string  $url  the url
+     * @param $function mixed the function that must be executed when accessing the route
      */
-    public static function add(string $url, $function) {
+    public static function add(string $url, $function)
+    {
         $url = sanitizeURL($url);
+
+        //Use $function as a controller name and load it if it's a string
+        if (is_string($function)) {
+            $function = function () use ($function) {
+                $this->load->controller($function);
+            };
+        }
+
         self::$routes[$url] = array(
             'function' => $function,
-            'api' => false,
-            'status' => self::STATUS_OK
+            'api'      => false,
+            'status'   => self::STATUS_OK,
         );
     }
 
 
     /**
      * Add an API
-     * @param string $url the url
-     * @param int $status the http response code
-     * @param mixed $function the function that must be executed when accessing the API
+     *
+     * @param  string  $url  the url
+     * @param  int  $status  the http response code
+     * @param $function mixed the function that must be executed when accessing the API
      */
-    public static function api(string $url, int $status, $function) {
-        $url = sanitizeURL($url);
+    public static function api(string $url, int $status, $function)
+    {
+        $url                = sanitizeURL($url);
         self::$routes[$url] = array(
             'function' => $function,
-            'api' => true,
-            'status' => $status
+            'api'      => true,
+            'status'   => $status,
         );
     }
 
 
     /**
      * Redirect the first url to the second url
-     * @param string $url the first url
-     * @param string $url2 the second url
-     * @param int $status The response http code
+     *
+     * @param  string  $url  the first url
+     * @param  string  $url2  the second url
+     * @param  int  $status  The response http code
      */
-    public static function redirect(string $url, string $url2, int $status = self::STATUS_REDIRECT) {
-        $url = sanitizeURL($url);
+    public static function redirect(string $url, string $url2, int $status = self::STATUS_REDIRECT)
+    {
+        $url  = sanitizeURL($url);
         $url2 = sanitizeURL($url2);
 
         self::$routes[$url] = array(
             'function' => self::$routes[$url2]['function'],
-            'api' => false,
-            'status' => $status
+            'api'      => false,
+            'status'   => $status,
         );
 
         self::$redirects[] = array(
-            'origin' => $url,
+            'origin'  => $url,
             'destiny' => $url2,
-            'code' => $status
+            'code'    => $status,
         );
     }
 
 
     /**
      * Block an url
-     * @param string $url the url
+     *
+     * @param  string  $url  the url
      */
-    public static function block(string $url) {
+    public static function block(string $url)
+    {
         $url = sanitizeURL($url);
         array_push(self::$blocked, $url);
     }
@@ -162,15 +184,18 @@ class Route
 
     /**
      * Check if an url is blocked
-     * @param string $url the url
+     *
+     * @param  string  $url  the url
+     *
      * @return boolean true if the url is blocked, false otherwise
      */
-    public static function isBlocked(string $url) {
-        $url = explode('/', $url);
+    public static function isBlocked(string $url)
+    {
+        $url       = explode('/', $url);
         $urlLength = count($url);
 
         foreach (self::$blocked as $blocked) {
-            $blocked = explode('/', $blocked);
+            $blocked       = explode('/', $blocked);
             $blockedLength = count($blocked);
 
             for ($i = 0; $i < $blockedLength && $i < $urlLength; $i++) {
@@ -194,11 +219,14 @@ class Route
 
     /**
      * Check if a route exists
-     * @param string $url the url
+     *
+     * @param  string  $url  the url
+     *
      * @return boolean true if the route exists, false otherwise
      */
-    public static function exists(string $url) {
-        $url = preg_replace(GET_FORMAT, '{}', $url);
+    public static function exists(string $url)
+    {
+        $url    = preg_replace(GET_FORMAT, '{}', $url);
         $routes = [];
         foreach (array_keys(self::$routes) as $key) {
             $routes[] = preg_replace(GET_FORMAT, '{}', $key);
@@ -210,31 +238,39 @@ class Route
 
     /**
      * Check if a string has the format of a route GET variable
-     * @param string $str the string
+     *
+     * @param  string  $str  the string
+     *
      * @return boolean true if the string has the format of a route GET variable, false otherwise
      */
-    public static function isGetVariable(string $str) {
+    public static function isGetVariable(string $str)
+    {
         return preg_match('/\{(.*)?\}/', $str);
     }
 
 
     /**
      * Clear a GET string
-     * @param string $str the string
+     *
+     * @param  string  $str  the string
+     *
      * @return string the get variable without brackets
      */
-    public static function clearGetVariable(string $str) {
+    public static function clearGetVariable(string $str)
+    {
         return preg_replace('/\{|\}/', '', $str);
     }
 
 
     /**
      * Set a GET variable
-     * @param string $key the variable key
-     * @param string $value the variable value
+     *
+     * @param  string  $key  the variable key
+     * @param  string  $value  the variable value
      */
-    private static function setGetVariable(string $key, $value = '') {
-        $key = self::clearGetVariable($key);
+    private static function setGetVariable(string $key, $value = '')
+    {
+        $key        = self::clearGetVariable($key);
         $_GET[$key] = $value ?? '';
     }
 
@@ -243,16 +279,18 @@ class Route
      * Returns all the available routes
      * @return array the available routes
      */
-    public static function getRoutes() {
+    public static function getRoutes()
+    {
         return self::$routes;
     }
 
 
     /**
-     * Returns all the available redirections
-     * @return array the available redirections
+     * Returns all the available redirects
+     * @return array the available redirects
      */
-    public static function getRedirects() {
+    public static function getRedirects()
+    {
         return self::$redirects;
     }
 
@@ -261,7 +299,8 @@ class Route
      * Returns all the blocked routes
      * @return array the blocked routes
      */
-    public static function getBlocked() {
+    public static function getBlocked()
+    {
         return self::$blocked;
     }
 }

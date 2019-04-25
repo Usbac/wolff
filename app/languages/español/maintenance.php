@@ -1,4 +1,4 @@
 <?php
 
 $data['title'] = 'En mantenimiento';
-$data['msg'] = 'Vuelva pronto';
+$data['msg']   = 'Vuelva pronto';

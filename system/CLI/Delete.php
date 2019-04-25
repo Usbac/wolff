@@ -11,15 +11,17 @@ class Delete
     private $args;
 
 
-    public function __construct($route, $app_dir) {
-        $this->route = &$route;
+    public function __construct($route, $app_dir)
+    {
+        $this->route   = &$route;
         $this->app_dir = $app_dir;
     }
 
 
-    public function index($args) {
+    public function index($args)
+    {
         $this->args = $args;
-        $function = $this->args[1];
+        $function   = $this->args[1];
 
         if (method_exists($this, $function)) {
             $this->$function();
@@ -27,13 +29,15 @@ class Delete
             echo "\e[1;31m WARNING: Command doesn't exists!\e[0m \n \n";
         }
     }
-    
 
-    private function controller() {
+
+    private function controller()
+    {
         $file_dir = $this->app_dir . 'controllers/' . $this->args[2] . '.php';
 
         if (!is_file($file_dir)) {
             echo "\e[1;31m WARNING: the controller '" . $this->args[2] . "' doesn't exists!\e[0m \n \n";
+
             return;
         }
 
@@ -48,11 +52,13 @@ class Delete
     }
 
 
-    private function library() {
+    private function library()
+    {
         $file_dir = $this->app_dir . 'libraries/' . $this->args[2] . '.php';
 
         if (!is_file($file_dir)) {
             echo "\e[1;31m WARNING: the library '" . $this->args[2] . "' doesn't exists!\e[0m \n \n";
+
             return;
         }
 
@@ -67,11 +73,13 @@ class Delete
     }
 
 
-    private function view() {
+    private function view()
+    {
         $file_dir = $this->app_dir . 'views/' . $this->args[2];
 
         if (!is_file($file_dir)) {
             echo "\e[1;31m WARNING: the view '" . $this->args[2] . "' doesn't exists!\e[0m \n \n";
+
             return;
         }
 
@@ -86,11 +94,13 @@ class Delete
     }
 
 
-    private function extension() {
+    private function extension()
+    {
         $file_dir = '../extension/' . $this->args[2] . '.php';
 
         if (!is_file($file_dir)) {
             echo "\e[1;31m WARNING: the extension '" . $this->args[2] . "' doesn't exists!\e[0m \n \n";
+
             return;
         }
 
@@ -105,7 +115,8 @@ class Delete
     }
 
 
-    private function ip() {
+    private function ip()
+    {
         if (Maintenance::removeAllowedIP($this->args[2])) {
             echo "IP " . $this->args[2] . " removed successfully! \n \n";
         } else {
@@ -114,17 +125,20 @@ class Delete
     }
 
 
-    private function language() {
+    private function language()
+    {
         $language_dir = $this->app_dir . 'languages/' . $this->args[2];
         $this->deleteRecursively($language_dir);
     }
 
 
-    private function cache() {
+    private function cache()
+    {
         $cache_path = '../cache';
 
         if (!is_dir($cache_path)) {
             echo "\e[1;31m WARNING: the cache folder doesn't exists!\e[0m \n \n";
+
             return;
         }
 
@@ -132,6 +146,7 @@ class Delete
 
         if (count($files) <= 0) {
             echo "\e[1;31m WARNING: the cache folder is already empty!\e[0m \n \n";
+
             return;
         }
 
@@ -145,9 +160,11 @@ class Delete
     }
 
 
-    private function deleteRecursively($dir) {
+    private function deleteRecursively($dir)
+    {
         if (!is_dir($dir)) {
             echo "\e[1;31m WARNING: the language '" . $this->args[2] . "' doesn't exists!\e[0m \n \n";
+
             return;
         }
 

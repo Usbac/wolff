@@ -2,10 +2,13 @@
 
 namespace Library;
 
-class Home extends \Core\Library
+use Core\Library;
+
+class Home extends Library
 {
 
-    public function helloWorld() {
+    public function helloWorld()
+    {
         println('Hello world');
     }
 

@@ -11,7 +11,8 @@ namespace {
      * Returns the current server
      * @return string the current server
      */
-    function getServer() {
+    function getServer()
+    {
         return WOLFF_SERVER;
     }
 
@@ -20,16 +21,18 @@ namespace {
      * Returns the current database
      * @return string the current database
      */
-    function getDB() {
+    function getDB()
+    {
         return WOLFF_DB;
     }
 
 
     /**
-     * Returns the current database managment system
-     * @return string the current database managment system
+     * Returns the current database management system
+     * @return string the current database management system
      */
-    function getDBMS() {
+    function getDBMS()
+    {
         return WOLFF_DBMS;
     }
 
@@ -38,7 +41,8 @@ namespace {
      * Returns the current database username
      * @return string the current database username
      */
-    function getDBUser() {
+    function getDBUser()
+    {
         return WOLFF_DBUSERNAME;
     }
 
@@ -47,11 +51,12 @@ namespace {
      * Returns the current database username password
      * @return string the current database username password
      */
-    function getDBPass() {
+    function getDBPass()
+    {
         return WOLFF_DBPASSWORD;
     }
 
-    
+
     /**
      *  DIRECTORIES
      */
@@ -61,7 +66,8 @@ namespace {
      * Returns the root directory of the project
      * @return string the root directory of the project
      */
-    function getDirectory() {
+    function getDirectory()
+    {
         return WOLFF_ROOT_DIR;
     }
 
@@ -70,16 +76,18 @@ namespace {
      * Returns the absolute root directory of the project
      * @return string the absolute root directory of the project
      */
-   function getAbsoluteDirectory() {
-       return getServerRoot() . getDirectory();
-   }
+    function getAbsoluteDirectory()
+    {
+        return getServerRoot() . getDirectory();
+    }
 
 
     /**
      * Returns the app directory of the project
      * @return string the app directory of the project
      */
-    function getAppDirectory() {
+    function getAppDirectory()
+    {
         return WOLFF_APP_DIR;
     }
 
@@ -88,7 +96,8 @@ namespace {
      * Returns the public directory of the project
      * @return string the public directory of the project
      */
-    function getPublicDirectory() {
+    function getPublicDirectory()
+    {
         return WOLFF_PUBLIC_DIR;
     }
 
@@ -97,7 +106,8 @@ namespace {
      * Returns the extension directory of the project
      * @return string the extension directory of the project
      */
-    function getExtensionDirectory() {
+    function getExtensionDirectory()
+    {
         return WOLFF_EXTENSION_DIR;
     }
 
@@ -106,7 +116,8 @@ namespace {
      * Returns the cache directory of the project
      * @return string the cache directory of the project
      */
-    function getCacheDirectory() {
+    function getCacheDirectory()
+    {
         return WOLFF_CACHE_DIR;
     }
 
@@ -120,7 +131,8 @@ namespace {
      * Returns the title of the project
      * @return string the title of the project
      */
-    function getPageTitle() {
+    function getPageTitle()
+    {
         return WOLFF_PAGE_TITLE;
     }
 
@@ -129,7 +141,8 @@ namespace {
      * Returns the main page of the project
      * @return string the main page of the project
      */
-    function getMainPage() {
+    function getMainPage()
+    {
         return WOLFF_MAIN_PAGE;
     }
 
@@ -138,20 +151,22 @@ namespace {
      * Returns the language currently used by the project
      * @return string the language name
      */
-    function getLanguage() {
+    function getLanguage()
+    {
         return WOLFF_LANGUAGE;
     }
 
-    
+
     /**
      * Returns the current version of Wolff defined in the composer.json file
      * @return string The current version of Wolff defined in the composer.json file
      */
-    function wolffVersion() {
+    function wolffVersion()
+    {
         return WOLFF_VERSION;
     }
 
-    
+
     /**
      *  EXTRA
      */
@@ -161,7 +176,8 @@ namespace {
      * Returns true if the extensions are enabled, false otherwise
      * @return bool true if the extensions are enabled, false otherwise
      */
-    function extensionsEnabled() {
+    function extensionsEnabled()
+    {
         return WOLFF_EXTENSIONS_ON;
     }
 
@@ -170,7 +186,8 @@ namespace {
      * Returns true if the cache is enabled, false otherwise
      * @return bool true if the cache is enabled, false otherwise
      */
-    function cacheEnabled() {
+    function cacheEnabled()
+    {
         return WOLFF_CACHE_ON;
     }
 
@@ -179,8 +196,8 @@ namespace {
      * Returns true if the maintenance mode is enabled, false otherwise
      * @return bool true if the maintenance mode is enabled, false otherwise
      */
-    function maintenanceEnabled() {
+    function maintenanceEnabled()
+    {
         return WOLFF_MAINTENANCE_ON;
     }
-    
 }

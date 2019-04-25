@@ -2,8 +2,8 @@
 
 namespace Cli;
 
-use Utilities\Maintenance;
 use Core\Extension;
+use Utilities\Maintenance;
 
 class Create
 {
@@ -13,16 +13,18 @@ class Create
     private $routes_dir;
 
 
-    public function __construct($route, $app_dir) {
-        $this->route = &$route;
-        $this->app_dir = $app_dir;
+    public function __construct($route, $app_dir)
+    {
+        $this->route      = &$route;
+        $this->app_dir    = $app_dir;
         $this->routes_dir = 'Routes.php';
     }
 
 
-    public function index($args) {
+    public function index($args)
+    {
         $this->args = $args;
-        $function = $this->args[1];
+        $function   = $this->args[1];
 
         if (method_exists($this, $function)) {
             $this->$function();
@@ -32,20 +34,24 @@ class Create
     }
 
 
-    private function page() {
+    private function page()
+    {
         if (!isset($this->args[2]) || empty($this->args[2])) {
             echo "\e[1;31m WARNING: No name specified!\e[0m \n \n";
+
             return;
         }
-        
+
         $this->controller();
         $this->view();
     }
 
 
-    private function controller() {
+    private function controller()
+    {
         if (!isset($this->args[2]) || empty($this->args[2])) {
             echo "\e[1;31m WARNING: No name specified!\e[0m \n \n";
+
             return;
         }
 
@@ -53,6 +59,7 @@ class Create
 
         if (file_exists($file_dir)) {
             echo "\e[1;31m WARNING: controller " . $this->args[2] . " already exists!\e[0m \n \n";
+
             return;
         }
 
@@ -61,10 +68,10 @@ class Create
 
         $file = fopen($file_dir, 'w') or die("WARNING: Cannot create Controller file \n \n");
 
-        $content = file_get_contents('CLI/templates/controller.txt');
-        $original = array('{namespace}', '{classname}');
+        $content     = file_get_contents('CLI/templates/controller.txt');
+        $original    = array('{namespace}', '{classname}');
         $replacement = array($namespace, $file_name);
-        $content = str_replace($original, $replacement, $content);
+        $content     = str_replace($original, $replacement, $content);
 
         fwrite($file, $content);
         fclose($file);
@@ -73,16 +80,19 @@ class Create
     }
 
 
-    private function view() {
+    private function view()
+    {
         if (!isset($this->args[2]) || empty($this->args[2])) {
             echo "\e[1;31m WARNING: No name specified!\e[0m \n \n";
+
             return;
         }
-        
+
         $file_dir = $this->app_dir . 'views/' . $this->args[2] . '.php';
 
         if (file_exists($file_dir)) {
             echo "\e[1;31m WARNING: view " . $this->args[2] . " already exists!\e[0m \n \n";
+
             return;
         }
 
@@ -105,12 +115,14 @@ class Create
     }
 
 
-    private function extension() {
+    private function extension()
+    {
         if (!isset($this->args[2]) || empty($this->args[2])) {
             echo "\e[1;31m WARNING: No name specified!\e[0m \n \n";
+
             return;
         }
-        
+
         $file_dir = '../' . getExtensionDirectory() . $this->args[2] . '.php';
 
         Extension::setDirectory('../' . getExtensionDirectory());
@@ -118,17 +130,18 @@ class Create
 
         if (file_exists($file_dir)) {
             echo "\e[1;31m WARNING: extension " . $this->args[2] . " already exists!\e[0m \n \n";
+
             return;
         }
 
         $file = fopen($file_dir, 'w') or die("WARNING: Cannot create extension file \n \n");
 
-        $name = readline("Name -> ");
+        $name        = readline("Name -> ");
         $description = readline("Description -> ");
-        $version = readline("Version -> ");
-        $author = readline("Author -> ");
+        $version     = readline("Version -> ");
+        $author      = readline("Author -> ");
 
-        $original = array('{classname}', '{name}', '{description}', '{version}', '{author}');
+        $original    = array('{classname}', '{name}', '{description}', '{version}', '{author}');
         $replacement = array($this->args[2], $name, $description, $version, $author);
 
         $content = file_get_contents('CLI/templates/extension.txt');
@@ -141,9 +154,11 @@ class Create
     }
 
 
-    private function language() {
+    private function language()
+    {
         if (!isset($this->args[2]) || empty($this->args[2])) {
             echo "\e[1;31m WARNING: No name specified!\e[0m \n \n";
+
             return;
         }
 
@@ -153,6 +168,7 @@ class Create
             mkdir($dir);
             if (is_dir($dir)) {
                 echo "Language " . $this->args[2] . " created successfully! \n \n";
+
                 return;
             }
         }
@@ -161,9 +177,11 @@ class Create
     }
 
 
-    private function library() {
+    private function library()
+    {
         if (!isset($this->args[2]) || empty($this->args[2])) {
             echo "\e[1;31m WARNING: Library name is empty!\e[0m \n \n";
+
             return;
         }
 
@@ -171,6 +189,7 @@ class Create
 
         if (file_exists($file_dir)) {
             echo "\e[1;31m WARNING: Library " . $this->args[2] . " already exists!\e[0m \n \n";
+
             return;
         }
 
@@ -179,10 +198,10 @@ class Create
 
         $file = fopen($file_dir, 'w') or die("WARNING: Cannot create library file \n \n");
 
-        $content = file_get_contents('CLI/templates/library.txt');
-        $original = array('{namespace}', '{classname}');
+        $content     = file_get_contents('CLI/templates/library.txt');
+        $original    = array('{namespace}', '{classname}');
         $replacement = array($namespace, $file_name);
-        $content = str_replace($original, $replacement, $content);
+        $content     = str_replace($original, $replacement, $content);
 
         fwrite($file, $content);
         fclose($file);
@@ -191,14 +210,16 @@ class Create
     }
 
 
-    private function route() {
+    private function route()
+    {
         $file = fopen($this->routes_dir, 'r') or die('WARNING: Cannot read Routes file');
         $content = fread($file, filesize($this->routes_dir));
-        $route = $this->args[2];
+        $route   = $this->args[2];
 
         if (preg_match("/Route::add\((\s){0,}?[\'\"]" . $route . "[\'\"](\s){0,}?\,/", $content)) {
             echo "\e[1;31m WARNING: Route already exists!\e[0m \n \n";
             fclose($file);
+
             return;
         }
         fclose($file);
@@ -214,14 +235,16 @@ class Create
     }
 
 
-    private function block() {
+    private function block()
+    {
         $file = fopen($this->routes_dir, 'r') or die('WARNING: Cannot read Routes file');
         $content = fread($file, filesize($this->routes_dir));
-        $route = $this->args[2];
+        $route   = $this->args[2];
 
         if (preg_match("/Route::block\((\s){0,}?[\'\"]" . $route . "[\'\"](\s){0,}?\)\;/", $content)) {
             echo "\e[1;31m WARNING: Block already exists!\e[0m \n";
             fclose($file);
+
             return;
         }
         fclose($file);
@@ -234,16 +257,19 @@ class Create
     }
 
 
-    private function redirect() {
+    private function redirect()
+    {
         $file = fopen($this->routes_dir, 'r') or die('WARNING: Cannot read Routes file');
-        $content = fread($file, filesize($this->routes_dir));
-        $original = $this->args[2];
-        $redirect = $this->args[3];
+        $content       = fread($file, filesize($this->routes_dir));
+        $original      = $this->args[2];
+        $redirect      = $this->args[3];
         $redirect_code = "";
 
-        if (preg_match("/Route::redirect\((\s){0,}?[\'\"]" . $original . "[\'\"]\,(\s){0,}?[\'\"]" . $redirect . "[\'\"]/", $content)) {
+        if (preg_match("/Route::redirect\((\s){0,}?[\'\"]" . $original . "[\'\"]\,(\s){0,}?[\'\"]" . $redirect . "[\'\"]/",
+            $content)) {
             echo "\e[1;31m WARNING: Redirect already exists!\e[0m \n \n";
             fclose($file);
+
             return;
         }
         fclose($file);
@@ -260,9 +286,11 @@ class Create
     }
 
 
-    private function ip() {
+    private function ip()
+    {
         if (!isset($this->args[2]) || empty($this->args[2])) {
             echo "\e[1;31m WARNING: No IP address specified!\e[0m \n \n";
+
             return;
         }
 
@@ -274,7 +302,8 @@ class Create
     }
 
 
-    private function createDirectoryInApp($dir, $folder) {
+    private function createDirectoryInApp($dir, $folder)
+    {
         $dir = $this->app_dir . $folder . '/' . implode('/', $dir);
 
         if (!is_dir($dir)) {
@@ -283,8 +312,9 @@ class Create
     }
 
 
-    private function createNamespace($dir, &$file_name, $type) {
-        $dir = explode('/', $this->args[2]);
+    private function createNamespace($dir, &$file_name, $type)
+    {
+        $dir       = explode('/', $this->args[2]);
         $file_name = array_pop($dir);
 
         if (count($dir) > 0) {

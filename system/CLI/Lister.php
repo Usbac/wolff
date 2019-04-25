@@ -2,8 +2,8 @@
 
 namespace Cli;
 
-use Utilities\Maintenance;
 use Core\{Extension, Route};
+use Utilities\Maintenance;
 
 class Lister
 {
@@ -13,14 +13,16 @@ class Lister
     private $args;
 
 
-    public function __construct($route, $app_dir, $public_dir) {
-        $this->route = &$route;
-        $this->app_dir = $app_dir;
+    public function __construct($route, $app_dir, $public_dir)
+    {
+        $this->route      = &$route;
+        $this->app_dir    = $app_dir;
         $this->public_dir = $public_dir;
     }
 
 
-    public function index($args) {
+    public function index($args)
+    {
         $this->args = $args;
 
         switch ($this->args[1]) {
@@ -64,12 +66,14 @@ class Lister
     }
 
 
-    private function extensions() {
+    private function extensions()
+    {
         Extension::setDirectory('../' . getExtensionDirectory());
         $extensions = Extension::get();
 
         if (empty($extensions)) {
             echo "Extensions: none \n \n";
+
             return;
         }
 
@@ -85,7 +89,8 @@ class Lister
     }
 
 
-    private function views() {
+    private function views()
+    {
         $views = $this->listViewFiles($this->app_dir . 'views');
 
         foreach ($views as $view) {
@@ -95,7 +100,8 @@ class Lister
     }
 
 
-    private function controllers() {
+    private function controllers()
+    {
         $controllers = $this->listPHPFiles($this->app_dir . 'controllers');
 
         foreach ($controllers as $controller) {
@@ -105,7 +111,8 @@ class Lister
     }
 
 
-    private function libraries() {
+    private function libraries()
+    {
         $libraries = $this->listPHPFiles($this->app_dir . 'libraries');
 
         foreach ($libraries as $library) {
@@ -115,7 +122,8 @@ class Lister
     }
 
 
-    private function languages() {
+    private function languages()
+    {
         $languages = glob($this->app_dir . 'languages/*', GLOB_ONLYDIR);
 
         foreach ($languages as $language) {
@@ -125,7 +133,8 @@ class Lister
     }
 
 
-    private function public() {
+    private function public()
+    {
         $files = $this->listAnyFiles($this->public_dir);
 
         foreach ($files as $file) {
@@ -135,16 +144,17 @@ class Lister
     }
 
 
-    private function listViewFiles($dir, $folder = '', &$result = []) {
+    private function listViewFiles($dir, $folder = '', &$result = [])
+    {
         $folder = substr($dir, strrpos($dir, '/') + 1);
-        $files = scandir($dir);
+        $files  = scandir($dir);
 
         foreach ($files as $value) {
             $path = realpath($dir . '/' . $value);
 
             if (!is_dir($path) && in_array(pathinfo($path)['extension'], array('php', 'html', 'phtml'))) {
                 $file_path = substr($path, strpos($path, $folder) + strlen($folder) + 1);
-                $result[] = $file_path;
+                $result[]  = $file_path;
             } else {
                 if ($value != "." && $value != "..") {
                     $this->listFiles($path, $result);
@@ -156,16 +166,17 @@ class Lister
     }
 
 
-    private function listPHPFiles($dir, $folder = '', &$result = []) {
+    private function listPHPFiles($dir, $folder = '', &$result = [])
+    {
         $folder = substr($dir, strrpos($dir, '/') + 1);
-        $files = scandir($dir);
+        $files  = scandir($dir);
 
         foreach ($files as $value) {
             $path = realpath($dir . '/' . $value);
 
             if (!is_dir($path) && pathinfo($path)['extension'] === 'php') {
                 $file_path = substr($path, strpos($path, $folder) + strlen($folder) + 1);
-                $result[] = $file_path;
+                $result[]  = $file_path;
             } else {
                 if ($value != "." && $value != "..") {
                     $this->listPHPFiles($path, $folder, $result);
@@ -177,7 +188,8 @@ class Lister
     }
 
 
-    private function listAnyFiles($dir, &$result = []) {
+    private function listAnyFiles($dir, &$result = [])
+    {
         $files = scandir($dir);
 
         foreach ($files as $value) {
@@ -185,7 +197,7 @@ class Lister
 
             if (!is_dir($path)) {
                 $file_path = $path;
-                $result[] = $file_path;
+                $result[]  = $file_path;
             } else {
                 if ($value != "." && $value != "..") {
                     $this->listAnyFiles($path, $result);
@@ -197,11 +209,13 @@ class Lister
     }
 
 
-    private function routes() {
+    private function routes()
+    {
         $routes = Route::getRoutes();
 
         if (count($routes) <= 0) {
             echo "\n ROUTES: none \n \n";
+
             return;
         } else {
             foreach ($routes as $key => $value) {
@@ -213,11 +227,13 @@ class Lister
     }
 
 
-    private function blocked() {
+    private function blocked()
+    {
         $blocked = Route::getBlocked();
 
         if (count($blocked) <= 0) {
             echo "\n BLOCKED: none \n \n";
+
             return;
         } else {
             foreach ($blocked as $key => $value) {
@@ -229,11 +245,13 @@ class Lister
     }
 
 
-    private function redirects() {
+    private function redirects()
+    {
         $redirects = Route::getRedirects();
 
         if (count($redirects) <= 0) {
             echo "\n REDIRECTIONS: none \n \n";
+
             return;
         } else {
             foreach ($redirects as $key => $value) {
@@ -245,11 +263,13 @@ class Lister
     }
 
 
-    private function ip() {
+    private function ip()
+    {
         $ips = Maintenance::getAllowedIPs();
 
         if ($ips === false || count($ips) <= 0) {
             echo "\n Allowed IPs: none \n \n";
+
             return;
         } else {
             foreach ($ips as $ip) {
@@ -261,7 +281,8 @@ class Lister
     }
 
 
-    private function config() {
+    private function config()
+    {
         echo "\n -> SERVER CONFIG: ";
         echo "\n getDBMS(): " . getDBMS();
         echo "\n Server: " . getServer();

@@ -18,22 +18,24 @@ class Wolffie
     private $public_dir;
 
 
-    public function __construct() {
+    public function __construct()
+    {
         DB::initialize();
         $this->route = new Route();
 
-        $root = '../';
-        $this->app_dir = $root . WOLFF_APP_DIR;
+        $root             = '../';
+        $this->app_dir    = $root . WOLFF_APP_DIR;
         $this->public_dir = $root . WOLFF_PUBLIC_DIR;
-        $this->list = new Lister($this->route, $this->app_dir, $this->public_dir);
-        $this->create = new Create($this->route, $this->app_dir);
-        $this->delete = new Delete($this->route, $this->app_dir);
+        $this->list       = new Lister($this->route, $this->app_dir, $this->public_dir);
+        $this->create     = new Create($this->route, $this->app_dir);
+        $this->delete     = new Delete($this->route, $this->app_dir);
     }
 
 
-    public function mainMenu() {
+    public function mainMenu()
+    {
         $this->command = readline("command -> ");
-        $this->args = explode(' ', $this->command);
+        $this->args    = explode(' ', $this->command);
 
         switch ($this->args[0]) {
             case 'ls':
@@ -67,7 +69,8 @@ class Wolffie
     }
 
 
-    private function help() {
+    private function help()
+    {
         if (empty($this->args[1])) {
             echo "\nMAIN COMMANDS \n";
             echo "\n\e[32m ls \e[0m                     -> List elements";
@@ -79,6 +82,7 @@ class Wolffie
             echo "\n\e[32m version \e[0m                -> Get the Wolff version";
             echo "\n\e[32m e \e[0m                      -> Exit";
             echo "\n \n\e[1;30m Run help followed by one of the commands showed above for more information.\e[0m \n \n";
+
             return;
         }
 
@@ -145,11 +149,13 @@ class Wolffie
     }
 
 
-    private function export() {
+    private function export()
+    {
         $sql = substr($this->command, strlen($this->args[1]) + 1);
 
         if (!$query = DB::run($sql)) {
             echo "WARNING: Error in query \n \n";
+
             return;
         }
 
@@ -158,19 +164,22 @@ class Wolffie
     }
 
 
-    private function set() {
-        $file = '../config.php';
-        $original = "/define\((\s){0,}?[\'\"]" . strtoupper($this->args[1]) . "[\'\"](\s){0,}?,(.*?)\)\;/";
+    private function set()
+    {
+        $file        = '../config.php';
+        $original    = "/define\((\s){0,}?[\'\"]" . strtoupper($this->args[1]) . "[\'\"](\s){0,}?,(.*?)\)\;/";
         $replacement = "define('" . strtoupper($this->args[1]) . "', " . $this->args[2] . ");";
 
 
         if (!$content = file_get_contents($file)) {
             echo "\e[1;31m WARNING: Couldn't read the config file!\e[0m \n \n";
+
             return;
         }
 
         if (!preg_match($original, $content)) {
             echo "\e[1;31m WARNING: Constant doesn't exists!\e[0m \n \n";
+
             return;
         }
 
@@ -181,7 +190,8 @@ class Wolffie
     }
 
 
-    private function version() {
+    private function version()
+    {
         echo "\e[32m WOLFF v" . wolffVersion() . "\e[0m \n \n";
     }
 

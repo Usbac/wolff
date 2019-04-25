@@ -3,4 +3,4 @@ session_start();
 
 require('vendor/autoload.php');
 
-new System\Start;
+(new System\Start)->load();

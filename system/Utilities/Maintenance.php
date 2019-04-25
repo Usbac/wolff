@@ -21,13 +21,15 @@ class Maintenance
      * Returns an array of the IP in the whitelist
      * @return array An array of the IP in the whitelist, false if an error happends
      */
-    public static function getAllowedIPs() {
+    public static function getAllowedIPs()
+    {
         if (!is_file(self::$filename)) {
             return false;
         }
 
         if (!$content = file_get_contents(self::$filename)) {
             error_log(self::READ_ERROR);
+
             return false;
         }
 
@@ -37,10 +39,13 @@ class Maintenance
 
     /**
      * Add an IP to the whitelist
-     * @param string $ip the IP to add
+     *
+     * @param  string  $ip  the IP to add
+     *
      * @return bool true if the IP is added/exists in the whitelist
      */
-    public static function addAllowedIP(string $ip) {
+    public static function addAllowedIP(string $ip)
+    {
         if (!$ip = filter_var($ip, FILTER_VALIDATE_IP)) {
             return false;
         }
@@ -50,9 +55,11 @@ class Maintenance
         if (!$content = file_get_contents(self::$filename)) {
             if (is_writable(self::$filename)) {
                 file_put_contents(self::$filename, $ip);
+
                 return true;
             }
             error_log(self::READ_ERROR);
+
             return false;
         }
 
@@ -61,16 +68,20 @@ class Maintenance
         }
 
         file_put_contents(self::$filename, PHP_EOL . $ip, FILE_APPEND | LOCK_EX);
+
         return true;
     }
 
 
     /**
      * Remove an IP from the whitelist
-     * @param string $ip the IP to remove
+     *
+     * @param  string  $ip  the IP to remove
+     *
      * @return bool true if the IP is removed/doesn't exists in the whitelist
      */
-    public static function removeAllowedIP(string $ip) {
+    public static function removeAllowedIP(string $ip)
+    {
         if (!$ip = filter_var($ip, FILTER_VALIDATE_IP)) {
             return false;
         }
@@ -79,6 +90,7 @@ class Maintenance
 
         if (!$content = file_get_contents(self::$filename)) {
             error_log(self::READ_ERROR);
+
             return false;
         }
 
@@ -89,6 +101,7 @@ class Maintenance
         $content = str_replace($ip, '', $content);
         $content = implode(PHP_EOL, array_filter(explode(PHP_EOL, $content)));
         file_put_contents(self::$filename, $content);
+
         return true;
     }
 
@@ -96,7 +109,8 @@ class Maintenance
     /**
      * Create the text file with the IP whitelist
      */
-    public function createFile() {
+    public static function createFile()
+    {
         if (!is_file(self::$filename)) {
             file_put_contents(self::$filename, '');
         }
@@ -107,7 +121,8 @@ class Maintenance
      * Returns true if the current client IP is in the whitelist, false otherwise
      * @return bool true if the current client IP is in the whitelist, false otherwise
      */
-    public function isClientAllowed() {
+    public static function isClientAllowed()
+    {
         if (self::getAllowedIPs() === false) {
             return false;
         }

@@ -7,15 +7,18 @@ class Session
 
     const DATE_FORMAT = 'Y-m-d H:i:s';
 
+
     /**
      * Destroy and unset the session if the live time is zero or less
      */
-    public function __construct() {
+    public function __construct()
+    {
         $_SESSION['flash_data'] = [];
 
         if ($this->hasExpired()) {
             $this->empty();
             $this->kill();
+
             return;
         }
 
@@ -30,12 +33,13 @@ class Session
     /**
      * Initialize all the session variables
      */
-    private function start() {
+    private function start()
+    {
         $this->empty();
 
-        $_SESSION['IPaddress'] = getClientIP();
-        $_SESSION['userAgent'] = getUserAgent();
-        $_SESSION['start_time'] = microtime(true);
+        $_SESSION['IPaddress']     = getClientIP();
+        $_SESSION['userAgent']     = getUserAgent();
+        $_SESSION['start_time']    = microtime(true);
         $_SESSION['vars_tmp_time'] = [];
     }
 
@@ -43,7 +47,8 @@ class Session
     /**
      * Unset all the session variables that have expired
      */
-    private function unsetExpiredVariables() {
+    private function unsetExpiredVariables()
+    {
         foreach ($_SESSION['vars_tmp_time'] as $key => $value) {
             if (time() >= $value) {
                 $this->delete($key);
@@ -56,19 +61,21 @@ class Session
      * Returns true if the current session has expired, false otherwise
      * @return bool true if the current session has expired, false otherwise
      */
-    public function hasExpired() {
+    public function hasExpired()
+    {
         return isset($_SESSION['end_time']) && time() >= $_SESSION['end_time'];
     }
 
 
     /**
-     * Returns true if the current IP and the userAgent are the same 
+     * Returns true if the current IP and the userAgent are the same
      * than the IP and userAgent of the previous connection.
      * This is done for preventing session hijacking.
-     * @return bool true if the current IP address and the userAgent are the same 
+     * @return bool true if the current IP address and the userAgent are the same
      * than the IP address and userAgent of the previous connection.
      */
-    private function isValid() {
+    private function isValid()
+    {
         if (!isset($_SESSION['IPaddress']) || !isset($_SESSION['userAgent'])) {
             return false;
         }
@@ -87,10 +94,13 @@ class Session
 
     /**
      * Get a session variable
-     * @param string $key the variable key
+     *
+     * @param  string  $key  the variable key
+     *
      * @return object the variable
      */
-    public function get(string $key = null) {
+    public function get(string $key = null)
+    {
         if (!isset($key)) {
             return $_SESSION;
         }
@@ -101,30 +111,37 @@ class Session
 
     /**
      * Set a session variable
-     * @param string $key the variable key
-     * @param string value the variable value
+     *
+     * @param  string  $key  the variable key
+     * @param  string value the variable value
      */
-    public function set(string $key, $value) {
+    public function set(string $key, $value)
+    {
         $_SESSION[$key] = $value;
     }
 
 
     /**
      * Add time to the session live time (in minutes)
-     * @param int $time the session live time to add
+     *
+     * @param  int  $time  the session live time to add
      */
-    public function addTime(int $time) {
+    public function addTime(int $time)
+    {
         $_SESSION['end_time'] += $time * 60;
     }
 
 
     /**
      * Get a live time (in minutes) of a session variable
-     * @param string $key the variable key
-     * @param bool $gmdate return the time in date format
+     *
+     * @param  string  $key  the variable key
+     * @param  bool  $gmdate  return the time in date format
+     *
      * @return int the variable live time
      */
-    public function getVarTime(string $key, bool $gmdate = false) {
+    public function getVarTime(string $key, bool $gmdate = false)
+    {
         $remaining = 0;
         if (isset($_SESSION['vars_tmp_time'][$key])) {
             $remaining = $_SESSION['vars_tmp_time'][$key] - time();
@@ -140,29 +157,35 @@ class Session
 
     /**
      * Set a live time (in minutes) to a session variable
-     * @param string $key the variable key
-     * @param int $time the variable live time
+     *
+     * @param  string  $key  the variable key
+     * @param  int  $time  the variable live time
      */
-    public function setVarTime(string $key, int $time = 1) {
+    public function setVarTime(string $key, int $time = 1)
+    {
         $_SESSION['vars_tmp_time'][$key] = time() + ($time * 60);
     }
 
 
     /**
      * Add more live time (in minutes) to a session variable
-     * @param string $key the variable key
-     * @param int $time the variable time to add
+     *
+     * @param  string  $key  the variable key
+     * @param  int  $time  the variable time to add
      */
-    public function addVarTime(string $key, int $time = 1) {
+    public function addVarTime(string $key, int $time = 1)
+    {
         $_SESSION['vars_tmp_time'][$key] += ($time * 60);
     }
 
 
     /**
      * Delete a session variable
-     * @param string $key the variable key
+     *
+     * @param  string  $key  the variable key
      */
-    public function delete(string $key) {
+    public function delete(string $key)
+    {
         unset($_SESSION[$key]);
     }
 
@@ -170,20 +193,25 @@ class Session
     /**
      * Set the session live time (in minutes) starting from
      * the moment this function is called
-     * @param time $time the time
+     *
+     * @param  int  $time  the time
      */
-    public function setTime(int $time) {
+    public function setTime(int $time)
+    {
         $_SESSION['live_time'] = ($time * 60);
-        $_SESSION['end_time'] = time() + ($time * 60);
+        $_SESSION['end_time']  = time() + ($time * 60);
     }
 
 
     /**
      * Returns the session creation time
-     * @param bool $gmdate format the time in H:i:s
+     *
+     * @param  bool  $gmdate  format the time in H:i:s
+     *
      * @return mixed the session creation time
      */
-    public function getTime(bool $gmdate = false) {
+    public function getTime(bool $gmdate = false)
+    {
         if ($gmdate) {
             return gmdate(self::DATE_FORMAT, $_SESSION['start_time']);
         }
@@ -193,20 +221,24 @@ class Session
 
 
     /**
-     * Returns the transcurrent time since the session was created in seconds
-     * @return mixed the transcurrent time since the session was created in seconds
+     * Returns the time since the session was created in seconds
+     * @return mixed the time since the session was created in seconds
      */
-    public function getPassedTime() {
+    public function getPassedTime()
+    {
         return microtime(true) - $_SESSION['start_time'];
     }
 
 
     /**
      * Returns the established session live time (in minutes)
-     * @param bool $gmdate format the time in H:i:s
+     *
+     * @param  bool  $gmdate  format the time in H:i:s
+     *
      * @return mixed the established session live time (in minutes)
      */
-    public function getLiveTime(bool $gmdate = false) {
+    public function getLiveTime(bool $gmdate = false)
+    {
         if ($gmdate) {
             return gmdate(self::DATE_FORMAT, $_SESSION['live_time']);
         }
@@ -217,11 +249,14 @@ class Session
 
     /**
      * Returns the remaining session live time (in minutes)
-     * @param bool $gmdate format the time in H:i:s
+     *
+     * @param  bool  $gmdate  format the time in H:i:s
+     *
      * @return mixed the remaining session live time (in minutes)
      */
-    public function getRemainingTime(bool $gmdate = false) {
-        $end = $_SESSION['end_time'] ?? 0;
+    public function getRemainingTime(bool $gmdate = false)
+    {
+        $end       = $_SESSION['end_time'] ?? 0;
         $remaining = $end - time();
 
         if ($gmdate) {
@@ -234,20 +269,25 @@ class Session
 
     /**
      * Set flash variable (will be destroyed on next response)
-     * @param string $key the variable name
-     * @param string $value the variable value
+     *
+     * @param  string  $key  the variable name
+     * @param  string  $value  the variable value
      */
-    public function setFlash(string $key, $value) {
+    public function setFlash(string $key, $value)
+    {
         $_SESSION['flash_data'][$key] = $value;
     }
 
 
     /**
      * Get flash variable
-     * @param string $key the variable name
+     *
+     * @param  string  $key  the variable name
+     *
      * @return object the variable
      */
-    public function getFlash(string $key) {
+    public function getFlash(string $key)
+    {
         return $_SESSION['flash_data'][$key];
     }
 
@@ -255,7 +295,8 @@ class Session
     /**
      * Unset the session data
      */
-    public function empty() {
+    public function empty()
+    {
         session_unset();
     }
 
@@ -263,7 +304,8 @@ class Session
     /**
      * Destroy the session
      */
-    public function kill() {
+    public function kill()
+    {
         session_destroy();
     }
 
