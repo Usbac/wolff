@@ -11,9 +11,9 @@ class Session
      * Destroy and unset the session if the live time is zero or less
      */
     public function __construct() {
-        $_SESSION['flash_data'] = array();
+        $_SESSION['flash_data'] = [];
 
-        if (isset($_SESSION['end_time']) && time() >= $_SESSION['end_time']) {
+        if ($this->hasExpired()) {
             $this->empty();
             $this->kill();
             return;
@@ -23,11 +23,7 @@ class Session
             $this->start();
         }
 
-        foreach ($_SESSION['vars_tmp_time'] as $key => $value) {
-            if (time() >= $value) {
-                $this->delete($key);
-            }
-        }
+        $this->unsetExpiredVariables();
     }
 
 
@@ -40,7 +36,28 @@ class Session
         $_SESSION['IPaddress'] = getClientIP();
         $_SESSION['userAgent'] = getUserAgent();
         $_SESSION['start_time'] = microtime(true);
-        $_SESSION['vars_tmp_time'] = array();
+        $_SESSION['vars_tmp_time'] = [];
+    }
+
+
+    /**
+     * Unset all the session variables that have expired
+     */
+    private function unsetExpiredVariables() {
+        foreach ($_SESSION['vars_tmp_time'] as $key => $value) {
+            if (time() >= $value) {
+                $this->delete($key);
+            }
+        }
+    }
+
+
+    /**
+     * Returns true if the current session has expired, false otherwise
+     * @return bool true if the current session has expired, false otherwise
+     */
+    public function hasExpired() {
+        return isset($_SESSION['end_time']) && time() >= $_SESSION['end_time'];
     }
 
 
@@ -66,6 +83,7 @@ class Session
 
         return true;
     }
+
 
     /**
      * Get a session variable

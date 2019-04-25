@@ -38,7 +38,7 @@ class Library
         $this->load = &$load;
         $this->session = $this->load->getSession();
         $this->upload = $this->load->getUpload();
-        $this->data = array();
+        $this->data = [];
     }
 
 }

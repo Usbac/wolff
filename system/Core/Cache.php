@@ -19,6 +19,8 @@ class Cache
      */
     private static $time = 1440;
 
+    const FILENAME = "tmp_%s.php";
+
 
     public function __construct() {
     }
@@ -115,21 +117,15 @@ class Cache
     public static function clear(string $dir = '') {
         $folder_path = getServerRoot() . getCacheDirectory();
 
-        if (!empty($dir)) {
-            $file_path = $folder_path . self::getFilename($dir);
-
-            if (is_file($file_path)) {
-                unlink($file_path);
-            }
+        if (empty($dir)) {
+            deleteFilesInDir($folder_path);
             return;
         }
 
-        $files = glob($folder_path . '*');
-
-        foreach ($files as $file) {
-            if (is_file($file)) {
-                unlink($file);
-            }
+        $file_path = $folder_path . self::getFilename($dir);
+        
+        if (is_file($file_path)) {
+            unlink($file_path);
         }
     }
 
@@ -140,7 +136,7 @@ class Cache
      * @return string the filename with the cache format
      */
     public static function getFilename(string $dir) {
-        return 'tmp_' . $dir . '.php';
+        return sprintf(self::FILENAME, $dir);
     }
 
 }

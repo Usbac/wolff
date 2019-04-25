@@ -39,7 +39,7 @@ class Delete
 
         echo "Are you sure about deleting the " . $this->args[2] . ".php controller? Y/N \n";
         $response = readline(" -> ");
-        if ($response == 'Y') {
+        if ($response === 'Y') {
             unlink($file_dir);
             echo "Controller " . $this->args[2] . " deleted successfully! \n \n";
         } else {
@@ -58,7 +58,7 @@ class Delete
 
         echo "Are you sure about deleting the " . $this->args[2] . ".php library? Y/N \n";
         $response = readline(" -> ");
-        if ($response == 'Y') {
+        if ($response === 'Y') {
             unlink($file_dir);
             echo "Library " . $this->args[2] . " deleted successfully! \n \n";
         } else {
@@ -77,7 +77,7 @@ class Delete
 
         echo "Are you sure about deleting the " . $this->args[2] . " view? Y/N \n";
         $response = readline(" -> ");
-        if ($response == 'Y') {
+        if ($response === 'Y') {
             unlink($file_dir);
             echo "View " . $this->args[2] . " deleted successfully! \n \n";
         } else {
@@ -96,7 +96,7 @@ class Delete
 
         echo "Are you sure about deleting the " . $this->args[2] . " extension? Y/N \n";
         $response = readline(" -> ");
-        if ($response == 'Y') {
+        if ($response === 'Y') {
             unlink($file_dir);
             echo "Extension " . $this->args[2] . " deleted successfully! \n \n";
         } else {

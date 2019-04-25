@@ -135,7 +135,7 @@ class Lister
     }
 
 
-    private function listViewFiles($dir, $folder = '', &$result = array()) {
+    private function listViewFiles($dir, $folder = '', &$result = []) {
         $folder = substr($dir, strrpos($dir, '/') + 1);
         $files = scandir($dir);
 
@@ -156,14 +156,14 @@ class Lister
     }
 
 
-    private function listPHPFiles($dir, $folder = '', &$result = array()) {
+    private function listPHPFiles($dir, $folder = '', &$result = []) {
         $folder = substr($dir, strrpos($dir, '/') + 1);
         $files = scandir($dir);
 
         foreach ($files as $value) {
             $path = realpath($dir . '/' . $value);
 
-            if (!is_dir($path) && pathinfo($path)['extension'] == 'php') {
+            if (!is_dir($path) && pathinfo($path)['extension'] === 'php') {
                 $file_path = substr($path, strpos($path, $folder) + strlen($folder) + 1);
                 $result[] = $file_path;
             } else {
@@ -177,7 +177,7 @@ class Lister
     }
 
 
-    private function listAnyFiles($dir, &$result = array()) {
+    private function listAnyFiles($dir, &$result = []) {
         $files = scandir($dir);
 
         foreach ($files as $value) {
@@ -270,17 +270,18 @@ class Lister
         echo "\n Password: " . getDBPass();
         echo "\n";
         echo "\n -> GENERAL CONFIG: ";
-        echo "\n Project folder: " . WOLFF_ROOT_DIR;
-        echo "\n App folder: " . WOLFF_APP_DIR;
-        echo "\n Public folder: " . WOLFF_PUBLIC_DIR;
-        echo "\n Page title: " . WOLFF_PAGE_TITLE;
-        echo "\n Main page: " . WOLFF_MAIN_PAGE;
-        echo "\n Language: " . WOLFF_LANGUAGE;
+        echo "\n Wolff version : " . wolffVersion();
+        echo "\n Project folder: " . getDirectory();
+        echo "\n App folder: " . getAppDirectory();
+        echo "\n Public folder: " . getPublicDirectory();
+        echo "\n Page title: " . getPageTitle();
+        echo "\n Main page: " . getMainPage();
+        echo "\n Language: " . getLanguage();
         echo "\n";
         echo "\n -> EXTRA CONFIG: ";
-        echo "\n Cache enabled: " . (WOLFF_CACHE_ON ? "yes" : "no");
-        echo "\n Extensions enabled: " . (WOLFF_EXTENSIONS_ON ? "yes" : "no");
-        echo "\n Maintenance mode enabled: " . (WOLFF_MAINTENANCE_ON ? "yes" : "no");
+        echo "\n Cache enabled: " . (cacheEnabled() ? "yes" : "no");
+        echo "\n Extensions enabled: " . (extensionsEnabled() ? "yes" : "no");
+        echo "\n Maintenance mode enabled: " . (maintenanceEnabled() ? "yes" : "no");
         echo "\n \n";
     }
 

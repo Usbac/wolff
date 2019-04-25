@@ -135,7 +135,7 @@ namespace {
         $file = fopen($filename, 'w');
 
         //Single array
-        if (count($array) == count($array, COUNT_RECURSIVE)) {
+        if (count($array) === count($array, COUNT_RECURSIVE)) {
             if ($printKeys) {
                 fputcsv($file, array_keys($array));
             }
@@ -234,6 +234,21 @@ namespace {
      */
     function pathToNamespace(string $path) {
         return str_replace('/', '\\', $path);
+    }
+
+
+    /**
+     * Delete all the files in the given directory
+     * @param string $dir the directory path
+     */
+    function deleteFilesInDir($dir) {
+        $files = glob($dir . '/*');
+
+        foreach ($files as $file) {
+            if (is_file($file)) {
+                unlink($file);
+            }
+        }
     }
     
 }

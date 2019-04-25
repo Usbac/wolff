@@ -1,8 +1,9 @@
+#!/usr/bin/env php
 <?php
 
 chdir(dirname(__FILE__));
 
-require('../vendor/autoload.php');
+require '../vendor/autoload.php';
 
 $wolffie = new Cli\Wolffie();
 

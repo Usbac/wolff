@@ -2,8 +2,7 @@
 
 namespace Cli;
 
-use Core;
-use Core\{DB, Route, Extension};
+use Core\{DB, Route};
 
 class Wolffie
 {
@@ -183,8 +182,7 @@ class Wolffie
 
 
     private function version() {
-        $data = json_decode(file_get_contents('../composer.json'), true);
-        echo "\e[32m WOLFF v" . $data['version'] . "\e[0m \n \n";
+        echo "\e[32m WOLFF v" . wolffVersion() . "\e[0m \n \n";
     }
 
 }

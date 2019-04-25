@@ -309,7 +309,7 @@ class Easql
      * Execute the last query executed by Easql
      * @return array the query result
      */
-    public static function doLastQuery() {
+    public static function doLastSQL() {
         $query = DB::run(self::getLastSQL());
         self::clear();
 

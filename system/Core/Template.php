@@ -67,13 +67,11 @@ class Template
 
         if (file_exists($file_path . '.php')) {
             return file_get_contents($file_path . '.php');
+        } elseif (file_exists($file_path . '.html')) {
+            return file_get_contents($file_path . '.html');
         } else {
-            if (file_exists($file_path . '.html')) {
-                return file_get_contents($file_path . '.html');
-            } else {
-                error_log("Error: View '" . $dir . "' doesn't exists");
-                return null;
-            }
+            error_log("Error: View '" . $dir . "' doesn't exists");
+            return null;
         }
     }
 

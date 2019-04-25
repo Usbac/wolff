@@ -24,6 +24,7 @@ class Extension
 
 
     const CLASS_ERROR = "Warning: Extension class %s doesn't exists";
+    const NAMESPACE = 'Extension\\';
 
 
     /**
@@ -52,8 +53,8 @@ class Extension
         }
 
         foreach (self::$extensions as $extension) {
-            if ($extension['type'] == $type && self::matchesRoute($extension['route'])) {
-                $class = 'Extension\\' . $extension['name'];
+            if ($extension['type'] === $type && self::matchesRoute($extension['route'])) {
+                $class = self::NAMESPACE . $extension['name'];
 
                 if (!class_exists($class)) {
                     error_log(sprintf(self::CLASS_ERROR, $extension['name']));
@@ -89,7 +90,7 @@ class Extension
         $urlLength = count($url) - 1;
 
         for ($i = 0; $i <= $dirLength && $i <= $urlLength; $i++) {
-            if ($dir[$i] == '*') {
+            if ($dir[$i] === '*') {
                 return true;
             }
 
@@ -175,7 +176,7 @@ class Extension
     public static function get(string $name = '') {
         //Specified extension
         if (!empty($name)) {
-            $class = 'Extension\\' . $name;
+            $class = self::NAMESPACE . $name;
 
             if (class_exists($class)) {
                 return (new $class)->desc;
@@ -190,7 +191,7 @@ class Extension
         
         foreach ($files as $file) {
             $filename = basename($file, '.php');
-            $class = 'Extension\\' . $filename;
+            $class = self::NAMESPACE . $filename;
             $extension = new $class;
 
             $extensions[] = array(

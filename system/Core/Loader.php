@@ -28,6 +28,7 @@ class Loader
 
     const HEADER_404 = "HTTP/1.0 404 Not Found";
     const HEADER_503 = "HTTP/1.1 503 Service Temporarily Unavailable";
+    const CONTROLLER_NAMESPACE = 'Controller\\';
 
 
     public function __construct($session, $upload) {
@@ -93,7 +94,7 @@ class Loader
      * @return object the controller with its main variables initialized
      */
     private function getController(string $dir) {
-        $class = 'Controller\\' . pathToNamespace($dir);
+        $class = self::CONTROLLER_NAMESPACE . pathToNamespace($dir);
         return new $class($this);
     }
 
@@ -107,7 +108,7 @@ class Loader
     public function language(string $dir, string $language = WOLFF_LANGUAGE) {
         //Sanitize directory
         $dir = sanitizePath($dir);
-        $file_path = getServerRoot() . WOLFF_APP_DIR . 'languages/' . $language . '/' . $dir . '.php';
+        $file_path = getServerRoot() . getAppDirectory() . 'languages/' . $language . '/' . $dir . '.php';
 
         if (file_exists($file_path)) {
             include_once($file_path);
@@ -147,7 +148,7 @@ class Loader
      * @param array $data the view data
      * @param bool $cache use or not the cache system
      */
-    public function view(string $dir, array $data = array(), bool $cache = true) {
+    public function view(string $dir, array $data = [], bool $cache = true) {
         $dir = sanitizePath($dir);
         $this->template->get($dir, $data, $cache);
     }
@@ -159,7 +160,7 @@ class Loader
      * @param array $data the data
      * @return string the view
      */
-    public function getView(string $dir, array $data = array()) {
+    public function getView(string $dir, array $data = []) {
         $dir = sanitizePath($dir);
         return $this->template->getView($dir, $data);
     }

@@ -19,6 +19,13 @@ class DB
      */
     protected static $connection;
 
+    /**
+     * The last query executed.
+     *
+     * @var string
+     */
+    protected static $lastSQL;
+
 
     /**
      * Connects with the database using the constants present in config.php
@@ -40,6 +47,15 @@ class DB
         if (!self::$instance) {
             self::$instance = new self();
         }
+    }
+
+
+    /**
+     * Returns the last query executed
+     * @return string $lastSQL the last query executed
+     */
+    public static function getLastSQL() {
+        return self::$lastSQL;
     }
 
 
@@ -70,6 +86,7 @@ class DB
      * @return array the query result as an associative array
      */
     public static function run(string $sql, $args = []) {
+        self::$lastSQL = $sql;
         //Query without args
         if (!$args) {
             $result = self::$connection->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
@@ -106,7 +123,7 @@ class DB
 
 
     /**
-     * Export a query to a csv
+     * Export a query to a csv file
      * @param string $filename the filename
      * @param string $sql the query
      * @param mixed $args the arguments

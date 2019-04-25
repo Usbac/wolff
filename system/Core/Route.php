@@ -42,7 +42,7 @@ class Route
         $urlLength = count($url) - 1;
         $finished = false;
 
-        if (self::$routes == []) {
+        if (self::$routes === []) {
             return null;
         }
 
