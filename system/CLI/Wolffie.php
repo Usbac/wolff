@@ -2,50 +2,32 @@
 
 namespace Cli;
 
-use Core\{DB, Route};
+use Core\{DB};
 
 class Wolffie
 {
 
-    private $list;
-    private $create;
-    private $delete;
-
-    private $command;
-    private $args;
-    private $route;
-    private $app_dir;
-    private $public_dir;
+    private $argv;
 
 
-    public function __construct()
+    public function __construct($argv)
     {
-        DB::initialize();
-        $this->route = new Route();
-
-        $root             = '../';
-        $this->app_dir    = $root . WOLFF_APP_DIR;
-        $this->public_dir = $root . WOLFF_PUBLIC_DIR;
-        $this->list       = new Lister($this->route, $this->app_dir, $this->public_dir);
-        $this->create     = new Create($this->route, $this->app_dir);
-        $this->delete     = new Delete($this->route, $this->app_dir);
+        $this->argv = $argv;
+        $this->mainMenu();
     }
 
 
     public function mainMenu()
     {
-        $this->command = readline("command -> ");
-        $this->args    = explode(' ', $this->command);
-
-        switch ($this->args[0]) {
+        switch ($this->argv[1]) {
             case 'ls':
-                $this->list->index($this->args);
+                new Lister($this->argv);
                 break;
             case 'mk':
-                $this->create->index($this->args);
+                new Create($this->argv);
                 break;
             case 'rm':
-                $this->delete->index($this->args);
+                new Delete($this->argv);
                 break;
             case 'set':
                 $this->set();
@@ -59,11 +41,8 @@ class Wolffie
             case 'export':
                 $this->export();
                 break;
-            case 'e':
-                die();
-                break;
             default:
-                echo "\e[1;31m WARNING: Command doesn't exists!\e[0m \n \n";
+                echo "\e[1;31m WARNING: Command doesn't exists!\e[0m\n";
                 break;
         }
     }
@@ -71,7 +50,7 @@ class Wolffie
 
     private function help()
     {
-        if (empty($this->args[1])) {
+        if (empty($this->argv[2])) {
             echo "\nMAIN COMMANDS \n";
             echo "\n\e[32m ls \e[0m                     -> List elements";
             echo "\n\e[32m mk \e[0m                     -> Create elements";
@@ -80,13 +59,12 @@ class Wolffie
             echo "\n\e[32m export [query] \e[0m         -> Export a query to a csv file";
             echo "\n\e[32m help [command] \e[0m         -> Get help";
             echo "\n\e[32m version \e[0m                -> Get the Wolff version";
-            echo "\n\e[32m e \e[0m                      -> Exit";
-            echo "\n \n\e[1;30m Run help followed by one of the commands showed above for more information.\e[0m \n \n";
+            echo "\n \n\e[1;30m Run help followed by one of the commands showed above for more information.\e[0m\n";
 
             return;
         }
 
-        switch ($this->args[1]) {
+        switch ($this->argv[2]) {
             case 'ls':
                 echo "\nLIST COMMANDS \n";
                 echo "\n\e[32m views \e[0m       -> List the available views.";
@@ -95,7 +73,7 @@ class Wolffie
                 echo "\n\e[32m extensions \e[0m  -> List the available extensions.";
                 echo "\n\e[32m public \e[0m      -> List all the files in the public folder.";
                 echo "\n\e[32m ip \e[0m          -> List all the allowed IPs for maintenance mode.";
-                echo "\n\e[32m config \e[0m      -> List the config constants. \n \n";
+                echo "\n\e[32m config \e[0m      -> List the config constants.\n";
                 break;
             case 'mk':
                 echo "\nCREATE COMMANDS";
@@ -113,7 +91,7 @@ class Wolffie
                 echo "\n\e[32m route [url] [controller path] \e[0m -> Create a route.";
                 echo "\n\e[32m redirect [orig] [dest] [code] \e[0m -> Create a redirect.";
                 echo "\n\e[32m block [route] \e[0m                 -> Block a route.";
-                echo "\n \n\e[1;30m These changes will be applied to the routes.php file inside the system folder.\e[0m \n \n";
+                echo "\n \n\e[1;30m These changes will be applied to the routes.php file inside the system folder.\e[0m\n";
                 break;
             case 'rm':
                 echo "\nREMOVE COMMANDS \n";
@@ -124,26 +102,23 @@ class Wolffie
                 echo "\n\e[32m ip [name] \e[0m          -> Remove an IP from the maintenance mode whitelist.";
                 echo "\n\e[32m language [name] \e[0m    -> Delete a language.";
                 echo "\n\e[32m cache \e[0m              -> Delete all the cache files.";
-                echo "\n \n\e[1;30m The file extension must be specified in the [path] only when deleting views.\e[0m \n \n";
+                echo "\n \n\e[1;30m The file extension must be specified in the [path] only when deleting views.\e[0m\n";
                 break;
             case 'set':
                 echo "\nModify a constant defined in the config.php file. \n";
-                echo "Example changing the language to english: set wolff_language 'english'. \n \n";
+                echo "Example changing the language to english: set wolff_language 'english'.\n";
                 break;
             case 'help':
-                echo "\nIs this recursion? \n \n";
+                echo "\nIs this recursion?\n";
                 break;
             case 'version':
-                echo "\nShow the current version of Wolff \n \n";
-                break;
-            case 'e':
-                echo "\nEscape from Wolffie \n \n";
+                echo "\nShow the current version of Wolff\n";
                 break;
             case 'export':
-                echo "\nExport a query result to a .csv file in the project root folder \n \n";
+                echo "\nExport a query result to a .csv file in the project root folder\n";
                 break;
             default:
-                echo "\e[1;31m WARNING: Command doesn't exists!\e[0m \n \n";
+                echo "\e[1;31m WARNING: Command doesn't exists!\e[0m\n";
                 break;
         }
     }
@@ -151,34 +126,32 @@ class Wolffie
 
     private function export()
     {
-        $sql = substr($this->command, strlen($this->args[1]) + 1);
-
-        if (!$query = DB::run($sql)) {
-            echo "WARNING: Error in query \n \n";
+        DB::initialize();
+        if (!$query = DB::run($this->argv[2])) {
+            echo "WARNING: Error in query\n";
 
             return;
         }
 
         @arrayToCsv('sql_' . date('y-m-d'), $query);
-        echo "\n Query exported successfully! \n \n";
+        echo "\n Query exported successfully!\n";
     }
 
 
     private function set()
     {
-        $file        = '../config.php';
-        $original    = "/define\((\s){0,}?[\'\"]" . strtoupper($this->args[1]) . "[\'\"](\s){0,}?,(.*?)\)\;/";
-        $replacement = "define('" . strtoupper($this->args[1]) . "', " . $this->args[2] . ");";
-
+        $file        = 'config.php';
+        $original    = "/define\((\s){0,}?[\'\"]" . strtoupper($argv[2]) . "[\'\"](\s){0,}?,(.*?)\)\;/";
+        $replacement = "define('" . strtoupper($argv[2]) . "', " . $argv[3] . ");";
 
         if (!$content = file_get_contents($file)) {
-            echo "\e[1;31m WARNING: Couldn't read the config file!\e[0m \n \n";
+            echo "\e[1;31m WARNING: Couldn't read the config file!\e[0m\n";
 
             return;
         }
 
         if (!preg_match($original, $content)) {
-            echo "\e[1;31m WARNING: Constant doesn't exists!\e[0m \n \n";
+            echo "\e[1;31m WARNING: Constant doesn't exists!\e[0m\n";
 
             return;
         }
@@ -186,13 +159,13 @@ class Wolffie
         $content = preg_replace($original, $replacement, $content);
         file_put_contents($file, $content);
 
-        echo "Constant " . $this->args[1] . " modified successfully! \n \n";
+        echo "Constant " . $argv[2] . " modified successfully!\n";
     }
 
 
     private function version()
     {
-        echo "\e[32m WOLFF v" . wolffVersion() . "\e[0m \n \n";
+        echo "\e[32m WOLFF v" . wolffVersion() . "\e[0m\n";
     }
 
 }

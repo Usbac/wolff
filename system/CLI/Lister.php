@@ -7,25 +7,26 @@ use Utilities\Maintenance;
 
 class Lister
 {
-    private $route;
-    private $app_dir;
-    private $public_dir;
-    private $args;
+
+    private $argv;
+
+    const EXTENSIONS_NONE = "\n Extensions: none\n";
+    const ROUTES_NONE = "\n Routes: none\n";
+    const BLOCKED_NONE = "\n Blocked: none\n";
+    const REDIRECTS_NONE = "\n Redirections: none\n";
+    const IP_NONE = "\n Allowed IPs: none\n";
 
 
-    public function __construct($route, $app_dir, $public_dir)
+    public function __construct($argv)
     {
-        $this->route      = &$route;
-        $this->app_dir    = $app_dir;
-        $this->public_dir = $public_dir;
+        $this->argv = $argv;
+        $this->index();
     }
 
 
-    public function index($args)
+    public function index()
     {
-        $this->args = $args;
-
-        switch ($this->args[1]) {
+        switch ($this->argv[2]) {
             case 'extensions':
                 $this->extensions();
                 break;
@@ -60,7 +61,7 @@ class Lister
                 $this->ip();
                 break;
             default:
-                echo "\e[1;31m WARNING: Command doesn't exists\e[0m \n \n";
+                echo "\e[1;31m WARNING: Command doesn't exists\e[0m\n";
                 break;
         }
     }
@@ -68,11 +69,10 @@ class Lister
 
     private function extensions()
     {
-        Extension::setDirectory('../' . getExtensionDirectory());
         $extensions = Extension::get();
 
         if (empty($extensions)) {
-            echo "Extensions: none \n \n";
+            echo self::EXTENSIONS_NONE;
 
             return;
         }
@@ -85,62 +85,63 @@ class Lister
             echo "\nFilename: " . $ext['filename'];
             echo "\n";
         }
+
         echo "\n";
     }
 
 
     private function views()
     {
-        $views = $this->listViewFiles($this->app_dir . 'views');
+        $views = $this->listViewFiles(getAppDirectory() . 'views');
 
         foreach ($views as $view) {
             echo "\n" . $view;
         }
-        echo "\n \n";
+        echo "\n";
     }
 
 
     private function controllers()
     {
-        $controllers = $this->listPHPFiles($this->app_dir . 'controllers');
+        $controllers = $this->listPHPFiles(getAppDirectory() . 'controllers');
 
         foreach ($controllers as $controller) {
             echo "\n" . $controller;
         }
-        echo "\n \n";
+        echo "\n";
     }
 
 
     private function libraries()
     {
-        $libraries = $this->listPHPFiles($this->app_dir . 'libraries');
+        $libraries = $this->listPHPFiles(getAppDirectory() . 'libraries');
 
         foreach ($libraries as $library) {
             echo "\n" . $library;
         }
-        echo "\n \n";
+        echo "\n";
     }
 
 
     private function languages()
     {
-        $languages = glob($this->app_dir . 'languages/*', GLOB_ONLYDIR);
+        $languages = glob(getAppDirectory() . 'languages/*', GLOB_ONLYDIR);
 
         foreach ($languages as $language) {
             echo "\n" . substr($language, strrpos($language, '/') + 1);
         }
-        echo "\n \n";
+        echo "\n";
     }
 
 
     private function public()
     {
-        $files = $this->listAnyFiles($this->public_dir);
+        $files = $this->listAnyFiles(getPublicDirectory());
 
         foreach ($files as $file) {
-            echo "\n" . $file;
+            echo "\n " . $file;
         }
-        echo "\n \n";
+        echo "\n";
     }
 
 
@@ -214,7 +215,7 @@ class Lister
         $routes = Route::getRoutes();
 
         if (count($routes) <= 0) {
-            echo "\n ROUTES: none \n \n";
+            echo self::ROUTES_NONE;
 
             return;
         } else {
@@ -222,8 +223,7 @@ class Lister
                 echo "\n " . $key;
             }
         }
-
-        echo "\n \n";
+        echo "\n";
     }
 
 
@@ -232,7 +232,7 @@ class Lister
         $blocked = Route::getBlocked();
 
         if (count($blocked) <= 0) {
-            echo "\n BLOCKED: none \n \n";
+            echo self::BLOCKED_NONE;
 
             return;
         } else {
@@ -240,8 +240,7 @@ class Lister
                 echo "\n " . $key;
             }
         }
-
-        echo "\n \n";
+        echo "\n";
     }
 
 
@@ -250,7 +249,7 @@ class Lister
         $redirects = Route::getRedirects();
 
         if (count($redirects) <= 0) {
-            echo "\n REDIRECTIONS: none \n \n";
+            echo self::REDIRECTS_NONE;
 
             return;
         } else {
@@ -258,8 +257,7 @@ class Lister
                 echo "\n " . $redirects[$key]['origin'] . " -> " . $redirects[$key]['destiny'] . " | " . $redirects[$key]['code'];
             }
         }
-
-        echo "\n \n";
+        echo "\n";
     }
 
 
@@ -268,7 +266,7 @@ class Lister
         $ips = Maintenance::getAllowedIPs();
 
         if ($ips === false || count($ips) <= 0) {
-            echo "\n Allowed IPs: none \n \n";
+            echo self::IP_NONE;
 
             return;
         } else {
@@ -276,34 +274,37 @@ class Lister
                 echo "\n " . $ip;
             }
         }
-
-        echo "\n \n";
+        echo "\n";
     }
 
 
     private function config()
     {
-        echo "\n -> SERVER CONFIG: ";
-        echo "\n getDBMS(): " . getDBMS();
+        echo "\n ->\e[32m SERVER \e[0m";
+        echo "\n DBMS: " . getDBMS();
         echo "\n Server: " . getServer();
         echo "\n Database: " . getDB();
         echo "\n User: " . getDBUser();
         echo "\n Password: " . getDBPass();
         echo "\n";
-        echo "\n -> GENERAL CONFIG: ";
-        echo "\n Wolff version : " . wolffVersion();
+        echo "\n ->\e[32m DIRECTORIES \e[0m";
         echo "\n Project folder: " . getDirectory();
         echo "\n App folder: " . getAppDirectory();
         echo "\n Public folder: " . getPublicDirectory();
+        echo "\n Extensions folder: " . getExtensionDirectory();
+        echo "\n Cache folder: " . getCacheDirectory();
+        echo "\n";
+        echo "\n ->\e[32m GENERAL \e[0m";
+        echo "\n Wolff version: " . wolffVersion();
         echo "\n Page title: " . getPageTitle();
         echo "\n Main page: " . getMainPage();
         echo "\n Language: " . getLanguage();
         echo "\n";
-        echo "\n -> EXTRA CONFIG: ";
+        echo "\n ->\e[32m EXTRA \e[0m";
         echo "\n Cache enabled: " . (cacheEnabled() ? "yes" : "no");
         echo "\n Extensions enabled: " . (extensionsEnabled() ? "yes" : "no");
         echo "\n Maintenance mode enabled: " . (maintenanceEnabled() ? "yes" : "no");
-        echo "\n \n";
+        echo "\n";
     }
 
 }

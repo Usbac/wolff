@@ -6,14 +6,6 @@ class Extension
 {
 
     /**
-     * The server root directory
-     * or the system directory if from a CLI.
-     *
-     * @var string
-     */
-    private static $directory;
-
-    /**
      * List of extensions
      *
      * @var array
@@ -23,17 +15,6 @@ class Extension
 
     const CLASS_ERROR = "Warning: Extension class %s doesn't exists";
     const NAMESPACE = 'Extension\\';
-
-
-    /**
-     * Set the extensions folder path (only for CLI)
-     *
-     * @param  string  $dir  the desired folder path
-     */
-    public static function setDirectory(string $dir)
-    {
-        self::$directory = $dir;
-    }
 
 
     /**
@@ -126,11 +107,7 @@ class Extension
      */
     public static function folderExists()
     {
-        if (!self::$directory) {
-            self::$directory = getServerRoot() . getExtensionDirectory();
-        }
-
-        return file_exists(self::$directory);
+        return file_exists(getServerRoot() . getExtensionDirectory());
     }
 
 
@@ -139,12 +116,8 @@ class Extension
      */
     public static function makeFolder()
     {
-        if (!self::$directory) {
-            self::$directory = getServerRoot() . getExtensionDirectory();
-        }
-
         if (!self::folderExists()) {
-            mkdir(self::$directory);
+            mkdir(getServerRoot() . getExtensionDirectory());
         }
     }
 
@@ -160,7 +133,7 @@ class Extension
         self::$extensions[] = array(
             'name'  => $extension_name,
             'route' => $route,
-            'type'  => 'after',
+            'type'  => 'after'
         );
     }
 
@@ -176,7 +149,7 @@ class Extension
         self::$extensions[] = array(
             'name'  => $extension_name,
             'route' => $route,
-            'type'  => 'before',
+            'type'  => 'before'
         );
     }
 
@@ -202,7 +175,7 @@ class Extension
         }
 
         //All the extensions
-        $files      = glob(self::$directory . '*.php');
+        $files      = glob(getExtensionDirectory() . '*.php');
         $extensions = [];
 
         foreach ($files as $file) {

@@ -6,146 +6,188 @@ use Utilities\Maintenance;
 
 class Delete
 {
-    private $route;
-    private $app_dir;
-    private $args;
+    
+    private $argv;
 
 
-    public function __construct($route, $app_dir)
+    public function __construct($argv)
     {
-        $this->route   = &$route;
-        $this->app_dir = $app_dir;
+        $this->argv    = $argv;
+        $this->index();
     }
 
 
-    public function index($args)
+    public function index()
     {
-        $this->args = $args;
-        $function   = $this->args[1];
-
-        if (method_exists($this, $function)) {
-            $this->$function();
-        } else {
-            echo "\e[1;31m WARNING: Command doesn't exists!\e[0m \n \n";
+        switch ($this->argv[2]) {
+            case 'controller':
+                $this->controller();
+                break;
+            case 'view':
+                $this->view();
+                break;
+            case 'extension':
+                $this->extension();
+                break;
+            case 'language':
+                $this->language();
+                break;
+            case 'library':
+                $this->library();
+                break;
+            case 'ip':
+                $this->ip();
+                break;
+            case 'cache':
+                $this->cache();
+                break;
+            default:
+                echo "\e[1;31m WARNING: Command doesn't exists\e[0m\n";
+                break;
         }
     }
 
 
     private function controller()
     {
-        $file_dir = $this->app_dir . 'controllers/' . $this->args[2] . '.php';
+        if (empty($this->argv[3])) {
+            echo "\e[1;31m WARNING: no name specified!\e[0m \n";
+            return;
+        }
+
+        $file_dir = getAppDirectory() . 'controllers/' . $this->argv[3] . '.php';
 
         if (!is_file($file_dir)) {
-            echo "\e[1;31m WARNING: the controller '" . $this->args[2] . "' doesn't exists!\e[0m \n \n";
+            echo "\e[1;31m WARNING: the controller '" . $this->argv[3] . "' doesn't exists!\e[0m \n";
 
             return;
         }
 
-        echo "Are you sure about deleting the " . $this->args[2] . ".php controller? Y/N \n";
+        echo "Are you sure about deleting the " . $this->argv[3] . ".php controller? Y/N \n";
         $response = readline(" -> ");
         if ($response === 'Y') {
             unlink($file_dir);
-            echo "Controller " . $this->args[2] . " deleted successfully! \n \n";
-        } else {
-            echo "\n";
+            echo "Controller " . $this->argv[3] . " deleted successfully! \n";
         }
     }
 
 
     private function library()
     {
-        $file_dir = $this->app_dir . 'libraries/' . $this->args[2] . '.php';
+        if (empty($this->argv[3])) {
+            echo "\e[1;31m WARNING: no name specified!\e[0m \n";
+            return;
+        }
+
+        $file_dir = getAppDirectory() . 'libraries/' . $this->argv[3] . '.php';
 
         if (!is_file($file_dir)) {
-            echo "\e[1;31m WARNING: the library '" . $this->args[2] . "' doesn't exists!\e[0m \n \n";
+            echo "\e[1;31m WARNING: the library '" . $this->argv[3] . "' doesn't exists!\e[0m \n";
 
             return;
         }
 
-        echo "Are you sure about deleting the " . $this->args[2] . ".php library? Y/N \n";
+        echo "Are you sure about deleting the " . $this->argv[3] . ".php library? Y/N \n";
         $response = readline(" -> ");
         if ($response === 'Y') {
             unlink($file_dir);
-            echo "Library " . $this->args[2] . " deleted successfully! \n \n";
-        } else {
-            echo "\n";
+            echo "Library " . $this->argv[3] . " deleted successfully! \n";
         }
     }
 
 
     private function view()
     {
-        $file_dir = $this->app_dir . 'views/' . $this->args[2];
+        if (empty($this->argv[3])) {
+            echo "\e[1;31m WARNING: no name specified!\e[0m \n";
+            return;
+        }
+
+        $file_dir = getAppDirectory() . 'views/' . $this->argv[3];
 
         if (!is_file($file_dir)) {
-            echo "\e[1;31m WARNING: the view '" . $this->args[2] . "' doesn't exists!\e[0m \n \n";
+            echo "\e[1;31m WARNING: the view '" . $this->argv[3] . "' doesn't exists!\e[0m \n";
 
             return;
         }
 
-        echo "Are you sure about deleting the " . $this->args[2] . " view? Y/N \n";
+        echo "Are you sure about deleting the " . $this->argv[3] . " view? Y/N \n";
         $response = readline(" -> ");
         if ($response === 'Y') {
             unlink($file_dir);
-            echo "View " . $this->args[2] . " deleted successfully! \n \n";
-        } else {
-            echo "\n";
+            echo "View " . $this->argv[3] . " deleted successfully! \n";
         }
     }
 
 
     private function extension()
     {
-        $file_dir = '../extension/' . $this->args[2] . '.php';
+        if (empty($this->argv[3])) {
+            echo "\e[1;31m WARNING: no name specified!\e[0m \n";
+            return;
+        }
+
+        $file_dir = getExtensionDirectory() . $this->argv[3] . '.php';
 
         if (!is_file($file_dir)) {
-            echo "\e[1;31m WARNING: the extension '" . $this->args[2] . "' doesn't exists!\e[0m \n \n";
+            echo "\e[1;31m WARNING: the extension '" . $this->argv[3] . "' doesn't exists!\e[0m \n";
 
             return;
         }
 
-        echo "Are you sure about deleting the " . $this->args[2] . " extension? Y/N \n";
+        echo "Are you sure about deleting the " . $this->argv[3] . " extension? Y/N \n";
         $response = readline(" -> ");
         if ($response === 'Y') {
             unlink($file_dir);
-            echo "Extension " . $this->args[2] . " deleted successfully! \n \n";
-        } else {
-            echo "\n";
+            echo "Extension " . $this->argv[3] . " deleted successfully! \n";
         }
     }
 
 
     private function ip()
     {
-        if (Maintenance::removeAllowedIP($this->args[2])) {
-            echo "IP " . $this->args[2] . " removed successfully! \n \n";
+        if (empty($this->argv[3])) {
+            echo "\e[1;31m WARNING: no name specified!\e[0m \n";
+            return;
+        }
+
+        if (Maintenance::removeAllowedIP($this->argv[3])) {
+            echo "IP " . $this->argv[3] . " removed successfully! \n";
         } else {
-            echo "\e[1;31m WARNING: IP " . $this->args[2] . " not removed!\e[0m \n \n";
+            echo "\e[1;31m WARNING: IP " . $this->argv[3] . " not removed!\e[0m \n";
         }
     }
 
 
     private function language()
     {
-        $language_dir = $this->app_dir . 'languages/' . $this->args[2];
-        $this->deleteRecursively($language_dir);
+        if (empty($this->argv[3])) {
+            echo "\e[1;31m WARNING: no name specified!\e[0m \n";
+            return;
+        }
+
+        $language_dir = getAppDirectory() . 'languages/' . $this->argv[3];
+
+        echo "Are you sure about deleting the " . $this->argv[3] . " language? Y/N \n";
+        $response = readline(" -> ");
+        if ($response === 'Y') {
+            $this->deleteRecursively($language_dir);
+        }
     }
 
 
     private function cache()
     {
-        $cache_path = '../cache';
-
-        if (!is_dir($cache_path)) {
-            echo "\e[1;31m WARNING: the cache folder doesn't exists!\e[0m \n \n";
+        if (!is_dir(getCacheDirectory())) {
+            echo "\e[1;31m WARNING: the cache folder doesn't exists!\e[0m \n";
 
             return;
         }
 
-        $files = glob($cache_path . '/*');
+        $files = glob(getCacheDirectory() . '/*');
 
         if (count($files) <= 0) {
-            echo "\e[1;31m WARNING: the cache folder is already empty!\e[0m \n \n";
+            echo "\e[1;31m WARNING: the cache folder is already empty!\e[0m \n";
 
             return;
         }
@@ -156,14 +198,14 @@ class Delete
             }
         }
 
-        echo "Cache deleted successfully! \n \n";
+        echo "Cache deleted successfully! \n";
     }
 
 
     private function deleteRecursively($dir)
     {
         if (!is_dir($dir)) {
-            echo "\e[1;31m WARNING: the language '" . $this->args[2] . "' doesn't exists!\e[0m \n \n";
+            echo "\e[1;31m WARNING: the language '" . $this->argv[3] . "' doesn't exists!\e[0m \n";
 
             return;
         }
@@ -182,7 +224,7 @@ class Delete
         }
 
         rmdir($dir);
-        echo "Language " . $this->args[2] . " deleted successfully! \n \n";
+        echo "Language " . $this->argv[3] . " deleted successfully! \n";
     }
 
 }
