@@ -5,6 +5,28 @@ namespace Core;
 class Template
 {
 
+    /**
+     * List of custom templates
+     *
+     * @var array
+     */
+    private static $templates = [];
+
+    const ECHO_FORMAT = '/\{\{(.*?)\}\}/';
+    const TAG_FORMAT = '/\{%(.*?)%\}/';
+    const FUNCTION_FORMAT = '/{func}( ?){1,}\|([^\}]{1,})/';
+    const INCLUDE_FORMAT = '/@load\(( ?){1,}(.*)(.php|.html)( ?){1,}\)/';
+
+    const IF_FORMAT = '/\{(\s?){1,}(.*)\?(\s?){1,}\}/';
+    const ENDIF_FORMAT = '/\{\?\}/';
+    const ELSE_FORMAT = '/\{(\s?){1,}else(\s?){1,}\}/';
+    const ELSEIF_FORMAT = '/\{(\s?){1,}else(\s?){1,}(.*)(\s?){1,}\}/';
+
+    const FOR_FORMAT = '/\{( ?){1,}for( ){1,}(.*)( ){1,}in( ){1,}\((.*)( ?){1,},( ?){1,}(.*)( ?){1,}\)( ?){1,}\}/';
+    const ENDFOR_FORMAT = '/\{( ?){1,}for( ?){1,}\}/';
+    const FOREACH_FORMAT = '/\{( ?){1,}for( ?){1,}(.*)( ?){1,}as( ?){1,}(.*)( ?){1,}\}/';
+    const ENDFOREACH_FORMAT = '/\{( ?){1,}foreach( ?){1,}\}/';
+
 
     public function __construct()
     {
@@ -88,6 +110,40 @@ class Template
 
 
     /**
+     * Add a custom template
+     *
+     * @param  mixed  $function  the function with the custom template
+     */
+    public static function custom($function) {
+        if (!is_callable($function)) {
+            return;
+        }
+        
+        self::$templates[] = $function;
+    }
+
+
+    /**
+     * Apply the custom templates
+     *
+     * @param  string  $content  the view content
+     *
+     * @return string the view content with the custom templates formatted
+     */
+    private function replaceCustom(string $content) {
+        if (empty(self::$templates)) {
+            return $content;
+        }
+
+        foreach(self::$templates as $template) {
+            $content = $template($content);
+        }
+
+        return $content;
+    }
+
+
+    /**
      * Apply all the replace methods of the template
      *
      * @param  string  $content  the view content
@@ -100,6 +156,7 @@ class Template
         $content = $this->replaceFunctions($content);
         $content = $this->replaceTags($content);
         $content = $this->replaceConditionals($content);
+        $content = $this->replaceCustom($content);
 
         return $this->replaceCycles($content);
     }
@@ -114,7 +171,7 @@ class Template
      */
     private function replaceInclude($content)
     {
-        preg_match_all('/@load\(( ?){1,}(.*)(.php|.html)( ?){1,}\)/', $content, $matches, PREG_OFFSET_CAPTURE);
+        preg_match_all(self::INCLUDE_FORMAT, $content, $matches, PREG_OFFSET_CAPTURE);
 
         foreach ($matches[1] as $key => $value) {
             $content = str_replace($matches[0][$key][0], $this->getContent($matches[2][$key][0]), $content);
@@ -133,36 +190,34 @@ class Template
      */
     private function replaceFunctions($content)
     {
-        $format = '/{func}( ?){1,}\|([^\}]{1,})/';
-
         //Escape
-        $content = preg_replace(str_replace('{func}', 'e', $format), 'htmlspecialchars(strip_tags($2))',
+        $content = preg_replace(str_replace('{func}', 'e', self::FUNCTION_FORMAT), 'htmlspecialchars(strip_tags($2))',
             $content);
         //HTMLspecialchars
-        $content = preg_replace(str_replace('{func}', 'especial', $format),
+        $content = preg_replace(str_replace('{func}', 'especial', self::FUNCTION_FORMAT),
             'htmlspecialchars($2, ENT_QUOTES, \'UTF-8\')', $content);
         //Uppercase
-        $content = preg_replace(str_replace('{func}', 'upper', $format), 'strtoupper($2)', $content);
+        $content = preg_replace(str_replace('{func}', 'upper', self::FUNCTION_FORMAT), 'strtoupper($2)', $content);
         //Lowercase
-        $content = preg_replace(str_replace('{func}', 'lower', $format), 'strtolower($2)', $content);
+        $content = preg_replace(str_replace('{func}', 'lower', self::FUNCTION_FORMAT), 'strtolower($2)', $content);
         //First uppercase
-        $content = preg_replace(str_replace('{func}', 'upperf', $format), 'ucfirst($2)', $content);
+        $content = preg_replace(str_replace('{func}', 'upperf', self::FUNCTION_FORMAT), 'ucfirst($2)', $content);
         //Length
-        $content = preg_replace(str_replace('{func}', 'length', $format), 'strlen($2)', $content);
+        $content = preg_replace(str_replace('{func}', 'length', self::FUNCTION_FORMAT), 'strlen($2)', $content);
         //Title case
-        $content = preg_replace(str_replace('{func}', 'title', $format), 'ucwords($2)', $content);
+        $content = preg_replace(str_replace('{func}', 'title', self::FUNCTION_FORMAT), 'ucwords($2)', $content);
         //MD5
-        $content = preg_replace(str_replace('{func}', 'md5', $format), 'md5($2)', $content);
+        $content = preg_replace(str_replace('{func}', 'md5', self::FUNCTION_FORMAT), 'md5($2)', $content);
         //Count words
-        $content = preg_replace(str_replace('{func}', 'countwords', $format), 'str_word_count($2)', $content);
+        $content = preg_replace(str_replace('{func}', 'countwords', self::FUNCTION_FORMAT), 'str_word_count($2)', $content);
         //Trim
-        $content = preg_replace(str_replace('{func}', 'trim', $format), 'trim($2)', $content);
+        $content = preg_replace(str_replace('{func}', 'trim', self::FUNCTION_FORMAT), 'trim($2)', $content);
         //nl2br
-        $content = preg_replace(str_replace('{func}', 'nl2br', $format), 'nl2br($2)', $content);
+        $content = preg_replace(str_replace('{func}', 'nl2br', self::FUNCTION_FORMAT), 'nl2br($2)', $content);
         //Join
-        $content = preg_replace(str_replace('{func}', 'join\((.*?)\)', $format), 'implode($1, $3)', $content);
+        $content = preg_replace(str_replace('{func}', 'join\((.*?)\)', self::FUNCTION_FORMAT), 'implode($1, $3)', $content);
         //Repeat
-        $content = preg_replace(str_replace('{func}', 'repeat\((.*?)\)', $format), 'str_repeat($3, $1)', $content);
+        $content = preg_replace(str_replace('{func}', 'repeat\((.*?)\)', self::FUNCTION_FORMAT), 'str_repeat($3, $1)', $content);
 
         return $content;
     }
@@ -177,9 +232,9 @@ class Template
      */
     private function replaceTags($content)
     {
-        $content = preg_replace('/\{\{(.*?)\}\}/', '<?php echo $1; ?>', $content);
+        $content = preg_replace(self::ECHO_FORMAT, '<?php echo $1; ?>', $content);
 
-        return preg_replace('/\{%(.*?)%\}/', '<?php $1 ?>', $content);
+        return preg_replace(self::TAG_FORMAT, '<?php $1 ?>', $content);
     }
 
 
@@ -192,10 +247,10 @@ class Template
      */
     private function replaceConditionals($content)
     {
-        $content = preg_replace('/\{\?\}/', '<?php endif; ?>', $content);
-        $content = preg_replace('/\{(\s?){1,}(.*)\?(\s?){1,}\}/', '<?php if ($2): ?>', $content);
-        $content = preg_replace('/\{(\s?){1,}else(\s?){1,}\}/', '<?php else: ?>', $content);
-        $content = preg_replace('/\{(\s?){1,}else(\s?){1,}(.*)(\s?){1,}\}/', '<?php elseif ($3): ?>', $content);
+        $content = preg_replace(self::ENDIF_FORMAT, '<?php endif; ?>', $content);
+        $content = preg_replace(self::IF_FORMAT, '<?php if ($2): ?>', $content);
+        $content = preg_replace(self::ELSE_FORMAT, '<?php else: ?>', $content);
+        $content = preg_replace(self::ELSEIF_FORMAT, '<?php elseif ($3): ?>', $content);
 
         return $content;
     }
@@ -211,13 +266,11 @@ class Template
     private function replaceCycles($content)
     {
         //For
-        $content = preg_replace('/\{( ?){1,}for( ){1,}(.*)( ){1,}in( ){1,}\((.*)( ?){1,},( ?){1,}(.*)( ?){1,}\)( ?){1,}\}/',
-            '<?php for (\$$3=$6; \$$3 <= $9; \$$3++): ?>', $content);
-        $content = preg_replace('/\{( ?){1,}for( ?){1,}\}/', '<?php endfor; ?>', $content);
+        $content = preg_replace(self::FOR_FORMAT, '<?php for (\$$3=$6; \$$3 <= $9; \$$3++): ?>', $content);
+        $content = preg_replace(self::ENDFOR_FORMAT, '<?php endfor; ?>', $content);
         //Foreach
-        $content = preg_replace('/\{( ?){1,}for( ?){1,}(.*)( ?){1,}as( ?){1,}(.*)( ?){1,}\}/',
-            '<?php foreach ($3 as $6): ?>', $content);
-        $content = preg_replace('/\{( ?){1,}foreach( ?){1,}\}/', '<?php endforeach; ?>', $content);
+        $content = preg_replace(self::FOREACH_FORMAT, '<?php foreach ($3 as $6): ?>', $content);
+        $content = preg_replace(self::ENDFOREACH_FORMAT, '<?php endforeach; ?>', $content);
 
         return $content;
     }

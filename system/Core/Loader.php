@@ -35,8 +35,8 @@ class Loader
     public function __construct($session, $upload)
     {
         $this->template = new Template();
-        $this->session  = &$session;
-        $this->upload   = &$upload;
+        $this->session = &$session;
+        $this->upload = &$upload;
     }
 
 
@@ -82,8 +82,8 @@ class Loader
 
         //Get a possible function from the url
         $lastSlash = strrpos($dir, '/');
-        $function  = substr($dir, $lastSlash + 1);
-        $dir       = substr($dir, 0, $lastSlash);
+        $function = substr($dir, $lastSlash + 1);
+        $dir = substr($dir, 0, $lastSlash);
 
         //load a controller function and return it
         if (controllerExists($dir)) {
@@ -123,7 +123,7 @@ class Loader
     public function language(string $dir, string $language = WOLFF_LANGUAGE)
     {
         //Sanitize directory
-        $dir       = sanitizePath($dir);
+        $dir = sanitizePath($dir);
         $file_path = getServerRoot() . getAppDirectory() . 'languages/' . $language . '/' . $dir . '.php';
 
         if (file_exists($file_path)) {

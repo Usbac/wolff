@@ -135,7 +135,7 @@ class Route
      */
     public static function api(string $url, int $status, $function)
     {
-        $url                = sanitizeURL($url);
+        $url = sanitizeURL($url);
         self::$routes[$url] = array(
             'function' => $function,
             'api'      => true,
@@ -153,7 +153,7 @@ class Route
      */
     public static function redirect(string $url, string $url2, int $status = self::STATUS_REDIRECT)
     {
-        $url  = sanitizeURL($url);
+        $url = sanitizeURL($url);
         $url2 = sanitizeURL($url2);
 
         self::$routes[$url] = array(
@@ -191,11 +191,11 @@ class Route
      */
     public static function isBlocked(string $url)
     {
-        $url       = explode('/', $url);
+        $url = explode('/', $url);
         $urlLength = count($url);
 
         foreach (self::$blocked as $blocked) {
-            $blocked       = explode('/', $blocked);
+            $blocked = explode('/', $blocked);
             $blockedLength = count($blocked);
 
             for ($i = 0; $i < $blockedLength && $i < $urlLength; $i++) {
@@ -226,7 +226,7 @@ class Route
      */
     public static function exists(string $url)
     {
-        $url    = preg_replace(GET_FORMAT, '{}', $url);
+        $url = preg_replace(GET_FORMAT, '{}', $url);
         $routes = [];
         foreach (array_keys(self::$routes) as $key) {
             $routes[] = preg_replace(GET_FORMAT, '{}', $key);
@@ -270,7 +270,7 @@ class Route
      */
     private static function setGetVariable(string $key, $value = '')
     {
-        $key        = self::clearGetVariable($key);
+        $key = self::clearGetVariable($key);
         $_GET[$key] = $value ?? '';
     }
 

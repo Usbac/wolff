@@ -10,7 +10,7 @@
     "mvc"
   ],
   "type": "project",
-  "version": "0.9.7.5",
+  "version": "0.9.8",
   "license": "MIT",
   "support": {
     "issues": "https://github.com/Usbac/Wolff/issues",
@@ -40,7 +40,8 @@
       "system/stdlib/sanitizer.php",
       "system/stdlib/utilities.php",
       "system/Routes.php",
-      "system/Extensions.php"
+      "system/Extensions.php",
+      "system/Templates.php"
     ],
     "psr-4": {
       "Root\\": "",

@@ -15,7 +15,7 @@ class Create
     public function __construct($argv)
     {
         $this->routes_dir = 'System/Routes.php';
-        $this->argv       = $argv;
+        $this->argv = $argv;
         $this->index();
     }
 
@@ -94,10 +94,10 @@ class Create
 
         $file = fopen($file_dir, 'w') or die("WARNING: Cannot create Controller file \n");
 
-        $content     = file_get_contents('system/CLI/templates/controller.txt');
-        $original    = array('{namespace}', '{classname}');
+        $content = file_get_contents('system/CLI/templates/controller.txt');
+        $original = array('{namespace}', '{classname}');
         $replacement = array($namespace, $file_name);
-        $content     = str_replace($original, $replacement, $content);
+        $content = str_replace($original, $replacement, $content);
 
         fwrite($file, $content);
         fclose($file);
@@ -160,12 +160,12 @@ class Create
 
         $file = fopen($file_dir, 'w') or die("WARNING: Cannot create extension file \n");
 
-        $name        = readline("Name -> ");
+        $name = readline("Name -> ");
         $description = readline("Description -> ");
-        $version     = readline("Version -> ");
-        $author      = readline("Author -> ");
+        $version = readline("Version -> ");
+        $author = readline("Author -> ");
 
-        $original    = array('{classname}', '{name}', '{description}', '{version}', '{author}');
+        $original = array('{classname}', '{name}', '{description}', '{version}', '{author}');
         $replacement = array($this->argv[3], $name, $description, $version, $author);
 
         $content = file_get_contents('system/CLI/templates/extension.txt');
@@ -222,10 +222,10 @@ class Create
 
         $file = fopen($file_dir, 'w') or die("WARNING: Cannot create library file \n");
 
-        $content     = file_get_contents('system/CLI/templates/library.txt');
-        $original    = array('{namespace}', '{classname}');
+        $content = file_get_contents('system/CLI/templates/library.txt');
+        $original = array('{namespace}', '{classname}');
         $replacement = array($namespace, $file_name);
-        $content     = str_replace($original, $replacement, $content);
+        $content = str_replace($original, $replacement, $content);
 
         fwrite($file, $content);
         fclose($file);
@@ -238,7 +238,7 @@ class Create
     {
         $file = fopen($this->routes_dir, 'r') or die('WARNING: Cannot read Routes file');
         $content = fread($file, filesize($this->routes_dir));
-        $route   = $this->argv[3];
+        $route = $this->argv[3];
         $controller = $this->argv[4];
 
         if (preg_match("/Route::add\((\s){0,}?[\'\"]" . $route . "[\'\"](\s){0,}?\,/", $content)) {
@@ -264,7 +264,7 @@ class Create
     {
         $file = fopen($this->routes_dir, 'r') or die('WARNING: Cannot read Routes file');
         $content = fread($file, filesize($this->routes_dir));
-        $route   = $this->argv[3];
+        $route = $this->argv[3];
 
         if (preg_match("/Route::block\((\s){0,}?[\'\"]" . $route . "[\'\"](\s){0,}?\)\;/", $content)) {
             echo "\e[1;31m WARNING: Block already exists!\e[0m \n";
@@ -285,9 +285,9 @@ class Create
     private function redirect()
     {
         $file = fopen($this->routes_dir, 'r') or die('WARNING: Cannot read Routes file');
-        $content       = fread($file, filesize($this->routes_dir));
-        $original      = $this->argv[3];
-        $redirect      = $this->argv[4];
+        $content = fread($file, filesize($this->routes_dir));
+        $original = $this->argv[3];
+        $redirect = $this->argv[4];
         $redirect_code = "";
 
         if (preg_match("/Route::redirect\((\s){0,}?[\'\"]" . $original . "[\'\"]\,(\s){0,}?[\'\"]" . $redirect . "[\'\"]/",
@@ -339,7 +339,7 @@ class Create
 
     private function createNamespace($dir, &$file_name, $type)
     {
-        $dir       = explode('/', $this->argv[3]);
+        $dir = explode('/', $this->argv[3]);
         $file_name = array_pop($dir);
 
         if (count($dir) > 0) {

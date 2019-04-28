@@ -40,8 +40,8 @@ namespace {
     {
         //Remove the function from the url and save the function name
         $lastSlash = strrpos($dir, '/');
-        $function  = substr($dir, $lastSlash + 1);
-        $dir       = substr($dir, 0, $lastSlash);
+        $function = substr($dir, $lastSlash + 1);
+        $dir = substr($dir, 0, $lastSlash);
 
         $class = 'Controller\\' . pathToNamespace($dir);
 

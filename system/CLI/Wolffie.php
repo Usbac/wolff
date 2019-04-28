@@ -140,8 +140,8 @@ class Wolffie
 
     private function set()
     {
-        $file        = 'config.php';
-        $original    = "/define\((\s){0,}?[\'\"]" . strtoupper($argv[2]) . "[\'\"](\s){0,}?,(.*?)\)\;/";
+        $file = 'config.php';
+        $original = "/define\((\s){0,}?[\'\"]" . strtoupper($argv[2]) . "[\'\"](\s){0,}?,(.*?)\)\;/";
         $replacement = "define('" . strtoupper($argv[2]) . "', " . $argv[3] . ");";
 
         if (!$content = file_get_contents($file)) {

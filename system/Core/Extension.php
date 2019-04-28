@@ -46,10 +46,10 @@ class Extension
                     continue;
                 }
 
-                $extension          = new $class;
-                $extension->load    = $loader;
+                $extension = new $class;
+                $extension->load = $loader;
                 $extension->session = $loader->getSession();
-                $extension->upload  = $loader->getUpload();
+                $extension->upload = $loader->getUpload();
                 $extension->index();
             }
         }
@@ -71,10 +71,10 @@ class Extension
             return false;
         }
 
-        $dir       = explode('/', sanitizeURL($dir));
+        $dir = explode('/', sanitizeURL($dir));
         $dirLength = count($dir) - 1;
 
-        $url       = explode('/', sanitizeURL(getCurrentPage()));
+        $url = explode('/', sanitizeURL(getCurrentPage()));
         $urlLength = count($url) - 1;
 
         for ($i = 0; $i <= $dirLength && $i <= $urlLength; $i++) {
@@ -175,12 +175,12 @@ class Extension
         }
 
         //All the extensions
-        $files      = glob(getExtensionDirectory() . '*.php');
+        $files = glob(getExtensionDirectory() . '*.php');
         $extensions = [];
 
         foreach ($files as $file) {
             $filename  = basename($file, '.php');
-            $class     = self::NAMESPACE . $filename;
+            $class = self::NAMESPACE . $filename;
             $extension = new $class;
 
             $extensions[] = array(

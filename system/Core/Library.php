@@ -36,10 +36,10 @@ class Library
 
     public function __construct($load)
     {
-        $this->load    = &$load;
+        $this->load = &$load;
         $this->session = $this->load->getSession();
-        $this->upload  = $this->load->getUpload();
-        $this->data    = [];
+        $this->upload = $this->load->getUpload();
+        $this->data = [];
     }
 
 }

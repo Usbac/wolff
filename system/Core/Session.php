@@ -37,9 +37,9 @@ class Session
     {
         $this->empty();
 
-        $_SESSION['IPaddress']     = getClientIP();
-        $_SESSION['userAgent']     = getUserAgent();
-        $_SESSION['start_time']    = microtime(true);
+        $_SESSION['IPaddress'] = getClientIP();
+        $_SESSION['userAgent'] = getUserAgent();
+        $_SESSION['start_time'] = microtime(true);
         $_SESSION['vars_tmp_time'] = [];
     }
 
@@ -199,7 +199,7 @@ class Session
     public function setTime(int $time)
     {
         $_SESSION['live_time'] = ($time * 60);
-        $_SESSION['end_time']  = time() + ($time * 60);
+        $_SESSION['end_time'] = time() + ($time * 60);
     }
 
 
@@ -256,7 +256,7 @@ class Session
      */
     public function getRemainingTime(bool $gmdate = false)
     {
-        $end       = $_SESSION['end_time'] ?? 0;
+        $end = $_SESSION['end_time'] ?? 0;
         $remaining = $end - time();
 
         if ($gmdate) {

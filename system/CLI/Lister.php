@@ -79,10 +79,10 @@ class Lister
 
         foreach ($extensions as $ext) {
             echo "\n ->\e[32m " . $ext['name'] . "\e[0m";
-            echo "\nDescription: " . $ext['description'];
-            echo "\nVersion: " . $ext['version'];
-            echo "\nAuthor: " . $ext['author'];
-            echo "\nFilename: " . $ext['filename'];
+            echo "\n Description: " . $ext['description'];
+            echo "\n Version: " . $ext['version'];
+            echo "\n Author: " . $ext['author'];
+            echo "\n Filename: " . $ext['filename'];
             echo "\n";
         }
 
@@ -148,7 +148,7 @@ class Lister
     private function listViewFiles($dir, $folder = '', &$result = [])
     {
         $folder = substr($dir, strrpos($dir, '/') + 1);
-        $files  = scandir($dir);
+        $files = scandir($dir);
 
         foreach ($files as $value) {
             $path = realpath($dir . '/' . $value);
@@ -170,7 +170,7 @@ class Lister
     private function listPHPFiles($dir, $folder = '', &$result = [])
     {
         $folder = substr($dir, strrpos($dir, '/') + 1);
-        $files  = scandir($dir);
+        $files = scandir($dir);
 
         foreach ($files as $value) {
             $path = realpath($dir . '/' . $value);

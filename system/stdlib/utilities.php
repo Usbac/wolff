@@ -134,6 +134,17 @@ namespace {
 
 
     /**
+     * Redirect to a page
+     *
+     * @param  string  $page the page
+     */
+    function redirect(string $page)
+    {
+        header('Location:' . $page);
+    }
+
+
+    /**
      * Returns the first element of an array, or false if it's empty
      *
      * @param  array  $array
@@ -156,7 +167,7 @@ namespace {
     function arrayToCsv(string $filename, array $array, bool $printKeys = true)
     {
         $filename .= ".csv";
-        $file     = fopen($filename, 'w');
+        $file = fopen($filename, 'w');
 
         //Single array
         if (count($array) === count($array, COUNT_RECURSIVE)) {
@@ -234,6 +245,23 @@ namespace {
     function getCurrentPage()
     {
         return substr($_SERVER['REQUEST_URI'], strlen(getDirectory()));
+    }
+
+
+    /**
+     * Returns the current page without arguments
+     * @return string the current page without arguments
+     */
+    function getPureCurrentPage()
+    {
+        $host = (isset($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'];
+
+        if (!strContains($_SERVER['REQUEST_URI'], '?')) {
+            return $host . $_SERVER['REQUEST_URI'];
+        }
+
+        $page = explode('?', $_SERVER['REQUEST_URI']);
+        return $host . $page[0];
     }
 
 

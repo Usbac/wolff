@@ -9,7 +9,7 @@
 <h4 align="center">Ridiculously small PHP framework.</h4>
 
 <p align="center">
-<img src="https://img.shields.io/badge/stability-stable-green.svg"> <img src="https://img.shields.io/badge/version-0.9.7.5-blue.svg"> <img src="https://img.shields.io/badge/license-MIT-orange.svg">
+<img src="https://img.shields.io/badge/stability-stable-green.svg"> <img src="https://img.shields.io/badge/version-0.9.8-blue.svg"> <img src="https://img.shields.io/badge/license-MIT-orange.svg">
 </p>
 
 Wolff is a ridiculously small and lightweight PHP framework with useful functions and utilities like a template, route, extensions and language system. 
@@ -49,6 +49,8 @@ Wolff complies with the PSR-1, PSR-2 and PSR-4 coding standards :)
 * **Library**: A library system for making your own libraries inside Wolff and use them freely.
 
 * **Language**: For managing multiple languages easily and quickly.
+
+And more...
 
 ## CLI
 

@@ -2,7 +2,7 @@
 
 namespace System;
 
-use Core\{DB, Extension, Loader, Route, Session};
+use Core\{DB, Extension, Loader, Route, Session, Request};
 use Utilities\{Maintenance, Upload};
 
 class Start

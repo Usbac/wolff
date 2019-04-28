@@ -104,7 +104,7 @@ class Easql
      */
     public static function inner(string $table, string $name = null)
     {
-        $name       = $name ?? $table;
+        $name = $name ?? $table;
         self::$join .= " INNER JOIN $table as $name";
 
         return new static();
@@ -121,7 +121,7 @@ class Easql
      */
     public static function left(string $table, string $name = null)
     {
-        $name       = $name ?? $table;
+        $name = $name ?? $table;
         self::$join .= " LEFT JOIN $table as $name";
 
         return new static();
@@ -138,7 +138,7 @@ class Easql
      */
     public static function right(string $table, string $name = null)
     {
-        $name       = $name ?? $table;
+        $name = $name ?? $table;
         self::$join .= " RIGHT JOIN $table as $name";
 
         return new static();
@@ -236,7 +236,7 @@ class Easql
      */
     public static function delete($table)
     {
-        self::$table  = $table;
+        self::$table = $table;
         self::$delete = true;
 
         return new static();
@@ -322,7 +322,7 @@ class Easql
         }
 
         self::$conditional = empty(self::$conditional) ? "" : "WHERE " . self::$conditional;
-        self::$order       = empty(self::$order) ? "" : "ORDER BY" . self::$order;
+        self::$order = empty(self::$order) ? "" : "ORDER BY" . self::$order;
 
         return self::$sentence . self::$table . self::$join . self::$on . self::$conditional . self::$order;
     }
@@ -333,16 +333,16 @@ class Easql
      */
     public static function clear()
     {
-        self::$table       = '';
-        self::$delete      = '';
-        self::$sentence    = '';
-        self::$on          = '';
-        self::$join        = '';
-        self::$count       = '';
-        self::$distinct    = '';
+        self::$table = '';
+        self::$delete = '';
+        self::$sentence = '';
+        self::$on = '';
+        self::$join = '';
+        self::$count = '';
+        self::$distinct = '';
         self::$conditional = '';
-        self::$order       = '';
-        self::$lastQuery   = '';
+        self::$order = '';
+        self::$lastQuery = '';
     }
 
 
@@ -376,7 +376,7 @@ class Easql
     public static function do()
     {
         self::$lastQuery = self::getSQL();
-        $query           = DB::run(self::getSQL());
+        $query = DB::run(self::getSQL());
         self::clear();
 
         return $query;
@@ -390,7 +390,7 @@ class Easql
     public static function query($sql)
     {
         self::$lastQuery = self::getSQL();
-        $query           = DB::run($sql);
+        $query = DB::run($sql);
         self::clear();
 
         return $query;
