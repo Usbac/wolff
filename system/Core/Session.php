@@ -122,6 +122,19 @@ class Session
 
 
     /**
+     * Returns true if the session variable exists, false otherwise
+     *
+     * @param  string  $key  the variable key
+     * 
+     * @return bool true if the session variable exists, false otherwise
+     */
+    public function has(string $key) 
+    {
+        return array_key_exists($key, $_SESSION);
+    }
+
+
+    /**
      * Add time to the session live time (in minutes)
      *
      * @param  int  $time  the session live time to add

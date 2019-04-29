@@ -107,7 +107,7 @@ class Route
      * @param  string  $url  the url
      * @param $function mixed the function that must be executed when accessing the route
      */
-    public static function add(string $url, $function)
+    public static function add(string $url, $function, int $status = self::STATUS_OK)
     {
         $url = sanitizeURL($url);
 
@@ -121,7 +121,7 @@ class Route
         self::$routes[$url] = array(
             'function' => $function,
             'api'      => false,
-            'status'   => self::STATUS_OK,
+            'status'   => $status
         );
     }
 
@@ -130,10 +130,10 @@ class Route
      * Add an API
      *
      * @param  string  $url  the url
+     * @param  mixed  $function mixed the function that must be executed when accessing the API
      * @param  int  $status  the http response code
-     * @param $function mixed the function that must be executed when accessing the API
      */
-    public static function api(string $url, int $status, $function)
+    public static function api(string $url, $function, int $status = self::STATUS_OK)
     {
         $url = sanitizeURL($url);
         self::$routes[$url] = array(

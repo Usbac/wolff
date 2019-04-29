@@ -23,6 +23,19 @@ class Request
 
 
     /**
+     * Returns true if the GET variable exists, false otherwise
+     *
+     * @param  string  $key  the variable key
+     *
+     * @return bool true if the GET variable exists, false otherwise
+     */
+    public static function hasGet(string $key) 
+    {
+        return array_key_exists($key, $_GET);
+    }
+
+
+    /**
      * Set a GET variable
      *
      * @param  string  $key  the key
@@ -67,6 +80,19 @@ class Request
 
 
     /**
+     * Returns true if the POST variable exists, false otherwise
+     *
+     * @param  string  $key  the variable key
+     *
+     * @return bool true if the POST variable exists, false otherwise
+     */
+    public static function hasPost(string $key) 
+    {
+        return array_key_exists($key, $_POST);
+    }
+    
+
+    /**
      * Set a POST variable
      *
      * @param  string  $key  the key
@@ -109,6 +135,19 @@ class Request
         return $_FILES[$key] ?? null;
     }
 
+
+    /**
+     * Returns true if the FILE variable exists, false otherwise
+     *
+     * @param  string  $key  the variable key
+     *
+     * @return bool true if the FILE variable exists, false otherwise
+     */
+    public static function hasFile(string $key) 
+    {
+        return array_key_exists($key, $_FILES);
+    }
+
     
     /**
      * Returns the superglobal COOKIE array or the specified value
@@ -126,7 +165,20 @@ class Request
         return $_COOKIE[$key] ?? null;
     }
 
+
+    /**
+     * Returns true if the COOKIE variable exists, false otherwise
+     *
+     * @param  string  $key  the variable key
+     *
+     * @return bool true if the COOKIE variable exists, false otherwise
+     */
+    public static function hasCookie(string $key) 
+    {
+        return array_key_exists($key, $_COOKIE);
+    }
     
+
     /**
      * Set a COOKIE variable
      *
@@ -162,6 +214,7 @@ class Request
     {
         if (!isset($key)) {
             $_COOKIE = [];
+            return;
         }
 
         unset($_COOKIE[$key]);
