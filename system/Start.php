@@ -60,7 +60,7 @@ class Start
             $this->load->maintenance();
         }
 
-        $url = sanitizeURL($_GET['url'] ?? getMainPage());
+        $url = sanitizeURL(Request::get('url') ?? getMainPage());
 
         //Load extensions of type before
         if (extensionsEnabled()) {

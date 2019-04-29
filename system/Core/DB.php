@@ -29,6 +29,13 @@ class DB
      */
     protected static $lastSQL;
 
+    /**
+     * The number of rows affected by the last query.
+     *
+     * @var int
+     */
+    protected static $affectedRows;
+
 
     /**
      * Connects with the database using the constants present in config.php
@@ -56,12 +63,42 @@ class DB
 
 
     /**
+     * Returns the PDO connection
+     * @return PDO the PDO connection
+     */
+    public static function getPdo()
+    {
+        return self::$connection;
+    }
+
+
+    /**
      * Returns the last query executed
      * @return string $lastSQL the last query executed
      */
-    public static function getLastSQL()
+    public static function getLastSql()
     {
         return self::$lastSQL;
+    }
+    
+
+    /**
+     * Returns the last inserted id in the database
+     * @return string the last inserted id in the database
+     */
+    public static function getLastId()
+    {
+        return self::getPdo()->lastInsertId();
+    }
+
+
+    /**
+     * Returns the number of rows affected by the last query
+     * @return int the number of rows affected by the last query
+     */
+    public static function getAffectedRows()
+    {
+        return self::$affectedRows;
     }
 
 
@@ -75,17 +112,7 @@ class DB
      */
     public static function __callStatic($method, $args)
     {
-        return call_user_func_array(array(self::$connection, $method), $args);
-    }
-
-
-    /**
-     * Returns the last inserted id in the database
-     * @return string the last inserted id in the database
-     */
-    public static function getLastId()
-    {
-        return self::$connection->lastInsertId();
+        return call_user_func_array(array(self::getPdo(), $method), $args);
     }
 
 
@@ -102,7 +129,7 @@ class DB
         self::$lastSQL = $sql;
         //Query without args
         if (!$args) {
-            $result = self::$connection->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+            $result = self::getPdo()->query($sql)->fetchAll(PDO::FETCH_ASSOC);
             if (count($result) <= 1) {
                 return $result[0];
             }
@@ -112,8 +139,9 @@ class DB
 
         //Query with args
         $args = is_array($args) ? $args : array($args);
-        $stmt = self::$connection->prepare($sql);
+        $stmt = self::getPdo()->prepare($sql);
         $stmt->execute($args);
+        self::$affectedRows = $stmt->rowCount();
 
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         if (count($result) <= 1) {

@@ -5,17 +5,14 @@ RewriteEngine On
 RewriteCond %{REQUEST_URI} "/public/"
 RewriteRule (.*) $1 [L]
 
-# if request is not for a file
-RewriteCond %{REQUEST_FILENAME} !-d
-
-# if request is not for a directory
 RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
 
 # load index
 RewriteRule ^(.+)?$ index.php?url=$1 [L,QSA]
 
 # block access to certain files
-RewriteRule \.(wav|swf|jpg|jpeg|gif|png|bmp)$ - [F,NC,L]
+RewriteRule !^(index\.php)?$ - [F,NC,L]
 
 # Hide directories
 Options -Indexes

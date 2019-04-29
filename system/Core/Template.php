@@ -12,9 +12,10 @@ class Template
      */
     private static $templates = [];
 
+    const PLAINECHO_FORMAT = '/\{\!(.*?)\!\}/';
     const ECHO_FORMAT = '/\{\{(.*?)\}\}/';
     const TAG_FORMAT = '/\{%(.*?)%\}/';
-    const FUNCTION_FORMAT = '/{func}( ?){1,}\|([^\}]{1,})/';
+    const FUNCTION_FORMAT = '/{func}( ?){1,}\|([^\}!]{1,})/';
     const INCLUDE_FORMAT = '/@load\(( ?){1,}(.*)(.php|.html)( ?){1,}\)/';
 
     const IF_FORMAT = '/\{(\s?){1,}(.*)\?(\s?){1,}\}/';
@@ -193,9 +194,6 @@ class Template
         //Escape
         $content = preg_replace(str_replace('{func}', 'e', self::FUNCTION_FORMAT), 'htmlspecialchars(strip_tags($2))',
             $content);
-        //HTMLspecialchars
-        $content = preg_replace(str_replace('{func}', 'especial', self::FUNCTION_FORMAT),
-            'htmlspecialchars($2, ENT_QUOTES, \'UTF-8\')', $content);
         //Uppercase
         $content = preg_replace(str_replace('{func}', 'upper', self::FUNCTION_FORMAT), 'strtoupper($2)', $content);
         //Lowercase
@@ -232,7 +230,8 @@ class Template
      */
     private function replaceTags($content)
     {
-        $content = preg_replace(self::ECHO_FORMAT, '<?php echo $1; ?>', $content);
+        $content = preg_replace(self::ECHO_FORMAT, '<?php echo htmlspecialchars($1, ENT_QUOTES) ?>', $content);
+        $content = preg_replace(self::PLAINECHO_FORMAT, '<?php echo $1 ?>', $content);
 
         return preg_replace(self::TAG_FORMAT, '<?php $1 ?>', $content);
     }

@@ -18,7 +18,7 @@ class Request
             return $_GET;
         }
 
-        return $_GET[$key];
+        return $_GET[$key] ?? null;
     }
 
 
@@ -62,7 +62,7 @@ class Request
             return $_POST;
         }
 
-        return $_POST[$key];
+        return $_POST[$key] ?? null;
     }
 
 
@@ -106,7 +106,7 @@ class Request
             return $_FILES;
         }
 
-        return $_FILES[$key];
+        return $_FILES[$key] ?? null;
     }
 
     
@@ -123,7 +123,7 @@ class Request
             return $_COOKIE;
         }
 
-        return $_COOKIE[$key];
+        return $_COOKIE[$key] ?? null;
     }
 
     

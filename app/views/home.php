@@ -11,7 +11,7 @@
         <img class='main-img' src='{{WOLFF_PUBLIC_DIR}}logo.png' width='130px'>
         <h1 class='title'>{{ $lang['title'] }}</h1>
     </div>
-    <p class='description text-center'>{{ $lang['description'] }}</p>
+    <p class='text-center description'>{! $lang['description'] !}</p>
     <div class='text-center options'>
         <a target='_blank' href='https://github.com/Usbac/Wolff/wiki'>{{ upper|$lang['documentation'] }}</a>
         <a target='_blank' href='https://github.com/Usbac/Wolff'>{{ upper|$lang['github'] }}</a>
