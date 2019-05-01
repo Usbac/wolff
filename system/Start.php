@@ -40,7 +40,9 @@ class Start
     public function __construct()
     {
         DB::initialize();
+        
         $this->session = new Session();
+        $this->session->start();
 
         if (class_exists('Utilities\Upload')) {
             $this->upload = new Upload();

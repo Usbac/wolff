@@ -15,7 +15,7 @@ define('WOLFF_EXTENSION_DIR', WOLFF_ROOT_DIR . 'system/Extensions/');
 define('WOLFF_CACHE_DIR', WOLFF_ROOT_DIR . 'cache/');
 
 //General
-define('WOLFF_VERSION', '0.9.8.2');
+define('WOLFF_VERSION', '0.9.8.3');
 define('WOLFF_START', microtime(true));
 define('WOLFF_PAGE_TITLE', 'Wolff');
 define('WOLFF_MAIN_PAGE', 'main_page');

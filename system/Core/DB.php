@@ -30,6 +30,13 @@ class DB
     protected static $lastSQL;
 
     /**
+     * The arguments of the last query executed.
+     *
+     * @var array
+     */
+    protected static $lastArgs;
+
+    /**
      * The number of rows affected by the last query.
      *
      * @var int
@@ -80,6 +87,16 @@ class DB
     {
         return self::$lastSQL;
     }
+
+
+    /**
+     * Returns the arguments of the last query executed
+     * @return array $lastSQL the arguments of the last query executed
+     */
+    public static function getLastArgs()
+    {
+        return self::$lastArgs;
+    }
     
 
     /**
@@ -122,11 +139,12 @@ class DB
      * @param  string  $sql  the query
      * @param  mixed  $args  the arguments
      *
-     * @return array the query result as an associative array
+     * @return mixed the query result as an associative array
      */
     public static function run(string $sql, $args = [])
     {
         self::$lastSQL = $sql;
+        self::$lastArgs = $args;
         //Query without args
         if (!$args) {
             $result = self::getPdo()->query($sql)->fetchAll(PDO::FETCH_ASSOC);
@@ -158,7 +176,7 @@ class DB
      * @param  string  $sql  the query
      * @param  mixed  $args  the arguments
      *
-     * @return array the query result as a json
+     * @return string the query result as a json
      */
     public static function runJson(string $sql, $args = [])
     {
@@ -176,6 +194,17 @@ class DB
     public static function runCsv(string $filename, string $sql, $args = [])
     {
         arrayToCsv($filename, self::run($sql, $args));
+    }
+
+
+    /**
+     * Run the last query executed
+     *
+     * @return mixed the last query result as an associative array
+     */
+    public static function runLastSql()
+    {
+        return run(self::getLastSql(), self::getLastArgs());
     }
 
 }

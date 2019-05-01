@@ -61,7 +61,7 @@ class Loader
 
 
     /**
-     * Load a controller in the indicated directory and return it
+     * Load a controller and return it
      *
      * @param  string  $dir  the controller directory
      *
@@ -113,7 +113,7 @@ class Loader
 
 
     /**
-     * Load a language in the indicated directory and return its content
+     * Load a language and return its content
      *
      * @param  string  $dir  the language directory
      * @param  string  $language  the language selected
@@ -134,14 +134,14 @@ class Loader
             error_log("Warning: The " . $language . " language for '" . $dir . "' doesn't exists");
 
             return false;
-        } else {
-            return $data;
         }
+
+        return $data;
     }
 
 
     /**
-     * Load a library in the indicated directory and return it
+     * Load a library and return it
      *
      * @param  string  $dir  the library directory
      *
@@ -165,7 +165,7 @@ class Loader
 
 
     /**
-     * Load a view in the indicated directory
+     * Load a view
      *
      * @param  string  $dir  the view directory
      * @param  array  $data  the view data
@@ -179,7 +179,7 @@ class Loader
 
 
     /**
-     * Get a view in the indicated directory
+     * Get a view content
      *
      * @param  string  $dir  the view directory
      * @param  array  $data  the data

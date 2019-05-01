@@ -23,7 +23,7 @@ class Session
         }
 
         if (!$this->isValid()) {
-            $this->start();
+            $this->initialize();
         }
 
         $this->unsetExpiredVariables();
@@ -33,7 +33,7 @@ class Session
     /**
      * Initialize all the session variables
      */
-    private function start()
+    private function initialize()
     {
         $this->empty();
 
@@ -54,6 +54,15 @@ class Session
                 $this->delete($key);
             }
         }
+    }
+
+    
+    /**
+     * Start the session
+     */
+    public function start()
+    {
+        session_start();
     }
 
 
@@ -131,6 +140,17 @@ class Session
     public function has(string $key) 
     {
         return array_key_exists($key, $_SESSION);
+    }
+
+
+    /**
+     * Returns the numbers of elements in the session
+     * 
+     * @return int the numbers of elements in the session
+     */
+    public function count() 
+    {
+        return count($_SESSION);
     }
 
 
