@@ -5,25 +5,27 @@ namespace Core;
 class Cache
 {
 
-    /**
-     * List of specific cache life times in minutes.
-     *
-     * @var array
-     */
-    private static $remembered = [];
-
-    /**
-     * General cache life time in minutes.
-     *
-     * @var int
-     */
-    private static $time = 1440;
-
     const FILENAME = "tmp_%s.php";
+    const EXPIRATION_TIME = 604800; //One week
 
 
     public function __construct()
     {
+    }
+
+
+    /**
+     * Delete the cache files that have expired
+     */
+    public static function initialize() 
+    {
+        $files = glob(getServerRoot() . getCacheDirectory() . '*.php');
+
+        foreach ($files as $file) {
+            if (self::expired($file)) {
+                unlink($file);
+            }
+        }
     }
 
 
@@ -40,10 +42,6 @@ class Cache
         $file_path = getServerRoot() . getCacheDirectory() . self::getFilename($dir);
 
         self::createFolder();
-
-        if (self::expired($dir)) {
-            unlink($file_path);
-        }
 
         if (!file_exists($file_path)) {
             $file = fopen($file_path, 'w');
@@ -64,30 +62,11 @@ class Cache
      */
     public static function expired($dir)
     {
-        $file_path = getServerRoot() . getCacheDirectory() . self::getFilename($dir);
-        if (!file_exists($file_path)) {
+        if (!file_exists($dir)) {
             return false;
         }
 
-        $file_time = (time() - filemtime($file_path)) / 60;
-
-        if (array_key_exists($dir, self::$remembered)) {
-            return ($file_time > self::$remembered[$dir]);
-        }
-
-        return ($file_time > self::$time);
-    }
-
-
-    /**
-     * Set a cache file life time
-     *
-     * @param  string  $dir  the cache file directory
-     * @param  int  $time  the cache file life time
-     */
-    public static function remember($dir, $time)
-    {
-        self::$remembered[$dir] = $time;
+        return (time() - filectime($dir) > self::EXPIRATION_TIME);
     }
 
 

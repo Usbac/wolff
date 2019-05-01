@@ -12,6 +12,7 @@ class Template
      */
     private static $templates = [];
 
+    const COMMENT_FORMAT = '/\{#(?s).*#\}/';
     const PLAINECHO_FORMAT = '/\{\!(.*?)\!\}/';
     const ECHO_FORMAT = '/\{\{(.*?)\}\}/';
     const TAG_FORMAT = '/\{%(.*?)%\}/';
@@ -153,6 +154,7 @@ class Template
      */
     private function replaceAll(string $content)
     {
+        $content = $this->replaceComments($content);
         $content = $this->replaceInclude($content);
         $content = $this->replaceFunctions($content);
         $content = $this->replaceTags($content);
@@ -272,5 +274,18 @@ class Template
         $content = preg_replace(self::ENDFOREACH_FORMAT, '<?php endforeach; ?>', $content);
 
         return $content;
+    }
+
+
+    /**
+     * Remove the comments of a content
+     *
+     * @param  string  $content  the view content
+     *
+     * @return string the view content without the comments
+     */
+    private function replaceComments($content)
+    {
+        return preg_replace(self::COMMENT_FORMAT, '', $content);
     }
 }

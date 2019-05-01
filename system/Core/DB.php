@@ -50,8 +50,8 @@ class DB
     public function __construct()
     {
         try {
-            self::$connection = new PDO(strtolower(getDBMS()) . ":host=" . getServer() . "; dbname=" . getDB() . "",
-                getDBUser(), getDBPass(), array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+            self::$connection = new PDO(strtolower(getDBMS()) . ':host=' . getServer() . '; dbname=' . getDB() . '',
+                getDBUser(), getDBPass(), array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'));
         } catch (PDOException $e) {
             error_log($e->getMessage());
         }
@@ -148,7 +148,7 @@ class DB
         //Query without args
         if (!$args) {
             $result = self::getPdo()->query($sql)->fetchAll(PDO::FETCH_ASSOC);
-            if (count($result) <= 1) {
+            if (count($result) == 1) {
                 return $result[0];
             }
 
@@ -162,7 +162,7 @@ class DB
         self::$affectedRows = $stmt->rowCount();
 
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        if (count($result) <= 1) {
+        if (count($result) == 1) {
             return $result[0];
         }
 
@@ -205,6 +205,85 @@ class DB
     public static function runLastSql()
     {
         return run(self::getLastSql(), self::getLastArgs());
+    }
+
+
+    /**
+     * Returns true if the especified table exists in the database, false otherwise
+     *
+     * @param  string  $table  the table name
+     * 
+     * @return bool true if the especified table exists in the database, false otherwise
+     */
+    public static function tableExists(string $table) 
+    {
+        try {
+            $result = self::getPdo()->query("SELECT 1 FROM $table LIMIT 1");
+        } catch (Exception $e) {
+            return false;
+        }
+
+        return $result !== false;
+    }
+
+
+    /**
+     * Returns true if the especified column exists in the table of the database, false otherwise
+     *
+     * @param  string  $table  the table name
+     * @param  string  $column  the column name
+     * 
+     * @return bool true if the especified column exists in the table of the database, false otherwise
+     */
+    public static function columnExists(string $table, string $column) 
+    {
+        $result = self::getPdo()->query("SHOW COLUMNS FROM $table LIKE '$column'");
+        if (is_bool($result)) {
+            return false;
+        }
+        
+        return !empty($result->fetchAll()); 
+    }
+
+
+    /**
+     * Returns the database schema
+     * 
+     * @return array|bool the database schema
+     */
+    public static function getSchema()
+    {
+        $tables = self::getPdo()->query("SHOW TABLES");
+
+        if (is_bool($tables)) {
+            return false;
+        }
+
+        $database = [];
+
+        while ($table = $tables->fetch(PDO::FETCH_NUM)[0]) {
+            $database[$table] = self::getTable($table);
+        }
+
+        return $database;
+    }
+
+
+    /**
+     * Returns the table schema from the database
+     * 
+     * @param  string  $table  the table name
+     * 
+     * @return array|bool the table schema from the database
+     */
+    public static function getTable(string $table)
+    {
+        $result = self::getPdo()->query("SHOW COLUMNS FROM $table");
+        if (is_bool($result)) {
+            return false;
+        }
+        
+        return $result->fetchAll(PDO::FETCH_ASSOC); 
     }
 
 }

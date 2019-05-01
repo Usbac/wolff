@@ -2,7 +2,7 @@
 
 namespace System;
 
-use Core\{DB, Extension, Loader, Route, Session, Request};
+use Core\{Cache, DB, Extension, Loader, Route, Session, Request};
 use Utilities\{Maintenance, Upload};
 
 class Start
@@ -40,6 +40,7 @@ class Start
     public function __construct()
     {
         DB::initialize();
+        Cache::initialize();
         
         $this->session = new Session();
         $this->session->start();
