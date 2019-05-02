@@ -4,63 +4,6 @@ namespace {
 
 
     /**
-     * Returns true if a substring is present in another string
-     * or false otherwise
-     *
-     * @param  string  $str  the string
-     * @param  string  $needle  substring you are looking for
-     *
-     * @return boolean true if the substring is present in the other string, false otherwise
-     */
-    function strContains(string $str, string $needle)
-    {
-        return strpos($str, $needle) !== false;
-    }
-
-
-    /**
-     * Returns a string with the indicated substring removed
-     *
-     * @param  string  $str  the string
-     * @param  string  $needle  substring to remove
-     *
-     * @return string the string with the indicated substring removed
-     */
-    function strRemove(string $str, string $needle)
-    {
-        return str_replace($needle, '', $str);
-    }
-
-
-    /**
-     * Returns everything after the specified substring
-     *
-     * @param  string  $str  the string
-     * @param  string  $needle  substring
-     *
-     * @return string a string with everything after the specified substring in it
-     */
-    function strAfter(string $str, string $needle)
-    {
-        return substr($str, strpos($str, $needle) + strlen($needle));
-    }
-
-
-    /**
-     * Returns everything before the specified substring
-     *
-     * @param  string  $str  the string
-     * @param  string  $needle  the substring
-     *
-     * @return string a string with everything before the specified substring in it
-     */
-    function strBefore(string $str, string $needle)
-    {
-        return substr($str, 0, strpos($str, $needle));
-    }
-
-
-    /**
      * Print a string and then die
      *
      * @param $str the string to print
@@ -145,19 +88,6 @@ namespace {
 
 
     /**
-     * Returns the first element of an array, or false if it's empty
-     *
-     * @param  array  $array
-     *
-     * @return mixed The first element of an array, or false if it's empty
-     */
-    function arrayFirst($array)
-    {
-        return array_values($array)[0] ?? false;
-    }
-
-
-    /**
      * Convert an array content into a csv file and download it
      *
      * @param  string  $filename  the desired filename without extension
@@ -176,10 +106,10 @@ namespace {
             }
 
             fputcsv($file, $array);
-            //Multidimensional array
+        //Multidimensional array
         } else {
             if ($printKeys) {
-                fputcsv($file, array_keys(arrayFirst($array)));
+                fputcsv($file, array_keys($array[0]));
             }
 
             foreach ($array as $row) {
@@ -256,7 +186,7 @@ namespace {
     {
         $host = (isset($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'];
 
-        if (!strContains($_SERVER['REQUEST_URI'], '?')) {
+        if (strpos($_SERVER['REQUEST_URI'], '?') === false) {
             return $host . $_SERVER['REQUEST_URI'];
         }
 
@@ -282,19 +212,6 @@ namespace {
     function inCLI()
     {
         return (php_sapi_name() === 'cli');
-    }
-
-
-    /**
-     * Returns the directory path with the slashes replaced by backslashes
-     *
-     * @param  string  $path  the directory path
-     *
-     * @return string the directory path with the slashes replaced by backslashes
-     */
-    function pathToNamespace(string $path)
-    {
-        return str_replace('/', '\\', $path);
     }
 
 

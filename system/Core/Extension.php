@@ -15,6 +15,7 @@ class Extension
 
     const CLASS_ERROR = "Warning: Extension class %s doesn't exists";
     const NAMESPACE = 'Extension\\';
+    const FILE = 'system/Extensions.php';
 
 
     /**
@@ -27,31 +28,29 @@ class Extension
      */
     public static function load(string $type, $loader = null)
     {
-        if (!extensionsEnabled()) {
+        if (!extensionsEnabled() || empty(self::$extensions)) {
             return false;
         }
 
         self::makeFolder();
 
-        if (empty(self::$extensions)) {
-            return false;
-        }
-
         foreach (self::$extensions as $extension) {
-            if ($extension['type'] === $type && self::matchesRoute($extension['route'])) {
-                $class = self::NAMESPACE . $extension['name'];
-
-                if (!class_exists($class)) {
-                    error_log(sprintf(self::CLASS_ERROR, $extension['name']));
-                    continue;
-                }
-
-                $extension = new $class;
-                $extension->load = $loader;
-                $extension->session = $loader->getSession();
-                $extension->upload = $loader->getUpload();
-                $extension->index();
+            if ($extension['type'] !== $type || !self::matchesRoute($extension['route'])) {
+                continue;
             }
+
+            $class = self::NAMESPACE . $extension['name'];
+
+            if (!class_exists($class)) {
+                error_log(sprintf(self::CLASS_ERROR, $extension['name']));
+                continue;
+            }
+
+            $extension = new $class;
+            $extension->load = $loader;
+            $extension->session = $loader->getSession();
+            $extension->upload = $loader->getUpload();
+            $extension->index();
         }
 
         return true;
@@ -71,10 +70,10 @@ class Extension
             return false;
         }
 
-        $dir = explode('/', sanitizeURL($dir));
+        $dir = explode('/', Str::sanitizeURL($dir));
         $dirLength = count($dir) - 1;
 
-        $url = explode('/', sanitizeURL(getCurrentPage()));
+        $url = explode('/', Str::sanitizeURL(getCurrentPage()));
         $urlLength = count($url) - 1;
 
         for ($i = 0; $i <= $dirLength && $i <= $urlLength; $i++) {
@@ -112,7 +111,7 @@ class Extension
 
 
     /**
-     * Make the extension folder directory if doesn't exists
+     * Make the extension folder directory if it doesn't exists
      */
     public static function makeFolder()
     {
@@ -188,7 +187,7 @@ class Extension
                 'description' => $extension->desc['description'] ?? '',
                 'version'     => $extension->desc['version'] ?? '',
                 'author'      => $extension->desc['author'] ?? '',
-                'filename'    => $filename,
+                'filename'    => $filename
             );
         }
 

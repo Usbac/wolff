@@ -2,8 +2,8 @@
 
 namespace System;
 
-use Core\{Cache, DB, Extension, Loader, Route, Session, Request};
-use Utilities\{Maintenance, Upload};
+use Core\{Cache, DB, Extension, Loader, Route, Session, Request, Template};
+use Utilities\{Maintenance, Upload, Str};
 
 class Start
 {
@@ -21,6 +21,13 @@ class Start
      * @var Core\Loader
      */
     public $load;
+
+    /**
+     * Template manager.
+     *
+     * @var Core\Template
+     */
+    public $template;
 
     /**
      * Session manager.
@@ -42,14 +49,14 @@ class Start
         DB::initialize();
         Cache::initialize();
         
+        $this->template = new Template();
         $this->session = new Session();
-        $this->session->start();
 
         if (class_exists('Utilities\Upload')) {
             $this->upload = new Upload();
         }
 
-        $this->load = new Loader($this->session, $this->upload);
+        $this->load = new Loader($this->template, $this->session, $this->upload);
     }
 
 
@@ -63,7 +70,7 @@ class Start
             $this->load->maintenance();
         }
 
-        $url = sanitizeURL(Request::get('url') ?? getMainPage());
+        $url = Str::sanitizeURL(Request::get('url') ?? getMainPage());
 
         //Load extensions of type before
         if (extensionsEnabled()) {

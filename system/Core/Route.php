@@ -2,6 +2,8 @@
 
 namespace Core;
 
+use Utilities\Str;
+
 class Route
 {
 
@@ -41,9 +43,9 @@ class Route
      */
     public static function get(string $url)
     {
-        $url       = explode('/', sanitizeURL($url));
+        $url = explode('/', Str::sanitizeURL($url));
         $urlLength = count($url) - 1;
-        $finished  = false;
+        $finished = false;
 
         if (self::$routes === []) {
             return null;
@@ -109,7 +111,7 @@ class Route
      */
     public static function add(string $url, $function, int $status = self::STATUS_OK)
     {
-        $url = sanitizeURL($url);
+        $url = Str::sanitizeURL($url);
 
         //Use $function as a controller name and load it if it's a string
         if (is_string($function)) {
@@ -135,7 +137,7 @@ class Route
      */
     public static function api(string $url, $function, int $status = self::STATUS_OK)
     {
-        $url = sanitizeURL($url);
+        $url = Str::sanitizeURL($url);
         self::$routes[$url] = array(
             'function' => $function,
             'api'      => true,
@@ -153,8 +155,8 @@ class Route
      */
     public static function redirect(string $url, string $url2, int $status = self::STATUS_REDIRECT)
     {
-        $url = sanitizeURL($url);
-        $url2 = sanitizeURL($url2);
+        $url = Str::sanitizeURL($url);
+        $url2 = Str::sanitizeURL($url2);
 
         self::$routes[$url] = array(
             'function' => self::$routes[$url2]['function'],
@@ -177,7 +179,7 @@ class Route
      */
     public static function block(string $url)
     {
-        $url = sanitizeURL($url);
+        $url = Str::sanitizeURL($url);
         array_push(self::$blocked, $url);
     }
 
@@ -226,10 +228,11 @@ class Route
      */
     public static function exists(string $url)
     {
-        $url = preg_replace(GET_FORMAT, '{}', $url);
+        $url = preg_replace(self::GET_FORMAT, '{}', $url);
         $routes = [];
+
         foreach (array_keys(self::$routes) as $key) {
-            $routes[] = preg_replace(GET_FORMAT, '{}', $key);
+            $routes[] = preg_replace(self::GET_FORMAT, '{}', $key);
         }
 
         return in_array($url, $routes);

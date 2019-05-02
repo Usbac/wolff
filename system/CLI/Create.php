@@ -162,6 +162,8 @@ class Create
 
         $name = readline("Name -> ");
         $description = readline("Description -> ");
+        $directory = readline("Directory -> ");
+        $type = readline("(B)efore / (A)fter? -> ");
         $version = readline("Version -> ");
         $author = readline("Author -> ");
 
@@ -174,7 +176,18 @@ class Create
         fwrite($file, $content);
         fclose($file);
 
+        //Add extension route to Extensions.php
+        $this->extensionFile($type, $directory, $this->argv[3]);
+
         echo "\nExtension " . $name . " created successfully! \n";
+    }
+
+
+    private function extensionFile($type, $directory, $name)
+    {
+        $type = $type === 'B'? 'before':'after';
+        $route = PHP_EOL . "Extension::" . $type . "('" . $directory . "', '" . $name . "');";
+        file_put_contents('system/Extensions.php', $route, FILE_APPEND | LOCK_EX);
     }
 
 

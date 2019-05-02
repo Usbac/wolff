@@ -2,6 +2,8 @@
 
 namespace Utilities;
 
+use Utilities\Str;
+
 class Maintenance
 {
 
@@ -63,7 +65,7 @@ class Maintenance
             return false;
         }
 
-        if (strContains($content, $ip)) {
+        if (Str::contains($content, $ip)) {
             return true;
         }
 
@@ -94,7 +96,7 @@ class Maintenance
             return false;
         }
 
-        if (!strContains($content, $ip)) {
+        if (!Str::contains($content, $ip)) {
             return true;
         }
 

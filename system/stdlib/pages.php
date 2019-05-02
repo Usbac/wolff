@@ -43,7 +43,7 @@ namespace {
         $function = substr($dir, $lastSlash + 1);
         $dir = substr($dir, 0, $lastSlash);
 
-        $class = 'Controller\\' . pathToNamespace($dir);
+        $class = 'Controller\\' . str_replace('/', '\\', $dir);
 
         try {
             $class = new ReflectionClass($class);

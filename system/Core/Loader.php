@@ -2,6 +2,8 @@
 
 namespace Core;
 
+use Utilities\Str;
+
 class Loader
 {
 
@@ -28,13 +30,14 @@ class Loader
 
     const HEADER_404 = "HTTP/1.0 404 Not Found";
     const HEADER_503 = "HTTP/1.1 503 Service Temporarily Unavailable";
+
     const NAMESPACE_CONTROLLER = 'Controller\\';
     const NAMESPACE_LIBRARY = 'Library\\';
 
 
-    public function __construct($session, $upload)
+    public function __construct($template, $session, $upload)
     {
-        $this->template = new Template();
+        $this->template = &$template;
         $this->session = &$session;
         $this->upload = &$upload;
     }
@@ -69,12 +72,16 @@ class Loader
      */
     public function controller(string $dir)
     {
-        //Sanitize directory
-        $dir = sanitizePath($dir);
+        $dir = Str::sanitizePath($dir);
 
         //load controller default function and return it
         if (controllerExists($dir)) {
             $controller = $this->getController($dir);
+
+            if ($controller === false) {
+                return false;
+            }
+
             $controller->index();
 
             return $controller;
@@ -85,15 +92,20 @@ class Loader
         $function = substr($dir, $lastSlash + 1);
         $dir = substr($dir, 0, $lastSlash);
 
-        //load a controller function and return it
+        //load a controller specified function and return it
         if (controllerExists($dir)) {
             $controller = $this->getController($dir);
+
+            if ($controller === false) {
+                return false;
+            }
+
             $controller->$function();
 
             return $controller;
         }
 
-        return null;
+        return false;
     }
 
 
@@ -106,7 +118,13 @@ class Loader
      */
     private function getController(string $dir)
     {
-        $class = self::NAMESPACE_CONTROLLER . pathToNamespace($dir);
+        $class = self::NAMESPACE_CONTROLLER . Str::pathToNamespace($dir);
+
+        if (!class_exists($class)) {
+            error_log("Warning: The controller class '" . $class . "' doesn't exists");
+
+            return false;
+        }
 
         return new $class($this);
     }
@@ -123,7 +141,7 @@ class Loader
     public function language(string $dir, string $language = WOLFF_LANGUAGE)
     {
         //Sanitize directory
-        $dir = sanitizePath($dir);
+        $dir = Str::sanitizePath($dir);
         $file_path = getServerRoot() . getAppDirectory() . 'languages/' . $language . '/' . $dir . '.php';
 
         if (file_exists($file_path)) {
@@ -149,16 +167,22 @@ class Loader
      */
     public function library(string $dir)
     {
-        $dir = sanitizeURL($dir);
+        $dir = Str::sanitizeURL($dir);
 
         if (!libraryExists($dir)) {
             error_log("Warning: The library '" . $dir . "' doesn't exists");
 
-            return null;
+            return false;
         }
 
         //Initialize the library for the object which called this function
-        $class = self::NAMESPACE_LIBRARY . pathToNamespace($dir);
+        $class = self::NAMESPACE_LIBRARY . Str::pathToNamespace($dir);
+
+        if (!class_exists($class)) {
+            error_log("Warning: The library class '" . $class . "' doesn't exists");
+
+            return false;
+        }
 
         return new $class($this);
     }
@@ -173,7 +197,7 @@ class Loader
      */
     public function view(string $dir, array $data = [], bool $cache = true)
     {
-        $dir = sanitizePath($dir);
+        $dir = Str::sanitizePath($dir);
         $this->template->get($dir, $data, $cache);
     }
 
@@ -188,7 +212,7 @@ class Loader
      */
     public function getView(string $dir, array $data = [])
     {
-        $dir = sanitizePath($dir);
+        $dir = Str::sanitizePath($dir);
 
         return $this->template->getView($dir, $data);
     }
