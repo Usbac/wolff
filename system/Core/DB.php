@@ -148,9 +148,6 @@ class DB
         //Query without args
         if (!$args) {
             $result = self::getPdo()->query($sql)->fetchAll(PDO::FETCH_ASSOC);
-            if (count($result) == 1) {
-                return $result[0];
-            }
 
             return $result;
         }
@@ -162,9 +159,6 @@ class DB
         self::$affectedRows = $stmt->rowCount();
 
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        if (count($result) == 1) {
-            return $result[0];
-        }
 
         return $result;
     }

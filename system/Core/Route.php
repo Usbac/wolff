@@ -115,9 +115,7 @@ class Route
 
         //Use $function as a controller name and load it if it's a string
         if (is_string($function)) {
-            $function = function () use ($function) {
-                $this->load->controller($function);
-            };
+            $function = self::getControllerClosure($function);
         }
 
         self::$routes[$url] = array(
@@ -125,6 +123,21 @@ class Route
             'api'      => false,
             'status'   => $status
         );
+    }
+
+
+    /**
+     * Returns the closure that loads a controller
+     *
+     * @param  string  $controller  the controller
+     *
+     * @return closure The closure that loads a controller
+     */
+    private function getControllerClosure(string $controller)
+    {
+        return function () use ($controller) {
+            $this->load->controller($controller);
+        };
     }
 
 
