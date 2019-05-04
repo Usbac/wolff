@@ -12,7 +12,7 @@ class Template
      */
     private static $templates = [];
 
-    const COMMENT_FORMAT = '/\{#(?s).*#\}/';
+    const COMMENT_FORMAT = '/\{#(?s).[^#\}]*#\}/';
     const PLAINECHO_FORMAT = '/\{\!(.*?)\!\}/';
     const ECHO_FORMAT = '/\{\{(.*?)\}\}/';
     const TAG_FORMAT = '/\{%(.*?)%\}/';
