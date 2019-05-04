@@ -14,7 +14,7 @@ class Create
 
     public function __construct($argv)
     {
-        $this->routes_dir = 'System/Routes.php';
+        $this->routes_dir = 'System/Definitions/Routes.php';
         $this->argv = $argv;
         $this->index();
     }
@@ -187,7 +187,7 @@ class Create
     {
         $type = $type === 'B'? 'before':'after';
         $route = PHP_EOL . "Extension::" . $type . "('" . $directory . "', '" . $name . "');";
-        file_put_contents('system/Extensions.php', $route, FILE_APPEND | LOCK_EX);
+        file_put_contents('system/Definitions/Extensions.php', $route, FILE_APPEND | LOCK_EX);
     }
 
 

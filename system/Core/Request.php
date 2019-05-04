@@ -126,7 +126,7 @@ class Request
      *
      * @return mixed the superglobal FILES array or the specified value
      */
-    public static function files(string $key = null) 
+    public static function file(string $key = null) 
     {
         if (!isset($key)) {
             return $_FILES;

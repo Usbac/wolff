@@ -15,7 +15,7 @@ class Extension
 
     const CLASS_ERROR = "Warning: Extension class %s doesn't exists";
     const NAMESPACE = 'Extension\\';
-    const FILE = 'system/Extensions.php';
+    const FILE = 'system/Definitions/Extensions.php';
 
 
     /**

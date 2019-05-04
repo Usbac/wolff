@@ -2,7 +2,7 @@
 
 namespace Cli;
 
-use Core\{DB};
+use Core\DB;
 
 class Wolffie
 {
@@ -140,7 +140,7 @@ class Wolffie
 
     private function set()
     {
-        $file = 'config.php';
+        $file = 'system/config.php';
         $original = "/define\((\s){0,}?[\'\"]" . strtoupper($argv[2]) . "[\'\"](\s){0,}?,(.*?)\)\;/";
         $replacement = "define('" . strtoupper($argv[2]) . "', " . $argv[3] . ");";
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace System;
+namespace Definitions;
 
 use Core\Extension;
 
