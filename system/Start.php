@@ -66,14 +66,14 @@ class Start
     public function load()
     {
         //Check maintenance mode
-        if (maintenanceEnabled() && !Maintenance::isClientAllowed()) {
+        if (Maintenance::isEnabled() && !Maintenance::isClientAllowed()) {
             $this->load->maintenance();
         }
 
         $url = Str::sanitizeURL(Request::get('url') ?? getMainPage());
 
         //Load extensions of type before
-        if (extensionsEnabled()) {
+        if (Extension::isEnabled()) {
             Extension::load('before', $this->load);
         }
 
@@ -93,7 +93,7 @@ class Start
         }
 
         //Load extensions of type after
-        if (extensionsEnabled()) {
+        if (Extension::isEnabled()) {
             Extension::load('after', $this->load);
         }
     }

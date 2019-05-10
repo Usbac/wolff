@@ -1,0 +1,9 @@
+<?php
+
+namespace Definitions;
+
+use Core\Template;
+
+/**
+ * Use this file for declaring custom templates...
+ */

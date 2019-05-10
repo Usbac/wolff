@@ -6,7 +6,6 @@ namespace {
      *  SERVER
      */
 
-
     /**
      * Returns the current server
      * @return string the current server
@@ -166,38 +165,4 @@ namespace {
         return WOLFF_VERSION;
     }
 
-
-    /**
-     *  EXTRA
-     */
-
-
-    /**
-     * Returns true if the extensions are enabled, false otherwise
-     * @return bool true if the extensions are enabled, false otherwise
-     */
-    function extensionsEnabled()
-    {
-        return WOLFF_EXTENSIONS_ON;
-    }
-
-
-    /**
-     * Returns true if the cache is enabled, false otherwise
-     * @return bool true if the cache is enabled, false otherwise
-     */
-    function cacheEnabled()
-    {
-        return WOLFF_CACHE_ON;
-    }
-
-
-    /**
-     * Returns true if the maintenance mode is enabled, false otherwise
-     * @return bool true if the maintenance mode is enabled, false otherwise
-     */
-    function maintenanceEnabled()
-    {
-        return WOLFF_MAINTENANCE_ON;
-    }
 }

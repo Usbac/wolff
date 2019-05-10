@@ -1,0 +1,12 @@
+<?php 
+
+namespace Library{namespace}; 
+
+class {classname} extends \Core\Library 
+{ 
+
+    public function index() { 
+        //Code
+    } 
+
+} 

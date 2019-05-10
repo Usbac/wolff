@@ -1,5 +1,7 @@
 <?php
 
+define('WOLFF_DEVELOPMENT', true);
+
 //Server 
 define('WOLFF_DBMS', 'mysql');
 define('WOLFF_SERVER', 'localhost');
@@ -15,7 +17,7 @@ define('WOLFF_EXTENSION_DIR', WOLFF_APP_DIR . 'extensions/');
 define('WOLFF_CACHE_DIR', WOLFF_ROOT_DIR . 'cache/');
 
 //General
-define('WOLFF_VERSION', '0.9.8.7');
+define('WOLFF_VERSION', '0.9.8.8');
 define('WOLFF_START', microtime(true));
 define('WOLFF_PAGE_TITLE', 'Wolff');
 define('WOLFF_MAIN_PAGE', 'main_page');
