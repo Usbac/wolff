@@ -9,7 +9,7 @@
 <h4 align="center">Ridiculously small PHP framework.</h4>
 
 <p align="center">
-<img src="https://img.shields.io/badge/stability-stable-green.svg"> <img src="https://img.shields.io/badge/version-0.9.8.7-blue.svg"> <img src="https://img.shields.io/badge/license-MIT-orange.svg">
+<img src="https://img.shields.io/badge/stability-stable-green.svg"> <img src="https://img.shields.io/badge/version-0.9.8.9-blue.svg"> <img src="https://img.shields.io/badge/license-MIT-orange.svg">
 </p>
 
 Wolff is a ridiculously small and lightweight PHP framework with useful functions and utilities like a template, route, extensions and language system. 
@@ -24,7 +24,7 @@ Wolff complies with the PSR-1, PSR-2 and PSR-4 coding standards :)
 
 * **Simple**: It’s not only small, but simple as well; with a clean documentation and easy way to use.
 
-* **Extensible**: Take advantage of the custom libraries you can make in Wolff to expand your page.
+* **Extensible**: Take advantage of the custom extensions and templates you can make in Wolff to expand your page.
 
 * **Clean**: The routes system allows you to have clean and friendly URLs, and the template system makes the php code cleaner while separating the logic from the view.
 
@@ -46,8 +46,6 @@ Wolff complies with the PSR-1, PSR-2 and PSR-4 coding standards :)
 
 * **Extension**: An useful and descriptive extension system which gives you more control over your site.
 
-* **Library**: A library system for making your own libraries inside Wolff and use them freely.
-
 * **Language**: For managing multiple languages easily and quickly.
 
 And more...
@@ -55,7 +53,7 @@ And more...
 ## CLI
 
 Take advantage of the CLI application of Wolff named Wolffie to do a lot of tasks in a fast and easy way using short commands.<br>
-With it you can create controllers, languages, routes, export queries to csv files, look at the available extensions, change the project configuration, delete elements like controllers, libraries and much more.
+With it you can create extensions, controllers, routes, export queries to csv files, look at the available extensions, change the project configuration, delete elements like controllers, languages and much more.
 
 <p align="center">
 <img src="http://usbac.com.ve/wp-content/uploads/2019/05/wolffie-cli2-min.PNG" alt="Wolff cli" width="500">

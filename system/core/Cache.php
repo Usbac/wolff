@@ -87,7 +87,7 @@ class Cache
     {
         $folder_path = getServerRoot() . getCacheDirectory();
         if (!file_exists($folder_path)) {
-            mkdir($folder_path, 0777, true);
+            mkdir($folder_path, 0755, true);
         }
     }
 

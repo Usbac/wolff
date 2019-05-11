@@ -32,7 +32,6 @@ class Loader
     const HEADER_503 = "HTTP/1.1 503 Service Temporarily Unavailable";
 
     const NAMESPACE_CONTROLLER = 'Controller\\';
-    const NAMESPACE_LIBRARY = 'Library\\';
 
 
     public function __construct($template, $session, $upload)
@@ -155,36 +154,6 @@ class Loader
         }
 
         return $data;
-    }
-
-
-    /**
-     * Load a library and return it
-     *
-     * @param  string  $dir  the library directory
-     *
-     * @return object the library class or null if an error happens
-     */
-    public function library(string $dir)
-    {
-        $dir = Str::sanitizeURL($dir);
-
-        if (!libraryExists($dir)) {
-            error_log("Warning: The library '" . $dir . "' doesn't exists");
-
-            return false;
-        }
-
-        //Initialize the library for the object which called this function
-        $class = self::NAMESPACE_LIBRARY . Str::pathToNamespace($dir);
-
-        if (!class_exists($class)) {
-            error_log("Warning: The library class '" . $class . "' doesn't exists");
-
-            return false;
-        }
-
-        return new $class($this);
     }
 
 

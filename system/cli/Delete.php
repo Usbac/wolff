@@ -2,7 +2,7 @@
 
 namespace Cli;
 
-use Utilities\Maintenance;
+use Core\Maintenance;
 
 class Delete
 {
@@ -31,9 +31,6 @@ class Delete
                 break;
             case 'language':
                 $this->language();
-                break;
-            case 'library':
-                $this->library();
                 break;
             case 'ip':
                 $this->ip();
@@ -68,30 +65,6 @@ class Delete
         if ($response === 'Y') {
             unlink($file_dir);
             echo "Controller " . $this->argv[3] . " deleted successfully! \n";
-        }
-    }
-
-
-    private function library()
-    {
-        if (empty($this->argv[3])) {
-            echo "\e[1;31m WARNING: no name specified!\e[0m \n";
-            return;
-        }
-
-        $file_dir = getAppDirectory() . 'libraries/' . $this->argv[3] . '.php';
-
-        if (!is_file($file_dir)) {
-            echo "\e[1;31m WARNING: the library '" . $this->argv[3] . "' doesn't exists!\e[0m \n";
-
-            return;
-        }
-
-        echo "Are you sure about deleting the " . $this->argv[3] . ".php library? Y/N \n";
-        $response = readline(" -> ");
-        if ($response === 'Y') {
-            unlink($file_dir);
-            echo "Library " . $this->argv[3] . " deleted successfully! \n";
         }
     }
 

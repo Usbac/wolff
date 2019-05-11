@@ -16,6 +16,7 @@ class Extension
     const CLASS_ERROR = "Warning: Extension class %s doesn't exists";
     const NAMESPACE = 'Extension\\';
     const FILE = 'system/definitions/Extensions.php';
+    const ALL = '*';
 
 
     /**
@@ -87,7 +88,7 @@ class Extension
         $urlLength = count($url) - 1;
 
         for ($i = 0; $i <= $dirLength && $i <= $urlLength; $i++) {
-            if ($dir[$i] === '*') {
+            if ($dir[$i] === self::ALL) {
                 return true;
             }
 
@@ -184,11 +185,11 @@ class Extension
         }
 
         //All the extensions
-        $files = glob(getExtensionDirectory() . '*.php');
+        $files = glob(getExtensionDirectory() . self::ALL . '.php');
         $extensions = [];
 
         foreach ($files as $file) {
-            $filename  = basename($file, '.php');
+            $filename = basename($file, '.php');
             $class = self::NAMESPACE . $filename;
             $extension = new $class;
 

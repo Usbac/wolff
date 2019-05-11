@@ -13,6 +13,13 @@ class Wolffie
     public function __construct($argv)
     {
         $this->argv = $argv;
+
+        if (!isset($this->argv[1])) {
+            echo "\e[1;31m WARNING: No command especified!\e[0m\n";
+
+            return;
+        }
+
         $this->mainMenu();
     }
 
@@ -81,7 +88,6 @@ class Wolffie
                 echo "\n\e[32m page [path] \e[0m                   -> Create a page (view and controller).";
                 echo "\n\e[32m view [path] \e[0m                   -> Create a view.";
                 echo "\n\e[32m controller [path] \e[0m             -> Create a controller.";
-                echo "\n\e[32m library [path] \e[0m                -> Create a library.";
                 echo "\n\e[32m language [name] \e[0m               -> Create a language.";
                 echo "\n\e[32m extension [name] \e[0m              -> Create a extension.";
                 echo "\n\e[32m ip [name] \e[0m                     -> Add an IP to the maintenance mode whitelist.";
@@ -97,7 +103,6 @@ class Wolffie
                 echo "\nREMOVE COMMANDS \n";
                 echo "\n\e[32m view [path] \e[0m        -> Delete a view.";
                 echo "\n\e[32m controller [path] \e[0m  -> Delete a controller.";
-                echo "\n\e[32m library [path] \e[0m     -> Delete a library.";
                 echo "\n\e[32m extension [path] \e[0m   -> Delete a extension.";
                 echo "\n\e[32m ip [name] \e[0m          -> Remove an IP from the maintenance mode whitelist.";
                 echo "\n\e[32m language [name] \e[0m    -> Delete a language.";

@@ -108,6 +108,7 @@ class Route
      *
      * @param  string  $url  the url
      * @param $function mixed the function that must be executed when accessing the route
+     * @param  int  $status the HTTP status code
      */
     public static function add(string $url, $function, int $status = self::STATUS_OK)
     {
@@ -164,7 +165,7 @@ class Route
      *
      * @param  string  $url  the first url
      * @param  string  $url2  the second url
-     * @param  int  $status  The response http code
+     * @param  int  $status  The HTTP response code
      */
     public static function redirect(string $url, string $url2, int $status = self::STATUS_REDIRECT)
     {

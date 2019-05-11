@@ -2,6 +2,19 @@
 
 namespace {
 
+    
+    /**
+     * Returns the complete path of the controller
+     *
+     * @param  string  $dir  the directory of the controller
+     *
+     * @return string the complete path of the controller
+     */
+    function getControllerPath(string $dir)
+    {
+        return getServerRoot() . getAppDirectory() . 'controllers/' . $dir . '.php';
+    }
+
 
     /**
      * Checks if the controller exists in the indicated directory
@@ -13,19 +26,6 @@ namespace {
     function controllerExists(string $dir)
     {
         return file_exists(getControllerPath($dir));
-    }
-
-
-    /**
-     * Returns the complete path of the controller
-     *
-     * @param  string  $dir  the directory of the controller
-     *
-     * @return string the complete path of the controller
-     */
-    function getControllerPath(string $dir)
-    {
-        return getServerRoot() . getAppDirectory() . 'controllers/' . $dir . '.php';
     }
 
 
@@ -82,32 +82,6 @@ namespace {
     function getLanguagePath(string $dir, string $language = WOLFF_LANGUAGE)
     {
         return getServerRoot() . getAppDirectory() . 'languages/' . $language . '/' . $dir . '.php';
-    }
-
-
-    /**
-     * Checks if the library exists in the indicated directory
-     *
-     * @param  string  $dir  the directory of the library
-     *
-     * @return boolean true if the library exists, false otherwise
-     */
-    function libraryExists(string $dir)
-    {
-        return file_exists(getLibraryPath($dir));
-    }
-
-
-    /**
-     * Returns the complete path of the library
-     *
-     * @param  string  $dir  the directory of the library
-     *
-     * @return string the complete path of the library
-     */
-    function getLibraryPath(string $dir)
-    {
-        return getServerRoot() . getAppDirectory() . 'libraries/' . $dir . '.php';
     }
 
 

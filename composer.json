@@ -10,7 +10,7 @@
     "mvc"
   ],
   "type": "project",
-  "version": "0.9.8.8",
+  "version": "0.9.8.9",
   "license": "MIT",
   "support": {
     "issues": "https://github.com/Usbac/Wolff/issues",
@@ -50,7 +50,6 @@
       "Core\\": "system/core/",
       "Utilities\\": "system/utilities/",
       "Extension\\": "app/extensions/",
-      "Library\\": "app/libraries/",
       "Controller\\": "app/controllers/",
       "Cli\\": "system/cli/"
     }

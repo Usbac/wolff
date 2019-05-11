@@ -49,6 +49,10 @@ class Session
      */
     private function unsetExpiredVariables()
     {
+        if (!isset($_SESSION['vars_tmp_time']) || !is_array($_SESSION['vars_tmp_time'])) {
+            $_SESSION['vars_tmp_time'] = [];
+        }
+
         foreach ($_SESSION['vars_tmp_time'] as $key => $value) {
             if (time() >= $value) {
                 $this->delete($key);
@@ -80,6 +84,7 @@ class Session
      * Returns true if the current IP and the userAgent are the same
      * than the IP and userAgent of the previous connection.
      * This is done for preventing session hijacking.
+     * 
      * @return bool true if the current IP address and the userAgent are the same
      * than the IP address and userAgent of the previous connection.
      */
@@ -213,11 +218,11 @@ class Session
 
 
     /**
-     * Delete a session variable
+     * Unset a session variable
      *
      * @param  string  $key  the variable key
      */
-    public function delete(string $key)
+    public function unset(string $key)
     {
         unset($_SESSION[$key]);
     }

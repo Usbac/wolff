@@ -2,8 +2,7 @@
 
 namespace Cli;
 
-use Core\{Cache, Extension, Route};
-use Utilities\Maintenance;
+use Core\{Cache, Extension, Maintenance, Route};
 
 class Lister
 {
@@ -35,9 +34,6 @@ class Lister
                 break;
             case 'controllers':
                 $this->controllers();
-                break;
-            case 'libraries':
-                $this->libraries();
                 break;
             case 'languages':
                 $this->languages();
@@ -107,17 +103,6 @@ class Lister
 
         foreach ($controllers as $controller) {
             echo "\n" . $controller;
-        }
-        echo "\n";
-    }
-
-
-    private function libraries()
-    {
-        $libraries = $this->listPHPFiles(getAppDirectory() . 'libraries');
-
-        foreach ($libraries as $library) {
-            echo "\n" . $library;
         }
         echo "\n";
     }

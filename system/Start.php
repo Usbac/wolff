@@ -2,8 +2,8 @@
 
 namespace System;
 
-use Core\{Cache, DB, Extension, Loader, Route, Session, Request, Template};
-use Utilities\{Maintenance, Upload, Str};
+use Core\{Cache, DB, Extension, Loader, Route, Session, Request, Maintenance, Template};
+use Utilities\{Upload, Str};
 
 class Start
 {

@@ -2,8 +2,7 @@
 
 namespace Cli;
 
-use Core\Extension;
-use Utilities\Maintenance;
+use Core\{Extension, Maintenance};
 
 class Create
 {
@@ -39,9 +38,6 @@ class Create
                 break;
             case 'language':
                 $this->language();
-                break;
-            case 'library':
-                $this->library();
                 break;
             case 'route':
                 $this->route();
@@ -213,39 +209,6 @@ class Create
         }
 
         echo "\e[1;31m WARNING: Language " . $this->argv[3] . " already exists!\e[0m \n";
-    }
-
-
-    private function library()
-    {
-        if (!isset($this->argv[3]) || empty($this->argv[3])) {
-            echo "\e[1;31m WARNING: Library name is empty!\e[0m \n";
-
-            return;
-        }
-
-        $file_dir = getAppDirectory() . 'libraries/' . $this->argv[3] . '.php';
-
-        if (file_exists($file_dir)) {
-            echo "\e[1;31m WARNING: Library " . $this->argv[3] . " already exists!\e[0m \n";
-
-            return;
-        }
-
-        $file_name = "";
-        $namespace = $this->createNamespace($file_dir, $file_name, 'libraries');
-
-        $file = fopen($file_dir, 'w') or die("WARNING: Cannot create library file \n");
-
-        $content = file_get_contents(self::TEMPLATE_PATH . 'library.txt');
-        $original = array('{namespace}', '{classname}');
-        $replacement = array($namespace, $file_name);
-        $content = str_replace($original, $replacement, $content);
-
-        fwrite($file, $content);
-        fclose($file);
-
-        echo "Library " . $this->argv[3] . " created successfully! \n";
     }
 
 

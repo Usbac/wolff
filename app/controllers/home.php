@@ -16,8 +16,7 @@ class Home extends Controller
 
     public function sayHello()
     {
-        $libraryHome = $this->load->library('home');
-        $libraryHome->helloWorld();
+        echo 'Hello world';
     }
 
 }

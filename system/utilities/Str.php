@@ -154,6 +154,87 @@ class Str
         return substr($str, 0, strpos($str, $needle));
     }
 
+    
+    /**
+     * Returns a truncated string with the specified length
+     *
+     * @param  string  $str  the string
+     * @param  int  $characters  the number of characters
+     *
+     * @return string a truncated string with the specified length
+     */
+    public static function limit(string $str, int $characters)
+    {
+        return substr($str, 0, $characters);
+    }
+
+    
+    /**
+     * Adds the given value at the start of the string and returns it
+     *
+     * @param  string  $str  the string
+     * @param  string  $start  the string to start with
+     *
+     * @return string a string starting with the given value
+     */
+    public static function unshift(string $str, string $start)
+    {
+        return $start . $str;
+    }
+
+    
+    /**
+     * Returns all the given strings concatenated into one
+     *
+     * @param  string  $str  the strings
+     *
+     * @return string all the given strings concatenated into one
+     */
+    public static function concat(...$strings)
+    {
+        $aux = '';
+
+        foreach ($strings as $string) {
+            $aux .= $string;
+        }
+
+        return $aux;
+    }
+
+        
+    /**
+     * Returns the given value to a string
+     *
+     * @param  mixed  $str  the value
+     *
+     * @return string the given value as a string
+     */
+    public static function toString($var)
+    {
+        //Boolean
+        if (is_bool($var)) {
+            if ($var === true) {
+                return 'true';
+            }
+
+            return 'false';
+        }
+
+        //Array
+        if (is_array($var)) {
+            $str = '';
+
+            foreach ($var as $value) {
+                $str .= $value;
+            }
+
+            return $str;
+        }
+        
+        //Other
+        return strval($var);
+    }
+
 
     /**
      * Returns the directory path with the slashes replaced by backslashes
