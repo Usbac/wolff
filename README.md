@@ -56,12 +56,14 @@ Take advantage of the CLI application of Wolff named Wolffie to do a lot of task
 With it you can create extensions, controllers, routes, export queries to csv files, look at the available extensions, change the project configuration, delete elements like controllers, languages and much more.
 
 <p align="center">
-<img src="http://usbac.com.ve/wp-content/uploads/2019/05/wolffie-cli2-min.PNG" alt="Wolff cli" width="500">
+<img src="http://usbac.com.ve/wp-content/uploads/2019/05/wolffie-cli2-min.PNG" alt="Wolff cli" width="400">
 </p>
 
 ## Requirements
 
-PHP version 7.0 or higher is required.
+* PHP version 7.0 or higher.
+
+* Composer
 
 ## Install
 
