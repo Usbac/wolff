@@ -10,4 +10,4 @@ if (WOLFF_DEVELOPMENT) {
     ini_set('display_errors', 0);
 }
 
-(new System\Start)->load();
+(new Core\Start)->load();

@@ -34,12 +34,42 @@ class Controller
     protected $upload;
 
 
-    public function __construct($load)
+    public function __construct()
+    {
+        $this->data = [];
+    }
+
+
+    /**
+     * Set the loader
+     *
+     * @param  Loader  $load  the loader
+     */
+    public function setLoader(Loader $load)
     {
         $this->load = &$load;
-        $this->session = $this->load->getSession();
-        $this->upload = $this->load->getUpload();
-        $this->data = [];
+    }
+
+
+    /**
+     * Set the session
+     *
+     * @param  Session  $session  the session
+     */
+    public function setSession(Session $session)
+    {
+        $this->session = &$session;
+    }
+
+
+    /**
+     * Set the uploader
+     *
+     * @param  \Utilities\Upload  $upload  the uploader
+     */
+    public function setUploader($upload)
+    {
+        $this->upload = &$upload;
     }
 
 }

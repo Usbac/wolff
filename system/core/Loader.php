@@ -76,6 +76,7 @@ class Loader
         //load controller default function and return it
         if (controllerExists($dir)) {
             $controller = $this->getController($dir);
+            $this->setControllerProps($controller);
 
             if ($controller === false) {
                 return false;
@@ -94,6 +95,7 @@ class Loader
         //load a controller specified function and return it
         if (controllerExists($dir)) {
             $controller = $this->getController($dir);
+            $this->setControllerProps($controller);
 
             if ($controller === false) {
                 return false;
@@ -125,7 +127,35 @@ class Loader
             return false;
         }
 
-        return new $class($this);
+        return new $class;
+    }
+
+
+    /**
+     * Set the controller properties
+     *
+     * @param  object  $controller  the controller
+     */
+    private function setControllerProps(object $controller)
+    {
+        $controller->setLoader($this);
+        $controller->setSession($this->session);
+        $controller->setUploader($this->upload);
+    }
+
+
+    /**
+     * Append a function to the controller class and execute it
+     *
+     * @param  \Closure  $closure  the anonymous function
+     */
+    public function closure(\Closure $closure)
+    {
+        $controller = new Controller;
+        $this->setControllerProps($controller);
+
+        $closure = $closure->bindTo($controller, $controller);
+        $closure();
     }
 
 
