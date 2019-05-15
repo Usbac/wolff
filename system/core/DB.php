@@ -97,7 +97,7 @@ class DB
     {
         return self::$lastArgs;
     }
-    
+
 
     /**
      * Returns the last inserted id in the database
@@ -203,13 +203,13 @@ class DB
 
 
     /**
-     * Returns true if the especified table exists in the database, false otherwise
+     * Returns true if the specified table exists in the database, false otherwise
      *
      * @param  string  $table  the table name
-     * 
-     * @return bool true if the especified table exists in the database, false otherwise
+     *
+     * @return bool true if the specified table exists in the database, false otherwise
      */
-    public static function tableExists(string $table) 
+    public static function tableExists(string $table)
     {
         try {
             $result = self::getPdo()->query("SELECT 1 FROM $table LIMIT 1");
@@ -222,27 +222,27 @@ class DB
 
 
     /**
-     * Returns true if the especified column exists in the table of the database, false otherwise
+     * Returns true if the specified column exists in the table of the database, false otherwise
      *
      * @param  string  $table  the table name
      * @param  string  $column  the column name
-     * 
-     * @return bool true if the especified column exists in the table of the database, false otherwise
+     *
+     * @return bool true if the specified column exists in the table of the database, false otherwise
      */
-    public static function columnExists(string $table, string $column) 
+    public static function columnExists(string $table, string $column)
     {
         $result = self::getPdo()->query("SHOW COLUMNS FROM $table LIKE '$column'");
         if (is_bool($result)) {
             return false;
         }
-        
-        return !empty($result->fetchAll()); 
+
+        return !empty($result->fetchAll());
     }
 
 
     /**
      * Returns the database schema
-     * 
+     *
      * @return array|bool the database schema
      */
     public static function getSchema()
@@ -265,9 +265,9 @@ class DB
 
     /**
      * Returns the table schema from the database
-     * 
+     *
      * @param  string  $table  the table name
-     * 
+     *
      * @return array|bool the table schema from the database
      */
     public static function getTable(string $table)
@@ -276,8 +276,8 @@ class DB
         if (is_bool($result)) {
             return false;
         }
-        
-        return $result->fetchAll(PDO::FETCH_ASSOC); 
+
+        return $result->fetchAll(PDO::FETCH_ASSOC);
     }
 
 }

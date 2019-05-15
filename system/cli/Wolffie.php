@@ -15,7 +15,7 @@ class Wolffie
         $this->argv = $argv;
 
         if (!isset($this->argv[1])) {
-            echo "\e[1;31m WARNING: No command especified!\e[0m\n";
+            echo "\e[1;31m WARNING: No command specified!\e[0m\n";
 
             return;
         }

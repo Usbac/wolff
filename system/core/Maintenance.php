@@ -7,7 +7,6 @@ use Utilities\Str;
 class Maintenance
 {
 
-
     /**
      * Filename of the ip whitelist file.
      *
@@ -28,7 +27,6 @@ class Maintenance
         return WOLFF_MAINTENANCE_ON;
     }
 
-    
     /**
      * Returns an array of the IP in the whitelist
      * @return array An array of the IP in the whitelist, false if an error happends
