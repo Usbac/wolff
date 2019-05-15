@@ -31,8 +31,6 @@ class Loader
     const HEADER_404 = "HTTP/1.0 404 Not Found";
     const HEADER_503 = "HTTP/1.1 503 Service Temporarily Unavailable";
 
-    const NAMESPACE_CONTROLLER = 'Controller\\';
-
 
     public function __construct($template, $session, $upload)
     {
@@ -75,7 +73,7 @@ class Loader
 
         //load controller default function and return it
         if (controllerExists($dir)) {
-            $controller = $this->getController($dir);
+            $controller = Factory::controller($dir);
             $this->setControllerProps($controller);
 
             if ($controller === false) {
@@ -94,7 +92,7 @@ class Loader
 
         //load a controller specified function and return it
         if (controllerExists($dir)) {
-            $controller = $this->getController($dir);
+            $controller = Factory::controller($dir);
             $this->setControllerProps($controller);
 
             if ($controller === false) {
@@ -107,27 +105,6 @@ class Loader
         }
 
         return false;
-    }
-
-
-    /**
-     * Get a controller with its main variables initialized
-     *
-     * @param  string  $dir  the controller directory
-     *
-     * @return object the controller with its main variables initialized
-     */
-    private function getController(string $dir)
-    {
-        $class = self::NAMESPACE_CONTROLLER . Str::pathToNamespace($dir);
-
-        if (!class_exists($class)) {
-            error_log("Warning: The controller class '" . $class . "' doesn't exists");
-
-            return false;
-        }
-
-        return new $class;
     }
 
 
@@ -151,7 +128,7 @@ class Loader
      */
     public function closure(\Closure $closure)
     {
-        $controller = new Controller;
+        $controller = Factory::controller();
         $this->setControllerProps($controller);
 
         $closure = $closure->bindTo($controller, $controller);

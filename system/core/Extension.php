@@ -2,8 +2,12 @@
 
 namespace Core;
 
+use Utilities\Str;
+
 class Extension
 {
+    
+    const NAMESPACE = 'Extension\\';
 
     /**
      * List of extensions
@@ -13,8 +17,6 @@ class Extension
     private static $extensions;
 
 
-    const CLASS_ERROR = "Warning: Extension class %s doesn't exists";
-    const NAMESPACE = 'Extension\\';
     const FILE = 'system/definitions/Extensions.php';
     const ALL = '*';
 
@@ -43,11 +45,10 @@ class Extension
             $class = self::NAMESPACE . $extension['name'];
 
             if (!class_exists($class)) {
-                error_log(sprintf(self::CLASS_ERROR, $extension['name']));
                 continue;
             }
 
-            $extension = new $class;
+            $extension = Factory::extension($extension['name']);
             $extension->load = $loader;
             $extension->session = $loader->getSession();
             $extension->upload = $loader->getUpload();
@@ -171,14 +172,14 @@ class Extension
      *
      * @return array the extensions list if the name is empty or the specified extension otherwise
      */
-    public static function get(string $name = '')
+    public static function get(string $name = null)
     {
         //Specified extension
-        if (!empty($name)) {
+        if (!isset($name)) {
             $class = self::NAMESPACE . $name;
 
             if (class_exists($class)) {
-                return (new $class)->desc;
+                return Factory::extension($name)->desc;
             }
 
             return false;
@@ -190,8 +191,7 @@ class Extension
 
         foreach ($files as $file) {
             $filename = basename($file, '.php');
-            $class = self::NAMESPACE . $filename;
-            $extension = new $class;
+            $extension = Factory::extension($filename);
 
             $extensions[] = array(
                 'name'        => $extension->desc['name'] ?? '',

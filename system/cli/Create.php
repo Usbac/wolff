@@ -7,7 +7,7 @@ use Core\{Extension, Maintenance};
 class Create
 {
 
-    const TEMPLATE_PATH = 'system/cli/template/';
+    const TEMPLATE_PATH = 'system/cli/templates/';
 
     private $routes_dir;
     private $argv;
