@@ -2,7 +2,7 @@
 
 define('WOLFF_DEVELOPMENT', true);
 
-//Server 
+//Server
 define('WOLFF_DBMS', 'mysql');
 define('WOLFF_SERVER', 'localhost');
 define('WOLFF_DB', '');
