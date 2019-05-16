@@ -6,7 +6,7 @@ use Core\Maintenance;
 
 class Delete
 {
-    
+
     private $argv;
 
 

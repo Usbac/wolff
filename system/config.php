@@ -10,14 +10,14 @@ define('WOLFF_DBUSERNAME', '');
 define('WOLFF_DBPASSWORD', '');
 
 //Directories
-define('WOLFF_ROOT_DIR', dirname($_SERVER['SCRIPT_NAME']) . '/');
+define('WOLFF_ROOT_DIR', dirname(__DIR__) . '/');
 define('WOLFF_APP_DIR', WOLFF_ROOT_DIR . 'app/');
 define('WOLFF_PUBLIC_DIR', WOLFF_ROOT_DIR . 'public/');
 define('WOLFF_EXTENSION_DIR', WOLFF_APP_DIR . 'extensions/');
 define('WOLFF_CACHE_DIR', WOLFF_ROOT_DIR . 'cache/');
 
 //General
-define('WOLFF_VERSION', '0.9.9.1');
+define('WOLFF_VERSION', '0.9.9.2');
 define('WOLFF_START', microtime(true));
 define('WOLFF_PAGE_TITLE', 'Wolff');
 define('WOLFF_MAIN_PAGE', 'main_page');

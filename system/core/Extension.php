@@ -6,7 +6,7 @@ use Utilities\Str;
 
 class Extension
 {
-    
+
     const NAMESPACE = 'Extension\\';
 
     /**
@@ -118,7 +118,7 @@ class Extension
      */
     public static function folderExists()
     {
-        return file_exists(getServerRoot() . getExtensionDirectory());
+        return file_exists(getExtensionDirectory());
     }
 
 
@@ -128,7 +128,7 @@ class Extension
     public static function makeFolder()
     {
         if (!self::folderExists()) {
-            mkdir(getServerRoot() . getExtensionDirectory());
+            mkdir(getExtensionDirectory());
         }
     }
 

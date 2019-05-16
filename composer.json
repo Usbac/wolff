@@ -10,7 +10,7 @@
     "mvc"
   ],
   "type": "project",
-  "version": "0.9.9.1",
+  "version": "0.9.9.2",
   "license": "MIT",
   "support": {
     "issues": "https://github.com/Usbac/Wolff/issues",
@@ -29,7 +29,6 @@
       "email": "Cfranklinmoreno@gmail.com"
     }
   ],
-  "minimum-stability": "stable",
   "require": {
     "php": ">=7.0.0"
   },

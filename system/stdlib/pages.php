@@ -2,7 +2,7 @@
 
 namespace {
 
-    
+
     /**
      * Returns the complete path of the controller
      *
@@ -12,7 +12,7 @@ namespace {
      */
     function getControllerPath(string $dir)
     {
-        return getServerRoot() . getAppDirectory() . 'controllers/' . $dir . '.php';
+        return getAppDirectory() . 'controllers/' . $dir . '.php';
     }
 
 
@@ -81,7 +81,7 @@ namespace {
      */
     function getLanguagePath(string $dir, string $language = WOLFF_LANGUAGE)
     {
-        return getServerRoot() . getAppDirectory() . 'languages/' . $language . '/' . $dir . '.php';
+        return getAppDirectory() . 'languages/' . $language . '/' . $dir . '.php';
     }
 
 
@@ -107,6 +107,6 @@ namespace {
      */
     function getViewPath(string $dir)
     {
-        return getServerRoot() . getAppDirectory() . 'views/' . $dir;
+        return getAppDirectory() . 'views/' . $dir;
     }
 }

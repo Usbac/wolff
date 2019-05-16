@@ -6,7 +6,7 @@
     margin: 0px;
 }
 
-/* GENERAL */
+/* HOME */
 
 body {
     background-color: #F0F0F0;
@@ -45,6 +45,10 @@ body {
     border-top: 1px #666666 solid;
     margin-bottom: 15px;
     margin-top: 15px;
+}
+
+.description > p {
+    margin: 5px 0px 5px 0px;
 }
 
 .version {

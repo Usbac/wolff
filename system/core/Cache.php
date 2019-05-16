@@ -17,9 +17,9 @@ class Cache
     /**
      * Delete the cache files that have expired
      */
-    public static function initialize() 
+    public static function initialize()
     {
-        $files = glob(getServerRoot() . getCacheDirectory() . '*.php');
+        $files = glob(getCacheDirectory() . '*.php');
 
         foreach ($files as $file) {
             if (self::expired($file)) {
@@ -28,7 +28,7 @@ class Cache
         }
     }
 
-    
+
     /**
      * Returns true if the cache is enabled, false otherwise
      * @return bool true if the cache is enabled, false otherwise
@@ -49,7 +49,7 @@ class Cache
      */
     public static function get(string $dir, string $content)
     {
-        $file_path = getServerRoot() . getCacheDirectory() . self::getFilename($dir);
+        $file_path = getCacheDirectory() . self::getFilename($dir);
 
         self::createFolder();
 
@@ -85,7 +85,7 @@ class Cache
      */
     public static function createFolder()
     {
-        $folder_path = getServerRoot() . getCacheDirectory();
+        $folder_path = getCacheDirectory();
         if (!file_exists($folder_path)) {
             mkdir($folder_path, 0755, true);
         }
@@ -101,7 +101,7 @@ class Cache
      */
     public static function exists(string $dir = '')
     {
-        $folder_path = getServerRoot() . getCacheDirectory();
+        $folder_path = getCacheDirectory();
 
         if (!empty($dir)) {
             $file_path = $folder_path . self::getFilename($dir);
@@ -120,7 +120,7 @@ class Cache
      */
     public static function clear(string $dir = '')
     {
-        $folder_path = getServerRoot() . getCacheDirectory();
+        $folder_path = getCacheDirectory();
 
         if (empty($dir)) {
             deleteFilesInDir($folder_path);

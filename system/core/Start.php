@@ -50,7 +50,7 @@ class Start
 
         $this->template = new Template();
         $this->session = new Session();
-        
+
         if (class_exists('Utilities\Upload')) {
             $this->upload = new Upload();
         }

@@ -146,8 +146,8 @@ class Wolffie
     private function set()
     {
         $file = 'system/config.php';
-        $original = "/define\((\s){0,}?[\'\"]" . strtoupper($argv[2]) . "[\'\"](\s){0,}?,(.*?)\)\;/";
-        $replacement = "define('" . strtoupper($argv[2]) . "', " . $argv[3] . ");";
+        $original = "/define\((\s){0,}?[\'\"]" . strtoupper($this->argv[2]) . "[\'\"](\s){0,}?,(.*?)\)\;/";
+        $replacement = "define('" . strtoupper($this->argv[2]) . "', " . $this->argv[3] . ");";
 
         if (!$content = file_get_contents($file)) {
             echo "\e[1;31m WARNING: Couldn't read the config file!\e[0m\n";
@@ -164,7 +164,7 @@ class Wolffie
         $content = preg_replace($original, $replacement, $content);
         file_put_contents($file, $content);
 
-        echo "Constant " . $argv[2] . " modified successfully!\n";
+        echo "Constant " . $this->argv[2] . " modified successfully!\n";
     }
 
 

@@ -148,7 +148,7 @@ class Loader
     {
         //Sanitize directory
         $dir = Str::sanitizePath($dir);
-        $file_path = getServerRoot() . getAppDirectory() . 'languages/' . $language . '/' . $dir . '.php';
+        $file_path = getAppDirectory() . 'languages/' . $language . '/' . $dir . '.php';
 
         if (file_exists($file_path)) {
             include_once($file_path);

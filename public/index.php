@@ -1,6 +1,6 @@
 <?php
 
-require('vendor/autoload.php');
+require('../vendor/autoload.php');
 
 if (WOLFF_DEVELOPMENT) {
     error_reporting(E_ALL);

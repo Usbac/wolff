@@ -72,16 +72,6 @@ namespace {
 
 
     /**
-     * Returns the absolute root directory of the project
-     * @return string the absolute root directory of the project
-     */
-    function getAbsoluteDirectory()
-    {
-        return getServerRoot() . getDirectory();
-    }
-
-
-    /**
      * Returns the app directory of the project
      * @return string the app directory of the project
      */

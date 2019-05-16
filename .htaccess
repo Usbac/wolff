@@ -1,18 +1,5 @@
-Options -MultiViews
-RewriteEngine On
-
-# allow public folder
-RewriteCond %{REQUEST_URI} "/public/"
-RewriteRule (.*) $1 [L]
-
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-
-# load index
-RewriteRule ^(.+)?$ index.php?url=$1 [L,QSA]
-
-# block access to certain files
-RewriteRule !^(index\.php)?$ - [F,NC,L]
-
-# Hide directories
 Options -Indexes
+
+RewriteEngine on
+RewriteRule ^$ public/ [L]
+RewriteRule ^((?!public/).*)$ public/$1 [L,NC]

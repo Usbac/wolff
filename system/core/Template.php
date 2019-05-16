@@ -99,7 +99,7 @@ class Template
      */
     private function getContent($dir)
     {
-        $file_path = getServerRoot() . WOLFF_APP_DIR . 'views/' . $dir;
+        $file_path = getAppDirectory() . 'views/' . $dir;
 
         if (file_exists($file_path . '.php')) {
             return file_get_contents($file_path . '.php');
@@ -122,7 +122,7 @@ class Template
         if (!is_callable($function)) {
             return;
         }
-        
+
         self::$templates[] = $function;
     }
 
