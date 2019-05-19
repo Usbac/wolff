@@ -60,7 +60,7 @@ class Session
         }
     }
 
-    
+
     /**
      * Start the session
      */
@@ -84,7 +84,7 @@ class Session
      * Returns true if the current IP and the userAgent are the same
      * than the IP and userAgent of the previous connection.
      * This is done for preventing session hijacking.
-     * 
+     *
      * @return bool true if the current IP address and the userAgent are the same
      * than the IP address and userAgent of the previous connection.
      */
@@ -139,10 +139,10 @@ class Session
      * Returns true if the session variable exists, false otherwise
      *
      * @param  string  $key  the variable key
-     * 
+     *
      * @return bool true if the session variable exists, false otherwise
      */
-    public function has(string $key) 
+    public function has(string $key)
     {
         return array_key_exists($key, $_SESSION);
     }
@@ -150,10 +150,10 @@ class Session
 
     /**
      * Returns the numbers of elements in the session
-     * 
+     *
      * @return int the numbers of elements in the session
      */
-    public function count() 
+    public function count()
     {
         return count($_SESSION);
     }

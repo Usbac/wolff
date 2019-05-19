@@ -146,7 +146,7 @@ class DB
         self::$lastSQL = $sql;
         self::$lastArgs = $args;
         //Query without args
-        if (!$args) {
+        if (!isset($args)) {
             $result = self::getPdo()->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 
             return $result;
@@ -256,7 +256,7 @@ class DB
         $database = [];
 
         while ($table = $tables->fetch(PDO::FETCH_NUM)[0]) {
-            $database[$table] = self::getTable($table);
+            $database[$table] = self::getTableSchema($table);
         }
 
         return $database;
@@ -270,7 +270,7 @@ class DB
      *
      * @return array|bool the table schema from the database
      */
-    public static function getTable(string $table)
+    public static function getTableSchema(string $table)
     {
         $result = self::getPdo()->query("SHOW COLUMNS FROM $table");
         if (is_bool($result)) {
@@ -278,6 +278,51 @@ class DB
         }
 
         return $result->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+    /**
+     * Returns the result of a SELECT ALL query
+     *
+     * @param  string  $table  the table for the query
+     * @param  string  $conditions  the select conditions
+     * @param  mixed  $args the query arguments
+     *
+     * @return array the query result as an assosiative array
+     */
+    public static function selectAll(string $table, string $conditions = '1', $args = null)
+    {
+        return DB::run("SELECT * FROM $table WHERE $conditions", $args);
+    }
+
+
+    /**
+     * Returns the result of a SELECT COUNT query
+     *
+     * @param  string  $table  the table for the query
+     * @param  string  $conditions  the select conditions
+     * @param  mixed  $args the query arguments
+     *
+     * @return array the query result as an assosiative array
+     */
+    public static function countAll(string $table, string $conditions = '1', $args = null)
+    {
+        return DB::run("SELECT COUNT(*) FROM $table WHERE $conditions", $args)[0]['COUNT(*)'];
+    }
+
+
+    /**
+     * Runs a DELETE query
+     *
+     * @param  string  $table  the table for the query
+     * @param  string  $conditions  the select conditions
+     * @param  mixed  $args the query arguments
+     *
+     * @return array the query result as an assosiative array
+     */
+    public static function deleteAll(string $table, string $conditions = '1', $args = null)
+    {
+        return DB::run("DELETE FROM $table WHERE $conditions", $args);
     }
 
 }

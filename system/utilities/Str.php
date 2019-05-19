@@ -84,7 +84,31 @@ class Str
         return strpos($str, $needle) !== false;
     }
 
-    
+
+    /**
+     * Returns a string with its placeholders replaced by context values
+     *
+     * @param  string  $str  the string
+     * @param  array  $values  the context values for the placeholders
+     *
+     * @return string|bool the string with its placeholders replaced by context values
+     */
+    public static function interpolate(string $str, array $values)
+    {
+        if (!is_string($str) || !is_array($values) || empty($values)) {
+            return false;
+        }
+
+        foreach ($values as $key => $val) {
+            if (!is_array($val) && (!is_object($val) || method_exists($val, '__toString'))) {
+                $str = str_replace('{' . $key . '}', $val, $str);
+            }
+        }
+
+        return $str;
+    }
+
+
     /**
      * Returns true if a string starts with another string, false otherwise
      *
@@ -154,7 +178,7 @@ class Str
         return substr($str, 0, strpos($str, $needle));
     }
 
-    
+
     /**
      * Returns a truncated string with the specified length
      *
@@ -168,7 +192,7 @@ class Str
         return substr($str, 0, $characters);
     }
 
-    
+
     /**
      * Adds the given value at the start of the string and returns it
      *
@@ -182,7 +206,7 @@ class Str
         return $start . $str;
     }
 
-    
+
     /**
      * Returns all the given strings concatenated into one
      *
@@ -201,7 +225,7 @@ class Str
         return $aux;
     }
 
-        
+
     /**
      * Returns the given value to a string
      *
@@ -230,7 +254,7 @@ class Str
 
             return $str;
         }
-        
+
         //Other
         return strval($var);
     }

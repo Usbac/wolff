@@ -6,7 +6,7 @@ use Utilities\Str;
 
 class Factory
 {
-    
+
     const NAMESPACE_CONTROLLER = 'Controller\\';
     const NAMESPACE_EXTENSION = 'Extension\\';
 
@@ -44,7 +44,7 @@ class Factory
      *
      * @return object|bool a extension initialized or false if it doesn't exists
      */
-    public static function extension(string $name) 
+    public static function extension(string $name)
     {
         $class = self::NAMESPACE_EXTENSION . $name;
 

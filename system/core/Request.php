@@ -2,7 +2,7 @@
 
 namespace Core;
 
-class Request 
+class Request
 {
 
     /**
@@ -12,7 +12,7 @@ class Request
      *
      * @return mixed the superglobal GET array or the specified value
      */
-    public static function get(string $key = null) 
+    public static function get(string $key = null)
     {
         if (!isset($key)) {
             return $_GET;
@@ -29,7 +29,7 @@ class Request
      *
      * @return bool true if the GET variable exists, false otherwise
      */
-    public static function hasGet(string $key) 
+    public static function hasGet(string $key)
     {
         return array_key_exists($key, $_GET);
     }
@@ -41,18 +41,18 @@ class Request
      * @param  string  $key  the key
      * @param  mixed  $value  the variable value
      */
-    public static function setGet(string $key, $value) 
+    public static function setGet(string $key, $value)
     {
         $_GET[$key] = $value;
     }
 
-    
+
     /**
      * Unset a GET variable
      *
      * @param  string  $key  the key
      */
-    public static function unsetGet(string $key = null) 
+    public static function unsetGet(string $key = null)
     {
         if (!isset($key)) {
             $_GET = [];
@@ -69,7 +69,7 @@ class Request
      *
      * @return mixed the superglobal POST array or the specified value
      */
-    public static function post(string $key = null) 
+    public static function post(string $key = null)
     {
         if (!isset($key)) {
             return $_POST;
@@ -86,11 +86,11 @@ class Request
      *
      * @return bool true if the POST variable exists, false otherwise
      */
-    public static function hasPost(string $key) 
+    public static function hasPost(string $key)
     {
         return array_key_exists($key, $_POST);
     }
-    
+
 
     /**
      * Set a POST variable
@@ -98,7 +98,7 @@ class Request
      * @param  string  $key  the key
      * @param  mixed  $value  the variable value
      */
-    public static function setPost(string $key, $value) 
+    public static function setPost(string $key, $value)
     {
         $_POST[$key] = $value;
     }
@@ -109,7 +109,7 @@ class Request
      *
      * @param  string  $key  the key
      */
-    public static function unsetPost(string $key = null) 
+    public static function unsetPost(string $key = null)
     {
         if (!isset($key)) {
             $_POST = [];
@@ -126,7 +126,7 @@ class Request
      *
      * @return mixed the superglobal FILES array or the specified value
      */
-    public static function file(string $key = null) 
+    public static function file(string $key = null)
     {
         if (!isset($key)) {
             return $_FILES;
@@ -143,12 +143,12 @@ class Request
      *
      * @return bool true if the FILE variable exists, false otherwise
      */
-    public static function hasFile(string $key) 
+    public static function hasFile(string $key)
     {
         return array_key_exists($key, $_FILES);
     }
 
-    
+
     /**
      * Returns the superglobal COOKIE array or the specified value
      *
@@ -156,7 +156,7 @@ class Request
      *
      * @return mixed the superglobal COOKIE array or the specified value
      */
-    public static function cookie(string $key = null) 
+    public static function cookie(string $key = null)
     {
         if (!isset($key)) {
             return $_COOKIE;
@@ -173,11 +173,11 @@ class Request
      *
      * @return bool true if the COOKIE variable exists, false otherwise
      */
-    public static function hasCookie(string $key) 
+    public static function hasCookie(string $key)
     {
         return array_key_exists($key, $_COOKIE);
     }
-    
+
 
     /**
      * Set a COOKIE variable
@@ -187,7 +187,7 @@ class Request
      * @param  mixed  $time  the cookie time
      * @param  string  $path  the path where the cookie will work
      */
-    public static function setCookie(string $key, $value, $time, string $path = '/') 
+    public static function setCookie(string $key, $value, $time, string $path = '/')
     {
         if ($time === 'forever') {
             $time = 1577880000000;
@@ -204,13 +204,13 @@ class Request
         setCookie($key, $value, time() + $time, $path);
     }
 
-        
+
     /**
      * Unset a COOKIE variable
      *
      * @param  string  $key  the cookie key
      */
-    public static function unsetCookie(string $key = null) 
+    public static function unsetCookie(string $key = null)
     {
         if (!isset($key)) {
             $_COOKIE = [];
