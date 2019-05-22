@@ -15,7 +15,7 @@ class Maintenance
     private static $file = WOLFF_ROOT_DIR . 'system/definitions/maintenance_whitelist.txt';
 
 
-    const READ_ERROR = "Warning: Couldn't read the maintenance whitelist file";
+    const READ_ERROR = "Couldn't read the maintenance whitelist file";
 
 
     /**
@@ -38,7 +38,7 @@ class Maintenance
         }
 
         if (!$content = file_get_contents(self::$file)) {
-            error_log(self::READ_ERROR);
+            Log::warning(self::READ_ERROR);
 
             return false;
         }
@@ -68,7 +68,7 @@ class Maintenance
 
                 return true;
             }
-            error_log(self::READ_ERROR);
+            Log::warning(self::READ_ERROR);
 
             return false;
         }
@@ -99,7 +99,7 @@ class Maintenance
         self::createFile();
 
         if (!$content = file_get_contents(self::$file)) {
-            error_log(self::READ_ERROR);
+            Log::warning(self::READ_ERROR);
 
             return false;
         }

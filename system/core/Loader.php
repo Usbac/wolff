@@ -69,6 +69,7 @@ class Loader
      */
     public function controller(string $dir)
     {
+        $controller_path = $dir;
         $dir = Str::sanitizePath($dir);
 
         //load controller default function and return it
@@ -103,6 +104,8 @@ class Loader
 
             return $controller;
         }
+
+        Log::error("Controller '$controller_path' doesn't exists");
 
         return false;
     }
@@ -152,10 +155,14 @@ class Loader
 
         if (file_exists($file_path)) {
             include_once($file_path);
+        } else {
+            Log::warning("The $language language for '$dir' doesn't exists");
+
+            return false;
         }
 
         if (!isset($data)) {
-            error_log("Warning: The " . $language . " language for '" . $dir . "' doesn't exists");
+            Log::warning("The $language language content for '$dir' is empty");
 
             return false;
         }
@@ -174,6 +181,14 @@ class Loader
     public function view(string $dir, array $data = [], bool $cache = true)
     {
         $dir = Str::sanitizePath($dir);
+        $file_path = getAppDirectory() . 'views/' . $dir;
+
+        if (!file_exists($file_path . '.php') && !file_exists($file_path . '.html')) {
+            Log::error("View '$dir' doesn't exists");
+
+            return;
+        }
+
         $this->template->get($dir, $data, $cache);
     }
 
@@ -189,6 +204,13 @@ class Loader
     public function getView(string $dir, array $data = [])
     {
         $dir = Str::sanitizePath($dir);
+        $file_path = getAppDirectory() . 'views/' . $dir;
+
+        if (!file_exists($file_path . '.php') && !file_exists($file_path . '.html')) {
+            Log::error("View '$dir' doesn't exists");
+
+            return;
+        }
 
         return $this->template->getView($dir, $data);
     }

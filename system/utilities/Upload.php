@@ -2,6 +2,8 @@
 
 namespace Utilities;
 
+use Core\Log;
+
 class Upload
 {
 
@@ -110,14 +112,14 @@ class Upload
         $file = $_FILES[$filename];
 
         if ($this->maxSize > 0 && $file['size'] > $this->maxSize) {
-            error_log("Error: file '" . $file['name'] . "' exceeds maximum upload size");
+            Log::notice("File '" . $file['name'] . "' exceeds maximum upload size");
 
             return false;
         }
 
         $dir = getPublicDirectory() . $this->directory;
         if (!move_uploaded_file($file['tmp_name'], $dir . '/' . $file['name'])) {
-            error_log("Error: Upload of '" . $file['name'] . "' failed");
+            Log::notice("Upload of '" . $file['name'] . "' failed");
 
             return false;
         }
@@ -130,7 +132,7 @@ class Upload
             'size'        => $file['size'],
             'directory'   => $dir,
             'uploader_ip' => $_SERVER['REMOTE_ADDR'],
-            'date'        => date('Y-m-d H:i:s'),
+            'date'        => date('Y-m-d H:i:s')
         );
 
         return true;

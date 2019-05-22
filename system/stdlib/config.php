@@ -72,6 +72,16 @@ namespace {
 
 
     /**
+     * Returns the system directory of the project
+     * @return string the system directory of the project
+     */
+    function getSystemDirectory()
+    {
+        return WOLFF_SYS_DIR;
+    }
+
+
+    /**
      * Returns the app directory of the project
      * @return string the app directory of the project
      */

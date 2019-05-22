@@ -28,7 +28,7 @@ class Factory
         $class = self::NAMESPACE_CONTROLLER . Str::pathToNamespace($dir);
 
         if (!class_exists($class)) {
-            error_log("Warning: The controller class '" . $class . "' doesn't exists");
+            Log::error("The controller class '$class' doesn't exists");
 
             return false;
         }
@@ -49,7 +49,7 @@ class Factory
         $class = self::NAMESPACE_EXTENSION . $name;
 
         if (!class_exists($class)) {
-            error_log("Warning: The Extension class '" . $class . "' doesn't exists");
+            Log::error("The extension class '$class' doesn't exists");
 
             return false;
         }

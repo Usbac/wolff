@@ -3,6 +3,7 @@
 namespace Cli;
 
 use Core\{Extension, Maintenance};
+use Utilities\Str;
 
 class Create
 {
@@ -92,10 +93,13 @@ class Create
 
         $file = fopen($file_dir, 'w') or die("WARNING: Cannot create Controller file \n");
 
+        $values = [
+            'namespace' => $namespace,
+            'classname' => $file_name
+        ];
+
         $content = file_get_contents(self::TEMPLATE_PATH . 'controller.txt');
-        $original = array('{namespace}', '{classname}');
-        $replacement = array($namespace, $file_name);
-        $content = str_replace($original, $replacement, $content);
+        $content = Str::interpolate($content, $values);
 
         fwrite($file, $content);
         fclose($file);
@@ -130,7 +134,7 @@ class Create
         $file = fopen($file_dir, 'w') or die("WARNING: Cannot create view file \n");
 
         $content = file_get_contents(self::TEMPLATE_PATH . 'view.txt');
-        $content = str_replace('{title}', $this->argv[3], $content);
+        $content = Str::interpolate($content, ['title' => $this->argv[3]]);
 
         fwrite($file, $content);
         fclose($file);
@@ -148,7 +152,7 @@ class Create
         }
 
         $file_dir = getExtensionDirectory() . $this->argv[3] . '.php';
-        Extension::makeFolder();
+        Extension::mkdir();
 
         if (file_exists($file_dir)) {
             echo "\e[1;31m WARNING: extension " . $this->argv[3] . " already exists!\e[0m \n";
@@ -165,11 +169,16 @@ class Create
         $version = readline("Version -> ");
         $author = readline("Author -> ");
 
-        $original = array('{classname}', '{name}', '{description}', '{version}', '{author}');
-        $replacement = array($this->argv[3], $name, $description, $version, $author);
+        $values = [
+            'classname'   => $this->argv[3],
+            'name'        => $name,
+            'description' => $description,
+            'version'     => $version,
+            'author'      => $author,
+        ];
 
         $content = file_get_contents(self::TEMPLATE_PATH . 'extension.txt');
-        $content = str_replace($original, $replacement, $content);
+        $content = Str::interpolate($content, $values);
 
         fwrite($file, $content);
         fclose($file);

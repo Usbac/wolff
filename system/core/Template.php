@@ -54,11 +54,17 @@ class Template
             unset($data);
         }
 
-        $content = $this->replaceAll($this->getContent($dir));
+        $content = $this->getContent($dir);
+
+        if ($content === false) {
+            return false;
+        }
+
+        $content = $this->replaceAll($content);
 
         //Cache system
         if ($cache && Cache::isEnabled()) {
-            include(Cache::get($dir, $content));
+            include(Cache::set($dir, $content));
         } else {
             $temp = tmpfile();
             fwrite($temp, $content);
@@ -76,7 +82,7 @@ class Template
      * @param  string  $dir  the view directory
      * @param  array  $data  the data array present in the view
      *
-     * @return string the view content
+     * @return string|bool the view content or false if it doesn't exists
      */
     public function getView(string $dir, array $data)
     {
@@ -86,7 +92,13 @@ class Template
             unset($data);
         }
 
-        return $this->replaceAll($this->getContent($dir));
+        $content = $this->getContent($dir);
+
+        if ($content === false) {
+            return false;
+        }
+
+        return $this->replaceAll($content);
     }
 
 
@@ -95,7 +107,7 @@ class Template
      *
      * @param  string  $dir  the view directory
      *
-     * @return string the view content
+     * @return string|bool the view content or false if it doesn't exists
      */
     private function getContent($dir)
     {
@@ -106,9 +118,9 @@ class Template
         } elseif (file_exists($file_path . '.html')) {
             return file_get_contents($file_path . '.html');
         } else {
-            error_log("Error: View '" . $dir . "' doesn't exists");
+            Log::error("View '" . $dir . "' doesn't exists");
 
-            return null;
+            return false;
         }
     }
 

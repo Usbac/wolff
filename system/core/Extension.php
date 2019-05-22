@@ -35,7 +35,7 @@ class Extension
             return false;
         }
 
-        self::makeFolder();
+        self::mkdir();
 
         foreach (self::$extensions as $extension) {
             if ($extension['type'] !== $type || !self::matchesRoute($extension['route'])) {
@@ -125,7 +125,7 @@ class Extension
     /**
      * Make the extension folder directory if it doesn't exists
      */
-    public static function makeFolder()
+    public static function mkdir()
     {
         if (!self::folderExists()) {
             mkdir(getExtensionDirectory());

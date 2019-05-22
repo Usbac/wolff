@@ -40,18 +40,31 @@ class Cache
 
 
     /**
+     * Return the specified cache file path
+     *
+     * @param  string  $dir  the cache filename
+     *
+     * @return string return the specified cache file path
+     */
+    public static function get(string $dir)
+    {
+        return getCacheDirectory() . self::getFilename($dir);
+    }
+
+
+    /**
      * Create the cache file if doesn't exists and return its path
      *
-     * @param  string  $dir  the view directory
+     * @param  string  $dir  the cache filename
      * @param  string  $content  the original file content
      *
      * @return string the cache file path
      */
-    public static function get(string $dir, string $content)
+    public static function set(string $dir, string $content)
     {
-        $file_path = getCacheDirectory() . self::getFilename($dir);
+        $file_path = self::get($dir);
 
-        self::createFolder();
+        self::mkdir();
 
         if (!file_exists($file_path)) {
             $file = fopen($file_path, 'w');
@@ -83,7 +96,7 @@ class Cache
     /**
      * Create the cache folder if it doesn't exists
      */
-    public static function createFolder()
+    public static function mkdir()
     {
         $folder_path = getCacheDirectory();
         if (!file_exists($folder_path)) {
@@ -99,40 +112,43 @@ class Cache
      *
      * @return bool true if the cache exists, false otherwise
      */
-    public static function exists(string $dir = '')
+    public static function has(string $dir)
     {
-        $folder_path = getCacheDirectory();
+        $file_path = getCacheDirectory() . self::getFilename($dir);
 
-        if (!empty($dir)) {
-            $file_path = $folder_path . self::getFilename($dir);
-
-            return is_file($file_path);
-        }
-
-        return !empty(glob($folder_path . '*'));
+        return is_file($file_path);
     }
 
 
     /**
-     * Delete all the cache files or the specified one
+     * Delete the specified cache file
      *
      * @param  string  $dir  the cache to delete, if its empty all the cache will be deleted
+     *
+     * @return bool true if the item was successfully removed, false otherwise
      */
-    public static function clear(string $dir = '')
+    public static function delete(string $dir)
     {
-        $folder_path = getCacheDirectory();
-
-        if (empty($dir)) {
-            deleteFilesInDir($folder_path);
-
-            return;
-        }
-
-        $file_path = $folder_path . self::getFilename($dir);
+        $file_path = getCacheDirectory() . self::getFilename($dir);
 
         if (is_file($file_path)) {
             unlink($file_path);
+
+            return true;
         }
+
+        return false;
+    }
+
+
+    /**
+     * Delete all the cache files
+     *
+     * @return bool true if the item was successfully removed, false otherwise
+     */
+    public static function clear()
+    {
+        return deleteFilesInDir(getCacheDirectory());
     }
 
 
