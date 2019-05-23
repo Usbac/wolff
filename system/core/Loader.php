@@ -22,21 +22,20 @@ class Loader
     private $session;
 
     /**
-     * File uploader utility.
+     * Array of ulitities.
      *
-     * @var Utilities\Upload
+     * @var array
      */
-    private $upload;
+    private static $utilities;
 
     const HEADER_404 = "HTTP/1.0 404 Not Found";
     const HEADER_503 = "HTTP/1.1 503 Service Temporarily Unavailable";
 
 
-    public function __construct($template, $session, $upload)
+    public function __construct($template, $session)
     {
         $this->template = &$template;
         $this->session = &$session;
-        $this->upload = &$upload;
     }
 
 
@@ -47,16 +46,6 @@ class Loader
     public function getSession()
     {
         return $this->session;
-    }
-
-
-    /**
-     * Returns the uploader
-     * @return Lib\Upload the uploader
-     */
-    public function getUpload()
-    {
-        return $this->upload;
     }
 
 
@@ -120,17 +109,39 @@ class Loader
     {
         $controller->setLoader($this);
         $controller->setSession($this->session);
-        $controller->setUploader($this->upload);
+
+        if (is_array(self::$utilities)) {
+            foreach(self::$utilities as $key => $class) {
+                $controller->addUtility($key, $class);
+            }
+        }
+    }
+
+
+    /**
+     * Adds an utility to the list
+     *
+     * @param  string  $key  the classname to refer to in the controller
+     * @param  string  $class  the classname
+     */
+    public static function utility(string $name, string $class)
+    {
+        self::$utilities[$name] = $class;
     }
 
 
     /**
      * Append a function to the controller class and execute it
      *
-     * @param  \Closure  $closure  the anonymous function
+     * @param  mixed  $closure  the anonymous function
      */
-    public function closure(\Closure $closure)
+    public function closure($closure)
     {
+        if (is_string($closure)) {
+            $this->controller($closure);
+            return;
+        }
+
         $controller = Factory::controller();
         $this->setControllerProps($controller);
 

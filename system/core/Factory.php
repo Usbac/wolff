@@ -9,6 +9,7 @@ class Factory
 
     const NAMESPACE_CONTROLLER = 'Controller\\';
     const NAMESPACE_EXTENSION = 'Extension\\';
+    const NAMESPACE_UTILITY = 'Utilities\\';
 
 
     /**
@@ -28,7 +29,7 @@ class Factory
         $class = self::NAMESPACE_CONTROLLER . Str::pathToNamespace($dir);
 
         if (!class_exists($class)) {
-            Log::error("The controller class '$class' doesn't exists");
+            Log::error("The controller class '$dir' doesn't exists");
 
             return false;
         }
@@ -49,11 +50,33 @@ class Factory
         $class = self::NAMESPACE_EXTENSION . $name;
 
         if (!class_exists($class)) {
-            Log::error("The extension class '$class' doesn't exists");
+            Log::error("The extension class '$name' doesn't exists");
 
             return false;
         }
 
         return new $class;
     }
+
+
+    /**
+     * Returns an utility initialized or false if it doesn't exists
+     *
+     * @param  string  $name  the utility name
+     *
+     * @return object|bool a utility initialized or false if it doesn't exists
+     */
+    public static function utility(string $name)
+    {
+        $class = self::NAMESPACE_UTILITY . $name;
+
+        if (!class_exists($class)) {
+            Log::error("The utility class '$name' doesn't exists");
+
+            return false;
+        }
+
+        return new $class;
+    }
+
 }

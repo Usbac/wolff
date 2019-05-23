@@ -2,7 +2,7 @@
 
 namespace Core;
 
-use Utilities\{Upload, Str};
+use Utilities\Str;
 
 class Start
 {
@@ -35,27 +35,12 @@ class Start
      */
     public $session;
 
-    /**
-     * File uploader utility.
-     *
-     * @var Utilities\Upload
-     */
-    public $upload;
-
 
     public function __construct()
     {
-        DB::initialize();
-        Cache::initialize();
-
         $this->template = new Template();
         $this->session = new Session();
-
-        if (class_exists('Utilities\Upload')) {
-            $this->upload = new Upload();
-        }
-
-        $this->load = new Loader($this->template, $this->session, $this->upload);
+        $this->load = new Loader($this->template, $this->session);
     }
 
 
@@ -64,36 +49,54 @@ class Start
      */
     public function load()
     {
-        $url = Str::sanitizeURL(Request::get('url') ?? getMainPage());
+        $url = $this->getUrl();
 
-        //Check maintenance mode
-        if (Maintenance::isEnabled() && !Maintenance::isClientAllowed()) {
-            $this->load->maintenance();
-        }
-
-        //Check blocked route
-        if (Route::isBlocked($url)) {
-            $this->load->redirect404();
-        }
+        $this->checkAccess($url);
+        $this->initialize();
 
         //Load extensions of type before
         if (Extension::isEnabled()) {
-            Extension::load('before', $this->load);
+            Extension::load(Extension::BEFORE, $this->load);
         }
 
         $this->loadPage($url);
 
         //Load extensions of type after
         if (Extension::isEnabled()) {
-            Extension::load('after', $this->load);
+            Extension::load(Extension::AFTER, $this->load);
         }
     }
 
 
     /**
-     * Load the specified page
+     * Initialize some of the core classes
      */
-    private function loadPage($url)
+    public function initialize()
+    {
+        DB::initialize();
+        Cache::initialize();
+    }
+
+
+    /**
+     * Returns the current url processed
+     *
+     * @return  string  the current url processed
+     */
+    public function getUrl()
+    {
+        $url = Request::get('url') ?? getMainPage();
+        $url = Str::sanitizeURL($url);
+        return Route::getRedirection($url) ?? $url;
+    }
+
+
+    /**
+     * Load the requested page
+     *
+     * @param  string  $url the page url
+     */
+    public function loadPage(string $url)
     {
         $function = Route::get($url);
 
@@ -102,6 +105,26 @@ class Start
         } elseif (controllerExists($url) || functionExists($url)) {
             $this->load->controller($url);
         } else {
+            $this->load->redirect404();
+        }
+    }
+
+
+    /**
+     * Check the client access to the page
+     * This can redirect to the maintenance or the 404 page
+     *
+     * @param  string  $url the page url
+     */
+    public function checkAccess($url)
+    {
+        //Check maintenance mode
+        if (Maintenance::isEnabled() && !Maintenance::isClientAllowed()) {
+            $this->load->maintenance();
+        }
+
+        //Check blocked route
+        if (Route::isBlocked($url)) {
             $this->load->redirect404();
         }
     }

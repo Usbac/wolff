@@ -18,6 +18,8 @@ class Extension
 
 
     const FILE = 'system/definitions/Extensions.php';
+    const BEFORE = 'before';
+    const AFTER = 'after';
     const ALL = '*';
 
 
@@ -144,7 +146,7 @@ class Extension
         self::$extensions[] = array(
             'name'  => $extension_name,
             'route' => $route,
-            'type'  => 'after'
+            'type'  => self::AFTER
         );
     }
 
@@ -160,7 +162,7 @@ class Extension
         self::$extensions[] = array(
             'name'  => $extension_name,
             'route' => $route,
-            'type'  => 'before'
+            'type'  => self::BEFORE
         );
     }
 

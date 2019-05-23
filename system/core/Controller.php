@@ -63,13 +63,14 @@ class Controller
 
 
     /**
-     * Set the uploader
+     * Add an utility
      *
-     * @param  \Utilities\Upload  $upload  the uploader
+     * @param  string  $key  the classname to refer to in the controller
+     * @param  string  $class  the classname
      */
-    public function setUploader($upload)
+    public function addUtility($key, $class)
     {
-        $this->upload = &$upload;
+        $this->$key = Factory::utility($class);
     }
 
 }

@@ -8,6 +8,7 @@ class Log
 {
 
     const FOLDER_NAME = 'logs';
+    const DATE_FORMAT = 'm-d-Y H:i:s';
     const FORMAT = '[{date}] [{ip}] {level}: {message}';
 
     const EMERGENCY = 'Emergency';
@@ -117,7 +118,7 @@ class Log
     private static function log(string $level, string $message)
     {
         $values = [
-            'date'    => date('m-d-Y H:i:s'),
+            'date'    => date(self::DATE_FORMAT),
             'ip'      => getClientIP(),
             'level'   => $level,
             'message' => $message
@@ -137,7 +138,7 @@ class Log
     {
         self::mkdir();
         $filename = getSystemDirectory() . self::FOLDER_NAME . '/' . date("m-d-Y") . '.log';
-        file_put_contents($filename, $data . "\n", FILE_APPEND);
+        file_put_contents($filename, $data . PHP_EOL, FILE_APPEND);
     }
 
 

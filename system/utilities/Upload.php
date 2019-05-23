@@ -28,6 +28,8 @@ class Upload
      */
     private $lastFile;
 
+    const DATE_FORMAT = 'Y-m-d H:i:s';
+
 
     /**
      * Set the files maximum size
@@ -75,7 +77,7 @@ class Upload
      */
     public function getDirectory()
     {
-        return $this->directory;
+        return $this->directory ?? '';
     }
 
 
@@ -111,7 +113,7 @@ class Upload
     {
         $file = $_FILES[$filename];
 
-        if ($this->maxSize > 0 && $file['size'] > $this->maxSize) {
+        if (isset($this->maxSize) && $file['size'] > $this->maxSize) {
             Log::notice("File '" . $file['name'] . "' exceeds maximum upload size");
 
             return false;
@@ -132,7 +134,7 @@ class Upload
             'size'        => $file['size'],
             'directory'   => $dir,
             'uploader_ip' => $_SERVER['REMOTE_ADDR'],
-            'date'        => date('Y-m-d H:i:s')
+            'date'        => date(self::DATE_FORMAT)
         );
 
         return true;

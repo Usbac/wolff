@@ -52,7 +52,7 @@ class Route
         }
 
         foreach (self::$routes as $key => $value) {
-            $route       = explode('/', $key);
+            $route = explode('/', $key);
             $routeLength = count($route) - 1;
 
             for ($i = 0; $i <= $routeLength && $i <= $urlLength; $i++) {
@@ -107,38 +107,14 @@ class Route
      * Add a route
      *
      * @param  string  $url  the url
-     * @param $function mixed the function that must be executed when accessing the route
+     * @param  mixed  $function mixed the function that must be executed when accessing the route
      * @param  int  $status the HTTP status code
      */
     public static function add(string $url, $function, int $status = self::STATUS_OK)
     {
         $url = Str::sanitizeURL($url);
 
-        //Use $function as a controller name and load it if it's a string
-        if (is_string($function)) {
-            $function = self::getControllerClosure($function);
-        }
-
-        self::$routes[$url] = array(
-            'function' => $function,
-            'api'      => false,
-            'status'   => $status
-        );
-    }
-
-
-    /**
-     * Returns the closure that loads a controller
-     *
-     * @param  string  $controller  the controller
-     *
-     * @return closure The closure that loads a controller
-     */
-    private function getControllerClosure(string $controller)
-    {
-        return function () use ($controller) {
-            $this->load->controller($controller);
-        };
+        self::addRoute($url, $function, false, $status);
     }
 
 
@@ -152,11 +128,7 @@ class Route
     public static function api(string $url, $function, int $status = self::STATUS_OK)
     {
         $url = Str::sanitizeURL($url);
-        self::$routes[$url] = array(
-            'function' => $function,
-            'api'      => true,
-            'status'   => $status,
-        );
+        self::addRoute($url, $function, true, $status);
     }
 
 
@@ -172,17 +144,47 @@ class Route
         $url = Str::sanitizeURL($url);
         $url2 = Str::sanitizeURL($url2);
 
-        self::$routes[$url] = array(
-            'function' => self::$routes[$url2]['function'],
-            'api'      => false,
-            'status'   => $status,
-        );
+        //Get the controller default route if the second url isn't a defined custom route
+        if (isset(self::$routes[$url2])) {
+            $function = self::$routes[$url2]['function'];
+        } else {
+            $function = $url2;
+        }
 
-        self::$redirects[] = array(
-            'origin'  => $url,
+        self::addRoute($url, $function, false, $status);
+        self::addRedirect($url, $url2, $status);
+    }
+
+
+    /**
+     * Add a route to the list
+     *
+     * @param  mixed  $url  the url
+     * @param  mixed  $function  the url function or controller name
+     * @param  bool  $api  is or not an api route
+     * @param  int  $status  the HTTP status code
+     */
+    private static function addRoute($url, $function, bool $api, int $status) {
+        self::$routes[$url] = [
+            'function' => $function,
+            'api'      => $api,
+            'status'   => $status
+        ];
+    }
+
+
+    /**
+     * Add a redirection to the list
+     *
+     * @param  mixed  $url  the origin url
+     * @param  mixed  $url2  the destiny url
+     * @param  int  $status  the HTTP status code
+     */
+    private static function addRedirect($url, $url2, int $status) {
+        self::$redirects[$url] = [
             'destiny' => $url2,
-            'code'    => $status,
-        );
+            'code'    => $status
+        ];
     }
 
 
@@ -309,6 +311,24 @@ class Route
     public static function getRedirects()
     {
         return self::$redirects;
+    }
+
+
+    /**
+     * Returns the redirection of the specified route
+     *
+     * @param  string  $url  the route url
+     *
+     * @return string|null the redirection url
+     * or null if the specified route doesn't have a redirection
+     */
+    public static function getRedirection(string $url)
+    {
+        if (!isset(self::$redirects[$url])) {
+            return null;
+        }
+
+        return self::$redirects[$url]['destiny'] ?? null;
     }
 
 

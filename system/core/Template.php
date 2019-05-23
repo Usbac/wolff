@@ -118,7 +118,7 @@ class Template
         } elseif (file_exists($file_path . '.html')) {
             return file_get_contents($file_path . '.html');
         } else {
-            Log::error("View '" . $dir . "' doesn't exists");
+            Log::error("View '$dir' doesn't exists");
 
             return false;
         }

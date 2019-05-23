@@ -10,7 +10,7 @@
     "mvc"
   ],
   "type": "project",
-  "version": "0.9.9.4",
+  "version": "0.9.9.5",
   "license": "MIT",
   "support": {
     "issues": "https://github.com/Usbac/Wolff/issues",
@@ -39,6 +39,7 @@
       "system/stdlib/pages.php",
       "system/stdlib/utilities.php",
       "system/definitions/Routes.php",
+      "system/definitions/Utilities.php",
       "system/definitions/Extensions.php",
       "system/definitions/Templates.php"
     ],
