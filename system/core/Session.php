@@ -13,8 +13,6 @@ class Session
      */
     public function __construct()
     {
-        $_SESSION['flash_data'] = [];
-
         if ($this->hasExpired()) {
             $this->empty();
             $this->kill();
@@ -303,31 +301,6 @@ class Session
         }
 
         return ($remaining > 0) ? $remaining : 0;
-    }
-
-
-    /**
-     * Set flash variable (will be destroyed on next response)
-     *
-     * @param  string  $key  the variable name
-     * @param  string  $value  the variable value
-     */
-    public function setFlash(string $key, $value)
-    {
-        $_SESSION['flash_data'][$key] = $value;
-    }
-
-
-    /**
-     * Get flash variable
-     *
-     * @param  string  $key  the variable name
-     *
-     * @return object the variable
-     */
-    public function getFlash(string $key)
-    {
-        return $_SESSION['flash_data'][$key];
     }
 
 

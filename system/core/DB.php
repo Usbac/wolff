@@ -153,28 +153,28 @@ class DB
 
 
     /**
-     * Returns a query result as an associative array
+     * Returns a query result
      *
      * @param  string  $sql  the query
      * @param  mixed  $args  the arguments
      *
-     * @return mixed the query result as an associative array
+     * @return mixed the query result
      */
     public static function run(string $sql, $args = [])
     {
         self::$last_sql = $sql;
-        self::$last_args = $args;
+        self::$last_args = is_array($args) ? $args : array($args);
+
         //Query without args
-        if (!isset($args)) {
+        if (!isset(self::$last_args)) {
             $result = self::getPdo()->query($sql)->fetchAll();
 
             return $result;
         }
 
         //Query with args
-        $args = is_array($args) ? $args : array($args);
         $stmt = self::getPdo()->prepare($sql);
-        $stmt->execute($args);
+        $stmt->execute(self::$last_args);
         self::$affected_rows = $stmt->rowCount();
 
         $result = $stmt->fetchAll();
@@ -198,22 +198,9 @@ class DB
 
 
     /**
-     * Export a query to a csv file
-     *
-     * @param  string  $filename  the filename
-     * @param  string  $sql  the query
-     * @param  mixed  $args  the arguments
-     */
-    public static function runCsv(string $filename, string $sql, $args = [])
-    {
-        arrayToCsv($filename, self::run($sql, $args));
-    }
-
-
-    /**
      * Run the last query executed
      *
-     * @return mixed the last query result as an associative array
+     * @return mixed the last query result
      */
     public static function runLastSql()
     {
