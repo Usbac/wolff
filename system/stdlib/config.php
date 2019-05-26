@@ -43,25 +43,25 @@ namespace {
         }
     }
 
-    if (!function_exists('getDBUser')) {
+    if (!function_exists('getDbUser')) {
 
         /**
          * Returns the current database username
          * @return string the current database username
          */
-        function getDBUser()
+        function getDbUser()
         {
             return CONFIG['db_username'];
         }
     }
 
-    if (!function_exists('getDBPass')) {
+    if (!function_exists('getDbPass')) {
 
         /**
          * Returns the current database username password
          * @return string the current database username password
          */
-        function getDBPass()
+        function getDbPass()
         {
             return CONFIG['db_password'];
         }

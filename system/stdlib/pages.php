@@ -55,7 +55,6 @@ namespace {
                 $class = new ReflectionClass($class);
                 $class->getMethod($function);
             } catch (Exception $e) {
-                error_log($e->getMessage());
 
                 return false;
             }

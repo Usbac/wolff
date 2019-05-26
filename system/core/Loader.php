@@ -103,9 +103,9 @@ class Loader
     /**
      * Set the controller properties
      *
-     * @param  object  $controller  the controller
+     * @param  mixed  $controller  the controller
      */
-    private function setControllerProps(object $controller)
+    private function setControllerProps($controller)
     {
         $controller->setLoader($this);
         $controller->setSession($this->session);

@@ -88,18 +88,6 @@ namespace {
         }
     }
 
-    if (!function_exists('redirect')) {
-
-        /**
-         * Redirect to a page
-         *
-         * @param  string  $page the page
-         */
-        function redirect(string $page)
-        {
-            header('Location:' . $page);
-        }
-    }
 
     if (!function_exists('arrayToCsv')) {
 
@@ -233,13 +221,13 @@ namespace {
         }
     }
 
-    if (!function_exists('inCLI')) {
+    if (!function_exists('inCli')) {
 
         /**
          * Returns true if running from command line interface, false otherwise
          * @return bool true if running from command line interface, false otherwise
          */
-        function inCLI()
+        function inCli()
         {
             return (php_sapi_name() === 'cli');
         }

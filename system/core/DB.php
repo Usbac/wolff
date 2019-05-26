@@ -37,11 +37,11 @@ class DB
     protected static $last_args;
 
     /**
-     * The number of rows affected by the last query.
+     * The last PDO statement executed.
      *
-     * @var int
+     * @var PDOStatement
      */
-    protected static $affected_rows;
+    protected static $last_stmt;
 
     const FETCH_MODE = PDO::FETCH_ASSOC;
     const NAMES_MODE = 'SET NAMES utf8';
@@ -59,7 +59,7 @@ class DB
 
         try {
             self::$connection = new PDO(getDBMS() . ':host=' . getServer() . '; dbname=' . getDB() . '',
-                                        getDBUser(), getDBPass(), $options);
+                                        getDbUser(), getDbPass(), $options);
         } catch (PDOException $e) {
             Log::critical($e->getMessage());
         }
@@ -119,6 +119,16 @@ class DB
 
 
     /**
+     * Returns the last prepared PDO statement
+     * @return PDOStatement the last prepared PDO statement
+     */
+    public static function getLastStmt()
+    {
+        return self::$last_stmt;
+    }
+
+
+    /**
      * Returns the last inserted id in the database
      * @return string the last inserted id in the database
      */
@@ -130,11 +140,11 @@ class DB
 
     /**
      * Returns the number of rows affected by the last query
-     * @return int the number of rows affected by the last query
+     * @return int|null the number of rows affected by the last query
      */
     public static function getAffectedRows()
     {
-        return self::$affected_rows;
+        return self::$last_stmt ? self::$last_stmt->rowCount() : null;
     }
 
 
@@ -175,7 +185,7 @@ class DB
         //Query with args
         $stmt = self::getPdo()->prepare($sql);
         $stmt->execute(self::$last_args);
-        self::$affected_rows = $stmt->rowCount();
+        self::$last_stmt = $stmt;
 
         $result = $stmt->fetchAll();
 
@@ -303,7 +313,7 @@ class DB
 
 
     /**
-     * Returns the result of a SELECT COUNT query
+     * Returns the result of a SELECT COUNT(*) query
      *
      * @param  string  $table  the table for the query
      * @param  string  $conditions  the select conditions

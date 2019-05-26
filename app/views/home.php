@@ -2,13 +2,13 @@
 <html>
 <head>
     <title>{{ CONFIG['title'] }} - Home</title>
-    <link href="{{ getPublicDirectory() }}/assets/css/styles.css" rel="stylesheet"/>
-    <link rel="icon" href="{{ getPublicDirectory() }}/logo.png">
+    <link href="{{ getPublicDirectory() }}assets/css/styles.css" rel="stylesheet"/>
+    <link rel="icon" href="{{ getPublicDirectory() }}logo.png">
 </head>
 <body>
 <div class='center'>
     <div class='text-center'>
-        <img class='main-img' src="{{ getPublicDirectory() }}/logo.png" width='130px'>
+        <img class='main-img' src="{{ getPublicDirectory() }}logo.png" width='130px'>
         <h1 class='title'>{{ $lang['title'] }}</h1>
     </div>
     <div class='text-center description'>

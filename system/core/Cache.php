@@ -7,6 +7,7 @@ class Cache
 
     const FILENAME = "tmp_%s.php";
     const EXPIRATION_TIME = 604800; //One week
+    const FOLDER_PERMISSIONS = 0755;
 
 
     public function __construct()
@@ -100,7 +101,7 @@ class Cache
     {
         $folder_path = getCacheDirectory();
         if (!file_exists($folder_path)) {
-            mkdir($folder_path, 0755, true);
+            mkdir($folder_path, self::FOLDER_PERMISSIONS, true);
         }
     }
 

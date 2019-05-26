@@ -99,7 +99,7 @@ class Lister
 
     private function controllers()
     {
-        $controllers = $this->listPHPFiles(getAppDirectory() . 'controllers');
+        $controllers = $this->listPhpFiles(getAppDirectory() . 'controllers');
 
         foreach ($controllers as $controller) {
             echo "\n" . $controller;
@@ -152,7 +152,7 @@ class Lister
     }
 
 
-    private function listPHPFiles($dir, $folder = '', &$result = [])
+    private function listPhpFiles($dir, $folder = '', &$result = [])
     {
         $folder = substr($dir, strrpos($dir, '/') + 1);
         $files = scandir($dir);
@@ -165,7 +165,7 @@ class Lister
                 $result[]  = $file_path;
             } else {
                 if ($value != "." && $value != "..") {
-                    $this->listPHPFiles($path, $folder, $result);
+                    $this->listPhpFiles($path, $folder, $result);
                 }
             }
         }
@@ -254,10 +254,10 @@ class Lister
             echo self::IP_NONE;
 
             return;
-        } else {
-            foreach ($ips as $ip) {
-                echo "\n " . $ip;
-            }
+        }
+
+        foreach ($ips as $ip) {
+            echo "\n " . $ip;
         }
         echo "\n";
     }
@@ -269,8 +269,8 @@ class Lister
         echo "\n DBMS: " . getDBMS();
         echo "\n Server: " . getServer();
         echo "\n Database: " . getDB();
-        echo "\n User: " . getDBUser();
-        echo "\n Password: " . getDBPass();
+        echo "\n User: " . getDbUser();
+        echo "\n Password: " . getDbPass();
         echo "\n";
         echo "\n ->\e[32m DIRECTORIES \e[0m";
         echo "\n Project folder: " . getDirectory();
