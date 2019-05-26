@@ -43,15 +43,23 @@ class DB
      */
     protected static $affected_rows;
 
+    const FETCH_MODE = PDO::FETCH_ASSOC;
+    const NAMES_MODE = 'SET NAMES utf8';
+
 
     /**
      * Connects with the database using the constants present in system/config.php
      */
     public function __construct()
     {
+        $options = [
+            PDO::MYSQL_ATTR_INIT_COMMAND => self::NAMES_MODE,
+            PDO::ATTR_DEFAULT_FETCH_MODE => self::FETCH_MODE
+        ];
+
         try {
-            self::$connection = new PDO(strtolower(getDBMS()) . ':host=' . getServer() . '; dbname=' . getDB() . '',
-                getDBUser(), getDBPass(), array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'));
+            self::$connection = new PDO(getDBMS() . ':host=' . getServer() . '; dbname=' . getDB() . '',
+                                        getDBUser(), getDBPass(), $options);
         } catch (PDOException $e) {
             Log::critical($e->getMessage());
         }
@@ -76,6 +84,17 @@ class DB
     public static function getPdo()
     {
         return self::$connection;
+    }
+
+
+    /**
+     * Set the connection fetch mode
+     *
+     * @param  int  $mode  the connection fetch mode
+     */
+    public static function setFetchMode(int $mode = self::FETCH_MODE)
+    {
+        self::$connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, $mode);
     }
 
 
@@ -147,7 +166,7 @@ class DB
         self::$last_args = $args;
         //Query without args
         if (!isset($args)) {
-            $result = self::getPdo()->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+            $result = self::getPdo()->query($sql)->fetchAll();
 
             return $result;
         }
@@ -158,7 +177,7 @@ class DB
         $stmt->execute($args);
         self::$affected_rows = $stmt->rowCount();
 
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $result = $stmt->fetchAll();
 
         return $result;
     }
@@ -277,7 +296,7 @@ class DB
             return false;
         }
 
-        return $result->fetchAll(PDO::FETCH_ASSOC);
+        return $result->fetchAll();
     }
 
 

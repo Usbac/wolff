@@ -49,13 +49,14 @@ class Session
      */
     private function unsetExpiredVariables()
     {
+
         if (!isset($_SESSION['vars_tmp_time']) || !is_array($_SESSION['vars_tmp_time'])) {
             $_SESSION['vars_tmp_time'] = [];
         }
 
         foreach ($_SESSION['vars_tmp_time'] as $key => $value) {
             if (time() >= $value) {
-                $this->delete($key);
+                $this->unset($key);
             }
         }
     }
@@ -127,11 +128,18 @@ class Session
      * Set a session variable
      *
      * @param  string  $key  the variable key
-     * @param  string value the variable value
+     * @param  string  $value the variable value
+     * @param  int  $time the variable live time
      */
-    public function set(string $key, $value)
+    public function set(string $key, $value, int $time = null)
     {
         $_SESSION[$key] = $value;
+
+        if (isset($time)) {
+            $this->setVarTime($key, $time);
+        } else {
+            unset($_SESSION['vars_tmp_time'][$key]);
+        }
     }
 
 
@@ -201,6 +209,10 @@ class Session
      */
     public function setVarTime(string $key, int $time = 1)
     {
+        if (!isset($_SESSION[$key])) {
+            return;
+        }
+
         $_SESSION['vars_tmp_time'][$key] = time() + ($time * 60);
     }
 
@@ -214,17 +226,6 @@ class Session
     public function addVarTime(string $key, int $time = 1)
     {
         $_SESSION['vars_tmp_time'][$key] += ($time * 60);
-    }
-
-
-    /**
-     * Unset a session variable
-     *
-     * @param  string  $key  the variable key
-     */
-    public function unset(string $key)
-    {
-        unset($_SESSION[$key]);
     }
 
 
@@ -327,6 +328,18 @@ class Session
     public function getFlash(string $key)
     {
         return $_SESSION['flash_data'][$key];
+    }
+
+
+    /**
+     * Unset a session variable
+     *
+     * @param  string  $key  the variable key
+     */
+    public function unset(string $key)
+    {
+        unset($_SESSION[$key]);
+        unset($_SESSION['vars_tmp_time'][$key]);
     }
 
 

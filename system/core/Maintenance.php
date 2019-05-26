@@ -27,6 +27,18 @@ class Maintenance
         return CONFIG['maintenance_on'];
     }
 
+
+    /**
+     * Returns true if the client has access to the page, false otherwise
+     *
+     * @return bool true if the client has access to the page, false otherwise
+     */
+    public static function hasAccess()
+    {
+        return !self::isEnabled() || self::isClientAllowed();
+    }
+
+
     /**
      * Returns an array of the IP in the whitelist
      * @return array An array of the IP in the whitelist, false if an error happends

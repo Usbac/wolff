@@ -44,7 +44,7 @@ class Start
     {
         $url = $this->getUrl();
 
-        $this->checkAccess($url);
+        $this->validateAccess($url);
         $this->initialize();
 
         Extension::loadBefore($this->load);
@@ -73,7 +73,7 @@ class Start
     public function getUrl()
     {
         $url = Request::get('url') ?? getMainPage();
-        $url = Str::sanitizeURL($url);
+        $url = Str::sanitizeUrl($url);
         return Route::getRedirection($url) ?? $url;
     }
 
@@ -98,15 +98,15 @@ class Start
 
 
     /**
-     * Check the client access to the page
+     * Validate the client access to the page
      * This can redirect to the maintenance or the 404 page
      *
      * @param  string  $url the page url
      */
-    public function checkAccess($url)
+    public function validateAccess($url)
     {
         //Check maintenance mode
-        if (Maintenance::isEnabled() && !Maintenance::isClientAllowed()) {
+        if (!Maintenance::hasAccess()) {
             $this->load->maintenance();
         }
 
