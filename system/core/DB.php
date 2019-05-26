@@ -27,21 +27,21 @@ class DB
      *
      * @var string
      */
-    protected static $lastSQL;
+    protected static $last_sql;
 
     /**
      * The arguments of the last query executed.
      *
      * @var array
      */
-    protected static $lastArgs;
+    protected static $last_args;
 
     /**
      * The number of rows affected by the last query.
      *
      * @var int
      */
-    protected static $affectedRows;
+    protected static $affected_rows;
 
 
     /**
@@ -81,21 +81,21 @@ class DB
 
     /**
      * Returns the last query executed
-     * @return string $lastSQL the last query executed
+     * @return string the last query executed
      */
     public static function getLastSql()
     {
-        return self::$lastSQL;
+        return self::$last_sql;
     }
 
 
     /**
      * Returns the arguments of the last query executed
-     * @return array $lastSQL the arguments of the last query executed
+     * @return array the arguments of the last query executed
      */
     public static function getLastArgs()
     {
-        return self::$lastArgs;
+        return self::$last_args;
     }
 
 
@@ -115,7 +115,7 @@ class DB
      */
     public static function getAffectedRows()
     {
-        return self::$affectedRows;
+        return self::$affected_rows;
     }
 
 
@@ -143,8 +143,8 @@ class DB
      */
     public static function run(string $sql, $args = [])
     {
-        self::$lastSQL = $sql;
-        self::$lastArgs = $args;
+        self::$last_sql = $sql;
+        self::$last_args = $args;
         //Query without args
         if (!isset($args)) {
             $result = self::getPdo()->query($sql)->fetchAll(PDO::FETCH_ASSOC);
@@ -156,7 +156,7 @@ class DB
         $args = is_array($args) ? $args : array($args);
         $stmt = self::getPdo()->prepare($sql);
         $stmt->execute($args);
-        self::$affectedRows = $stmt->rowCount();
+        self::$affected_rows = $stmt->rowCount();
 
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

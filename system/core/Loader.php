@@ -109,12 +109,7 @@ class Loader
     {
         $controller->setLoader($this);
         $controller->setSession($this->session);
-
-        if (is_array(self::$utilities)) {
-            foreach(self::$utilities as $key => $class) {
-                $controller->addUtility($key, $class);
-            }
-        }
+        $controller->setUtilities(self::$utilities);
     }
 
 
@@ -158,7 +153,7 @@ class Loader
      *
      * @return mixed the language content or false if an error happens
      */
-    public function language(string $dir, string $language = WOLFF_LANGUAGE)
+    public function language(string $dir, string $language = CONFIG['language'])
     {
         //Sanitize directory
         $dir = Str::sanitizePath($dir);

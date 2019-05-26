@@ -1,30 +1,31 @@
 <?php
 
-define('WOLFF_DEVELOPMENT', true);
+define('CONFIG', [
+    //Server
+    'dbms'        => 'mysql',
+    'server'      => 'localhost',
+    'db'          => '',
+    'db_username' => '',
+    'db_password' => '',
 
-//Server
-define('WOLFF_DBMS', 'mysql');
-define('WOLFF_SERVER', 'localhost');
-define('WOLFF_DB', '');
-define('WOLFF_DBUSERNAME', '');
-define('WOLFF_DBPASSWORD', '');
+    //Directories
+    'root_dir'      => $root = dirname(__DIR__) . '/',
+    'system_dir'    => $root . 'system/',
+    'app_dir'       => $root . 'app/',
+    'extension_dir' => $root . 'app/extensions/',
+    'cache_dir'     => $root . 'cache/',
+    'public_dir'    => $root . 'public/',
 
-//Directories
-define('WOLFF_ROOT_DIR', dirname(__DIR__) . '/');
-define('WOLFF_SYS_DIR', WOLFF_ROOT_DIR . 'system/');
-define('WOLFF_APP_DIR', WOLFF_ROOT_DIR . 'app/');
-define('WOLFF_PUBLIC_DIR', WOLFF_ROOT_DIR . 'public/');
-define('WOLFF_EXTENSION_DIR', WOLFF_APP_DIR . 'extensions/');
-define('WOLFF_CACHE_DIR', WOLFF_ROOT_DIR . 'cache/');
+    //General
+    'version'   => '0.9.9.6',
+    'start'     => microtime(true),
+    'title'     => 'Wolff',
+    'main_page' => 'main_page',
+    'language'  => 'english',
 
-//General
-define('WOLFF_VERSION', '0.9.9.5');
-define('WOLFF_START', microtime(true));
-define('WOLFF_PAGE_TITLE', 'Wolff');
-define('WOLFF_MAIN_PAGE', 'main_page');
-define('WOLFF_LANGUAGE', 'english');
-
-//Extra
-define('WOLFF_CACHE_ON', true);
-define('WOLFF_EXTENSIONS_ON', true);
-define('WOLFF_MAINTENANCE_ON', false);
+    //Extra
+    'development_on' => true,
+    'extensions_on'  => true,
+    'cache_on'       => true,
+    'maintenance_on' => false
+]);

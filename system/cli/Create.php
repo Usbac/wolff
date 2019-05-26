@@ -237,9 +237,9 @@ class Create
         fclose($file);
 
         $content = "\n";
-        $content .= 'Route::add("' . $route . '", function() {' . "\n";
-        $content .= '    $this->load->controller("' . $controller . '");' . "\n";
-        $content .= '});';
+        $content .= "Route::add('" . $route . "', function() { \n";
+        $content .= "    \$this->load->controller('" . $controller . "'); \n";
+        $content .= "});";
 
         if (file_put_contents($this->routes_dir, $content, "\r\n" . FILE_APPEND | LOCK_EX)) {
             echo "Route " . $route . " created successfully! \n";

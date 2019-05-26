@@ -2,15 +2,10 @@
   "name": "usbac/wolff",
   "description": "Ridiculously small PHP framework",
   "keywords": [
-    "framework",
-    "php",
-    "small",
-    "web",
-    "fast",
-    "mvc"
+    "framework", "php", "small", "web", "fast", "mvc"
   ],
   "type": "project",
-  "version": "0.9.9.5",
+  "version": "0.9.9.6",
   "license": "MIT",
   "support": {
     "issues": "https://github.com/Usbac/Wolff/issues",
@@ -44,15 +39,13 @@
       "system/definitions/Templates.php"
     ],
     "psr-4": {
-      "Root\\": "",
-      "App\\": "app/",
-      "System\\": "system/",
-      "Definitions\\": "system/definitions",
       "Core\\": "system/core/",
+      "Definitions\\": "system/definitions",
       "Utilities\\": "system/utilities/",
+      "Cli\\": "system/cli/",
+      "App\\": "app/",
       "Extension\\": "app/extensions/",
-      "Controller\\": "app/controllers/",
-      "Cli\\": "system/cli/"
+      "Controller\\": "app/controllers/"
     }
   }
 }

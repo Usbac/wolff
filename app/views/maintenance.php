@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ WOLFF_PAGE_TITLE }} - {{ $lang['title'] }}</title>
-    <link href="{{WOLFF_PUBLIC_DIR}}assets/css/styles.css" rel="stylesheet"/>
+    <title>{{ CONFIG['title'] }} - {{ $lang['title'] }}</title>
+    <link href="{{ getPublicDirectory() }}/assets/css/styles.css" rel="stylesheet"/>
 </head>
 <body>
 <div class='center'>

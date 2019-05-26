@@ -8,13 +8,6 @@ class Start
 {
 
     /**
-     * Extension.
-     *
-     * @var Core\Extension
-     */
-    public $extension;
-
-    /**
      * Loader.
      *
      * @var Core\Loader
@@ -54,17 +47,11 @@ class Start
         $this->checkAccess($url);
         $this->initialize();
 
-        //Load extensions of type before
-        if (Extension::isEnabled()) {
-            Extension::load(Extension::BEFORE, $this->load);
-        }
+        Extension::loadBefore($this->load);
 
         $this->loadPage($url);
 
-        //Load extensions of type after
-        if (Extension::isEnabled()) {
-            Extension::load(Extension::AFTER, $this->load);
-        }
+        Extension::loadAfter($this->load);
     }
 
 

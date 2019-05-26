@@ -12,7 +12,7 @@ class Str
      *
      * @return string the url sanitized
      */
-    public static function sanitizeURL(string $url)
+    public static function sanitizeUrl(string $url)
     {
         return filter_var(rtrim(strtolower($url), '/'), FILTER_SANITIZE_URL);
     }
@@ -106,6 +106,25 @@ class Str
         }
 
         return $str;
+    }
+
+
+    /**
+     * Converts a string with any encoding to UTF-8 and returns it
+     * Keep in mind that the string encoding detection is not perfect
+     *
+     * @param  string  $str  the string
+     *
+     * @return string the string encoded in UTF-8
+     */
+    function toUtf8($str) {
+        $encoded = iconv(mb_detect_encoding($str, mb_detect_order(), true), "UTF-8", $str);
+
+        if (empty($encoded)) {
+            return utf8_encode($str);
+        }
+
+        return $encoded;
     }
 
 
@@ -219,7 +238,9 @@ class Str
         $aux = '';
 
         foreach ($strings as $string) {
-            $aux .= $string;
+            if (is_string($string)) {
+                $aux .= $string;
+            }
         }
 
         return $aux;

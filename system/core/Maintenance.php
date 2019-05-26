@@ -12,7 +12,7 @@ class Maintenance
      *
      * @var string
      */
-    private static $file = WOLFF_ROOT_DIR . 'system/definitions/maintenance_whitelist.txt';
+    private static $file = CONFIG['root_dir'] . 'system/definitions/maintenance_whitelist.txt';
 
 
     const READ_ERROR = "Couldn't read the maintenance whitelist file";
@@ -24,7 +24,7 @@ class Maintenance
      */
     public static function isEnabled()
     {
-        return WOLFF_MAINTENANCE_ON;
+        return CONFIG['maintenance_on'];
     }
 
     /**

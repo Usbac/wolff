@@ -2,7 +2,7 @@
 
 require('../vendor/autoload.php');
 
-if (WOLFF_DEVELOPMENT) {
+if (CONFIG['development_on']) {
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
 } else {

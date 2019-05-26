@@ -1,5 +1,5 @@
 /vendor/
 /cache/
-/system/logs/
+/system/log/
 /app/extensions/
 composer.lock

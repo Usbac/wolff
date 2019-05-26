@@ -7,8 +7,6 @@ use Utilities\Str;
 class Extension
 {
 
-    const NAMESPACE = 'Extension\\';
-
     /**
      * List of extensions
      *
@@ -16,7 +14,7 @@ class Extension
      */
     private static $extensions;
 
-
+    const NAMESPACE = 'Extension\\';
     const FILE = 'system/definitions/Extensions.php';
     const BEFORE = 'before';
     const AFTER = 'after';
@@ -31,7 +29,7 @@ class Extension
      *
      * @return bool true if the extensions have been loaded, false otherwise
      */
-    public static function load(string $type, $loader = null)
+    private static function load(string $type, $loader = null)
     {
         if (!self::isEnabled() || empty(self::$extensions)) {
             return false;
@@ -62,12 +60,38 @@ class Extension
 
 
     /**
+     * Load the extensions files of type before that matches the current route
+     *
+     * @param  mixed  $loader  the loader class
+     *
+     * @return bool true if the extensions have been loaded, false otherwise
+     */
+    public static function loadBefore($loader = null)
+    {
+        return self::load(Extension::BEFORE, $loader);
+    }
+
+
+    /**
+     * Load the extensions files of type after that matches the current route
+     *
+     * @param  mixed  $loader  the loader class
+     *
+     * @return bool true if the extensions have been loaded, false otherwise
+     */
+    public static function loadAfter($loader = null)
+    {
+        return self::load(Extension::AFTER, $loader);
+    }
+
+
+    /**
      * Returns true if the extensions are enabled, false otherwise
      * @return bool true if the extensions are enabled, false otherwise
      */
     public static function isEnabled()
     {
-        return WOLFF_EXTENSIONS_ON;
+        return CONFIG['extensions_on'];
     }
 
 
@@ -85,12 +109,12 @@ class Extension
         }
 
         $dir = explode('/', Str::sanitizeURL($dir));
-        $dirLength = count($dir) - 1;
+        $dir_length = count($dir) - 1;
 
         $url = explode('/', Str::sanitizeURL(getCurrentPage()));
-        $urlLength = count($url) - 1;
+        $url_length = count($url) - 1;
 
-        for ($i = 0; $i <= $dirLength && $i <= $urlLength; $i++) {
+        for ($i = 0; $i <= $dir_length && $i <= $url_length; $i++) {
             if ($dir[$i] === self::ALL) {
                 return true;
             }
@@ -100,12 +124,12 @@ class Extension
             }
 
             //Finish if last GET variable from url is empty
-            if ($i + 1 === $dirLength && $i === $urlLength && Route::isGetVariable($dir[$i + 1])) {
+            if ($i + 1 === $dir_length && $i === $url_length && Route::isGetVariable($dir[$i + 1])) {
                 return true;
             }
 
             //Finish if in the end of the route
-            if ($i === $dirLength && $i === $urlLength) {
+            if ($i === $dir_length && $i === $url_length) {
                 return true;
             }
         }

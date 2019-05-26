@@ -15,7 +15,7 @@ namespace {
          */
         function getServer()
         {
-            return WOLFF_SERVER;
+            return CONFIG['server'];
         }
     }
 
@@ -27,7 +27,7 @@ namespace {
          */
         function getDB()
         {
-            return WOLFF_DB;
+            return CONFIG['db'];
         }
     }
 
@@ -39,7 +39,7 @@ namespace {
          */
         function getDBMS()
         {
-            return WOLFF_DBMS;
+            return CONFIG['dbms'];
         }
     }
 
@@ -51,7 +51,7 @@ namespace {
          */
         function getDBUser()
         {
-            return WOLFF_DBUSERNAME;
+            return CONFIG['db_username'];
         }
     }
 
@@ -63,7 +63,7 @@ namespace {
          */
         function getDBPass()
         {
-            return WOLFF_DBPASSWORD;
+            return CONFIG['db_password'];
         }
     }
 
@@ -79,7 +79,7 @@ namespace {
          */
         function getDirectory()
         {
-            return WOLFF_ROOT_DIR;
+            return CONFIG['root_dir'];
         }
     }
 
@@ -91,7 +91,7 @@ namespace {
          */
         function getSystemDirectory()
         {
-            return WOLFF_SYS_DIR;
+            return CONFIG['system_dir'];
         }
     }
 
@@ -103,7 +103,7 @@ namespace {
          */
         function getAppDirectory()
         {
-            return WOLFF_APP_DIR;
+            return CONFIG['app_dir'];
         }
     }
 
@@ -111,11 +111,12 @@ namespace {
 
         /**
          * Returns the public directory of the project
+         * relative to the server root
          * @return string the public directory of the project
          */
         function getPublicDirectory()
         {
-            return WOLFF_PUBLIC_DIR;
+            return substr(CONFIG['public_dir'], strlen($_SERVER['DOCUMENT_ROOT']));
         }
     }
 
@@ -127,7 +128,7 @@ namespace {
          */
         function getExtensionDirectory()
         {
-            return WOLFF_EXTENSION_DIR;
+            return CONFIG['extension_dir'];
         }
     }
 
@@ -139,7 +140,7 @@ namespace {
          */
         function getCacheDirectory()
         {
-            return WOLFF_CACHE_DIR;
+            return CONFIG['cache_dir'];
         }
     }
 
@@ -155,7 +156,7 @@ namespace {
          */
         function getPageTitle()
         {
-            return WOLFF_PAGE_TITLE;
+            return CONFIG['title'];
         }
     }
 
@@ -167,7 +168,7 @@ namespace {
          */
         function getMainPage()
         {
-            return WOLFF_MAIN_PAGE;
+            return CONFIG['main_page'];
         }
     }
 
@@ -179,19 +180,19 @@ namespace {
          */
         function getLanguage()
         {
-            return WOLFF_LANGUAGE;
+            return CONFIG['language'];
         }
     }
 
     if (!function_exists('wolffVersion')) {
 
         /**
-         * Returns the current version of Wolff defined in the composer.json file
-         * @return string The current version of Wolff defined in the composer.json file
+         * Returns the current version of Wolff
+         * @return string the current version of Wolff
          */
         function wolffVersion()
         {
-            return WOLFF_VERSION;
+            return CONFIG['version'];
         }
     }
 

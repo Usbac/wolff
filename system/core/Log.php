@@ -7,7 +7,7 @@ use Utilities\Str;
 class Log
 {
 
-    const FOLDER_NAME = 'logs';
+    const FOLDER_NAME = 'log';
     const DATE_FORMAT = 'm-d-Y H:i:s';
     const FORMAT = '[{date}] [{ip}] {level}: {message}';
 
@@ -124,8 +124,8 @@ class Log
             'message' => $message
         ];
 
-        $data = Str::interpolate(self::FORMAT, $values);
-        self::writeToFile($data);
+        $log = Str::interpolate(self::FORMAT, $values);
+        self::writeToFile($log);
     }
 
 

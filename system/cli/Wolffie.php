@@ -9,6 +9,9 @@ class Wolffie
 
     private $argv;
 
+    const CONFIG_FILE = 'system/config.php';
+    const DATE_FORMAT = 'y-m-d';
+
 
     public function __construct($argv)
     {
@@ -111,7 +114,7 @@ class Wolffie
                 break;
             case 'set':
                 echo "\nModify a constant defined in the config.php file. \n";
-                echo "Example changing the language to english: set wolff_language 'english'.\n";
+                echo "Example changing the language to english:\e[32m php wolffie set language 'english'\e[0m\n";
                 break;
             case 'help':
                 echo "\nIs this recursion?\n";
@@ -133,23 +136,22 @@ class Wolffie
     {
         DB::initialize();
         if (!$query = DB::run($this->argv[2])) {
-            echo "WARNING: Error in query\n";
+            echo "\e[1;31m WARNING: Error in query\e[0m\n";
 
             return;
         }
 
-        @arrayToCsv('sql_' . date('y-m-d'), $query);
+        @arrayToCsv('sql_' . date(self::DATE_FORMAT), $query);
         echo "\n Query exported successfully!\n";
     }
 
 
     private function set()
     {
-        $file = 'system/config.php';
-        $original = "/define\((\s){0,}?[\'\"]" . strtoupper($this->argv[2]) . "[\'\"](\s){0,}?,(.*?)\)\;/";
-        $replacement = "define('" . strtoupper($this->argv[2]) . "', " . $this->argv[3] . ");";
+        $original = "/[\'\"]" . $this->argv[2] . "[\'\"](\s){0,}?=>(\s){0,}?(.*)?/";
+        $replacement = "'" . $this->argv[2] . "' => " . $this->argv[3] . ",";
 
-        if (!$content = file_get_contents($file)) {
+        if (!$content = file_get_contents(self::CONFIG_FILE)) {
             echo "\e[1;31m WARNING: Couldn't read the config file!\e[0m\n";
 
             return;
@@ -162,7 +164,7 @@ class Wolffie
         }
 
         $content = preg_replace($original, $replacement, $content);
-        file_put_contents($file, $content);
+        file_put_contents(self::CONFIG_FILE, $content);
 
         echo "Constant " . $this->argv[2] . " modified successfully!\n";
     }

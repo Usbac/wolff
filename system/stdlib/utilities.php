@@ -6,7 +6,7 @@ namespace {
     if (!function_exists('echod')) {
 
         /**
-         * Print a string and then die
+         * Print a string and die
          *
          * @param $str the string to print
          */
@@ -48,7 +48,7 @@ namespace {
     if (!function_exists('printrd')) {
 
         /**
-         * Print an array in a nice looking way and then die
+         * Print an array in a nice looking way and die
          *
          * @param  array  $array  the array to print
          */
@@ -62,7 +62,7 @@ namespace {
     if (!function_exists('dumpd')) {
 
         /**
-         * Var dump a variable and then die
+         * Var dump a variable and die
          *
          * @param $var the variable
          */
@@ -229,7 +229,7 @@ namespace {
          */
         function getBenchmark()
         {
-            return microtime(true) - WOLFF_START;
+            return microtime(true) - CONFIG['start'];
         }
     }
 

@@ -44,7 +44,7 @@ class Route
     public static function get(string $url)
     {
         $url = explode('/', Str::sanitizeURL($url));
-        $urlLength = count($url) - 1;
+        $url_length = count($url) - 1;
         $finished = false;
 
         if (self::$routes === []) {
@@ -53,9 +53,9 @@ class Route
 
         foreach (self::$routes as $key => $value) {
             $route = explode('/', $key);
-            $routeLength = count($route) - 1;
+            $route_length = count($route) - 1;
 
-            for ($i = 0; $i <= $routeLength && $i <= $urlLength; $i++) {
+            for ($i = 0; $i <= $route_length && $i <= $url_length; $i++) {
                 if ($url[$i] != $route[$i] && !empty($route[$i]) && !self::isGetVariable($route[$i])) {
                     break;
                 }
@@ -66,13 +66,13 @@ class Route
                 }
 
                 //Finish if last GET variable from url is empty
-                if ($i + 1 === $routeLength && $i === $urlLength && self::isGetVariable($route[$i + 1])) {
+                if ($i + 1 === $route_length && $i === $url_length && self::isGetVariable($route[$i + 1])) {
                     self::setGetVariable($route[$i], $url[$i]);
                     $finished = true;
                 }
 
                 //Process the route and return its function
-                if ($finished || ($i === $routeLength && $i === $urlLength)) {
+                if ($finished || ($i === $route_length && $i === $url_length)) {
                     self::processRoute($key);
 
                     return self::$routes[$key]['function'];

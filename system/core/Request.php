@@ -5,6 +5,12 @@ namespace Core;
 class Request
 {
 
+    const FIVE_YEARS_TIME = 1577880000000;
+    const MONTH_TIME = 2629743;
+    const DAY_TIME = 86400;
+    const HOUR_TIME = 3600;
+
+
     /**
      * Returns the superglobal GET array or the specified value
      *
@@ -190,15 +196,15 @@ class Request
     public static function setCookie(string $key, $value, $time, string $path = '/')
     {
         if ($time === 'forever') {
-            $time = 1577880000000;
+            $time = self::FIVE_YEARS_TIME;
         }
 
         if ($time === 'month') {
-            $time = 2629743;
+            $time = self::MONTH_TIME;
         }
 
         if ($time === 'day') {
-            $time = 86400;
+            $time = self::DAY_TIME;
         }
 
         setCookie($key, $value, time() + $time, $path);
@@ -218,6 +224,6 @@ class Request
         }
 
         unset($_COOKIE[$key]);
-        setCookie($key, '', time() - 3600);
+        setCookie($key, '', time() - self::HOUR_TIME);
     }
 }

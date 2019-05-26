@@ -74,7 +74,7 @@ namespace {
          *
          * @return boolean true if the language file exists, false otherwise
          */
-        function languageExists(string $dir, string $language = WOLFF_LANGUAGE)
+        function languageExists(string $dir, string $language = CONFIG['language'])
         {
             return file_exists(getLanguagePath($dir, $language));
         }
@@ -89,7 +89,7 @@ namespace {
          *
          * @return string $language the complete path of the language
          */
-        function getLanguagePath(string $dir, string $language = WOLFF_LANGUAGE)
+        function getLanguagePath(string $dir, string $language = CONFIG['language'])
         {
             return getAppDirectory() . 'languages/' . $language . '/' . $dir . '.php';
         }

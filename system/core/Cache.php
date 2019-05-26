@@ -35,7 +35,7 @@ class Cache
      */
     public static function isEnabled()
     {
-        return WOLFF_CACHE_ON;
+        return CONFIG['cache_on'];
     }
 
 

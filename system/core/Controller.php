@@ -63,14 +63,19 @@ class Controller
 
 
     /**
-     * Add an utility
+     * Set the utilities
      *
-     * @param  string  $key  the classname to refer to in the controller
-     * @param  string  $class  the classname
+     * @param  array  $utilities  the utilities array
      */
-    public function addUtility($key, $class)
+    public function setUtilities(array $utilities)
     {
-        $this->$key = Factory::utility($class);
+        if (!is_array($utilities)) {
+            return;
+        }
+
+        foreach($utilities as $key => $class) {
+            $this->$key = Factory::utility($class);
+        }
     }
 
 }
