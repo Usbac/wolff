@@ -8,6 +8,7 @@ class Log
 {
 
     const FOLDER_NAME = 'log';
+    const FILE_PERMISSIONS = 0755;
     const DATE_FORMAT = 'm-d-Y H:i:s';
     const FORMAT = '[{date}] [{ip}] {level}: {message}';
 
@@ -150,7 +151,7 @@ class Log
         $folder_path = getSystemDirectory() . self::FOLDER_NAME;
 
         if (!file_exists($folder_path)) {
-            mkdir($folder_path, 0755, true);
+            mkdir($folder_path, self::FILE_PERMISSIONS, true);
         }
     }
 }

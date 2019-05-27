@@ -57,12 +57,7 @@ class DB
             PDO::ATTR_DEFAULT_FETCH_MODE => self::FETCH_MODE
         ];
 
-        try {
-            self::$connection = new PDO(getDBMS() . ':host=' . getServer() . '; dbname=' . getDB() . '',
-                                        getDbUser(), getDbPass(), $options);
-        } catch (PDOException $e) {
-            Log::critical($e->getMessage());
-        }
+        self::$connection = Factory::connection($options);
     }
 
 

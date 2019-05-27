@@ -63,13 +63,11 @@ class Loader
 
         //load controller default function and return it
         if (controllerExists($dir)) {
-            $controller = Factory::controller($dir);
-            $this->setControllerProps($controller);
-
-            if ($controller === false) {
+            if (($controller = Factory::controller($dir)) === false) {
                 return false;
             }
 
+            $this->setControllerProps($controller);
             $controller->index();
 
             return $controller;
@@ -82,13 +80,11 @@ class Loader
 
         //load a controller specified function and return it
         if (controllerExists($dir)) {
-            $controller = Factory::controller($dir);
-            $this->setControllerProps($controller);
-
-            if ($controller === false) {
+            if (($controller = Factory::controller($dir)) === false) {
                 return false;
             }
 
+            $this->setControllerProps($controller);
             $controller->$function();
 
             return $controller;

@@ -3,6 +3,7 @@
 namespace Core;
 
 use Utilities\Str;
+use PDO, PDOException;
 
 class Factory
 {
@@ -10,6 +11,32 @@ class Factory
     const NAMESPACE_CONTROLLER = 'Controller\\';
     const NAMESPACE_EXTENSION = 'Extension\\';
     const NAMESPACE_UTILITY = 'Utilities\\';
+
+
+    /**
+     * Returns a PDO connection or false in case of errors
+     *
+     * @param  array  $options  the connection options
+     *
+     * @return PDO|bool a PDO connection or false in case of errors
+     */
+    public static function connection(array $options)
+    {
+        if (isset($options) && !empty($options)) {
+            try {
+                $connection = new PDO(getDBMS() . ':host=' . getServer() . '; dbname=' . getDB() . '',
+                                      getDbUser(), getDbPass(), $options);
+            } catch (PDOException $e) {
+                Log::critical($e->getMessage());
+
+                return false;
+            }
+
+            return $connection;
+        }
+
+        return false;
+    }
 
 
     /**
