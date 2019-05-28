@@ -20,7 +20,7 @@ class Response
     private $url;
 
     /**
-     * The header tags list.
+     * The header tag list.
      *
      * @var array
      */
@@ -71,24 +71,6 @@ class Response
 
 
     /**
-     * Add a new header
-     *
-     * @param  string  $key  the header key
-     * @param  string  $value  the header value
-     *
-     * @return Response this
-     */
-    public function add(string $key, string $value)
-    {
-        if(!key_exists($key, $this->headers)) {
-            $this->set($key, $value);
-        }
-
-        return $this;
-    }
-
-
-    /**
      * Set the value of an existent or new header
      *
      * @param  string  $key  the header key
@@ -96,7 +78,7 @@ class Response
      *
      * @return Response this
      */
-    public function set(string $key, string $value)
+    public function header(string $key, string $value)
     {
         $key = trim($key);
         $this->headers[$key] = $value;
@@ -114,7 +96,7 @@ class Response
      */
     public function remove(string $key)
     {
-        if(key_exists($key, $this->headers)) {
+        if (key_exists($key, $this->headers)) {
             unset($this->headers[$key]);
         }
 
@@ -159,7 +141,7 @@ class Response
      */
     public function go()
     {
-        foreach($this->headers as $key => $header) {
+        foreach ($this->headers as $key => $header) {
             header("$key: $header");
         }
 
