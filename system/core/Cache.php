@@ -20,6 +20,10 @@ class Cache
      */
     public static function initialize()
     {
+        if (!self::isEnabled()) {
+            return;
+        }
+
         $files = glob(getCacheDirectory() . '*.php');
 
         foreach ($files as $file) {

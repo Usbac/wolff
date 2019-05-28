@@ -9,6 +9,7 @@ class Request
     const MONTH_TIME = 2629743;
     const DAY_TIME = 86400;
     const HOUR_TIME = 3600;
+    const ROOT_PATH = '/';
 
 
     /**
@@ -193,7 +194,7 @@ class Request
      * @param  mixed  $time  the cookie time
      * @param  string  $path  the path where the cookie will work
      */
-    public static function setCookie(string $key, $value, $time, string $path = '/')
+    public static function setCookie(string $key, $value, $time, string $path = self::ROOT_PATH)
     {
         if ($time === 'forever') {
             $time = self::FIVE_YEARS_TIME;

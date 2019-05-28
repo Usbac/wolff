@@ -88,6 +88,20 @@ namespace {
         }
     }
 
+    if (!function_exists('redirect')) {
+
+        /**
+         * Make a redirection
+         *
+         * @param  string  $url  the url to redirect to
+         * @param  int  $status  the HTTP status code
+         */
+        function redirect(string $url, int $status = 301)
+        {
+            header("Location: $url", true, $status);
+            exit;
+        }
+    }
 
     if (!function_exists('arrayToCsv')) {
 

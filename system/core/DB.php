@@ -48,7 +48,7 @@ class DB
 
 
     /**
-     * Connects with the database using the constants present in system/config.php
+     * Connects with the database using the constants present in the config file
      */
     public function __construct()
     {
