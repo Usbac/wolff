@@ -31,9 +31,9 @@ class Start
 
     public function __construct()
     {
-        $this->template = new Template();
-        $this->session = new Session();
-        $this->load = new Loader($this->template, $this->session);
+        $this->template = Factory::template();
+        $this->session = Factory::session();
+        $this->load = Factory::loader();
     }
 
 
@@ -80,6 +80,7 @@ class Start
 
     /**
      * Load the requested page
+     * This can redirect to the 404 page
      *
      * @param  string  $url the page url
      */

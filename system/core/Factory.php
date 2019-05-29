@@ -8,6 +8,27 @@ use PDO, PDOException;
 class Factory
 {
 
+    /**
+     * Loader.
+     *
+     * @var Core\Loader
+     */
+    private static $loader;
+
+    /**
+     * Template manager.
+     *
+     * @var Core\Template
+     */
+    private static $template;
+
+    /**
+     * Session manager.
+     *
+     * @var Core\Session
+     */
+    private static $session;
+
     const NAMESPACE_CONTROLLER = 'Controller\\';
     const NAMESPACE_EXTENSION = 'Extension\\';
     const NAMESPACE_UTILITY = 'Utilities\\';
@@ -91,7 +112,7 @@ class Factory
      *
      * @param  string  $name  the utility name
      *
-     * @return object|bool a utility initialized or false if it doesn't exists
+     * @return object|bool an utility initialized or false if it doesn't exists
      */
     public static function utility(string $name)
     {
@@ -104,6 +125,51 @@ class Factory
         }
 
         return new $class;
+    }
+
+
+    /**
+     * Returns a template class
+     *
+     * @return Core\Template a template class
+     */
+    public static function template()
+    {
+        if (!isset(self::$template)) {
+            self::$template = new Template;
+        }
+
+        return self::$template;
+    }
+
+
+    /**
+     * Returns a session class
+     *
+     * @return Core\Session a session class
+     */
+    public static function session()
+    {
+        if (!isset(self::$session)) {
+            self::$session = new Session;
+        }
+
+        return self::$session;
+    }
+
+
+    /**
+     * Returns a loader class
+     *
+     * @return Core\Loader a loader class
+     */
+    public static function loader()
+    {
+        if (!isset(self::$loader)) {
+            self::$loader = new Loader(self::template(), self::session());
+        }
+
+        return self::$loader;
     }
 
 }

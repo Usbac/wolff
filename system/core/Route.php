@@ -47,7 +47,7 @@ class Route
         $url_length = count($url) - 1;
         $finished = false;
 
-        if (self::$routes === []) {
+        if (empty(self::$routes)) {
             return null;
         }
 
@@ -75,7 +75,7 @@ class Route
                 if ($finished || ($i === $route_length && $i === $url_length)) {
                     self::processRoute($key);
 
-                    return self::$routes[$key]['function'];
+                    return $value['function'];
                 }
             }
         }
@@ -290,7 +290,7 @@ class Route
     private static function setGetVariable(string $key, $value = '')
     {
         $key = self::clearGetVariable($key);
-        $_GET[$key] = $value ?? '';
+        Request::setGet($key, $value ?? '');
     }
 
 

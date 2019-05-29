@@ -225,7 +225,7 @@ class Loader
     {
         header(self::HEADER_404);
         $this->controller('_404');
-        die();
+        exit;
     }
 
 
@@ -236,7 +236,7 @@ class Loader
     {
         header(self::HEADER_503);
         $this->controller('_maintenance');
-        die();
+        exit;
     }
 
 }
