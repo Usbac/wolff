@@ -29,6 +29,13 @@ class Factory
      */
     private static $session;
 
+    /**
+     * Array of utilities.
+     *
+     * @var array
+     */
+    private static $utilities;
+
     const NAMESPACE_CONTROLLER = 'Controller\\';
     const NAMESPACE_EXTENSION = 'Extension\\';
     const NAMESPACE_UTILITY = 'Utilities\\';
@@ -71,7 +78,10 @@ class Factory
     {
         //Load default Controller
         if (!isset($dir)) {
-            return new Controller;
+            $controller = new Controller;
+            self::setControllerProperties($controller);
+
+            return $controller;
         }
 
         $class = self::NAMESPACE_CONTROLLER . Str::pathToNamespace($dir);
@@ -82,7 +92,23 @@ class Factory
             return false;
         }
 
-        return new $class;
+        $controller = new $class;
+        self::setControllerProperties($controller);
+
+        return $controller;
+    }
+
+
+    /**
+     * Set the controller properties
+     *
+     * @param  mixed  $controller  the controller
+     */
+    private static function setControllerProperties($controller)
+    {
+        $controller->setLoader(self::loader());
+        $controller->setSession(self::session());
+        $controller->setUtilities(self::$utilities);
     }
 
 
@@ -125,6 +151,18 @@ class Factory
         }
 
         return new $class;
+    }
+
+
+    /**
+     * Adds an utility to the list
+     *
+     * @param  string  $key  the classname to refer to in the controller
+     * @param  string  $class  the classname
+     */
+    public static function addUtility(string $name, string $class)
+    {
+        self::$utilities[$name] = $class;
     }
 
 

@@ -21,15 +21,9 @@ class Loader
      */
     private $session;
 
-    /**
-     * Array of ulitities.
-     *
-     * @var array
-     */
-    private static $utilities;
-
-    const HEADER_404 = "HTTP/1.0 404 Not Found";
-    const HEADER_503 = "HTTP/1.1 503 Service Temporarily Unavailable";
+    const HEADER_404 = 'HTTP/1.0 404 Not Found';
+    const HEADER_503 = 'HTTP/1.1 503 Service Temporarily Unavailable';
+    const FUNCTION_SEPARATOR = '@';
 
 
     public function __construct($template, $session)
@@ -67,7 +61,6 @@ class Loader
                 return false;
             }
 
-            $this->setControllerProps($controller);
             $controller->index();
 
             return $controller;
@@ -84,7 +77,6 @@ class Loader
                 return false;
             }
 
-            $this->setControllerProps($controller);
             $controller->$function();
 
             return $controller;
@@ -97,27 +89,21 @@ class Loader
 
 
     /**
-     * Set the controller properties
+     * Return the return value of the controller's function
      *
-     * @param  mixed  $controller  the controller
-     */
-    private function setControllerProps($controller)
-    {
-        $controller->setLoader($this);
-        $controller->setSession($this->session);
-        $controller->setUtilities(self::$utilities);
-    }
-
-
-    /**
-     * Adds an utility to the list
+     * @param  string  $name  the controller's function name
+     * Must have the following format: controllerName@functionName
+     * @param  mixed  $param  the function arguments
      *
-     * @param  string  $key  the classname to refer to in the controller
-     * @param  string  $class  the classname
+     * @return mixed the return value of the controller's function
      */
-    public static function utility(string $name, string $class)
+    public function function(string $name, $params = [])
     {
-        self::$utilities[$name] = $class;
+        $params = is_array($params) ? $params : (array)$params;
+        $controller = Factory::controller(Str::before($name, self::FUNCTION_SEPARATOR));
+        $function = Str::after($name, self::FUNCTION_SEPARATOR);
+
+        return call_user_func_array([$controller, $function], $params);
     }
 
 
@@ -134,8 +120,6 @@ class Loader
         }
 
         $controller = Factory::controller();
-        $this->setControllerProps($controller);
-
         $closure = $closure->bindTo($controller, $controller);
         $closure();
     }

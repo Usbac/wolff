@@ -2,10 +2,10 @@
 
 namespace Definitions;
 
-use Core\Loader;
+use Core\Factory;
 
 /**
  * Use this file for declaring utilities...
  */
 
-Loader::utility('upload', 'Upload');
+Factory::addUtility('upload', 'Upload');
