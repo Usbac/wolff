@@ -83,17 +83,6 @@ class DB
 
 
     /**
-     * Set the connection fetch mode
-     *
-     * @param  int  $mode  the connection fetch mode
-     */
-    public static function setFetchMode(int $mode = self::FETCH_MODE)
-    {
-        self::$connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, $mode);
-    }
-
-
-    /**
      * Returns the last query executed
      * @return string the last query executed
      */
@@ -174,7 +163,7 @@ class DB
         if (!isset(self::$last_args)) {
             $result = self::getPdo()->query($sql)->fetchAll();
 
-            return $result;
+            return Factory::query($result);
         }
 
         //Query with args
@@ -182,9 +171,7 @@ class DB
         $stmt->execute(self::$last_args);
         self::$last_stmt = $stmt;
 
-        $result = $stmt->fetchAll();
-
-        return $result;
+        return Factory::query($stmt->fetchAll());
     }
 
 
@@ -198,7 +185,7 @@ class DB
      */
     public static function runJson(string $sql, $args = [])
     {
-        return json_encode(self::run($sql, $args));
+        return json_encode(self::run($sql, $args)->rows);
     }
 
 
@@ -303,7 +290,7 @@ class DB
      */
     public static function selectAll(string $table, string $conditions = '1', $args = null)
     {
-        return DB::run("SELECT * FROM $table WHERE $conditions", $args);
+        return DB::run("SELECT * FROM $table WHERE $conditions", $args)->rows;
     }
 
 
@@ -314,11 +301,12 @@ class DB
      * @param  string  $conditions  the select conditions
      * @param  mixed  $args the query arguments
      *
-     * @return array the query result as an assosiative array
+     * @return string the query result
      */
     public static function countAll(string $table, string $conditions = '1', $args = null)
     {
-        return DB::run("SELECT COUNT(*) FROM $table WHERE $conditions", $args)[0]['COUNT(*)'];
+        $result = DB::run("SELECT COUNT(*) FROM $table WHERE $conditions", $args)->first();
+        return empty($result) ? 0 : $result['COUNT(*)'];
     }
 
 
@@ -333,7 +321,7 @@ class DB
      */
     public static function deleteAll(string $table, string $conditions = '1', $args = null)
     {
-        return DB::run("DELETE FROM $table WHERE $conditions", $args);
+        return DB::run("DELETE FROM $table WHERE $conditions", $args)->rows;
     }
 
 }
