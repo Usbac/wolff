@@ -24,7 +24,7 @@ namespace {
          *
          * @param $str the string to print
          */
-        function println($str)
+        function println($str = '')
         {
             echo "$str\n";
         }
@@ -200,7 +200,7 @@ namespace {
          */
         function getCurrentPage()
         {
-            return substr($_SERVER['REQUEST_URI'], strlen(getDirectory()));
+            return substr($_SERVER['REQUEST_URI'], strlen(getProjectDirectory()));
         }
     }
 

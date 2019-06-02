@@ -25,11 +25,10 @@ class Extension
      * Load all the extensions files that matches the current route
      *
      * @param  string  $type  the type of extensions to load
-     * @param  mixed  $loader  the loader class
      *
      * @return bool true if the extensions have been loaded, false otherwise
      */
-    private static function load(string $type, $loader = null)
+    private static function load(string $type)
     {
         if (!self::isEnabled() || empty(self::$extensions)) {
             return false;
@@ -49,9 +48,6 @@ class Extension
             }
 
             $extension = Factory::extension($extension['name']);
-            $extension->load = $loader;
-            $extension->session = $loader->getSession();
-            $extension->upload = $loader->getUpload();
             $extension->index();
         }
 
@@ -62,26 +58,22 @@ class Extension
     /**
      * Load the extensions files of type before that matches the current route
      *
-     * @param  mixed  $loader  the loader class
-     *
      * @return bool true if the extensions have been loaded, false otherwise
      */
-    public static function loadBefore($loader = null)
+    public static function loadBefore()
     {
-        return self::load(Extension::BEFORE, $loader);
+        return self::load(Extension::BEFORE);
     }
 
 
     /**
      * Load the extensions files of type after that matches the current route
      *
-     * @param  mixed  $loader  the loader class
-     *
      * @return bool true if the extensions have been loaded, false otherwise
      */
-    public static function loadAfter($loader = null)
+    public static function loadAfter()
     {
-        return self::load(Extension::AFTER, $loader);
+        return self::load(Extension::AFTER);
     }
 
 

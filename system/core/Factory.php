@@ -113,6 +113,24 @@ class Factory
 
 
     /**
+     * Set the extension properties
+     *
+     * @param  mixed  $extension  the extension
+     */
+    private static function setExtensionProperties($extension)
+    {
+        $extension->load = self::$loader;
+        $extension->session = self::$session;
+
+        if (is_array(self::$utilities)) {
+            foreach(self::$utilities as $key => $class) {
+                $extension->$key = Factory::utility($class);
+            }
+        }
+    }
+
+
+    /**
      * Returns a extension initialized or false if it doesn't exists
      *
      * @param  string  $name  the extension name
@@ -129,7 +147,10 @@ class Factory
             return false;
         }
 
-        return new $class;
+        $extension = new $class;
+        self::setExtensionProperties($extension);
+
+        return $extension;
     }
 
 

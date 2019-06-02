@@ -47,11 +47,11 @@ class Start
         $this->validateAccess($url);
         $this->initialize();
 
-        Extension::loadBefore($this->load);
+        Extension::loadBefore();
 
         $this->loadPage($url);
 
-        Extension::loadAfter($this->load);
+        Extension::loadAfter();
     }
 
 
