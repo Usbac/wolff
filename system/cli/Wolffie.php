@@ -135,7 +135,7 @@ class Wolffie
     private function export()
     {
         DB::initialize();
-        if (!$query = DB::run($this->argv[2])) {
+        if (!$query = DB::run($this->argv[2])->rows) {
             echo "\e[1;31m WARNING: Error in query\e[0m\n";
 
             return;

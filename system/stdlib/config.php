@@ -83,6 +83,18 @@ namespace {
         }
     }
 
+    if (!function_exists('getProjectDirectory')) {
+
+        /**
+         * Returns the root directory of the project relative to the server root
+         * @return string the root directory of the project relative to the server root
+         */
+        function getProjectDirectory()
+        {
+            return substr(CONFIG['root_dir'], strlen($_SERVER['DOCUMENT_ROOT']));;
+        }
+    }
+
     if (!function_exists('getSystemDirectory')) {
 
         /**

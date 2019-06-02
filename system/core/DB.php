@@ -3,7 +3,6 @@
 namespace Core;
 
 use PDO;
-use PDOException;
 
 class DB
 {
@@ -172,20 +171,6 @@ class DB
         self::$last_stmt = $stmt;
 
         return Factory::query($stmt->fetchAll());
-    }
-
-
-    /**
-     * Returns a query result as a json
-     *
-     * @param  string  $sql  the query
-     * @param  mixed  $args  the arguments
-     *
-     * @return string the query result as a json
-     */
-    public static function runJson(string $sql, $args = [])
-    {
-        return json_encode(self::run($sql, $args)->rows);
     }
 
 

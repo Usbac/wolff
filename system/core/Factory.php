@@ -204,7 +204,8 @@ class Factory
     public static function loader()
     {
         if (!isset(self::$loader)) {
-            self::$loader = new Loader(self::template(), self::session());
+            self::$loader = new Loader(self::template(),
+                                       self::session());
         }
 
         return self::$loader;
@@ -234,6 +235,16 @@ class Factory
             }
 
             /**
+             * Returns the query results as a Json
+             *
+             * @return string the query results as a Json
+             */
+            public function toJson()
+            {
+                return json_encode($this->rows);
+            }
+
+            /**
              * Returns the first element of the query results
              *
              * @return array the first element of the query results
@@ -259,7 +270,7 @@ class Factory
              * @param  int  $start  the offset
              * @param  int  $end  the length
              *
-             * @return int the query result sliced
+             * @return array the query result sliced
              */
             public function limit(int $start, int $end)
             {
