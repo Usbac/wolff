@@ -2,10 +2,10 @@
   "name": "usbac/wolff",
   "description": "Ridiculously small PHP framework",
   "keywords": [
-    "framework", "php", "small", "web", "fast", "mvc"
+    "framework", "php", "small", "web", "apps", "fast"
   ],
   "type": "project",
-  "version": "0.9.9.9",
+  "version": "1.0.0",
   "license": "MIT",
   "support": {
     "issues": "https://github.com/Usbac/Wolff/issues",

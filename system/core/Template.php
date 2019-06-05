@@ -15,9 +15,9 @@ class Template
     private static $templates = [];
 
     const COMMENT_FORMAT = '/\{#(?s).[^#\}]*#\}/';
-    const PLAINECHO_FORMAT = '/\{\!(.*?)\!\}/';
-    const ECHO_FORMAT = '/\{\{(.*?)\}\}/';
-    const TAG_FORMAT = '/\{%(.*?)%\}/';
+    const PLAINECHO_FORMAT = '/\{\!( ?){1,}(.*?)( ?){1,}\!\}/';
+    const ECHO_FORMAT = '/\{\{( ?){1,}(.*?)( ?){1,}\}\}/';
+    const TAG_FORMAT = '/\{%( ?){1,}(.*?)( ?){1,}%\}/';
     const FUNCTION_FORMAT = '/{func}( ?){1,}\|([^\}!]{1,})/';
     const INCLUDE_FORMAT = '/@load\(( |\'?){1,}(.*)(.php|.html)( |\'?){1,}\)/';
 
@@ -28,7 +28,7 @@ class Template
 
     const FOR_FORMAT = '/\{( ?){1,}for( ){1,}(.*)( ){1,}in( ){1,}\((.*)( ?){1,},( ?){1,}(.*)( ?){1,}\)( ?){1,}\}/';
     const ENDFOR_FORMAT = '/\{( ?){1,}for( ?){1,}\}/';
-    const FOREACH_FORMAT = '/\{( ?){1,}for( ?){1,}(.*)( ?){1,}as( ?){1,}(.*)( ?){1,}\}/';
+    const FOREACH_FORMAT = '/\{( ?){1,}foreach( ?){1,}(.*)( ?){1,}as( ?){1,}(.*)( ?){1,}\}/';
     const ENDFOREACH_FORMAT = '/\{( ?){1,}foreach( ?){1,}\}/';
 
 
@@ -77,7 +77,7 @@ class Template
 
 
     /**
-     * Apply the template format over a content and return it
+     * Apply the template format over a view content and return it
      *
      * @param  string  $dir  the view directory
      * @param  array  $data  the data array present in the view
@@ -249,10 +249,10 @@ class Template
      */
     private function replaceTags($content)
     {
-        $content = preg_replace(self::ECHO_FORMAT, '<?php echo htmlspecialchars($1, ENT_QUOTES) ?>', $content);
-        $content = preg_replace(self::PLAINECHO_FORMAT, '<?php echo $1 ?>', $content);
+        $content = preg_replace(self::ECHO_FORMAT, '<?php echo htmlspecialchars($2, ENT_QUOTES) ?>', $content);
+        $content = preg_replace(self::PLAINECHO_FORMAT, '<?php echo $2 ?>', $content);
 
-        return preg_replace(self::TAG_FORMAT, '<?php $1 ?>', $content);
+        return preg_replace(self::TAG_FORMAT, '<?php $2 ?>', $content);
     }
 
 

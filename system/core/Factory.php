@@ -225,8 +225,7 @@ class Factory
     public static function loader()
     {
         if (!isset(self::$loader)) {
-            self::$loader = new Loader(self::template(),
-                                       self::session());
+            self::$loader = new Loader(self::template(), self::session());
         }
 
         return self::$loader;
@@ -236,68 +235,11 @@ class Factory
     /**
      * Returns a query result as an object
      *
-     * @return stdClass a query result as an object
+     * @return Core\Query a query result as an object
      */
     public static function query($results)
     {
-        return new class($results)
-        {
-            /**
-             * The query result.
-             *
-             * @var array
-             */
-            public $rows;
-
-
-            public function __construct($results)
-            {
-                $this->rows = $results;
-            }
-
-            /**
-             * Returns the query results as a Json
-             *
-             * @return string the query results as a Json
-             */
-            public function toJson()
-            {
-                return json_encode($this->rows);
-            }
-
-            /**
-             * Returns the first element of the query results
-             *
-             * @return array the first element of the query results
-             */
-            public function first()
-            {
-                return $this->rows[0] ?? null;
-            }
-
-            /**
-             * Returns the number of rows in the query results
-             *
-             * @return int the number of rows in the query results
-             */
-            public function count()
-            {
-                return count($this->rows);
-            }
-
-            /**
-             * Returns the query result sliced
-             *
-             * @param  int  $start  the offset
-             * @param  int  $end  the length
-             *
-             * @return array the query result sliced
-             */
-            public function limit(int $start, int $end)
-            {
-                return array_slice($this->rows, $start, $end);
-            }
-        };
+        return new Query($results);
     }
 
 }

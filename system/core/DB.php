@@ -257,6 +257,7 @@ class DB
     public static function getTableSchema(string $table)
     {
         $result = self::getPdo()->query("SHOW COLUMNS FROM $table");
+
         if (is_bool($result)) {
             return false;
         }
@@ -276,7 +277,7 @@ class DB
      */
     public static function selectAll(string $table, string $conditions = '1', $args = null)
     {
-        return DB::run("SELECT * FROM $table WHERE $conditions", $args)->rows;
+        return DB::run("SELECT * FROM $table WHERE $conditions", $args)->get();
     }
 
 
@@ -307,7 +308,7 @@ class DB
      */
     public static function deleteAll(string $table, string $conditions = '1', $args = null)
     {
-        return DB::run("DELETE FROM $table WHERE $conditions", $args)->rows;
+        return DB::run("DELETE FROM $table WHERE $conditions", $args)->get();
     }
 
 }

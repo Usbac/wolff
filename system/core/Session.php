@@ -166,17 +166,6 @@ class Session
 
 
     /**
-     * Add time to the session live time (in minutes)
-     *
-     * @param  int  $time  the session live time to add
-     */
-    public function addTime(int $time)
-    {
-        $_SESSION['end_time'] += $time * 60;
-    }
-
-
-    /**
      * Get a live time (in minutes) of a session variable
      *
      * @param  string  $key  the variable key
@@ -203,7 +192,7 @@ class Session
      * Set a live time (in minutes) to a session variable
      *
      * @param  string  $key  the variable key
-     * @param  int  $time  the variable live time
+     * @param  int  $time  the variable live time in minutes
      */
     public function setVarTime(string $key, int $time = 1)
     {
@@ -228,6 +217,17 @@ class Session
 
 
     /**
+     * Add time to the session live time (in minutes)
+     *
+     * @param  int  $time  the session live time to add
+     */
+    public function addTime(int $time)
+    {
+        $_SESSION['end_time'] += $time * 60;
+    }
+
+
+    /**
      * Set the session live time (in minutes) starting from
      * the moment this function is called
      *
@@ -247,7 +247,7 @@ class Session
      *
      * @return mixed the session creation time
      */
-    public function getTime(bool $gmdate = false)
+    public function getStartTime(bool $gmdate = false)
     {
         if ($gmdate) {
             return gmdate(self::DATE_FORMAT, $_SESSION['start_time']);
