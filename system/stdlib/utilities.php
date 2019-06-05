@@ -96,7 +96,7 @@ namespace {
          * @param  string  $url  the url to redirect to
          * @param  int  $status  the HTTP status code
          */
-        function redirect(string $url, int $status = 301)
+        function redirect(string $url, int $status = null)
         {
             header("Location: $url", true, $status);
             exit;

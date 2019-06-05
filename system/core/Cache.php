@@ -166,7 +166,7 @@ class Cache
      */
     public static function getFilename(string $dir)
     {
-        return sprintf(self::FILENAME, $dir);
+        return sprintf(self::FILENAME, str_replace('/', '_', $dir));
     }
 
 }

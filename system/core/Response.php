@@ -31,7 +31,7 @@ class Response
 
     public function __construct()
     {
-        $this->status_code = self::DEFAULT_STATUS;
+        $this->status_code = null;
         $this->headers = [];
         $this->url = '';
     }
@@ -111,7 +111,7 @@ class Response
      *
      * @return Response this
      */
-    public function setStatusCode(int $status = self::DEFAULT_STATUS)
+    public function setStatusCode(int $status = null)
     {
         $this->status_code = $status;
 
@@ -127,7 +127,7 @@ class Response
      *
      * @return Response this
      */
-    public function redirect(string $url, int $status = self::DEFAULT_STATUS)
+    public function redirect(string $url, int $status = null)
     {
         $this->setStatusCode($status);
         $this->url = $url;
