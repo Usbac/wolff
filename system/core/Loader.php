@@ -48,7 +48,7 @@ class Loader
      *
      * @param  string  $dir  the controller directory
      *
-     * @return object the controller
+     * @return mixed the controller or false in case of errors
      */
     public function controller(string $dir)
     {
@@ -93,7 +93,7 @@ class Loader
      *
      * @param  string  $name  the controller's function name
      * Must have the following format: controllerName@functionName
-     * @param  mixed  $param  the function arguments
+     * @param  mixed  $params  the function arguments
      *
      * @return mixed the return value of the controller's function
      */
@@ -185,7 +185,7 @@ class Loader
      * @param  string  $dir  the view directory
      * @param  array  $data  the data
      *
-     * @return string the view
+     * @return mixed the view or false in case of errors
      */
     public function getView(string $dir, array $data = [])
     {
@@ -195,7 +195,7 @@ class Loader
         if (!file_exists($file_path . '.php') && !file_exists($file_path . '.html')) {
             Log::error("View '$dir' doesn't exists");
 
-            return;
+            return false;
         }
 
         return $this->template->getView($dir, $data);

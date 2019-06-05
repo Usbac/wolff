@@ -40,8 +40,8 @@ class Maintenance
 
 
     /**
-     * Returns an array of the IP in the whitelist
-     * @return array An array of the IP in the whitelist, false if an error happends
+     * Returns an array of the IPs in the whitelist
+     * @return array An array of the IPs in the whitelist, false in case of errors
      */
     public static function getAllowedIPs()
     {
@@ -64,7 +64,7 @@ class Maintenance
      *
      * @param  string  $ip  the IP to add
      *
-     * @return bool true if the IP is added/exists in the whitelist
+     * @return bool true if the IP is added/exists in the whitelist, false otherwise
      */
     public static function addAllowedIP(string $ip)
     {
@@ -100,7 +100,7 @@ class Maintenance
      *
      * @param  string  $ip  the IP to remove
      *
-     * @return bool true if the IP is removed/doesn't exists in the whitelist
+     * @return bool true if the IP is removed/doesn't exists in the whitelist, false otherwise
      */
     public static function removeAllowedIP(string $ip)
     {

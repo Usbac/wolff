@@ -226,7 +226,7 @@ class DB
     /**
      * Returns the database schema
      *
-     * @return array|bool the database schema
+     * @return array|bool the database schema or false if no tables exist in the database
      */
     public static function getSchema()
     {
@@ -251,7 +251,8 @@ class DB
      *
      * @param  string  $table  the table name
      *
-     * @return array|bool the table schema from the database
+     * @return array|bool the table schema from the database,
+     * or false if the table columns doesn't exists
      */
     public static function getTableSchema(string $table)
     {

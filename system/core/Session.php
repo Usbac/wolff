@@ -110,7 +110,7 @@ class Session
      *
      * @param  string  $key  the variable key
      *
-     * @return object the variable
+     * @return mixed the session variable
      */
     public function get(string $key = null)
     {
@@ -126,7 +126,7 @@ class Session
      * Set a session variable
      *
      * @param  string  $key  the variable key
-     * @param  string  $value the variable value
+     * @param  mixed  $value the variable value
      * @param  int  $time the variable live time
      */
     public function set(string $key, $value, int $time = null)
