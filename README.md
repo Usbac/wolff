@@ -9,7 +9,7 @@
 <h4 align="center">Ridiculously small PHP framework.</h4>
 
 <p align="center">
-<img src="https://img.shields.io/badge/stability-stable-green.svg"> <img src="https://img.shields.io/badge/version-1.0.0-blue.svg"> <img src="https://img.shields.io/badge/license-MIT-orange.svg">
+<img src="https://img.shields.io/badge/stability-stable-green.svg"> <img src="https://img.shields.io/badge/version-1.1.0-blue.svg"> <img src="https://img.shields.io/badge/license-MIT-orange.svg">
 </p>
 
 Wolff is a ridiculously small and lightweight PHP framework with useful functions and utilities like a route, template, extensions and language system.
@@ -30,13 +30,13 @@ It is intended for those who want to build light websites without having to do e
 
 ## Utilities
 
-* **Cache**: An optional cache system which can increase the overall loading speed of your pages.
-
 * **Route**: A route system that allows you to have clean URLs, make redirections and block certain pages recursively.
+
+* **Database**: Wolff has a Database abstraction layer which simplifies the process of running queries and includes some useful functions.
 
 * **Template**: With the optional template system you can write cleaner code in your views and avoid things like the php tags.
 
-* **Database**: Wolff has a Database abstraction layer which simplifies the process of running queries and includes some useful functions.
+* **Cache**: An optional cache system which can increase the overall loading speed of your pages.
 
 * **Uploader**: Simplify and optimize the process of uploading files with the uploader system of Wolff.
 

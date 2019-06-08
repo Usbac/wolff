@@ -36,19 +36,24 @@ class Extension
 
         self::mkdir();
 
-        foreach (self::$extensions as $extension) {
-            if ($extension['type'] !== $type || !self::matchesRoute($extension['route'])) {
+        foreach (self::$extensions as $ext) {
+            if ($ext['type'] !== $type || !self::matchesRoute($ext['route'])) {
                 continue;
             }
 
-            $class = self::NAMESPACE . $extension['name'];
+            $class = self::NAMESPACE . $ext['name'];
 
             if (!class_exists($class)) {
                 continue;
             }
 
-            $extension = Factory::extension($extension['name']);
-            $extension->index();
+            $extension = Factory::extension($ext['name']);
+
+            if (method_exists($extension, 'index')) {
+                $extension->index();
+            } else {
+                Log::error("The extension '" . $ext['name'] . "' doesn't have an index method");
+            }
         }
 
         return true;

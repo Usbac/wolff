@@ -103,6 +103,24 @@ namespace {
         }
     }
 
+    if (!function_exists('getLocalUrl')) {
+
+        /**
+         * Returns the complete url relative to the local site
+         *
+         * @param  string  $url  the url to redirect to
+         *
+         * @return string the complete url relative to the local site
+         */
+        function getLocalUrl(string $url = '')
+        {
+            $http = (isset($_SERVER['HTTPS']) ? 'https' : 'http') . '://';
+            $directory = str_replace('\\', '/', getProjectDirectory());
+
+            return $http . $_SERVER['HTTP_HOST'] . $directory . $url;
+        }
+    }
+
     if (!function_exists('arrayToCsv')) {
 
         /**

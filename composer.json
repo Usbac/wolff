@@ -5,7 +5,7 @@
     "framework", "php", "small", "web", "apps", "fast"
   ],
   "type": "project",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "license": "MIT",
   "support": {
     "issues": "https://github.com/Usbac/Wolff/issues",

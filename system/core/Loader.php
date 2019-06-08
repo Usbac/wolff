@@ -61,7 +61,9 @@ class Loader
                 return false;
             }
 
-            $controller->index();
+            if (method_exists($controller, 'index')) {
+                $controller->index();
+            }
 
             return $controller;
         }
@@ -77,7 +79,13 @@ class Loader
                 return false;
             }
 
-            $controller->$function();
+            if (method_exists($controller, $function)) {
+                $controller->$function();
+            } else {
+                Log::error("Controller '$dir' doesn't have a '$function' method");
+
+                return false;
+            }
 
             return $controller;
         }
@@ -89,21 +97,28 @@ class Loader
 
 
     /**
-     * Return the return value of the controller's function
+     * Return the return value of the controller's function or null in case of errors
      *
      * @param  string  $name  the controller's function name
      * Must have the following format: controllerName@functionName
      * @param  mixed  $params  the function arguments
      *
-     * @return mixed the return value of the controller's function
+     * @return mixed the return value of the controller's function or null in case of errors
      */
     public function function(string $name, $params = [])
     {
         $params = is_array($params) ? $params : (array)$params;
-        $controller = Factory::controller(Str::before($name, self::FUNCTION_SEPARATOR));
+        $controller_name = Str::before($name, self::FUNCTION_SEPARATOR);
+        $controller = Factory::controller($controller_name);
         $function = Str::after($name, self::FUNCTION_SEPARATOR);
 
-        return call_user_func_array([$controller, $function], $params);
+        if (method_exists($controller, $function)) {
+            return call_user_func_array([$controller, $function], $params);
+        }
+
+        Log::error("Controller '$controller_name' doesn't have a '$function' method");
+
+        return null;
     }
 
 
