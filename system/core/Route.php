@@ -165,11 +165,20 @@ class Route
      * @param  int  $status  the HTTP status code
      */
     private static function addRoute($url, $function, bool $api, int $status) {
-        self::$routes[$url] = [
-            'function' => $function,
-            'api'      => $api,
-            'status'   => $status
+        $tmp_array = [
+            $url => [
+                'function' => $function,
+                'api'      => $api,
+                'status'   => $status
+            ]
         ];
+
+        //Leave the routes with GET parameters at the end of the routes array
+        if (preg_match(self::GET_FORMAT, $url)) {
+            self::$routes = self::$routes + $tmp_array;
+        } else {
+            self::$routes = $tmp_array + self::$routes;
+        }
     }
 
 

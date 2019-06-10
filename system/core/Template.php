@@ -38,7 +38,18 @@ class Template
 
 
     /**
-     * Apply the template format over a content and render it
+     * Returns true if the template system is enabled, false otherwise
+     * @return bool true if the template system is enabled, false otherwise
+     */
+    public static function isEnabled()
+    {
+        return CONFIG['template_on'];
+    }
+
+
+    /**
+     * Apply the template format over a content and render it.
+     * The template format will be applied only if the template is enabled.
      *
      * @param  string  $dir  the view directory
      * @param  array  $data  the data array present in the view
@@ -60,7 +71,9 @@ class Template
             return false;
         }
 
-        $content = $this->replaceAll($content);
+        if ($this->isEnabled()) {
+            $content = $this->replaceAll($content);
+        }
 
         //Cache system
         if ($cache && Cache::isEnabled()) {
@@ -169,7 +182,7 @@ class Template
     private function replaceAll(string $content)
     {
         $content = $this->replaceComments($content);
-        $content = $this->replaceInclude($content);
+        $content = $this->replaceIncludes($content);
         $content = $this->replaceFunctions($content);
         $content = $this->replaceTags($content);
         $content = $this->replaceConditionals($content);
@@ -186,7 +199,7 @@ class Template
      *
      * @return string the view content with the includes formatted
      */
-    private function replaceInclude($content)
+    private function replaceIncludes($content)
     {
         preg_match_all(self::INCLUDE_FORMAT, $content, $matches, PREG_OFFSET_CAPTURE);
 
