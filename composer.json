@@ -28,11 +28,6 @@
     "php": ">=7.0.0"
   },
   "autoload": {
-    "files": [
-      "system/stdlib/config.php",
-      "system/stdlib/pages.php",
-      "system/stdlib/utilities.php"
-    ],
     "psr-4": {
       "Core\\": "system/core/",
       "Definitions\\": "system/definitions",
