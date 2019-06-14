@@ -1,0 +1,10 @@
+/vendor/
+/cache/
+/app/
+/public/
+/system/definitions/
+/system/utilities/
+/system/log/
+/system/config.php
+composer.lock
+.htaccess

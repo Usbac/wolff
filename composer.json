@@ -1,0 +1,51 @@
+{
+  "name": "usbac/wolff",
+  "description": "Ridiculously small PHP framework",
+  "keywords": [
+    "framework", "php", "small", "web", "apps", "fast"
+  ],
+  "type": "project",
+  "version": "1.2.1",
+  "license": "MIT",
+  "support": {
+    "issues": "https://github.com/Usbac/Wolff/issues",
+    "source": "https://github.com/Usbac/Wolff",
+    "wiki": "https://github.com/Usbac/Wolff/wiki",
+    "email": "Contacto@usbac.com.ve"
+  },
+  "authors": [
+    {
+      "name": "Usbac",
+      "homepage": "http://www.usbac.com.ve",
+      "email": "Contacto@usbac.com.ve"
+    },
+    {
+      "name": "Franklin Moreno",
+      "email": "Cfranklinmoreno@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.0.0"
+  },
+  "autoload": {
+    "files": [
+      "system/config.php",
+      "system/stdlib/config.php",
+      "system/stdlib/pages.php",
+      "system/stdlib/utilities.php",
+      "system/definitions/Routes.php",
+      "system/definitions/Utilities.php",
+      "system/definitions/Extensions.php",
+      "system/definitions/Templates.php"
+    ],
+    "psr-4": {
+      "Core\\": "system/core/",
+      "Definitions\\": "system/definitions",
+      "Utilities\\": "system/utilities/",
+      "Cli\\": "system/cli/",
+      "App\\": "app/",
+      "Extension\\": "app/extensions/",
+      "Controller\\": "app/controllers/"
+    }
+  }
+}

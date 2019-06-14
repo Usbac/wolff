@@ -1,0 +1,8 @@
+#!/usr/bin/env php
+<?php
+
+chdir(dirname(__FILE__));
+
+require 'vendor/autoload.php';
+
+new Cli\Wolffie($argv);
