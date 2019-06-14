@@ -43,11 +43,19 @@ class Query
 
     /**
      * Returns the first element of the query results
+     * or only the specified column of the first element
      *
-     * @return array the first element of the query results
+     * @param  string  $column  the column name to pick
+     *
+     * @return array the first element of the query results,
+     * or only the specified column of the first element
      */
-    public function first()
+    public function first(string $column = null)
     {
+        if (isset($column, $this->rows[0])) {
+            return $this->rows[0][$column];
+        }
+
         return $this->rows[0] ?? null;
     }
 

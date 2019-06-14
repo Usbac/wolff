@@ -9,14 +9,13 @@ class Create
 {
 
     const TEMPLATE_PATH = 'system/cli/templates/';
+    const ROUTES_PATH = 'system/definitions/Routes.php';
 
-    private $routes_dir;
     private $argv;
 
 
     public function __construct($argv)
     {
-        $this->routes_dir = 'System/definitions/Routes.php';
         $this->argv = $argv;
         $this->index();
     }
@@ -223,8 +222,8 @@ class Create
 
     private function route()
     {
-        $file = fopen($this->routes_dir, 'r') or die('WARNING: Cannot read Routes file');
-        $content = fread($file, filesize($this->routes_dir));
+        $file = fopen(self::ROUTES_PATH, 'r') or die('WARNING: Cannot read Routes file');
+        $content = fread($file, filesize(self::ROUTES_PATH));
         $route = $this->argv[3];
         $controller = $this->argv[4];
 
@@ -241,7 +240,7 @@ class Create
         $content .= "    \$this->load->controller('" . $controller . "'); \n";
         $content .= "});";
 
-        if (file_put_contents($this->routes_dir, $content, "\r\n" . FILE_APPEND | LOCK_EX)) {
+        if (file_put_contents(self::ROUTES_PATH, $content, "\r\n" . FILE_APPEND | LOCK_EX)) {
             echo "Route " . $route . " created successfully! \n";
         }
     }
@@ -249,8 +248,8 @@ class Create
 
     private function block()
     {
-        $file = fopen($this->routes_dir, 'r') or die('WARNING: Cannot read Routes file');
-        $content = fread($file, filesize($this->routes_dir));
+        $file = fopen(self::ROUTES_PATH, 'r') or die('WARNING: Cannot read Routes file');
+        $content = fread($file, filesize(self::ROUTES_PATH));
         $route = $this->argv[3];
 
         if (preg_match("/Route::block\((\s){0,}?[\'\"]" . $route . "[\'\"](\s){0,}?\)\;/", $content)) {
@@ -263,7 +262,7 @@ class Create
 
         $content = PHP_EOL . PHP_EOL . 'Route::block("' . $route . '");';
 
-        if (file_put_contents($this->routes_dir, $content, "\r\n" . FILE_APPEND | LOCK_EX)) {
+        if (file_put_contents(self::ROUTES_PATH, $content, "\r\n" . FILE_APPEND | LOCK_EX)) {
             echo "Route " . $route . " blocked successfully! \n";
         }
     }
@@ -271,8 +270,8 @@ class Create
 
     private function redirect()
     {
-        $file = fopen($this->routes_dir, 'r') or die('WARNING: Cannot read Routes file');
-        $content = fread($file, filesize($this->routes_dir));
+        $file = fopen(self::ROUTES_PATH, 'r') or die('WARNING: Cannot read Routes file');
+        $content = fread($file, filesize(self::ROUTES_PATH));
         $original = $this->argv[3];
         $redirect = $this->argv[4];
         $redirect_code = "";
@@ -292,7 +291,7 @@ class Create
 
         $content = PHP_EOL . PHP_EOL . 'Route::redirect("' . $original . '", "' . $redirect . '"' . $redirect_code . ');';
 
-        if (file_put_contents($this->routes_dir, $content, "\r\n" . FILE_APPEND | LOCK_EX)) {
+        if (file_put_contents(self::ROUTES_PATH, $content, "\r\n" . FILE_APPEND | LOCK_EX)) {
             echo "Redirect " . $original . "->" . $redirect . " created successfully! \n";
         }
     }
