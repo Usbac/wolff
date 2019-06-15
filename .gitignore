@@ -4,7 +4,6 @@
 /public/
 /system/definitions/
 /system/utilities/
-/system/stdlib/
 /system/log/
 /system/config.php
 composer.lock
