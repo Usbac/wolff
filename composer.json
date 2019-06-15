@@ -31,9 +31,6 @@
   "autoload": {
     "files": [
       "system/config.php",
-      "system/stdlib/config.php",
-      "system/stdlib/pages.php",
-      "system/stdlib/utilities.php",
       "system/definitions/Routes.php",
       "system/definitions/Utilities.php",
       "system/definitions/Extensions.php",
