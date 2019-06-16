@@ -3,6 +3,7 @@
 namespace Cli;
 
 use Core\{Cache, Extension, Maintenance, Route};
+use Utilities\Str;
 
 class Lister
 {
@@ -40,6 +41,9 @@ class Lister
                 break;
             case 'public':
                 $this->public();
+                break;
+            case 'cache':
+                $this->cache();
                 break;
             case 'routes':
                 $this->routes();
@@ -119,12 +123,23 @@ class Lister
     }
 
 
+    private function cache()
+    {
+        $files = $this->listAnyFiles(getCacheDirectory());
+
+        foreach ($files as $file) {
+            echo "\n " . Str::after($file, getCacheDirectory());
+        }
+        echo "\n";
+    }
+
+
     private function public()
     {
         $files = $this->listAnyFiles(getPublicDirectory());
 
         foreach ($files as $file) {
-            echo "\n " . $file;
+            echo "\n " . Str::after($file, getPublicDirectory());
         }
         echo "\n";
     }

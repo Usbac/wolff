@@ -82,6 +82,7 @@ class Wolffie
                 echo "\n\e[32m languages \e[0m   -> List the available languages.";
                 echo "\n\e[32m extensions \e[0m  -> List the available extensions.";
                 echo "\n\e[32m public \e[0m      -> List all the files in the public folder.";
+                echo "\n\e[32m cache \e[0m       -> List all the cache files.";
                 echo "\n\e[32m ip \e[0m          -> List all the allowed IPs for maintenance mode.";
                 echo "\n\e[32m config \e[0m      -> List the config constants.\n";
                 break;
@@ -109,7 +110,7 @@ class Wolffie
                 echo "\n\e[32m extension [path] \e[0m   -> Delete a extension.";
                 echo "\n\e[32m ip [name] \e[0m          -> Remove an IP from the maintenance mode whitelist.";
                 echo "\n\e[32m language [name] \e[0m    -> Delete a language.";
-                echo "\n\e[32m cache \e[0m              -> Delete all the cache files.";
+                echo "\n\e[32m cache [name] \e[0m       -> Delete a cache file, or all if the name is empty.";
                 echo "\n \n\e[1;30m The file extension must be specified in the [path] only when deleting views.\e[0m\n";
                 break;
             case 'set':

@@ -2,7 +2,7 @@
 
 namespace Cli;
 
-use Core\Maintenance;
+use Core\{Cache, Maintenance};
 
 class Delete
 {
@@ -12,7 +12,7 @@ class Delete
 
     public function __construct($argv)
     {
-        $this->argv    = $argv;
+        $this->argv = $argv;
         $this->index();
     }
 
@@ -157,18 +157,16 @@ class Delete
             return;
         }
 
-        $files = glob(getCacheDirectory() . '/*');
-
-        if (count($files) <= 0) {
+        if (count(glob(getCacheDirectory() . '/*')) <= 0) {
             echo "\e[1;31m WARNING: the cache folder is already empty!\e[0m \n";
 
             return;
         }
 
-        foreach ($files as $file) {
-            if (is_file($file)) {
-                unlink($file);
-            }
+        if (!isset($this->argv[3])) {
+            Cache::clear();
+        } else {
+            Cache::delete($this->argv[3]);
         }
 
         echo "Cache deleted successfully! \n";

@@ -128,7 +128,7 @@ class Cache
     /**
      * Delete the specified cache file
      *
-     * @param  string  $dir  the cache to delete, if its empty all the cache will be deleted
+     * @param  string  $dir  the cache to delete
      *
      * @return bool true if the item was successfully removed, false otherwise
      */
