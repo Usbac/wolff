@@ -17,8 +17,6 @@ define('CONFIG', [
     'public_dir'    => $root . 'public/',
 
     //General
-    'version'   => '1.3',
-    'start'     => microtime(true),
     'title'     => 'Wolff',
     'main_page' => 'main_page',
     'language'  => 'english',
