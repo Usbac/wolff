@@ -204,7 +204,7 @@ namespace {
          */
         function wolffVersion()
         {
-            return CONFIG['version'];
+            return CORE_CONFIG['version'];
         }
     }
 

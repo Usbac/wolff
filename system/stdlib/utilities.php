@@ -249,7 +249,7 @@ namespace {
          */
         function getBenchmark()
         {
-            return microtime(true) - CONFIG['start'];
+            return microtime(true) - CORE_CONFIG['start'];
         }
     }
 

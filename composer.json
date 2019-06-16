@@ -29,6 +29,7 @@
   },
   "autoload": {
     "files": [
+      "system/config.php",
       "system/stdlib/config.php",
       "system/stdlib/pages.php",
       "system/stdlib/utilities.php"
