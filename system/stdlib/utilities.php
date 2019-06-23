@@ -7,12 +7,14 @@ namespace {
 
         /**
          * Print a string and die
-         *
-         * @param $str the string to print
          */
-        function echod($str)
+        function echod()
         {
-            echo $str;
+            $args = func_get_args();
+            foreach ($args as $arg) {
+                echo $arg;
+            }
+
             die();
         }
     }
@@ -34,13 +36,14 @@ namespace {
 
         /**
          * Print an array in a nice looking way
-         *
-         * @param  array  $array  the array to print
          */
-        function printr(array $array)
+        function printr()
         {
             echo "<pre>";
-            print_r($array);
+            $args = func_get_args();
+            foreach ($args as $arg) {
+                print_r($arg);
+            }
             echo "</pre>";
         }
     }
@@ -63,12 +66,14 @@ namespace {
 
         /**
          * Var dump a variable and die
-         *
-         * @param $var the variable
          */
-        function dumpd($var)
+        function dumpd()
         {
-            var_dump($var);
+            $args = func_get_args();
+            foreach ($args as $arg) {
+                var_dump($arg);
+            }
+
             die();
         }
     }

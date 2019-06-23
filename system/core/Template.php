@@ -14,22 +14,27 @@ class Template
      */
     private static $templates = [];
 
-    const COMMENT_FORMAT = '/\{#(?s).[^#\}]*#\}/';
-    const PLAINECHO_FORMAT = '/\{\!( ?){1,}(.*?)( ?){1,}\!\}/';
-    const ECHO_FORMAT = '/\{\{( ?){1,}(.*?)( ?){1,}\}\}/';
-    const TAG_FORMAT = '/\{%( ?){1,}(.*?)( ?){1,}%\}/';
-    const FUNCTION_FORMAT = '/{func}( ?){1,}\|([^\}!]{1,})/';
-    const INCLUDE_FORMAT = '/@load\(( |\'?){1,}(.*)(.php|.html)( |\'?){1,}\)/';
+    const RAW = '~';
+    const NOT_RAW = '(?<!' . self::RAW . ')';
 
-    const IF_FORMAT = '/\{(\s?){1,}(.*)\?(\s?){1,}\}/';
-    const ENDIF_FORMAT = '/\{\?\}/';
-    const ELSE_FORMAT = '/\{(\s?){1,}else(\s?){1,}\}/';
-    const ELSEIF_FORMAT = '/\{(\s?){1,}else(\s?){1,}(.*)(\s?){1,}\}/';
+    const FORMAT = [
+        'comment'   => '/' . self::NOT_RAW . '\{#(?s).[^#\}]*#\}/',
+        'plainecho' => '/' . self::NOT_RAW . '\{\!( ?){1,}(.*?)( ?){1,}\!\}/',
+        'echo'      => '/' . self::NOT_RAW . '\{\{( ?){1,}(.*?)( ?){1,}\}\}/',
+        'tag'       => '/' . self::NOT_RAW . '\{%( ?){1,}(.*?)( ?){1,}%\}/',
+        'function'  => '/' . self::NOT_RAW . '{func}( ?){1,}\|([^\}!]{1,})/',
+        'include'   => '/' . self::NOT_RAW . '@load\(( |\'?){1,}(.*)(.php|.html)( |\'?){1,}\)/',
 
-    const FOR_FORMAT = '/\{( ?){1,}for( ){1,}(.*)( ){1,}in( ){1,}\((.*)( ?){1,},( ?){1,}(.*)( ?){1,}\)( ?){1,}\}/';
-    const ENDFOR_FORMAT = '/\{( ?){1,}for( ?){1,}\}/';
-    const FOREACH_FORMAT = '/\{( ?){1,}foreach( ?){1,}(.*)( ?){1,}as( ?){1,}(.*)( ?){1,}\}/';
-    const ENDFOREACH_FORMAT = '/\{( ?){1,}foreach( ?){1,}\}/';
+        'if'     => '/' . self::NOT_RAW . '\{(\s?){1,}(.*)\?(\s?){1,}\}/',
+        'endif'  => '/' . self::NOT_RAW . '\{\?\}/',
+        'else'   => '/' . self::NOT_RAW . '\{(\s?){1,}else(\s?){1,}\}/',
+        'elseif' => '/' . self::NOT_RAW . '\{(\s?){1,}else(\s?){1,}(.*)(\s?){1,}\}/',
+
+        'for'        => '/' . self::NOT_RAW . '\{( ?){1,}for( ){1,}(.*)( ){1,}in( ){1,}\((.*)( ?){1,},( ?){1,}(.*)( ?){1,}\)( ?){1,}\}/',
+        'endfor'     => '/' . self::NOT_RAW . '\{( ?){1,}for( ?){1,}\}/',
+        'foreach'    => '/' . self::NOT_RAW . '\{( ?){1,}foreach( ?){1,}(.*)( ?){1,}as( ?){1,}(.*)( ?){1,}\}/',
+        'endforeach' => '/' . self::NOT_RAW . '\{( ?){1,}foreach( ?){1,}\}/',
+    ];
 
 
     public function __construct()
@@ -181,14 +186,16 @@ class Template
      */
     private function replaceAll(string $content)
     {
-        $content = $this->replaceComments($content);
         $content = $this->replaceIncludes($content);
+        $content = $this->replaceComments($content);
         $content = $this->replaceFunctions($content);
         $content = $this->replaceTags($content);
         $content = $this->replaceConditionals($content);
         $content = $this->replaceCustom($content);
+        $content = $this->replaceCycles($content);
+        $content = $this->replaceRaws($content);
 
-        return $this->replaceCycles($content);
+        return $content;
     }
 
 
@@ -201,7 +208,7 @@ class Template
      */
     private function replaceIncludes($content)
     {
-        preg_match_all(self::INCLUDE_FORMAT, $content, $matches, PREG_OFFSET_CAPTURE);
+        preg_match_all(self::FORMAT['include'], $content, $matches, PREG_OFFSET_CAPTURE);
 
         foreach ($matches[1] as $key => $value) {
             $filename = Str::sanitizePath($matches[2][$key][0]);
@@ -224,30 +231,32 @@ class Template
         $func = '{func}';
 
         //Escape
-        $content = preg_replace(str_replace($func, 'e', self::FUNCTION_FORMAT), 'htmlspecialchars(strip_tags($2))',
+        $content = preg_replace(str_replace($func, 'e', self::FORMAT['function']), 'htmlspecialchars(strip_tags($2))',
             $content);
         //Uppercase
-        $content = preg_replace(str_replace($func, 'upper', self::FUNCTION_FORMAT), 'strtoupper($2)', $content);
+        $content = preg_replace(str_replace($func, 'upper', self::FORMAT['function']), 'strtoupper($2)', $content);
         //Lowercase
-        $content = preg_replace(str_replace($func, 'lower', self::FUNCTION_FORMAT), 'strtolower($2)', $content);
+        $content = preg_replace(str_replace($func, 'lower', self::FORMAT['function']), 'strtolower($2)', $content);
         //First uppercase
-        $content = preg_replace(str_replace($func, 'upperf', self::FUNCTION_FORMAT), 'ucfirst($2)', $content);
+        $content = preg_replace(str_replace($func, 'upperf', self::FORMAT['function']), 'ucfirst($2)', $content);
         //Length
-        $content = preg_replace(str_replace($func, 'length', self::FUNCTION_FORMAT), 'strlen($2)', $content);
+        $content = preg_replace(str_replace($func, 'length', self::FORMAT['function']), 'strlen($2)', $content);
+        //Count
+        $content = preg_replace(str_replace($func, 'count', self::FORMAT['function']), 'count($2)', $content);
         //Title case
-        $content = preg_replace(str_replace($func, 'title', self::FUNCTION_FORMAT), 'ucwords($2)', $content);
+        $content = preg_replace(str_replace($func, 'title', self::FORMAT['function']), 'ucwords($2)', $content);
         //MD5
-        $content = preg_replace(str_replace($func, 'md5', self::FUNCTION_FORMAT), 'md5($2)', $content);
+        $content = preg_replace(str_replace($func, 'md5', self::FORMAT['function']), 'md5($2)', $content);
         //Count words
-        $content = preg_replace(str_replace($func, 'countwords', self::FUNCTION_FORMAT), 'str_word_count($2)', $content);
+        $content = preg_replace(str_replace($func, 'countwords', self::FORMAT['function']), 'str_word_count($2)', $content);
         //Trim
-        $content = preg_replace(str_replace($func, 'trim', self::FUNCTION_FORMAT), 'trim($2)', $content);
+        $content = preg_replace(str_replace($func, 'trim', self::FORMAT['function']), 'trim($2)', $content);
         //nl2br
-        $content = preg_replace(str_replace($func, 'nl2br', self::FUNCTION_FORMAT), 'nl2br($2)', $content);
+        $content = preg_replace(str_replace($func, 'nl2br', self::FORMAT['function']), 'nl2br($2)', $content);
         //Join
-        $content = preg_replace(str_replace($func, 'join\((.*?)\)', self::FUNCTION_FORMAT), 'implode($1, $3)', $content);
+        $content = preg_replace(str_replace($func, 'join\((.*?)\)', self::FORMAT['function']), 'implode($1, $3)', $content);
         //Repeat
-        $content = preg_replace(str_replace($func, 'repeat\((.*?)\)', self::FUNCTION_FORMAT), 'str_repeat($3, $1)', $content);
+        $content = preg_replace(str_replace($func, 'repeat\((.*?)\)', self::FORMAT['function']), 'str_repeat($3, $1)', $content);
 
         return $content;
     }
@@ -262,10 +271,11 @@ class Template
      */
     private function replaceTags($content)
     {
-        $content = preg_replace(self::ECHO_FORMAT, '<?php echo htmlspecialchars($2, ENT_QUOTES) ?>', $content);
-        $content = preg_replace(self::PLAINECHO_FORMAT, '<?php echo $2 ?>', $content);
+        $content = preg_replace(self::FORMAT['echo'], '<?php echo htmlspecialchars($2, ENT_QUOTES) ?>', $content);
+        $content = preg_replace(self::FORMAT['plainecho'], '<?php echo $2 ?>', $content);
+        $content = preg_replace(self::FORMAT['tag'], '<?php $2 ?>', $content);
 
-        return preg_replace(self::TAG_FORMAT, '<?php $2 ?>', $content);
+        return $content;
     }
 
 
@@ -278,10 +288,10 @@ class Template
      */
     private function replaceConditionals($content)
     {
-        $content = preg_replace(self::ENDIF_FORMAT, '<?php endif; ?>', $content);
-        $content = preg_replace(self::IF_FORMAT, '<?php if ($2): ?>', $content);
-        $content = preg_replace(self::ELSE_FORMAT, '<?php else: ?>', $content);
-        $content = preg_replace(self::ELSEIF_FORMAT, '<?php elseif ($3): ?>', $content);
+        $content = preg_replace(self::FORMAT['endif'], '<?php endif; ?>', $content);
+        $content = preg_replace(self::FORMAT['if'], '<?php if ($2): ?>', $content);
+        $content = preg_replace(self::FORMAT['else'], '<?php else: ?>', $content);
+        $content = preg_replace(self::FORMAT['elseif'], '<?php elseif ($3): ?>', $content);
 
         return $content;
     }
@@ -297,11 +307,11 @@ class Template
     private function replaceCycles($content)
     {
         //For
-        $content = preg_replace(self::FOR_FORMAT, '<?php for (\$$3=$6; \$$3 <= $9; \$$3++): ?>', $content);
-        $content = preg_replace(self::ENDFOR_FORMAT, '<?php endfor; ?>', $content);
+        $content = preg_replace(self::FORMAT['for'], '<?php for (\$$3=$6; \$$3 <= $9; \$$3++): ?>', $content);
+        $content = preg_replace(self::FORMAT['endfor'], '<?php endfor; ?>', $content);
         //Foreach
-        $content = preg_replace(self::FOREACH_FORMAT, '<?php foreach ($3 as $6): ?>', $content);
-        $content = preg_replace(self::ENDFOREACH_FORMAT, '<?php endforeach; ?>', $content);
+        $content = preg_replace(self::FORMAT['foreach'], '<?php foreach ($3 as $6): ?>', $content);
+        $content = preg_replace(self::FORMAT['endforeach'], '<?php endforeach; ?>', $content);
 
         return $content;
     }
@@ -316,6 +326,26 @@ class Template
      */
     private function replaceComments($content)
     {
-        return preg_replace(self::COMMENT_FORMAT, '', $content);
+        return preg_replace(self::FORMAT['comment'], '', $content);
+    }
+
+
+    /**
+     * Remove the raw tag from the rest of the tags
+     *
+     * @param  string  $content  the view content
+     *
+     * @return string the view content with the raw tag removed from the rest of the tags
+     */
+    private function replaceRaws($content)
+    {
+        foreach (self::FORMAT as $format) {
+            $format = trim($format, '/');
+            $format = Str::remove($format, self::NOT_RAW);
+
+            $content = preg_replace('/' . self::RAW . '(' . $format . ')/', '$1', $content);
+        }
+
+        return $content;
     }
 }
