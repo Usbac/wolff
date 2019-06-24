@@ -8,7 +8,7 @@ use Utilities\Str;
 class Create
 {
 
-    const TEMPLATE_PATH = 'system/cli/templates/';
+    const TEMPLATE_PATH = __DIR__ . '/templates/';
     const ROUTES_PATH = 'system/definitions/Routes.php';
 
     private $argv;
@@ -79,7 +79,7 @@ class Create
             return;
         }
 
-        $file_dir = getAppDirectory() . 'controllers/' . $this->argv[3] . '.php';
+        $file_dir = getControllerPath($this->argv[3]);
 
         if (file_exists($file_dir)) {
             echo "\e[1;31m WARNING: controller " . $this->argv[3] . " already exists!\e[0m \n";
@@ -115,7 +115,7 @@ class Create
             return;
         }
 
-        $file_dir = getAppDirectory() . 'views/' . $this->argv[3] . '.php';
+        $file_dir = getViewPath($this->argv[3] . '.php');
 
         if (file_exists($file_dir)) {
             echo "\e[1;31m WARNING: view " . $this->argv[3] . " already exists!\e[0m \n";

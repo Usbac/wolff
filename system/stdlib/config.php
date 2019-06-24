@@ -75,11 +75,14 @@ namespace {
 
         /**
          * Returns the root directory of the project
+         *
+         * @param  string  $path  the optional path to append
+         *
          * @return string the root directory of the project
          */
-        function getDirectory()
+        function getDirectory(string $path = '')
         {
-            return CONFIG['root_dir'];
+            return CONFIG['root_dir'] . $path;
         }
     }
 
@@ -87,11 +90,14 @@ namespace {
 
         /**
          * Returns the root directory of the project relative to the server root
+         *
+         * @param  string  $path  the optional path to append
+         *
          * @return string the root directory of the project relative to the server root
          */
-        function getProjectDirectory()
+        function getProjectDirectory(string $path = '')
         {
-            return substr(CONFIG['root_dir'], strlen($_SERVER['DOCUMENT_ROOT']));;
+            return substr(CONFIG['root_dir'], strlen($_SERVER['DOCUMENT_ROOT'])) . $path;
         }
     }
 
@@ -99,11 +105,14 @@ namespace {
 
         /**
          * Returns the system directory of the project
+         *
+         * @param  string  $path  the optional path to append
+         *
          * @return string the system directory of the project
          */
-        function getSystemDirectory()
+        function getSystemDirectory(string $path = '')
         {
-            return CONFIG['system_dir'];
+            return CONFIG['system_dir'] . $path;
         }
     }
 
@@ -111,11 +120,14 @@ namespace {
 
         /**
          * Returns the app directory of the project
+         *
+         * @param  string  $path  the optional path to append
+         *
          * @return string the app directory of the project
          */
-        function getAppDirectory()
+        function getAppDirectory(string $path = '')
         {
-            return CONFIG['app_dir'];
+            return CONFIG['app_dir'] . $path;
         }
     }
 
@@ -124,11 +136,14 @@ namespace {
         /**
          * Returns the public directory of the project
          * relative to the server root
+         *
+         * @param  string  $path  the optional path to append
+         *
          * @return string the public directory of the project
          */
-        function getPublicDirectory()
+        function getPublicDirectory(string $path = '')
         {
-            return substr(CONFIG['public_dir'], strlen($_SERVER['DOCUMENT_ROOT']));
+            return substr(CONFIG['public_dir'], strlen($_SERVER['DOCUMENT_ROOT'])) . $path;
         }
     }
 
@@ -136,11 +151,14 @@ namespace {
 
         /**
          * Returns the extension directory of the project
+         *
+         * @param  string  $path  the optional path to append
+         *
          * @return string the extension directory of the project
          */
-        function getExtensionDirectory()
+        function getExtensionDirectory(string $path = '')
         {
-            return CONFIG['extension_dir'];
+            return CONFIG['extension_dir'] . $path;
         }
     }
 
@@ -148,11 +166,14 @@ namespace {
 
         /**
          * Returns the cache directory of the project
+         *
+         * @param  string  $path  the optional path to append
+         *
          * @return string the cache directory of the project
          */
-        function getCacheDirectory()
+        function getCacheDirectory(string $path = '')
         {
-            return CONFIG['cache_dir'];
+            return CONFIG['cache_dir'] . $path;
         }
     }
 

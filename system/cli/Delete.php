@@ -52,7 +52,7 @@ class Delete
             return;
         }
 
-        $file_dir = getAppDirectory() . 'controllers/' . $this->argv[3] . '.php';
+        $file_dir = getControllerPath($this->argv[3]);
 
         if (!is_file($file_dir)) {
             echo "\e[1;31m WARNING: the controller '" . $this->argv[3] . "' doesn't exists!\e[0m \n";
@@ -76,7 +76,7 @@ class Delete
             return;
         }
 
-        $file_dir = getAppDirectory() . 'views/' . $this->argv[3];
+        $file_dir = getViewPath($this->argv[3]);
 
         if (!is_file($file_dir)) {
             echo "\e[1;31m WARNING: the view '" . $this->argv[3] . "' doesn't exists!\e[0m \n";

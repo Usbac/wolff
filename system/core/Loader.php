@@ -148,8 +148,10 @@ class Loader
      *
      * @return mixed the language content or false if an error happens
      */
-    public function language(string $dir, string $language = CONFIG['language'])
+    public function language(string $dir, string $language = null)
     {
+        $language = $language ?? getLanguage();
+
         //Sanitize directory
         $dir = Str::sanitizePath($dir);
         $file_path = getAppDirectory() . 'languages/' . $language . '/' . $dir . '.php';
@@ -157,7 +159,7 @@ class Loader
         if (file_exists($file_path)) {
             include_once($file_path);
         } else {
-            Log::warning("The $language language for '$dir' doesn't exists");
+            Log::error("The $language language for '$dir' doesn't exists");
 
             return false;
         }
