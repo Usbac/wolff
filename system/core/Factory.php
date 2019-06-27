@@ -39,7 +39,7 @@ class Factory
     const NAMESPACE_CONTROLLER = 'Controller\\';
     const NAMESPACE_EXTENSION = 'Extension\\';
     const NAMESPACE_UTILITY = 'Utilities\\';
-
+    const DSN = '{dbms}:host={server}; dbname={db}';
 
     /**
      * Returns a PDO connection or false in case of errors
@@ -50,20 +50,25 @@ class Factory
      */
     public static function connection(array $options)
     {
-        if (isset($options) && !empty($options)) {
-            try {
-                $connection = new PDO(getDBMS() . ':host=' . getServer() . '; dbname=' . getDB() . '',
-                                      getDbUser(), getDbPass(), $options);
-            } catch (PDOException $e) {
-                Log::critical($e->getMessage());
-
-                return false;
-            }
-
-            return $connection;
+        if (empty($options)) {
+            return false;
         }
 
-        return false;
+        try {
+            $dsn = Str::interpolate(self::DSN, [
+                'dbms'   => getDBMS(),
+                'server' => getServer(),
+                'db'     => getDB(),
+            ]);
+
+            $connection = new PDO($dsn, getDbUser(), getDbPass(), $options);
+        } catch (PDOException $e) {
+            Log::critical($e->getMessage());
+
+            return false;
+        }
+
+        return $connection;
     }
 
 

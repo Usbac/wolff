@@ -116,6 +116,8 @@ class Session
     {
         if (!isset($key)) {
             return $_SESSION;
+        } elseif (!self::has($key)) {
+            Log::notice("Undefined index '$key' in Session array");
         }
 
         return $_SESSION[$key];
@@ -178,6 +180,8 @@ class Session
         $remaining = 0;
         if (isset($_SESSION['vars_tmp_time'][$key])) {
             $remaining = $_SESSION['vars_tmp_time'][$key] - time();
+        } else {
+            Log::notice("Undefined '$key' live time value in Session array");
         }
 
         if ($gmdate) {

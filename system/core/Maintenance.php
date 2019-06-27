@@ -15,7 +15,8 @@ class Maintenance
     private static $file = CONFIG['root_dir'] . 'system/definitions/maintenance_whitelist.txt';
 
 
-    const READ_ERROR = "Couldn't read the maintenance whitelist file";
+    const NO_READABLE = "Couldn't read the maintenance whitelist file";
+    const INVALID_IP = "Invalid IP format for the maintenance whitelist file";
 
 
     /**
@@ -50,7 +51,7 @@ class Maintenance
         }
 
         if (!$content = file_get_contents(self::$file)) {
-            Log::warning(self::READ_ERROR);
+            Log::warning(self::NO_READABLE);
 
             return false;
         }
@@ -69,6 +70,8 @@ class Maintenance
     public static function addAllowedIP(string $ip)
     {
         if (!$ip = filter_var($ip, FILTER_VALIDATE_IP)) {
+            Log::warning(self::INVALID_IP);
+
             return false;
         }
 
@@ -80,7 +83,7 @@ class Maintenance
 
                 return true;
             }
-            Log::warning(self::READ_ERROR);
+            Log::warning(self::NO_READABLE);
 
             return false;
         }
@@ -105,13 +108,15 @@ class Maintenance
     public static function removeAllowedIP(string $ip)
     {
         if (!$ip = filter_var($ip, FILTER_VALIDATE_IP)) {
+            Log::warning(self::INVALID_IP);
+
             return false;
         }
 
         self::createFile();
 
         if (!$content = file_get_contents(self::$file)) {
-            Log::warning(self::READ_ERROR);
+            Log::warning(self::NO_READABLE);
 
             return false;
         }

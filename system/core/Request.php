@@ -23,6 +23,8 @@ class Request
     {
         if (!isset($key)) {
             return $_GET;
+        } elseif (!self::hasGet($key)) {
+            Log::notice("Undefined index '$key' for Request::get");
         }
 
         return $_GET[$key] ?? null;
@@ -80,6 +82,8 @@ class Request
     {
         if (!isset($key)) {
             return $_POST;
+        } elseif (!self::hasPost($key)) {
+            Log::notice("Undefined index '$key' for Request::post");
         }
 
         return $_POST[$key] ?? null;
@@ -137,6 +141,8 @@ class Request
     {
         if (!isset($key)) {
             return $_FILES;
+        } elseif (!self::hasFile($key)) {
+            Log::notice("Undefined index '$key' for Request::file");
         }
 
         return $_FILES[$key] ?? null;
@@ -167,6 +173,8 @@ class Request
     {
         if (!isset($key)) {
             return $_COOKIE;
+        } elseif (!self::hasCookie($key)) {
+            Log::notice("Undefined index '$key' for Request::cookie");
         }
 
         return $_COOKIE[$key] ?? null;

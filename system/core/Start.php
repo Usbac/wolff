@@ -72,8 +72,9 @@ class Start
      */
     public function getUrl()
     {
-        $url = Request::get('url') ?? getMainPage();
+        $url = Request::hasGet('url')? Request::get('url') : getMainPage();
         $url = Str::sanitizeUrl($url);
+
         return Route::getRedirection($url) ?? $url;
     }
 

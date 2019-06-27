@@ -15,7 +15,7 @@ namespace {
          */
         function getServer()
         {
-            return CONFIG['server'];
+            return CONFIG['server'] ?? '';
         }
     }
 
@@ -27,7 +27,7 @@ namespace {
          */
         function getDB()
         {
-            return CONFIG['db'];
+            return CONFIG['db'] ?? '';
         }
     }
 
@@ -39,7 +39,7 @@ namespace {
          */
         function getDBMS()
         {
-            return CONFIG['dbms'];
+            return CONFIG['dbms'] ?? '';
         }
     }
 
@@ -51,7 +51,7 @@ namespace {
          */
         function getDbUser()
         {
-            return CONFIG['db_username'];
+            return CONFIG['db_username'] ?? '';
         }
     }
 
@@ -63,7 +63,7 @@ namespace {
          */
         function getDbPass()
         {
-            return CONFIG['db_password'];
+            return CONFIG['db_password'] ?? '';
         }
     }
 
@@ -189,7 +189,7 @@ namespace {
          */
         function getPageTitle()
         {
-            return CONFIG['title'];
+            return CONFIG['title'] ?? '';
         }
     }
 
@@ -201,7 +201,7 @@ namespace {
          */
         function getMainPage()
         {
-            return CONFIG['main_page'];
+            return CONFIG['main_page'] ?? '';
         }
     }
 
@@ -213,7 +213,7 @@ namespace {
          */
         function getLanguage()
         {
-            return CONFIG['language'];
+            return CONFIG['language'] ?? '';
         }
     }
 

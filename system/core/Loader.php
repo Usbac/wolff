@@ -225,7 +225,7 @@ class Loader
     public function redirect404()
     {
         header(self::HEADER_404);
-        $this->controller('_404');
+        $this->controller(CORE_CONFIG['404_controller']);
         exit;
     }
 
@@ -236,7 +236,7 @@ class Loader
     public function maintenance()
     {
         header(self::HEADER_503);
-        $this->controller('_maintenance');
+        $this->controller(CORE_CONFIG['maintenance_controller']);
         exit;
     }
 

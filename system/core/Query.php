@@ -61,18 +61,36 @@ class Query
 
 
     /**
-     * Returns only the specified column of the query result
+     * Returns only the specified column/s of the query result
      *
-     * @param  string  $column  the column name to pick
-     *
-     * @return array only the specified column of the query result
+     * @return array only the specified column/s of the query result
      */
-    public function pick(string $column)
+    public function pick()
     {
         $rows = [];
+        $columns = func_get_args();
 
+        //Only one column to pick
+        if (count($columns) == 1) {
+            foreach($this->rows as $row) {
+                if (is_string($columns[0]) && array_key_exists($columns[0], $row)) {
+                    $rows[] = $row[$columns[0]];
+                }
+            }
+
+            return $rows;
+        }
+
+        //Multiple columns to pick
         foreach($this->rows as $row) {
-            $rows[] = array_key_exists($column, $row) ? $row[$column] : $row;
+            $new_row = [];
+            foreach ($columns as $column) {
+                if (is_string($column) && array_key_exists($column, $row)) {
+                    $new_row[$column] = $row[$column];
+                }
+            }
+
+            array_push($rows, $new_row);
         }
 
         return $rows;
