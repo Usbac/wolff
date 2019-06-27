@@ -87,6 +87,8 @@ class Str
 
     /**
      * Returns a string with its placeholders replaced by context values
+     * The values must be enclosed by curly braces
+     * Example: Your age is {age}
      *
      * @param  string  $str  the string
      * @param  array  $values  the context values for the placeholders
