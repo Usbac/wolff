@@ -2,14 +2,14 @@
 <html>
 <head>
     <title>{{ getPageTitle() }} - Home</title>
-    <link href="{{ getPublicDirectory() }}assets/css/styles.css" rel="stylesheet"/>
-    <link rel="icon" href="{{ $logo }}">
+    <link href="{{ getPublicDirectory('assets/css/styles.css') }}" rel="stylesheet"/>
+    <link rel="icon" href="{{ getPublicDirectory('favicon.ico') }}">
 </head>
 <body>
 <div class='center'>
     {# Title #}
     <div class='text-center'>
-        <img class='main-img' src="{{ $logo }}" width='130px'>
+        <object data="{{ getPublicDirectory('logo.svg') }}" type="image/svg+xml" width="130px"></object>
         <h1 class='title'>{{ $lang['title'] }}</h1>
     </div>
 
@@ -21,7 +21,7 @@
 
     {# Options #}
     <div class='text-center options'>
-        <a target='_blank' href='https://github.com/Usbac/Wolff/wiki'>{{ upper|$lang['documentation'] }}</a>
+        <a target='_blank' href='https://www.getwolff.com/docs/1.x/home'>{{ upper|$lang['documentation'] }}</a>
         <a target='_blank' href='https://github.com/Usbac/Wolff'>{{ upper|$lang['github'] }}</a>
         <a target='_blank' href='https://github.com/Usbac'>{{ upper|$lang['creators_page'] }}</a>
     </div>

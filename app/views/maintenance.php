@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>{{ CONFIG['title'] }} - {{ $lang['title'] }}</title>
-    <link href="{{ getPublicDirectory() }}assets/css/styles.css" rel="stylesheet"/>
+    <link href="{{ getPublicDirectory('assets/css/styles.css') }}" rel="stylesheet"/>
 </head>
 <body>
 <div class='center'>

@@ -10,7 +10,6 @@ class Home extends Controller
     public function index()
     {
         $this->data['lang'] = $this->load->language('home');
-        $this->data['logo'] = getPublicDirectory() . 'logo.png';
 
         $this->load->view('home', $this->data);
     }
