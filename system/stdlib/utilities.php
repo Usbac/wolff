@@ -126,6 +126,21 @@ namespace {
         }
     }
 
+    if (!function_exists('url')) {
+
+        /**
+         * Returns the complete url relative to the local site
+         *
+         * @param  string  $url  the url to redirect to
+         *
+         * @return string the complete url relative to the local site
+         */
+        function url(string $url = '')
+        {
+            return getLocalUrl($url);
+        }
+    }
+
     if (!function_exists('arrayToCsv')) {
 
         /**

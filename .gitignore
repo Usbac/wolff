@@ -3,7 +3,6 @@
 /app/
 /public/
 /system/definitions/
-/system/utilities/
 /system/log/
 composer.lock
 .htaccess
