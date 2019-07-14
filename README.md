@@ -9,7 +9,7 @@
 <h4 align="center">Ridiculously small PHP framework.</h4>
 
 <p align="center">
-<img src="https://img.shields.io/badge/stability-stable-green.svg"> <img src="https://img.shields.io/badge/version-1.6-blue.svg"> <img src="https://img.shields.io/badge/license-MIT-orange.svg">
+<img src="https://img.shields.io/badge/stability-stable-green.svg"> <img src="https://img.shields.io/badge/version-1.6.1-blue.svg"> <img src="https://img.shields.io/badge/license-MIT-orange.svg">
 </p>
 
 Wolff is a ridiculously small and lightweight PHP framework with useful functions and utilities like a route, template, extensions and language system.
@@ -52,14 +52,14 @@ And more...
 
 ## CLI
 
-Take advantage of the CLI application of Wolff named Wolffie to do a lot of tasks in a fast and easy way using short commands.
+Take advantage of the [CLI](https://github.com/Usbac/wolff/wiki/CLI) application of Wolff named Wolffie to do a lot of tasks in a fast and easy way using short commands.
 
 With it you can create extensions, routes, export queries to csv files, look at the available pages, change the project configuration, delete elements like controllers, languages and much more.
 
 
 ## Requirements
 
-* PHP version 7.0 or higher.
+* PHP version 7.0 or higher
 
 * Composer
 
