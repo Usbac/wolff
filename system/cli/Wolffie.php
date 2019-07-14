@@ -18,7 +18,7 @@ class Wolffie
         $this->argv = $argv;
 
         if (!isset($this->argv[1])) {
-            echo "\e[1;31m WARNING: No command specified!\e[0m\n";
+            $this->help();
 
             return;
         }
@@ -45,7 +45,7 @@ class Wolffie
             case 'help':
                 $this->help();
                 break;
-            case 'version':
+            case 'version': case 'v':
                 $this->version();
                 break;
             case 'export':
@@ -62,14 +62,14 @@ class Wolffie
     {
         if (empty($this->argv[2])) {
             echo "\nMAIN COMMANDS \n";
-            echo "\n\e[32m ls \e[0m                     -> List elements";
-            echo "\n\e[32m mk \e[0m                     -> Create elements";
-            echo "\n\e[32m rm \e[0m                     -> Remove elements";
-            echo "\n\e[32m set [constant] [value] \e[0m -> Set a configuration constant";
-            echo "\n\e[32m export [query] \e[0m         -> Export a query to a csv file";
-            echo "\n\e[32m help [command] \e[0m         -> Get help";
-            echo "\n\e[32m version \e[0m                -> Get the Wolff version";
-            echo "\n \n\e[1;30m Run help followed by one of the commands showed above for more information.\e[0m\n";
+            echo "\n\e[32m ls \e[0m              -> List elements";
+            echo "\n\e[32m mk \e[0m              -> Create elements";
+            echo "\n\e[32m rm \e[0m              -> Remove elements";
+            echo "\n\e[32m set [key] [val] \e[0m -> Set a config constant (system/config.php)";
+            echo "\n\e[32m export [query] \e[0m  -> Export a query to a csv file";
+            echo "\n\e[32m help [command] \e[0m  -> Get help";
+            echo "\n\e[32m v \e[0m               -> Get the Wolff version";
+            echo "\n \n\e[1;30m Run help followed by one of the commands showed above for more info.\e[0m\n";
 
             return;
         }
@@ -120,7 +120,7 @@ class Wolffie
             case 'help':
                 echo "\nIs this recursion?\n";
                 break;
-            case 'version':
+            case 'version': case 'v':
                 echo "\nShow the current version of Wolff\n";
                 break;
             case 'export':
