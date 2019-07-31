@@ -16,8 +16,11 @@ class Template
 
     const RAW = '~';
     const NOT_RAW = '(?<!' . self::RAW . ')';
-
     const FORMAT = [
+        'style'  => '/' . self::NOT_RAW . '\{%(\s?){1,}style( ?){1,}=( ?){1,}(.*)(\s?){1,}%\}/',
+        'script' => '/' . self::NOT_RAW . '\{%(\s?){1,}script( ?){1,}=( ?){1,}(.*)(\s?){1,}%\}/',
+        'icon'   => '/' . self::NOT_RAW . '\{%(\s?){1,}icon( ?){1,}=( ?){1,}(.*)(\s?){1,}%\}/',
+
         'comment'   => '/' . self::NOT_RAW . '\{#(?s).[^#\}]*#\}/',
         'plainecho' => '/' . self::NOT_RAW . '\{\!( ?){1,}(.*?)( ?){1,}\!\}/',
         'echo'      => '/' . self::NOT_RAW . '\{\{( ?){1,}(.*?)( ?){1,}\}\}/',
@@ -186,6 +189,7 @@ class Template
      */
     private function replaceAll(string $content)
     {
+        $content = $this->replaceImports($content);
         $content = $this->replaceIncludes($content);
         $content = $this->replaceComments($content);
         $content = $this->replaceFunctions($content);
@@ -214,6 +218,23 @@ class Template
             $filename = Str::sanitizePath($matches[2][$key][0]);
             $content = str_replace($matches[0][$key][0], $this->getContent($filename), $content);
         }
+
+        return $content;
+    }
+
+
+    /**
+     * Apply the template imports
+     *
+     * @param  string  $content  the view content
+     *
+     * @return string the view content with the import tags formatted
+     */
+    private function replaceImports($content)
+    {
+        $content = preg_replace(self::FORMAT['style'], '<link rel="stylesheet" type="text/css" href=$4/>', $content);
+        $content = preg_replace(self::FORMAT['script'], '<script type="text/javascript" src=$4></script>', $content);
+        $content = preg_replace(self::FORMAT['icon'], '<link rel="icon" href=$4>', $content);
 
         return $content;
     }
