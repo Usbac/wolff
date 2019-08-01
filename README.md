@@ -9,7 +9,7 @@
 <h4 align="center">Ridiculously small PHP framework.</h4>
 
 <p align="center">
-<img src="https://img.shields.io/badge/stability-stable-green.svg"> <img src="https://img.shields.io/badge/version-1.6.1-blue.svg"> <img src="https://img.shields.io/badge/license-MIT-orange.svg">
+<img src="https://img.shields.io/badge/stability-stable-green.svg"> <img src="https://img.shields.io/badge/version-1.7-blue.svg"> <img src="https://img.shields.io/badge/license-MIT-orange.svg">
 </p>
 
 Wolff is a ridiculously small and lightweight PHP framework with useful functions and utilities like a route, template, extensions and language system.
@@ -71,7 +71,7 @@ You must have [composer](https://getcomposer.org/) in your system for installing
 Open your favorite terminal, move to the folder where you want Wolff to be installed and run the following command:
 
 ```
-composer create-project usbac/Wolff
+composer create-project usbac/wolff
 ```
 
 This will download the whole project with everything ready to run!

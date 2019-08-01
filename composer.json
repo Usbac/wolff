@@ -2,10 +2,10 @@
   "name": "usbac/wolff",
   "description": "Ridiculously small PHP framework",
   "keywords": [
-    "framework", "php", "small", "web", "apps", "fast"
+    "framework", "php", "small", "web", "apps", "fast", "full", "db"
   ],
   "type": "project",
-  "version": "1.6.1",
+  "version": "1.7",
   "license": "MIT",
   "support": {
     "issues": "https://github.com/Usbac/Wolff/issues",
@@ -22,7 +22,7 @@
   ],
   "require": {
     "php": ">=7.0.0",
-    "usbac/wolff-framework": "~1.6"
+    "usbac/wolff-framework": "~1.7"
   },
   "autoload": {
     "files": [
