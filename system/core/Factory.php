@@ -41,6 +41,7 @@ class Factory
     const NAMESPACE_UTILITY = 'Utilities\\';
     const DSN = '{dbms}:host={server}; dbname={db}';
 
+
     /**
      * Returns a PDO connection or false in case of errors
      *
@@ -50,7 +51,7 @@ class Factory
      */
     public static function connection(array $options)
     {
-        if (empty($options)) {
+        if (empty($options) || empty(getDB())) {
             return false;
         }
 
