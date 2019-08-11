@@ -26,8 +26,6 @@ class Response
      */
     private $headers;
 
-    const DEFAULT_STATUS = 200;
-
 
     public function __construct()
     {

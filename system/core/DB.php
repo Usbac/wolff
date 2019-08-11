@@ -194,6 +194,8 @@ class DB
      */
     public static function tableExists(string $table)
     {
+        $table = self::escape($table);
+
         try {
             $result = self::getPdo()->query("SELECT 1 FROM $table LIMIT 1");
         } catch (Exception $e) {
@@ -214,7 +216,10 @@ class DB
      */
     public static function columnExists(string $table, string $column)
     {
-        $result = self::getPdo()->query("SHOW COLUMNS FROM $table LIKE '$column'");
+        $table = self::escape($table);
+        $column = self::escape($column);
+
+        $result = self::getPdo()->query("SHOW COLUMNS FROM $table LIKE $column");
         if (is_bool($result)) {
             return false;
         }
@@ -256,6 +261,7 @@ class DB
      */
     public static function getTableSchema(string $table)
     {
+        $table = self::escape($table);
         $result = self::getPdo()->query("SHOW COLUMNS FROM $table");
 
         if (is_bool($result)) {
@@ -268,6 +274,7 @@ class DB
 
     /**
      * Returns the result of a SELECT ALL query
+     * WARNING: The conditions parameter must be manually escaped
      *
      * @param  string  $table  the table for the query
      * @param  string  $conditions  the select conditions
@@ -277,12 +284,15 @@ class DB
      */
     public static function selectAll(string $table, string $conditions = '1', $args = null)
     {
+        $table = self::escape($table);
+
         return DB::run("SELECT * FROM $table WHERE $conditions", $args)->get();
     }
 
 
     /**
      * Returns the result of a SELECT COUNT(*) query
+     * WARNING: The conditions parameter must be manually escaped
      *
      * @param  string  $table  the table for the query
      * @param  string  $conditions  the select conditions
@@ -292,13 +302,16 @@ class DB
      */
     public static function countAll(string $table, string $conditions = '1', $args = null)
     {
+        $table = self::escape($table);
         $result = DB::run("SELECT COUNT(*) FROM $table WHERE $conditions", $args)->first();
+
         return empty($result) ? 0 : $result['COUNT(*)'];
     }
 
 
     /**
      * Runs a DELETE query
+     * WARNING: The conditions parameter must be manually escaped
      *
      * @param  string  $table  the table for the query
      * @param  string  $conditions  the select conditions
@@ -308,7 +321,23 @@ class DB
      */
     public static function deleteAll(string $table, string $conditions = '1', $args = null)
     {
+        $table = self::escape($table);
+
         return DB::run("DELETE FROM $table WHERE $conditions", $args)->get();
+    }
+
+
+    /**
+     * Returns the string escaped
+     * Any character that is not a letter, number or underscore is removed.
+     *
+     * @param  string  $str  the string
+     *
+     * @return array the string escaped
+     */
+    private static function escape($str)
+    {
+        return preg_replace('/[^A-Za-z0-9_]+/', '', $str);
     }
 
 }
