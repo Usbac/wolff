@@ -2,8 +2,8 @@
 <html>
 <head>
     <title>{{ getPageTitle() }} - Home</title>
-    <link href="{{ getPublicDirectory('assets/css/styles.css') }}" rel="stylesheet"/>
-    <link rel="icon" href="{{ getPublicDirectory('favicon.ico') }}">
+    {% style="{{ getPublicDirectory('assets/css/styles.css') }}" %}
+    {% icon="{{ getPublicDirectory('favicon.ico') }}" %}
 </head>
 <body>
 <div class='center'>
