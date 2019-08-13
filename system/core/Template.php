@@ -189,8 +189,8 @@ class Template
      */
     private function replaceAll(string $content)
     {
-        $content = $this->replaceImports($content);
         $content = $this->replaceIncludes($content);
+        $content = $this->replaceImports($content);
         $content = $this->replaceComments($content);
         $content = $this->replaceFunctions($content);
         $content = $this->replaceTags($content);

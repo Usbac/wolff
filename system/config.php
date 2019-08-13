@@ -1,7 +1,7 @@
 <?php
 
 define('CORE_CONFIG', [
-    'version' => '1.7.2',
+    'version' => '1.8',
     'start'   => microtime(true),
 
     'maintenance_controller' => '_maintenance',

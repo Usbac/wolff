@@ -39,8 +39,9 @@ namespace {
          */
         function printr()
         {
-            echo "<pre>";
             $args = func_get_args();
+
+            echo "<pre>";
             foreach ($args as $arg) {
                 print_r($arg);
             }
@@ -105,6 +106,62 @@ namespace {
         {
             header("Location: $url", true, $status);
             exit;
+        }
+    }
+
+    if (!function_exists('isJson')) {
+        
+        /**
+         * Returns true if the given string is a Json, false otherwise
+         *
+         * @param  string  $str  the string
+         *
+         * @return string true if the given string is a Json, false otherwise
+         */
+        function isJson(string $str)
+        {
+            $str = json_decode($str);
+
+            return json_last_error() === JSON_ERROR_NONE;
+        }
+    }
+
+    if (!function_exists('toArray')) {
+        
+        /**
+         * Returns the given variable as an associative array
+         *
+         * @param  string  $obj  the object
+         *
+         * @return string the given variable as an associative array
+         */
+        function toArray($obj)
+        {
+            //Json
+            if (is_string($obj)) {
+                $json = json_decode($obj);
+                if (json_last_error() === JSON_ERROR_NONE) {
+                    $obj = json_decode($obj);
+                }
+            }
+    
+            $new = [];
+            
+            //Object
+            if (is_object($obj)) {
+                $obj = (array) $obj;
+            }
+            
+            //Array
+            if (is_array($obj)) {
+                foreach($obj as $key => $val) {
+                    $new[$key] = toArray($val);
+                }
+            } else {
+                $new = $obj;
+            }
+    
+            return $new;       
         }
     }
 
