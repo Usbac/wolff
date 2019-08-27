@@ -112,6 +112,30 @@ class Str
 
 
     /**
+     * Returns the string with the indicated substrings swaped 
+     * or false in case of errors.
+     *
+     * @param  string  $str  the string
+     * @param  string  $first_str  the first string
+     * @param  string  $second_str  the second string
+     *
+     * @return string the string with the indicated substrings swaped
+     * or false in case of errors.
+     */
+    public static function swap(string $str, string $first_str, string $second_str)
+    {
+        if (!is_string($str) || !is_string($first_str) || !is_string($second_str)) {
+            return false;
+        }
+
+        return strtr($str, [
+            $first_str  => $second_str,
+            $second_str => $first_str
+        ]);
+    }
+
+
+    /**
      * Converts a string with any encoding to UTF-8 and returns it
      * Keep in mind that the string encoding detection is not perfect
      *

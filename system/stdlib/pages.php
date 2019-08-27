@@ -120,7 +120,7 @@ namespace {
          */
         function getViewPath(string $dir)
         {
-            return getAppDirectory() . 'views/' . $dir;
+            return getAppDirectory() . CORE_CONFIG['views_folder'] . '/' . $dir;
         }
     }
 }

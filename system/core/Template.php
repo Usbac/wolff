@@ -56,14 +56,12 @@ class Template
 
 
     /**
-     * Apply the template format over a content and render it.
+     * Applies the template format over a view and renders it.
      * The template format will be applied only if the template is enabled.
      *
      * @param  string  $dir  the view directory
      * @param  array  $data  the data array present in the view
      * @param  bool  $cache  use or not the cache system
-     *
-     * @return string the view content
      */
     public function get(string $dir, array $data, bool $cache)
     {
@@ -93,7 +91,53 @@ class Template
             fclose($temp);
         }
 
-        return $content;
+    }
+
+
+    /**
+     * Returns the view content rendered or false in case of errors.
+     * The template format will be applied only if the template is enabled.
+     *
+     * @param  string  $dir  the view directory
+     * @param  array  $data  the data array present in the view
+     * @param  bool  $cache  use or not the cache system
+     *
+     * @return string the view content rendered or false in case of errors.
+     */
+    public function render(string $dir, array $data, bool $cache)
+    {
+        //Variables in data array
+        if (is_array($data)) {
+            extract($data);
+            unset($data);
+        }
+
+        $content = $this->getContent($dir);
+
+        if ($content === false) {
+            return false;
+        }
+
+        if ($this->isEnabled()) {
+            $content = $this->replaceAll($content);
+        }
+
+        ob_start();
+
+        //Cache system
+        if ($cache && Cache::isEnabled()) {
+            include(Cache::set($dir, $content));
+        } else {
+            $temp = tmpfile();
+            fwrite($temp, $content);
+            include(stream_get_meta_data($temp)['uri']);
+            fclose($temp);
+        }
+
+        $rendered_content = ob_get_contents(); 
+        ob_end_clean();
+
+        return $rendered_content;
     }
 
 
@@ -132,7 +176,7 @@ class Template
      */
     private function getContent($dir)
     {
-        $file_path = getAppDirectory() . 'views/' . $dir;
+        $file_path = getAppDirectory() . CORE_CONFIG['views_folder'] . '/' . $dir;
 
         if (file_exists($file_path . '.php')) {
             return file_get_contents($file_path . '.php');

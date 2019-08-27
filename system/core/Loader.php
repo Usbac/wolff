@@ -184,7 +184,7 @@ class Loader
     public function view(string $dir, array $data = [], bool $cache = true)
     {
         $dir = Str::sanitizePath($dir);
-        $file_path = getAppDirectory() . 'views/' . $dir;
+        $file_path = getAppDirectory() . CORE_CONFIG['views_folder'] . '/' . $dir;
 
         if (!file_exists($file_path . '.php') && !file_exists($file_path . '.html')) {
             Log::error("View '$dir' doesn't exists");
@@ -207,7 +207,7 @@ class Loader
     public function getView(string $dir, array $data = [])
     {
         $dir = Str::sanitizePath($dir);
-        $file_path = getAppDirectory() . 'views/' . $dir;
+        $file_path = getAppDirectory() . CORE_CONFIG['views_folder'] . '/' . $dir;
 
         if (!file_exists($file_path . '.php') && !file_exists($file_path . '.html')) {
             Log::error("View '$dir' doesn't exists");
@@ -216,6 +216,29 @@ class Loader
         }
 
         return $this->template->getView($dir, $data);
+    }
+
+
+    /**
+     * Get a view content rendered
+     *
+     * @param  string  $dir  the view directory
+     * @param  array  $data  the data
+     *
+     * @return mixed the view rendered or false in case of errors
+     */
+    public function getRender(string $dir, array $data = [], bool $cache = false)
+    {
+        $dir = Str::sanitizePath($dir);
+        $file_path = getAppDirectory() . CORE_CONFIG['views_folder'] . '/' . $dir;
+
+        if (!file_exists($file_path . '.php') && !file_exists($file_path . '.html')) {
+            Log::error("View '$dir' doesn't exists");
+
+            return false;
+        }
+
+        return $this->template->render($dir, $data, $cache);
     }
 
 

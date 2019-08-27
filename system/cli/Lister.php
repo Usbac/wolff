@@ -92,7 +92,7 @@ class Lister
 
     private function views()
     {
-        $views = $this->listViewFiles(getAppDirectory() . 'views');
+        $views = $this->listViewFiles(getAppDirectory() . CORE_CONFIG['views_folder']);
 
         foreach ($views as $view) {
             echo "\n" . $view;
@@ -114,7 +114,7 @@ class Lister
 
     private function languages()
     {
-        $languages = glob(getAppDirectory() . 'languages/*', GLOB_ONLYDIR);
+        $languages = glob(getAppDirectory() . CORE_CONFIG['languages_folder'] . '/*', GLOB_ONLYDIR);
 
         foreach ($languages as $language) {
             echo "\n" . substr($language, strrpos($language, '/') + 1);
