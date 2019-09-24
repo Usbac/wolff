@@ -219,13 +219,13 @@ class Route
     public static function isBlocked(string $url)
     {
         $url = explode('/', $url);
-        $urlLength = count($url);
+        $url_length = count($url);
 
         foreach (self::$blocked as $blocked) {
             $blocked = explode('/', $blocked);
-            $blockedLength = count($blocked);
+            $blocked_length = count($blocked);
 
-            for ($i = 0; $i < $blockedLength && $i < $urlLength; $i++) {
+            for ($i = 0; $i < $blocked_length && $i < $url_length; $i++) {
                 if ($url[$i] !== $blocked[$i] && $blocked[$i] !== '*') {
                     return false;
                 }
@@ -234,7 +234,7 @@ class Route
                     return true;
                 }
 
-                if ($i === $urlLength - 1 && $i === $blockedLength - 1) {
+                if ($i === $url_length - 1 && $i === $blocked_length - 1) {
                     return true;
                 }
             }
