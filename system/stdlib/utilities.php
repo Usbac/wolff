@@ -19,19 +19,6 @@ namespace {
         }
     }
 
-    if (!function_exists('println')) {
-
-        /**
-         * Print a string with a new line
-         *
-         * @param $str the string to print
-         */
-        function println($str = '')
-        {
-            echo "$str\n";
-        }
-    }
-
     if (!function_exists('printr')) {
 
         /**
@@ -165,24 +152,6 @@ namespace {
         }
     }
 
-    if (!function_exists('getLocalUrl')) {
-
-        /**
-         * Returns the complete url relative to the local site
-         *
-         * @param  string  $url  the url to redirect to
-         *
-         * @return string the complete url relative to the local site
-         */
-        function getLocalUrl(string $url = '')
-        {
-            $http = (isset($_SERVER['HTTPS']) ? 'https' : 'http') . '://';
-            $directory = str_replace('\\', '/', getProjectDirectory());
-
-            return $http . $_SERVER['HTTP_HOST'] . $directory . $url;
-        }
-    }
-
     if (!function_exists('url')) {
 
         /**
@@ -194,7 +163,14 @@ namespace {
          */
         function url(string $url = '')
         {
-            return getLocalUrl($url);
+            $http = (isset($_SERVER['HTTPS']) ? 'https' : 'http') . '://';
+            $directory = str_replace('\\', '/', getProjectDirectory());
+
+            if (substr($directory, -1) != '/' && substr($url, 0, 1) != '/') {
+                $directory .= '/';
+            }
+
+            return $http . $_SERVER['HTTP_HOST'] . $directory . $url;
         }
     }
 

@@ -6,7 +6,6 @@ use Utilities\Str;
 
 class View
 {
-    const FILE_FORMAT = '.wlf';
 
     /**
      * Load a view
@@ -78,7 +77,7 @@ class View
      */
     private static function log(string $view)
     {
-        $path = getAppDirectory() . CORE_CONFIG['views_folder'] . '/' . $view . self::FILE_FORMAT;
+        $path = getAppDirectory() . CORE_CONFIG['views_folder'] . '/' . $view . CORE_CONFIG['views_format'];
 
         if (!file_exists($path)) {
             Log::error("View '$view' doesn't exists");
