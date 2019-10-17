@@ -2,14 +2,14 @@
 <html>
 <head>
     <title>{{ getPageTitle() }} - Home</title>
-    {% style="{{ getPublicDirectory('assets/css/styles.css') }}" %}
-    {% icon="{{ getPublicDirectory('favicon.ico') }}" %}
+    {% style="{{ getPublic('assets/css/styles.css') }}" %}
+    {% icon="{{ getPublic('favicon.ico') }}" %}
 </head>
 <body>
 <div class='center'>
     {# Title #}
     <div class='text-center'>
-        <object data="{{ getPublicDirectory('logo.svg') }}" type="image/svg+xml" width="130px"></object>
+        <object data="{{ getPublic('logo.svg') }}" type="image/svg+xml" width="130px"></object>
         <h1 class='title'>{{ $lang['title'] }}</h1>
     </div>
 
