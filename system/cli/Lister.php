@@ -26,6 +26,11 @@ class Lister
 
     public function index()
     {
+        if (!isset($this->argv[2]) || empty($this->argv[2])) {
+            echo "\e[1;31m WARNING: No element specified for listing\e[0m\n";
+            return;
+        }
+
         switch ($this->argv[2]) {
             case 'extensions':
                 $this->extensions();
@@ -136,10 +141,10 @@ class Lister
 
     private function public()
     {
-        $files = $this->listAnyFiles(getPublicDirectory());
+        $files = $this->listAnyFiles(getPublic());
 
         foreach ($files as $file) {
-            echo "\n " . Str::after($file, getPublicDirectory());
+            echo "\n " . Str::after($file, getPublic());
         }
         echo "\n";
     }
@@ -290,7 +295,7 @@ class Lister
         echo "\n ->\e[32m DIRECTORIES \e[0m";
         echo "\n Project folder: " . getDirectory();
         echo "\n App folder: " . getAppDirectory();
-        echo "\n Public folder: " . getPublicDirectory();
+        echo "\n Public folder: " . getPublic();
         echo "\n Extensions folder: " . getExtensionDirectory();
         echo "\n Cache folder: " . getCacheDirectory();
         echo "\n";

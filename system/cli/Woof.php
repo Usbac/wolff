@@ -4,7 +4,7 @@ namespace Cli;
 
 use Core\DB;
 
-class Wolffie
+class Woof
 {
 
     private $argv;
@@ -89,12 +89,12 @@ class Wolffie
             case 'mk':
                 echo "\nCREATE COMMANDS";
                 echo "\n \nPage related:";
-                echo "\n\e[32m page [path] \e[0m                   -> Create a page (view and controller).";
-                echo "\n\e[32m view [path] \e[0m                   -> Create a view.";
-                echo "\n\e[32m controller [path] \e[0m             -> Create a controller.";
-                echo "\n\e[32m language [name] \e[0m               -> Create a language.";
-                echo "\n\e[32m extension [name] \e[0m              -> Create a extension.";
-                echo "\n\e[32m ip [name] \e[0m                     -> Add an IP to the maintenance mode whitelist.";
+                echo "\n\e[32m page [path] \e[0m       -> Create a page (view and controller).";
+                echo "\n\e[32m view [path] \e[0m       -> Create a view.";
+                echo "\n\e[32m controller [path] \e[0m -> Create a controller.";
+                echo "\n\e[32m language [name] \e[0m   -> Create a language.";
+                echo "\n\e[32m extension [name] \e[0m  -> Create a extension.";
+                echo "\n\e[32m ip [name] \e[0m         -> Add an IP to the maintenance mode whitelist.";
                 echo "\n \n\e[1;30m If the [path] includes folders that doesn't exists, those folders will be created automatically.\e[0m";
 
                 echo "\n \nRoutes related:";
@@ -110,21 +110,20 @@ class Wolffie
                 echo "\n\e[32m extension [path] \e[0m   -> Delete a extension.";
                 echo "\n\e[32m ip [name] \e[0m          -> Remove an IP from the maintenance mode whitelist.";
                 echo "\n\e[32m language [name] \e[0m    -> Delete a language.";
-                echo "\n\e[32m cache [name] \e[0m       -> Delete a cache file, or all if the name is empty.";
-                echo "\n \n\e[1;30m The file extension must be specified in the [path] only when deleting views.\e[0m\n";
+                echo "\n\e[32m cache [name] \e[0m       -> Delete a cache file, or all if the name is empty.\n\n";
                 break;
             case 'set':
-                echo "\nModify a constant defined in the config.php file. \n";
-                echo "Example changing the language to english:\e[32m php wolffie set language 'english'\e[0m\n";
+                echo "Modify a constant defined in the config.php file. \n";
+                echo "Example changing the language to english:\e[32m php woof set language 'english'\e[0m\n";
                 break;
             case 'help':
-                echo "\nIs this recursion?\n";
+                echo "Is this recursion?\n";
                 break;
             case 'version': case 'v':
-                echo "\nShow the current version of Wolff\n";
+                echo "Show the current version of Wolff\n";
                 break;
             case 'export':
-                echo "\nExport a query result to a .csv file in the project root folder\n";
+                echo "Export a query result to a .csv file in the project root folder\n";
                 break;
             default:
                 echo "\e[1;31m WARNING: Command doesn't exists!\e[0m\n";

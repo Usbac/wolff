@@ -19,6 +19,11 @@ class Delete
 
     public function index()
     {
+        if (!isset($this->argv[2]) || empty($this->argv[2])) {
+            echo "\e[1;31m WARNING: No element specified for removing\e[0m\n";
+            return;
+        }
+
         switch ($this->argv[2]) {
             case 'controller':
                 $this->controller();
@@ -84,8 +89,7 @@ class Delete
             return;
         }
 
-        echo "Are you sure about deleting the " . $this->argv[3] . " view? Y/N \n";
-        $response = readline(" -> ");
+        $response = readline("Are you sure about deleting the " . $this->argv[3] . " view? [Y/N] \n");
         if ($response === 'Y') {
             unlink($file_dir);
             echo "View " . $this->argv[3] . " deleted successfully! \n";
@@ -108,8 +112,7 @@ class Delete
             return;
         }
 
-        echo "Are you sure about deleting the " . $this->argv[3] . " extension? Y/N \n";
-        $response = readline(" -> ");
+        $response = readline("Are you sure about deleting the " . $this->argv[3] . " extension? [Y/N] \n");
         if ($response === 'Y') {
             unlink($file_dir);
             echo "Extension " . $this->argv[3] . " deleted successfully! \n";
@@ -141,8 +144,12 @@ class Delete
 
         $language_dir = getAppDirectory() . 'languages/' . $this->argv[3];
 
-        echo "Are you sure about deleting the " . $this->argv[3] . " language? Y/N \n";
-        $response = readline(" -> ");
+        if (!is_dir($language_dir)) {
+            echo "\e[1;31m WARNING: the language '" . $this->argv[3] . "' doesn't exists!\e[0m \n";
+            return;
+        }
+
+        $response = readline("Are you sure about deleting the " . $this->argv[3] . " language? [Y/N] \n");
         if ($response === 'Y') {
             $this->deleteRecursively($language_dir);
         }

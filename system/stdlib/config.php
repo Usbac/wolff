@@ -131,7 +131,7 @@ namespace {
         }
     }
 
-    if (!function_exists('getPublicDirectory')) {
+    if (!function_exists('getPublic')) {
 
         /**
          * Returns the public directory of the project
@@ -141,7 +141,7 @@ namespace {
          *
          * @return string the public directory of the project
          */
-        function getPublicDirectory(string $path = '')
+        function getPublic(string $path = '')
         {
             return substr(CONFIG['public_dir'], strlen($_SERVER['DOCUMENT_ROOT'])) . $path;
         }

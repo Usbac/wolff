@@ -23,6 +23,11 @@ class Create
 
     public function index()
     {
+        if (!isset($this->argv[2]) || empty($this->argv[2])) {
+            echo "\e[1;31m WARNING: No element specified for creation\e[0m\n";
+            return;
+        }
+
         switch ($this->argv[2]) {
             case 'page':
                 $this->page();
