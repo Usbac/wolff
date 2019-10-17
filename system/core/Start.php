@@ -14,25 +14,9 @@ class Start
      */
     public $load;
 
-    /**
-     * Template manager.
-     *
-     * @var Core\Template
-     */
-    public $template;
-
-    /**
-     * Session manager.
-     *
-     * @var Core\Session
-     */
-    public $session;
-
 
     public function __construct()
     {
-        $this->template = Factory::template();
-        $this->session = Factory::session();
         $this->load = Factory::loader();
     }
 

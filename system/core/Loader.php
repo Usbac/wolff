@@ -6,41 +6,9 @@ use Utilities\Str;
 
 class Loader
 {
-
-    /**
-     * Template manager.
-     *
-     * @var Core\Template
-     */
-    private $template;
-
-    /**
-     * Session manager.
-     *
-     * @var Core\Session
-     */
-    private $session;
-
     const HEADER_404 = 'HTTP/1.0 404 Not Found';
     const HEADER_503 = 'HTTP/1.1 503 Service Temporarily Unavailable';
     const FUNCTION_SEPARATOR = '@';
-
-
-    public function __construct($template, $session)
-    {
-        $this->template = &$template;
-        $this->session = &$session;
-    }
-
-
-    /**
-     * Returns the session manager
-     * @return Core\Session the session
-     */
-    public function getSession()
-    {
-        return $this->session;
-    }
 
 
     /**
@@ -175,75 +143,8 @@ class Loader
 
 
     /**
-     * Load a view
-     *
-     * @param  string  $dir  the view directory
-     * @param  array  $data  the view data
-     * @param  bool  $cache  use or not the cache system
-     */
-    public function view(string $dir, array $data = [], bool $cache = true)
-    {
-        $dir = Str::sanitizePath($dir);
-        $file_path = getAppDirectory() . CORE_CONFIG['views_folder'] . '/' . $dir;
-
-        if (!file_exists($file_path . '.php') && !file_exists($file_path . '.html')) {
-            Log::error("View '$dir' doesn't exists");
-
-            return;
-        }
-
-        $this->template->get($dir, $data, $cache);
-    }
-
-
-    /**
-     * Get a view content
-     *
-     * @param  string  $dir  the view directory
-     * @param  array  $data  the data
-     *
-     * @return mixed the view or false in case of errors
-     */
-    public function getView(string $dir, array $data = [])
-    {
-        $dir = Str::sanitizePath($dir);
-        $file_path = getAppDirectory() . CORE_CONFIG['views_folder'] . '/' . $dir;
-
-        if (!file_exists($file_path . '.php') && !file_exists($file_path . '.html')) {
-            Log::error("View '$dir' doesn't exists");
-
-            return false;
-        }
-
-        return $this->template->getView($dir, $data);
-    }
-
-
-    /**
-     * Get a view content rendered
-     *
-     * @param  string  $dir  the view directory
-     * @param  array  $data  the data
-     *
-     * @return mixed the view rendered or false in case of errors
-     */
-    public function getRender(string $dir, array $data = [], bool $cache = false)
-    {
-        $dir = Str::sanitizePath($dir);
-        $file_path = getAppDirectory() . CORE_CONFIG['views_folder'] . '/' . $dir;
-
-        if (!file_exists($file_path . '.php') && !file_exists($file_path . '.html')) {
-            Log::error("View '$dir' doesn't exists");
-
-            return false;
-        }
-
-        return $this->template->render($dir, $data, $cache);
-    }
-
-
-    /**
-     * Load the 404 view page
+     * Load the 404 page
+     * Warning: This method stops the current script
      */
     public function redirect404()
     {
@@ -254,7 +155,8 @@ class Loader
 
 
     /**
-     * Load the maintenance view page
+     * Load the maintenance page
+     * Warning: This method stops the current script
      */
     public function maintenance()
     {

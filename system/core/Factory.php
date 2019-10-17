@@ -16,20 +16,6 @@ class Factory
     private static $loader;
 
     /**
-     * Template manager.
-     *
-     * @var Core\Template
-     */
-    private static $template;
-
-    /**
-     * Session manager.
-     *
-     * @var Core\Session
-     */
-    private static $session;
-
-    /**
      * Array of utilities.
      *
      * @var array
@@ -113,7 +99,6 @@ class Factory
     private static function setControllerProperties($controller)
     {
         $controller->setLoader(self::loader());
-        $controller->setSession(self::session());
         $controller->setUtilities(self::$utilities);
     }
 
@@ -126,7 +111,6 @@ class Factory
     private static function setExtensionProperties($extension)
     {
         $extension->load = self::$loader;
-        $extension->session = self::$session;
 
         if (is_array(self::$utilities)) {
             foreach(self::$utilities as $key => $class) {
@@ -194,36 +178,6 @@ class Factory
 
 
     /**
-     * Returns a template class
-     *
-     * @return Core\Template a template class
-     */
-    public static function template()
-    {
-        if (!isset(self::$template)) {
-            self::$template = new Template;
-        }
-
-        return self::$template;
-    }
-
-
-    /**
-     * Returns a session class
-     *
-     * @return Core\Session a session class
-     */
-    public static function session()
-    {
-        if (!isset(self::$session)) {
-            self::$session = new Session;
-        }
-
-        return self::$session;
-    }
-
-
-    /**
      * Returns a loader class
      *
      * @return Core\Loader a loader class
@@ -231,7 +185,7 @@ class Factory
     public static function loader()
     {
         if (!isset(self::$loader)) {
-            self::$loader = new Loader(self::template(), self::session());
+            self::$loader = new Loader;
         }
 
         return self::$loader;
