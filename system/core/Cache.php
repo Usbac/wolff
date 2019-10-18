@@ -10,11 +10,6 @@ class Cache
     const FOLDER_PERMISSIONS = 0755;
 
 
-    public function __construct()
-    {
-    }
-
-
     /**
      * Delete the cache files that have expired
      */

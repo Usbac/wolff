@@ -32,10 +32,10 @@ class Route
     const STATUS_OK = 200;
     const STATUS_REDIRECT = 301;
     const GET_FORMAT = '/\{(.*)\}/';
-
+    const OPTIONAL_GET_FORMAT = '/\{(.*)\?\}/';
 
     /**
-     * Get the function of a route
+     * Returns the function of a route
      *
      * @param  string  $url  the url
      *
@@ -56,18 +56,23 @@ class Route
             $route_length = count($route) - 1;
 
             for ($i = 0; $i <= $route_length && $i <= $url_length; $i++) {
-                if ($url[$i] != $route[$i] && !empty($route[$i]) && !self::isGetVariable($route[$i])) {
+                if ($url[$i] != $route[$i] && !empty($route[$i]) && !self::isGetVar($route[$i]) && !self::isOptionalGetVar($route[$i])) {
                     break;
                 }
 
                 //Set GET variable from the url
-                if (self::isGetVariable($route[$i])) {
-                    self::setGetVariable($route[$i], $url[$i]);
+                if (self::isGetVar($route[$i])) {
+                    self::setGetVar($route[$i], $url[$i]);
                 }
 
-                //Finish if last GET variable from url is empty
-                if ($i + 1 === $route_length && $i === $url_length && self::isGetVariable($route[$i + 1])) {
-                    self::setGetVariable($route[$i], $url[$i]);
+                //Set optional GET variable from the url
+                if (self::isOptionalGetVar($route[$i])) {
+                    self::setOptionalGetVar($route[$i], $url[$i]);
+                }
+
+                //Finish if last GET variable from url is optional
+                if ($i + 1 === $route_length && $i === $url_length && self::isOptionalGetVar($route[$i + 1])) {
+                    self::setOptionalGetVar($route[$i], $url[$i]);
                     $finished = true;
                 }
 
@@ -265,28 +270,28 @@ class Route
 
 
     /**
-     * Check if a string has the format of a route GET variable
+     * Returns true if a string has the format of a GET variable, false otherwise
      *
      * @param  string  $str  the string
      *
      * @return boolean true if the string has the format of a route GET variable, false otherwise
      */
-    public static function isGetVariable(string $str)
+    public static function isGetVar(string $str)
     {
-        return preg_match('/\{(.*)?\}/', $str);
+        return preg_match(self::GET_FORMAT, $str);
     }
 
 
     /**
-     * Clear a GET string
+     * Returns true if a string has the format of an optional GET variable, false otherwise
      *
      * @param  string  $str  the string
      *
-     * @return string the get variable without brackets
+     * @return boolean true if the string has the format of an optional route GET variable, false otherwise
      */
-    public static function clearGetVariable(string $str)
+    public static function isOptionalGetVar(string $str)
     {
-        return preg_replace('/\{|\}/', '', $str);
+        return preg_match(self::OPTIONAL_GET_FORMAT, $str);
     }
 
 
@@ -296,9 +301,22 @@ class Route
      * @param  string  $key  the variable key
      * @param  string  $value  the variable value
      */
-    private static function setGetVariable(string $key, $value = '')
+    private static function setGetVar(string $key, $value)
     {
-        $key = self::clearGetVariable($key);
+        $key = preg_replace(self::GET_FORMAT, '$1', $key);
+        Request::setGet($key, $value);
+    }
+
+
+    /**
+     * Set an optional GET variable
+     *
+     * @param  string  $key  the variable key
+     * @param  string  $value  the variable value
+     */
+    private static function setOptionalGetVar(string $key, $value = null)
+    {
+        $key = preg_replace(self::OPTIONAL_GET_FORMAT, '$1', $key);
         Request::setGet($key, $value ?? '');
     }
 

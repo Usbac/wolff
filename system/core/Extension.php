@@ -164,11 +164,11 @@ class Extension
      */
     public static function after(string $route, string $extension_name)
     {
-        self::$extensions[] = array(
+        self::$extensions[] = [
             'name'  => $extension_name,
             'route' => $route,
             'type'  => self::AFTER
-        );
+        ];
     }
 
 
@@ -180,11 +180,11 @@ class Extension
      */
     public static function before(string $route, string $extension_name)
     {
-        self::$extensions[] = array(
+        self::$extensions[] = [
             'name'  => $extension_name,
             'route' => $route,
             'type'  => self::BEFORE
-        );
+        ];
     }
 
 
@@ -216,13 +216,13 @@ class Extension
             $filename = basename($file, '.php');
             $extension = Factory::extension($filename);
 
-            $extensions[] = array(
+            $extensions[] = [
                 'name'        => $extension->desc['name'] ?? '',
                 'description' => $extension->desc['description'] ?? '',
                 'version'     => $extension->desc['version'] ?? '',
                 'author'      => $extension->desc['author'] ?? '',
                 'filename'    => $filename
-            );
+            ];
         }
 
         return $extensions;
