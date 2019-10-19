@@ -99,7 +99,7 @@ class Factory
     private static function setControllerProperties($controller)
     {
         $controller->setLoader(self::loader());
-        $controller->setUtilities(self::$utilities);
+        $controller->setUtilities(self::$utilities ?? []);
     }
 
 
