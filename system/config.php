@@ -1,10 +1,10 @@
 <?php
 
 define('CORE_CONFIG', [
-    'version'      => '1.9',
+    'version'      => '2.0',
     'start'        => microtime(true),
     'views_format' => '.wlf',
-    
+
     'views_folder'     => 'views',
     'languages_folder' => 'languages',
 

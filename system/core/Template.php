@@ -26,7 +26,7 @@ class Template
         'echo'      => '/' . self::NOT_RAW . '\{\{( ?){1,}(.*?)( ?){1,}\}\}/',
         'tag'       => '/' . self::NOT_RAW . '\{%( ?){1,}(.*?)( ?){1,}%\}/',
         'function'  => '/' . self::NOT_RAW . '{func}( ?){1,}\|([^\}!]{1,})/',
-        'include'   => '/' . self::NOT_RAW . '@load\(( |\'?){1,}(.*)(.php|.html)( |\'?){1,}\)/',
+        'include'   => '/' . self::NOT_RAW . '@load\(( |\'?){1,}(.*)(.wlf|.php|.html)( |\'?){1,}\)/',
 
         'if'     => '/' . self::NOT_RAW . '\{(\s?){1,}(.*)\?(\s?){1,}\}/',
         'endif'  => '/' . self::NOT_RAW . '\{\?\}/',
@@ -58,7 +58,7 @@ class Template
      * @param  array  $data  the data array present in the view
      * @param  bool  $cache  use or not the cache system
      */
-    public static function get(string $dir, array $data, bool $cache)
+    public static function render(string $dir, array $data, bool $cache)
     {
         //Variables in data array
         if (is_array($data)) {
@@ -99,7 +99,7 @@ class Template
      *
      * @return string the view content rendered or false in case of errors.
      */
-    public static function render(string $dir, array $data, bool $cache)
+    public static function getRender(string $dir, array $data, bool $cache)
     {
         //Variables in data array
         if (is_array($data)) {
@@ -129,7 +129,7 @@ class Template
             fclose($temp);
         }
 
-        $rendered_content = ob_get_contents(); 
+        $rendered_content = ob_get_contents();
         ob_end_clean();
 
         return $rendered_content;
@@ -137,14 +137,16 @@ class Template
 
 
     /**
-     * Apply the template format over a view content and return it
+     * Returns the view content with the template format applied
+     * or false if it doesn't exists
      *
      * @param  string  $dir  the view directory
      * @param  array  $data  the data array present in the view
      *
-     * @return string|bool the view content or false if it doesn't exists
+     * @return string|bool the view content with the template format applied
+     * or false if it doesn't exists
      */
-    public static function getView(string $dir, array $data)
+    public static function get(string $dir, array $data)
     {
         //Variables in data array
         if (is_array($data)) {

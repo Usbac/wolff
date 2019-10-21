@@ -22,17 +22,38 @@ class View
             return;
         }
 
-        Template::get($dir, $data, $cache);
+        Template::render($dir, $data, $cache);
     }
 
 
     /**
-     * Get a view content
+     * Returns the original view content or false in case of errors
+     *
+     * @param  string  $dir  the view directory
+     *
+     * @return mixed the original view content or false in case of errors
+     */
+    public static function getSource(string $view)
+    {
+        $view = Str::sanitizePath($view);
+
+        if (!self::log($view)) {
+            return false;
+        }
+
+        return file_get_contents(getAppDirectory() . CORE_CONFIG['views_folder'] . '/' . $view . CORE_CONFIG['views_format']);
+    }
+
+
+    /**
+     * Returns the view content with the template format applied
+     * over it, or false in case of errors
      *
      * @param  string  $dir  the view directory
      * @param  array  $data  the data
      *
-     * @return mixed the view or false in case of errors
+     * @return mixed the view content with the template format applied
+     * over it, or false in case of errors
      */
     public static function get(string $dir, array $data = [])
     {
@@ -42,7 +63,7 @@ class View
             return false;
         }
 
-        return Template::getView($dir, $data);
+        return Template::get($dir, $data);
     }
 
 
@@ -62,7 +83,7 @@ class View
             return false;
         }
 
-        return Template::render($dir, $data, $cache);
+        return Template::getRender($dir, $data, $cache);
     }
 
 
