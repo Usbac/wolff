@@ -64,9 +64,8 @@ class Cache
     {
         $file_path = self::get($dir);
 
-        self::mkdir();
-
         if (!file_exists($file_path)) {
+            self::mkdir();
             $file = fopen($file_path, 'w');
             fwrite($file, $content);
             fclose($file);

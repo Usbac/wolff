@@ -80,10 +80,10 @@ class Template
         if ($cache && Cache::isEnabled()) {
             include(Cache::set($dir, $content));
         } else {
-            $temp = tmpfile();
-            fwrite($temp, $content);
-            include(stream_get_meta_data($temp)['uri']);
-            fclose($temp);
+            $tmp_file = tmpfile();
+            fwrite($tmp_file, $content);
+            include(stream_get_meta_data($tmp_file)['uri']);
+            fclose($tmp_file);
         }
 
     }
@@ -123,10 +123,10 @@ class Template
         if ($cache && Cache::isEnabled()) {
             include(Cache::set($dir, $content));
         } else {
-            $temp = tmpfile();
-            fwrite($temp, $content);
-            include(stream_get_meta_data($temp)['uri']);
-            fclose($temp);
+            $tmp_file = tmpfile();
+            fwrite($tmp_file, $content);
+            include(stream_get_meta_data($tmp_file)['uri']);
+            fclose($tmp_file);
         }
 
         $rendered_content = ob_get_contents();
