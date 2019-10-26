@@ -71,7 +71,7 @@ class Start
      */
     public function loadPage(string $url)
     {
-        $function = Route::get($url);
+        $function = Route::getFunc($url);
 
         if (isset($function)) {
             $this->load->closure($function);
