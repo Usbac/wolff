@@ -13,6 +13,32 @@ class Request
 
 
     /**
+     * Returns the current HTTP method
+     *
+     * @return string the current HTTP method
+     */
+    public static function getMethod()
+    {
+        return $_SERVER['REQUEST_METHOD'];
+    }
+
+
+    /**
+     * Returns true if the given HTTP method is equal to
+     * the current method, false otherwise
+     *
+     * @param  string  $method  the HTTP method to compare
+     *
+     * @return string true if the given HTTP method is equal to
+     * the current method, false otherwise
+     */
+    public static function matchesMethod(string $method)
+    {
+        return $_SERVER['REQUEST_METHOD'] === strtoupper($method);
+    }
+
+
+    /**
      * Returns the superglobal GET array or the specified value
      *
      * @param  string  $key  the key

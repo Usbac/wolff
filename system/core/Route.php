@@ -126,12 +126,8 @@ class Route
      */
     private static function isValidRoute($key)
     {
-        if (!self::$routes[$key] ||
-            $_SERVER['REQUEST_METHOD'] !== self::$routes[$key]['method']) {
-            return false;
-        }
-
-        return true;
+        return (self::$routes[$key] &&
+            Request::matchesMethod(self::$routes[$key]['method']));
     }
 
 
