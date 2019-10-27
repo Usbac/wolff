@@ -97,7 +97,7 @@ namespace {
     }
 
     if (!function_exists('isJson')) {
-        
+
         /**
          * Returns true if the given string is a Json, false otherwise
          *
@@ -114,7 +114,7 @@ namespace {
     }
 
     if (!function_exists('toArray')) {
-        
+
         /**
          * Returns the given variable as an associative array
          *
@@ -131,14 +131,14 @@ namespace {
                     $obj = json_decode($obj);
                 }
             }
-    
+
             $new = [];
-            
+
             //Object
             if (is_object($obj)) {
                 $obj = (array) $obj;
             }
-            
+
             //Array
             if (is_array($obj)) {
                 foreach($obj as $key => $val) {
@@ -147,8 +147,8 @@ namespace {
             } else {
                 $new = $obj;
             }
-    
-            return $new;       
+
+            return $new;
         }
     }
 
@@ -337,4 +337,44 @@ namespace {
         }
     }
 
+    if (!function_exists('isInt')) {
+
+        /**
+         * Returns true if the given variable
+         * complies with an int, false otherwise
+         *
+         * @param  mixed  $int  the variable
+         */
+        function isInt($int) {
+            return filter_var($int, FILTER_VALIDATE_INT) !== false;
+        }
+    }
+
+    if (!function_exists('isFloat')) {
+
+        /**
+         * Returns true if the given variable
+         * complies with an float, false otherwise
+         *
+         * @param  mixed  $float  the variable
+         */
+        function isFloat($float) {
+            return filter_var($float, FILTER_VALIDATE_FLOAT) !== false;
+        }
+    }
+
+    if (!function_exists('isBool')) {
+
+        /**
+         * Returns true if the given variable complies with an boolean,
+         * false otherwise
+         * Only the numeric values 1 and 0, and the strings
+         * 'true', 'false', '1' and '0' are counted as boolean.
+         *
+         * @param  mixed  $bool  the variable
+         */
+        function isBool($bool) {
+            return in_array(strval($bool), ['true', 'false', '1', '0']);
+        }
+    }
 }

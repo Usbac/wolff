@@ -8,7 +8,7 @@ class Str
     /**
      * Sanitize an url
      *
-     * @param  string url the url
+     * @param  string  url the url
      *
      * @return string the url sanitized
      */
@@ -21,7 +21,7 @@ class Str
     /**
      * Sanitize an email
      *
-     * @param  string email the email
+     * @param  string  email the email
      *
      * @return string the email sanitized
      */
@@ -34,7 +34,7 @@ class Str
     /**
      * Sanitize an string to integer (only numbers and +-)
      *
-     * @param  string int the integer
+     * @param  string  int the integer
      *
      * @return string the integer sanitized
      */
@@ -47,7 +47,7 @@ class Str
     /**
      * Sanitize an string to float (only numbers, fractions and +-)
      *
-     * @param  string float the float
+     * @param  string  float the float
      *
      * @return string the float sanitized
      */
@@ -60,13 +60,58 @@ class Str
     /**
      * Sanitize a path for only letters, numbers, underscores, dots and slashes
      *
-     * @param  string path the path
+     * @param  string  path the path
      *
      * @return string the path sanitized
      */
     public static function sanitizePath(string $path)
     {
         return preg_replace('/[^a-zA-Z0-9_\-\/. ]/', '', $path);
+    }
+
+
+    /**
+     * Returns true if the given string is a valid email,
+     * false otherwise
+     *
+     * @param  string  email the email string
+     *
+     * @return bool Returns true if the given string is a valid email,
+     * false otherwise
+     */
+    public static function isEmail(string $email)
+    {
+        return filter_var($email, FILTER_VALIDATE_EMAIL);
+    }
+
+
+    /**
+     * Returns true if the given string contains only
+     * alphanumeric characters and whitespaces, false otherwise
+     *
+     * @param  string  str the string
+     *
+     * @return bool Returns true if the given string contains only
+     * alphanumeric characters and whitespaces, false otherwise
+     */
+    public static function isAlphanumeric(string $str)
+    {
+        return preg_match('/[A-Za-z0-9 ]+$/', $str);
+    }
+
+
+    /**
+     * Returns true if the given string contains only
+     * letters and whitespaces, false otherwise
+     *
+     * @param  string  str the string
+     *
+     * @return bool Returns true if the given string contains only
+     * letters and whitespaces, false otherwise
+     */
+    public static function isAlpha(string $str)
+    {
+        return preg_match('/[A-Za-z ]+$/', $str);
     }
 
 
@@ -112,7 +157,7 @@ class Str
 
 
     /**
-     * Returns the string with the indicated substrings swaped 
+     * Returns the string with the indicated substrings swaped
      * or false in case of errors.
      *
      * @param  string  $str  the string
