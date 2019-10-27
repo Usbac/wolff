@@ -9,8 +9,8 @@ class Home extends Controller
 
     public function index()
     {
-        $this->data['lang'] = $this->load->language('home');
-        View::render('home', $this->data);
+        $data['lang'] = $this->load->language('home');
+        View::render('home', $data);
     }
 
 
