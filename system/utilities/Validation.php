@@ -134,40 +134,30 @@ class Validation
      */
     private function validateField(string $key)
     {
-        $rules = explode(',', $this->fields[$key]);
-        $val = $this->data[$key] ?? null;
+        $field = $this->data[$key] ?? null;
 
-        foreach ($rules as $rule) {
-            $rule = explode('=', $rule);
-            $rule[0] = trim(strtolower($rule[0]));
-
-            //Complies required
-            if ($rule[0] == 'required' && !isset($val)) {
-                $this->addInvalidValue($key, $rule[0]);
-            }
-
-            if (!isset($rule[1]) || !isset($val)) {
-                continue;
-            }
+        foreach ($this->fields[$key] as $rule => $val) {
+            $rule = trim(strtolower($rule));
 
             //Complies min length, max length, min value, max value and regex
-            if (($rule[0] == 'minlen' && strlen($val) < $rule[1]) ||
-                ($rule[0] == 'maxlen' && strlen($val) > $rule[1]) ||
-                ($rule[0] == 'minval' && $val < $rule[1]) ||
-                ($rule[0] == 'maxval' && $val > $rule[1]) ||
-                ($rule[0] == 'regex' && !preg_match($rule[1], $val))) {
-                $this->addInvalidValue($key, $rule[0]);
+            if (($rule == 'required' && $val && !isset($field)) ||
+                ($rule == 'minlen' && strlen($field) < $val) ||
+                ($rule == 'maxlen' && strlen($field) > $val) ||
+                ($rule == 'minval' && $field < $val) ||
+                ($rule == 'maxval' && $field > $val) ||
+                ($rule == 'regex' && !preg_match($val, $field))) {
+                $this->addInvalidValue($key, $rule);
             }
 
             //Complies type
-            if ($rule[0] == 'type') {
-                if (($rule[1] == 'email' && !Str::isEmail($val)) ||
-                    ($rule[1] == 'alphanumeric' && !Str::isAlphanumeric($val)) ||
-                    ($rule[1] == 'letters' && !Str::isAlpha($val)) ||
-                    ($rule[1] == 'int' && !isInt($val)) ||
-                    ($rule[1] == 'float' && !isFloat($val)) ||
-                    ($rule[1] == 'bool' && !isBool($val))) {
-                    $this->addInvalidValue($key, $rule[0]);
+            if ($rule == 'type') {
+                if (($val == 'email' && !Str::isEmail($field)) ||
+                    ($val == 'alphanumeric' && !Str::isAlphanumeric($field)) ||
+                    ($val == 'letters' && !Str::isAlpha($field)) ||
+                    ($val == 'int' && !isInt($field)) ||
+                    ($val == 'float' && !isFloat($field)) ||
+                    ($val == 'bool' && !isBool($field))) {
+                    $this->addInvalidValue($key, $rule);
                 }
             }
         }

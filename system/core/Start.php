@@ -42,7 +42,7 @@ class Start
     /**
      * Initialize some of the core classes
      */
-    public function initialize()
+    private function initialize()
     {
         DB::initialize();
         Cache::initialize();
@@ -54,7 +54,7 @@ class Start
      *
      * @return  string  the current url processed
      */
-    public function getUrl()
+    private function getUrl()
     {
         $url = Request::hasGet('url') ? Request::get('url') : getMainPage();
         $url = Str::sanitizeUrl($url);
@@ -69,7 +69,7 @@ class Start
      *
      * @param  string  $url the page url
      */
-    public function loadPage(string $url)
+    private function loadPage(string $url)
     {
         $function = Route::getFunc($url);
 
@@ -89,7 +89,7 @@ class Start
      *
      * @param  string  $url the page url
      */
-    public function validateAccess($url)
+    private function validateAccess($url)
     {
         //Check maintenance mode
         if (!Maintenance::hasAccess()) {
