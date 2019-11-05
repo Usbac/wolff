@@ -63,37 +63,6 @@ namespace {
         }
     }
 
-    if (!function_exists('languageExists')) {
-
-        /**
-         * Checks if the language file exists in the indicated directory
-         *
-         * @param  string  $dir  the directory of the language file
-         * @param  string  $language  the language selected (it will take the default language if no language is specified)
-         *
-         * @return boolean true if the language file exists, false otherwise
-         */
-        function languageExists(string $dir, string $language = CONFIG['language'])
-        {
-            return file_exists(getLanguagePath($dir, $language));
-        }
-    }
-
-    if (!function_exists('getLanguagePath')) {
-
-        /**
-         * Returns the complete path of the language
-         *
-         * @param  string  $dir  the directory of the language
-         *
-         * @return string $language the complete path of the language
-         */
-        function getLanguagePath(string $dir, string $language = CONFIG['language'])
-        {
-            return getAppDirectory() . 'languages/' . $language . '/' . $dir . '.php';
-        }
-    }
-
     if (!function_exists('viewExists')) {
 
         /**

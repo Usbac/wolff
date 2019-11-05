@@ -109,40 +109,6 @@ class Loader
 
 
     /**
-     * Load a language and return its content
-     *
-     * @param  string  $dir  the language directory
-     * @param  string  $language  the language selected
-     *
-     * @return mixed the language content or false if an error happens
-     */
-    public function language(string $dir, string $language = null)
-    {
-        $language = $language ?? getLanguage();
-
-        //Sanitize directory
-        $dir = Str::sanitizePath($dir);
-        $file_path = getAppDirectory() . 'languages/' . $language . '/' . $dir . '.php';
-
-        if (file_exists($file_path)) {
-            include_once($file_path);
-        } else {
-            Log::error("The $language language for '$dir' doesn't exists");
-
-            return false;
-        }
-
-        if (!isset($data)) {
-            Log::warning("The $language language content for '$dir' is empty");
-
-            return false;
-        }
-
-        return $data;
-    }
-
-
-    /**
      * Load the 404 page
      * Warning: This method stops the current script
      */
