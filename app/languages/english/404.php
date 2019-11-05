@@ -1,3 +1,5 @@
 <?php
 
-$data['msg'] = 'This page doesn\'t exists :(';
+return [
+    'msg' => 'This page doesn\'t exists :('
+];

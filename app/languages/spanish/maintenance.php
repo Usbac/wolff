@@ -1,4 +1,6 @@
 <?php
 
-$data['title'] = 'En mantenimiento';
-$data['msg']   = 'Vuelva pronto';
+return [
+    'title' => 'En mantenimiento',
+    'msg'   => 'Vuelva pronto'
+];

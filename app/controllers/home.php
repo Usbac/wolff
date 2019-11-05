@@ -2,14 +2,14 @@
 
 namespace Controller;
 
-use Core\{Controller, View};
+use Core\{Controller, Language, View};
 
 class Home extends Controller
 {
 
     public function index()
     {
-        $data['lang'] = $this->load->language('home');
+        $data['lang'] = Language::get('home');
         View::render('home', $data);
     }
 
