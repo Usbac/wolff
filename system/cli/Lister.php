@@ -158,7 +158,7 @@ class Lister
         foreach ($files as $value) {
             $path = realpath($dir . '/' . $value);
 
-            if (!is_dir($path) && in_array(pathinfo($path)['extension'], array('php', 'html', 'phtml'))) {
+            if (!is_dir($path) && in_array(pathinfo($path)['extension'], ['php', 'html', 'phtml'])) {
                 $file_path = substr($path, strpos($path, $folder) + strlen($folder) + 1);
                 $result[]  = $file_path;
             } else {

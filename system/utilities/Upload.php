@@ -126,7 +126,7 @@ class Upload
             return false;
         }
 
-        $this->lastFile = array(
+        $this->lastFile = [
             'name'        => $file['name'],
             'type'        => $file['type'],
             'tmp_name'    => $file['tmp_name'],
@@ -135,7 +135,7 @@ class Upload
             'directory'   => $dir,
             'uploader_ip' => $_SERVER['REMOTE_ADDR'],
             'date'        => date(self::DATE_FORMAT)
-        );
+        ];
 
         return true;
     }

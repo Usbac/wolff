@@ -2,15 +2,15 @@
 
 namespace Extension;
 
-class {classname} 
+class {classname}
 {
 
-    public $desc = array(
+    public $desc = [
         'name'        => "{name}",
         'description' => "{description}",
         'version'     => "{version}",
         'author'      => "{author}"
-    );    
+    ];
 
 
     public function index() {

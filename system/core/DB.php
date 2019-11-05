@@ -156,7 +156,7 @@ class DB
     public static function run(string $sql, $args = [])
     {
         self::$last_sql = $sql;
-        self::$last_args = is_array($args) ? $args : array($args);
+        self::$last_args = is_array($args) ? $args : [$args];
 
         //Query without args
         if (!isset(self::$last_args)) {
