@@ -22,9 +22,10 @@ define('CONFIG', [
     'language'  => 'english',
 
     //Extra
+    'db_on'          => true,
     'development_on' => true,
     'extensions_on'  => true,
     'template_on'    => true,
     'cache_on'       => true,
-    'maintenance_on' => false
+    'maintenance_on' => true
 ]);
