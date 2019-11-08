@@ -7,18 +7,7 @@ use Utilities\Str;
 class Start
 {
 
-    /**
-     * Loader.
-     *
-     * @var Core\Loader
-     */
-    public $load;
-
-
-    public function __construct()
-    {
-        $this->load = Factory::loader();
-    }
+    const HEADER_404 = 'HTTP/1.0 404 Not Found';
 
 
     /**
@@ -56,7 +45,8 @@ class Start
      */
     private function getUrl()
     {
-        $url = Request::hasGet('url') ? Request::get('url') : getMainPage();
+        $url = Request::hasGet('url') ?
+            Request::get('url') : getMainPage();
         $url = Str::sanitizeUrl($url);
 
         return Route::getRedirection($url) ?? $url;
@@ -74,11 +64,13 @@ class Start
         $function = Route::getFunc($url);
 
         if (isset($function)) {
-            $this->load->closure($function);
-        } elseif (controllerExists($url) || functionExists($url)) {
-            $this->load->controller($url);
+            Controller::closure($function);
+        } elseif (Controller::exists($url)) {
+            Controller::call($url);
+        } elseif (functionExists($url)) {
+            Controller::function(Str::before($url, '@') . '@' . Str::after($url, '@'));
         } else {
-            $this->load->redirect404();
+            self::load404();
         }
     }
 
@@ -93,13 +85,25 @@ class Start
     {
         //Check maintenance mode
         if (!Maintenance::hasAccess()) {
-            $this->load->maintenance();
+            Maintenance::call();
         }
 
         //Check blocked route
         if (Route::isBlocked($url)) {
-            $this->load->redirect404();
+            self::load404();
         }
+    }
+
+
+    /**
+     * Load the 404 page
+     * Warning: This method stops the current script
+     */
+    public function load404()
+    {
+        header(self::HEADER_404);
+        Controller:call(CORE_CONFIG['404_controller']);
+        exit;
     }
 
 }

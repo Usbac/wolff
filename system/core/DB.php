@@ -65,9 +65,19 @@ class DB
      */
     public static function initialize()
     {
-        if (!self::$instance) {
+        if (self::isEnabled() && !self::$instance) {
             self::$instance = new self();
         }
+    }
+
+
+    /**
+     * Returns true if the database is enabled, false otherwise
+     * @return bool true if the database is enabled, false otherwise
+     */
+    public static function isEnabled()
+    {
+        return CONFIG['db_on'];
     }
 
 

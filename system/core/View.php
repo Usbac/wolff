@@ -7,6 +7,9 @@ use Utilities\Str;
 class View
 {
 
+    const PATH_FORMAT = '{app}' . CORE_CONFIG['views_folder'] . '/{dir}' . CORE_CONFIG['views_format'];
+
+
     /**
      * Load a view
      *
@@ -41,7 +44,7 @@ class View
             return false;
         }
 
-        return file_get_contents(getAppDirectory() . CORE_CONFIG['views_folder'] . '/' . $view . CORE_CONFIG['views_format']);
+        return file_get_contents(self::getPath($view));
     }
 
 
@@ -68,7 +71,7 @@ class View
 
 
     /**
-     * Get a view content rendered
+     * Returns a view content rendered
      *
      * @param  string  $dir  the view directory
      * @param  array  $data  the data
@@ -88,6 +91,36 @@ class View
 
 
     /**
+     * Returns a view file path
+     *
+     * @param  string  $dir  the view directory
+     *
+     * @return string the view file path
+     */
+    public static function getPath(string $path)
+    {
+        return Str::interpolate(self::PATH_FORMAT, [
+            'app' => getAppDirectory(),
+            'dir' => $path
+        ]);
+    }
+
+
+    /**
+     * Returns true if the view exists in the indicated directory,
+     * false otherwise
+     *
+     * @param  string  $dir  the directory of the view
+     *
+     * @return boolean true if the view exists, false otherwise
+     */
+    public static function exists(string $dir)
+    {
+        return file_exists(self::getPath($dir));
+    }
+
+
+    /**
      * Returns true if the view file exists, false otherwise.
      * Warning: This functions logs an error message.
      *
@@ -98,9 +131,7 @@ class View
      */
     private static function log(string $view)
     {
-        $path = getAppDirectory() . CORE_CONFIG['views_folder'] . '/' . $view . CORE_CONFIG['views_format'];
-
-        if (!file_exists($path)) {
+        if (!self::exists($view)) {
             Log::error("View '$view' doesn't exists");
 
             return false;

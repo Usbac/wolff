@@ -14,7 +14,7 @@ class Maintenance
      */
     private static $file = CONFIG['root_dir'] . 'system/definitions/maintenance_whitelist.txt';
 
-
+    const HEADER_503 = 'HTTP/1.1 503 Service Temporarily Unavailable';
     const NO_READABLE = "Couldn't read the maintenance whitelist file";
     const INVALID_IP = "Invalid IP format for the maintenance whitelist file";
 
@@ -155,6 +155,18 @@ class Maintenance
         }
 
         return in_array(getClientIP(), self::getAllowedIPs());
+    }
+
+
+    /**
+     * Load the maintenance page
+     * Warning: This method stops the current script
+     */
+    public static function call()
+    {
+        header(self::HEADER_503);
+        Controller::call(CORE_CONFIG['maintenance_controller']);
+        exit;
     }
 
 }

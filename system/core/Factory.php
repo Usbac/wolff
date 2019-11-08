@@ -9,13 +9,6 @@ class Factory
 {
 
     /**
-     * Loader.
-     *
-     * @var Core\Loader
-     */
-    private static $loader;
-
-    /**
      * Array of utilities.
      *
      * @var array
@@ -71,7 +64,7 @@ class Factory
         //Load default Controller
         if (!isset($dir)) {
             $controller = new Controller;
-            self::setControllerProperties($controller);
+            $controller->setUtilities(self::$utilities ?? []);
 
             return $controller;
         }
@@ -85,21 +78,9 @@ class Factory
         }
 
         $controller = new $class;
-        self::setControllerProperties($controller);
+        $controller->setUtilities(self::$utilities ?? []);
 
         return $controller;
-    }
-
-
-    /**
-     * Set the controller properties
-     *
-     * @param  mixed  $controller  the controller
-     */
-    private static function setControllerProperties($controller)
-    {
-        $controller->setLoader(self::loader());
-        $controller->setUtilities(self::$utilities ?? []);
     }
 
 
@@ -110,8 +91,6 @@ class Factory
      */
     private static function setExtensionProperties($extension)
     {
-        $extension->load = self::$loader;
-
         if (is_array(self::$utilities)) {
             foreach(self::$utilities as $key => $class) {
                 $extension->$key = Factory::utility($class);
@@ -174,21 +153,6 @@ class Factory
     public static function addUtility(string $name, string $class)
     {
         self::$utilities[$name] = $class;
-    }
-
-
-    /**
-     * Returns a loader class
-     *
-     * @return Core\Loader a loader class
-     */
-    public static function loader()
-    {
-        if (!isset(self::$loader)) {
-            self::$loader = new Loader;
-        }
-
-        return self::$loader;
     }
 
 
