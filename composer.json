@@ -22,7 +22,7 @@
   ],
   "require": {
     "php": ">=7.0.0",
-    "usbac/wolff-framework": "~1.9"
+    "usbac/wolff-framework": "~2.0"
   },
   "autoload": {
     "files": [

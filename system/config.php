@@ -27,5 +27,5 @@ define('CONFIG', [
     'extensions_on'  => true,
     'template_on'    => true,
     'cache_on'       => true,
-    'maintenance_on' => true
+    'maintenance_on' => false
 ]);
