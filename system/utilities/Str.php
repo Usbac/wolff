@@ -242,29 +242,41 @@ class Str
 
 
     /**
-     * Returns everything after the specified substring
+     * Returns everything after the specified substring,
+     * or false if the substring is not in the string.
      *
      * @param  string  $str  the string
      * @param  string  $needle  substring
      *
-     * @return string a string with everything after the specified substring in it
+     * @return string a string with everything after the specified substring,
+     * or false if the substring is not in the string.
      */
     public static function after(string $str, string $needle)
     {
+        if (!self::contains($str, $needle)) {
+            return false;
+        }
+
         return substr($str, strpos($str, $needle) + strlen($needle));
     }
 
 
     /**
-     * Returns everything before the specified substring
+     * Returns everything before the specified substring,
+     * or false if the substring is not in the string.
      *
      * @param  string  $str  the string
      * @param  string  $needle  the substring
      *
-     * @return string a string with everything before the specified substring in it
+     * @return string a string with everything before the specified substring,
+     * or false if the substring is not in the string.
      */
     public static function before(string $str, string $needle)
     {
+        if (!self::contains($str, $needle)) {
+            return false;
+        }
+
         return substr($str, 0, strpos($str, $needle));
     }
 

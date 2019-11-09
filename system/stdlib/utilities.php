@@ -378,33 +378,4 @@ namespace {
         }
     }
 
-    if (!function_exists('functionExists')) {
-
-        /**
-         * Returns true if the controller's function exists, false otherwise
-         *
-         * @param  string  $dir  the directory of the controller
-         *
-         * @return boolean true if the controller's function exists, false otherwise
-         */
-        function functionExists(string $dir)
-        {
-            //Remove the function from the url and save the function name
-            $lastSlash = strrpos($dir, '/');
-            $function = substr($dir, $lastSlash + 1);
-            $dir = substr($dir, 0, $lastSlash);
-
-            $class = 'Controller\\' . str_replace('/', '\\', $dir);
-
-            try {
-                $class = new ReflectionClass($class);
-                $class->getMethod($function);
-            } catch (Exception $e) {
-
-                return false;
-            }
-
-            return true;
-        }
-    }
 }

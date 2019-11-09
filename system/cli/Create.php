@@ -232,7 +232,7 @@ class Create
         $route = $this->argv[3];
         $controller = $this->argv[4];
 
-        if (preg_match("/Route::add\((\s){0,}?[\'\"]" . $route . "[\'\"](\s){0,}?\,/", $content)) {
+        if (preg_match("/Route::get\((\s){0,}?[\'\"]" . $route . "[\'\"](\s){0,}?\,/", $content)) {
             echo "\e[1;31m WARNING: Route already exists!\e[0m \n";
             fclose($file);
 
@@ -241,8 +241,8 @@ class Create
         fclose($file);
 
         $content = "\n";
-        $content .= "Route::add('" . $route . "', function() { \n";
-        $content .= "    \$this->load->controller('" . $controller . "'); \n";
+        $content .= "Route::get('" . $route . "', function() { \n";
+        $content .= "    Controller::call('" . $controller . "'); \n";
         $content .= "});";
 
         if (file_put_contents(self::ROUTES_PATH, $content, "\r\n" . FILE_APPEND | LOCK_EX)) {

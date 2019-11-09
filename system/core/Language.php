@@ -9,6 +9,7 @@ class Language
     const BAD_FILE_ERROR = 'The {language} language file for \'{dir}\' doesn\'t return an associative array';
     const EXISTS_ERROR = 'The {language} language for \'{dir}\' doesn\'t exists';
     const EMPTY_WARNING = 'The {language} language content for \'{dir}\' is empty';
+    const KEY_WARNING = 'The \'{key}\' key doesn\'t exists in the {language} language array';
     const PATH_FORMAT = '{app}' . CORE_CONFIG['languages_folder'] . '/{language}/{dir}.php';
 
 
@@ -26,8 +27,12 @@ class Language
     {
         $language = $language ?? getLanguage();
         $dir = Str::sanitizePath($dir);
-        $file_path = self::getPath($dir, $language);
+        if (Str::contains($dir, '.')) {
+            $key = Str::after($dir, '.');
+            $dir = Str::before($dir, '.');
+        }
 
+        $file_path = self::getPath($dir, $language);
         $data = [];
 
         if (file_exists($file_path)) {
@@ -57,6 +62,19 @@ class Language
             ]));
 
             return false;
+        }
+
+        if (isset($key)) {
+            if (!array_key_exists($key, $data)) {
+                Log::warning(Str::interpolate(self::KEY_WARNING, [
+                    'key'      => $key,
+                    'language' => $language
+                ]));
+
+                return false;
+            }
+
+            return $data[$key];
         }
 
         return $data;

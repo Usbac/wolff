@@ -68,7 +68,7 @@ class Start
         } elseif (Controller::exists($url)) {
             Controller::call($url);
         } elseif (functionExists($url)) {
-            Controller::function(Str::before($url, '@') . '@' . Str::after($url, '@'));
+            Controller::method(Str::before($url, '@') . '@' . Str::after($url, '@'));
         } else {
             self::load404();
         }
