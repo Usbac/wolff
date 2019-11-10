@@ -97,7 +97,7 @@ class Lister
 
     private function views()
     {
-        $views = $this->listViewFiles(getAppDirectory() . CORE_CONFIG['views_folder']);
+        $views = $this->listViewFiles(getAppDir() . CORE_CONFIG['views_folder']);
 
         foreach ($views as $view) {
             echo "\n" . $view;
@@ -108,7 +108,7 @@ class Lister
 
     private function controllers()
     {
-        $controllers = $this->listPhpFiles(getAppDirectory() . 'controllers');
+        $controllers = $this->listPhpFiles(getAppDir() . 'controllers');
 
         foreach ($controllers as $controller) {
             echo "\n" . $controller;
@@ -119,7 +119,7 @@ class Lister
 
     private function languages()
     {
-        $languages = glob(getAppDirectory() . CORE_CONFIG['languages_folder'] . '/*', GLOB_ONLYDIR);
+        $languages = glob(getAppDir() . CORE_CONFIG['languages_folder'] . '/*', GLOB_ONLYDIR);
 
         foreach ($languages as $language) {
             echo "\n" . substr($language, strrpos($language, '/') + 1);
@@ -130,10 +130,10 @@ class Lister
 
     private function cache()
     {
-        $files = $this->listAnyFiles(getCacheDirectory());
+        $files = $this->listAnyFiles(getCacheDir());
 
         foreach ($files as $file) {
-            echo "\n " . Str::after($file, getCacheDirectory());
+            echo "\n " . Str::after($file, getCacheDir());
         }
         echo "\n";
     }
@@ -293,11 +293,11 @@ class Lister
         echo "\n Password: " . getDbPass();
         echo "\n";
         echo "\n ->\e[32m DIRECTORIES \e[0m";
-        echo "\n Project folder: " . getDirectory();
-        echo "\n App folder: " . getAppDirectory();
+        echo "\n Project folder: " . getDir();
+        echo "\n App folder: " . getAppDir();
         echo "\n Public folder: " . getPublic();
-        echo "\n Extensions folder: " . getExtensionDirectory();
-        echo "\n Cache folder: " . getCacheDirectory();
+        echo "\n Extensions folder: " . getExtensionDir();
+        echo "\n Cache folder: " . getCacheDir();
         echo "\n";
         echo "\n ->\e[32m GENERAL \e[0m";
         echo "\n Wolff version: " . wolffVersion();

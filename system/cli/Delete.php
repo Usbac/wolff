@@ -104,7 +104,7 @@ class Delete
             return;
         }
 
-        $file_dir = getExtensionDirectory() . $this->argv[3] . '.php';
+        $file_dir = getExtensionDir() . $this->argv[3] . '.php';
 
         if (!is_file($file_dir)) {
             echo "\e[1;31m WARNING: the extension '" . $this->argv[3] . "' doesn't exists!\e[0m \n";
@@ -142,7 +142,7 @@ class Delete
             return;
         }
 
-        $language_dir = getAppDirectory() . 'languages/' . $this->argv[3];
+        $language_dir = getAppDir() . 'languages/' . $this->argv[3];
 
         if (!is_dir($language_dir)) {
             echo "\e[1;31m WARNING: the language '" . $this->argv[3] . "' doesn't exists!\e[0m \n";
@@ -158,13 +158,13 @@ class Delete
 
     private function cache()
     {
-        if (!is_dir(getCacheDirectory())) {
+        if (!is_dir(getCacheDir())) {
             echo "\e[1;31m WARNING: the cache folder doesn't exists!\e[0m \n";
 
             return;
         }
 
-        if (count(glob(getCacheDirectory() . '/*')) <= 0) {
+        if (count(glob(getCacheDir() . '/*')) <= 0) {
             echo "\e[1;31m WARNING: the cache folder is already empty!\e[0m \n";
 
             return;

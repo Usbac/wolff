@@ -19,7 +19,7 @@ class Cache
             return;
         }
 
-        $files = glob(getCacheDirectory() . '*.php');
+        $files = glob(getCacheDir() . '*.php');
 
         foreach ($files as $file) {
             if (self::expired($file)) {
@@ -48,7 +48,7 @@ class Cache
      */
     public static function get(string $dir)
     {
-        return getCacheDirectory() . self::getFilename($dir);
+        return getCacheDir() . self::getFilename($dir);
     }
 
 
@@ -97,7 +97,7 @@ class Cache
      */
     public static function mkdir()
     {
-        $folder_path = getCacheDirectory();
+        $folder_path = getCacheDir();
         if (!file_exists($folder_path)) {
             mkdir($folder_path, self::FOLDER_PERMISSIONS, true);
         }
@@ -113,7 +113,7 @@ class Cache
      */
     public static function has(string $dir)
     {
-        $file_path = getCacheDirectory() . self::getFilename($dir);
+        $file_path = getCacheDir() . self::getFilename($dir);
 
         return is_file($file_path);
     }
@@ -128,7 +128,7 @@ class Cache
      */
     public static function delete(string $dir)
     {
-        $file_path = getCacheDirectory() . self::getFilename($dir);
+        $file_path = getCacheDir() . self::getFilename($dir);
 
         if (is_file($file_path)) {
             unlink($file_path);
@@ -147,7 +147,7 @@ class Cache
      */
     public static function clear()
     {
-        return deleteFilesInDir(getCacheDirectory());
+        return deleteFilesInDir(getCacheDir());
     }
 
 

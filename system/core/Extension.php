@@ -141,7 +141,7 @@ class Extension
      */
     public static function folderExists()
     {
-        return file_exists(getExtensionDirectory());
+        return file_exists(getExtensionDir());
     }
 
 
@@ -151,7 +151,7 @@ class Extension
     public static function mkdir()
     {
         if (!self::folderExists()) {
-            mkdir(getExtensionDirectory());
+            mkdir(getExtensionDir());
         }
     }
 
@@ -209,7 +209,7 @@ class Extension
         }
 
         //All the extensions
-        $files = glob(getExtensionDirectory() . self::ALL . '.php');
+        $files = glob(getExtensionDir() . self::ALL . '.php');
         $extensions = [];
 
         foreach ($files as $file) {

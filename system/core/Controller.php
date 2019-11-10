@@ -106,7 +106,7 @@ class Controller
     public static function getPath(string $dir)
     {
         return Str::interpolate(self::PATH_FORMAT, [
-            'app' => getAppDirectory(),
+            'app' => getAppDir(),
             'dir' => $dir
         ]);
     }

@@ -100,7 +100,7 @@ class View
     public static function getPath(string $path)
     {
         return Str::interpolate(self::PATH_FORMAT, [
-            'app' => getAppDirectory(),
+            'app' => getAppDir(),
             'dir' => $path
         ]);
     }

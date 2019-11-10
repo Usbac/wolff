@@ -92,7 +92,7 @@ class Language
     private static function getPath(string $dir, string $language)
     {
         return Str::interpolate(self::PATH_FORMAT, [
-            'app'       => getAppDirectory(),
+            'app'       => getAppDir(),
             'language'  => $language,
             'dir'       => $dir
         ]);

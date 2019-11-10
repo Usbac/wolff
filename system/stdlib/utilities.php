@@ -164,7 +164,7 @@ namespace {
         function url(string $url = '')
         {
             $http = (isset($_SERVER['HTTPS']) ? 'https' : 'http') . '://';
-            $directory = str_replace('\\', '/', getProjectDirectory());
+            $directory = str_replace('\\', '/', getProjectDir());
 
             if (substr($directory, -1) != '/' && substr($url, 0, 1) != '/') {
                 $directory .= '/';
@@ -271,7 +271,7 @@ namespace {
          */
         function getCurrentPage()
         {
-            return substr($_SERVER['REQUEST_URI'], strlen(getProjectDirectory()));
+            return substr($_SERVER['REQUEST_URI'], strlen(getProjectDir()));
         }
     }
 

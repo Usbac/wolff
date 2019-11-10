@@ -155,7 +155,7 @@ class Create
             return;
         }
 
-        $file_dir = getExtensionDirectory() . $this->argv[3] . '.php';
+        $file_dir = getExtensionDir() . $this->argv[3] . '.php';
         Extension::mkdir();
 
         if (file_exists($file_dir)) {
@@ -210,7 +210,7 @@ class Create
             return;
         }
 
-        $dir = getAppDirectory() . 'languages/' . $this->argv[3];
+        $dir = getAppDir() . 'languages/' . $this->argv[3];
 
         if (!is_dir($dir)) {
             mkdir($dir);
@@ -320,7 +320,7 @@ class Create
 
     private function createDirectoryInApp($dir, $folder)
     {
-        $dir = getAppDirectory() . $folder . '/' . implode('/', $dir);
+        $dir = getAppDir() . $folder . '/' . implode('/', $dir);
 
         if (!is_dir($dir)) {
             mkdir($dir, 0755, true);

@@ -75,7 +75,7 @@ class Upload
      * Get the file upload directory
      * @return float the file upload directory
      */
-    public function getDirectory()
+    public function getDir()
     {
         return $this->directory ?? '';
     }
