@@ -43,6 +43,7 @@ class DB
     protected static $last_stmt;
 
     const FETCH_MODE = PDO::FETCH_ASSOC;
+    const ERROR_MODE = PDO::ERRMODE_EXCEPTION;
     const NAMES_MODE = 'SET NAMES utf8';
 
 
@@ -53,7 +54,8 @@ class DB
     {
         $options = [
             PDO::MYSQL_ATTR_INIT_COMMAND => self::NAMES_MODE,
-            PDO::ATTR_DEFAULT_FETCH_MODE => self::FETCH_MODE
+            PDO::ATTR_DEFAULT_FETCH_MODE => self::FETCH_MODE,
+            PDO::ATTR_ERRMODE            => self::ERROR_MODE
         ];
 
         self::$connection = Factory::connection($options);
@@ -170,8 +172,7 @@ class DB
 
         //Query without args
         if (!isset(self::$last_args)) {
-            $result = self::getPdo()->query($sql)->fetchAll();
-
+            $result = self::getPdo()->query($sql);
             return Factory::query($result);
         }
 
@@ -180,7 +181,7 @@ class DB
         $stmt->execute(self::$last_args);
         self::$last_stmt = $stmt;
 
-        return Factory::query($stmt->fetchAll());
+        return Factory::query($stmt);
     }
 
 

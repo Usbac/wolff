@@ -133,7 +133,7 @@ class Controller
      *
      * @return boolean true if the controller's method exists, false otherwise
      */
-    function methodExists(string $dir)
+    public static function methodExists(string $dir)
     {
         $controller = Str::before($dir, self::METHOD_SEPARATOR);
         $method = Str::after($dir, self::METHOD_SEPARATOR);

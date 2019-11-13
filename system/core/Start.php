@@ -67,10 +67,13 @@ class Start
             Controller::closure($function);
         } elseif (Controller::exists($url)) {
             Controller::call($url);
-        } elseif (functionExists($url)) {
-            Controller::method(Str::before($url, '@') . '@' . Str::after($url, '@'));
         } else {
-            self::load404();
+            $method = Str::before($url, '/') . '@' . Str::after($url, '/');
+            if (Controller::methodExists($method)) {
+                Controller::method($method);
+            } else {
+                self::load404();
+            }
         }
     }
 
@@ -102,7 +105,7 @@ class Start
     public function load404()
     {
         header(self::HEADER_404);
-        Controller:call(CORE_CONFIG['404_controller']);
+        Controller::call(CORE_CONFIG['404_controller']);
         exit;
     }
 
