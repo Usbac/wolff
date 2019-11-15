@@ -6,16 +6,16 @@ class Query
 {
 
     /**
-     * The query result.
+     * The query statement.
      *
      * @var array
      */
-    private $rows;
+    private $stmt;
 
 
-    public function __construct($results)
+    public function __construct($stmt)
     {
-        $this->rows = $results;
+        $this->stmt = $stmt;
     }
 
 
@@ -26,7 +26,7 @@ class Query
      */
     public function get()
     {
-        return $this->rows;
+        return $this->stmt->fetchAll();
     }
 
 
@@ -37,7 +37,7 @@ class Query
      */
     public function toJson()
     {
-        return json_encode($this->rows);
+        return json_encode($this->get());
     }
 
 
@@ -52,11 +52,12 @@ class Query
      */
     public function first(string $column = null)
     {
-        if (isset($column, $this->rows[0])) {
-            return $this->rows[0][$column];
+        $first = $this->get()[0];
+        if (isset($column, $first)) {
+            return $first[$column];
         }
 
-        return $this->rows[0] ?? null;
+        return $first ?? null;
     }
 
 
@@ -69,10 +70,11 @@ class Query
     {
         $rows = [];
         $columns = func_get_args();
+        $result = $this->get();
 
         //Only one column to pick
         if (count($columns) == 1) {
-            foreach($this->rows as $row) {
+            foreach($result as $row) {
                 if (is_string($columns[0]) && array_key_exists($columns[0], $row)) {
                     $rows[] = $row[$columns[0]];
                 }
@@ -82,7 +84,7 @@ class Query
         }
 
         //Multiple columns to pick
-        foreach($this->rows as $row) {
+        foreach($result as $row) {
             $new_row = [];
             foreach ($columns as $column) {
                 if (is_string($column) && array_key_exists($column, $row)) {
@@ -104,7 +106,7 @@ class Query
      */
     public function count()
     {
-        return count($this->rows);
+        return count($this->get());
     }
 
 
@@ -118,7 +120,7 @@ class Query
      */
     public function limit(int $start, int $end)
     {
-        return array_slice($this->rows, $start, $end);
+        return array_slice($this->get(), $start, $end);
     }
 
 
@@ -127,7 +129,7 @@ class Query
      */
     public function dump()
     {
-        var_dump($this->rows);
+        var_dump($this->get());
     }
 
 
@@ -136,7 +138,7 @@ class Query
      */
     public function printr()
     {
-        printr($this->rows);
+        printr($this->get());
     }
 
 
@@ -145,7 +147,7 @@ class Query
      */
     public function dumpd()
     {
-        dumpd($this->rows);
+        dumpd($this->get());
     }
 
 
@@ -154,6 +156,6 @@ class Query
      */
     public function printrd()
     {
-        printrd($this->rows);
+        printrd($this->get());
     }
 }

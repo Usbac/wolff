@@ -112,7 +112,7 @@ class Str
 
 
     /**
-     * Returns the string with the indicated substrings swaped 
+     * Returns the string with the indicated substrings swaped
      * or false in case of errors.
      *
      * @param  string  $str  the string
@@ -143,7 +143,7 @@ class Str
      *
      * @return string the string encoded in UTF-8
      */
-    function toUtf8($str) {
+    public static function toUtf8($str) {
         $encoded = iconv(mb_detect_encoding($str, mb_detect_order(), true), "UTF-8", $str);
 
         if (empty($encoded)) {
