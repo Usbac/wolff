@@ -41,5 +41,6 @@
       "Extension\\": "app/extensions/",
       "Controller\\": "app/controllers/"
     }
-  }
+  },
+  "minimum-stability": "dev"
 }
