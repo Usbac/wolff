@@ -33,6 +33,11 @@ class Route
     const STATUS_REDIRECT = 301;
     const GET_FORMAT = '/\{(.*)\}/';
     const OPTIONAL_GET_FORMAT = '/\{(.*)\?\}/';
+    const PREFIXES = [
+        'json'  => 'json:',
+        'plain' => 'plain:',
+        'xml'   => 'xml:'
+    ];
     const HTTP_METHODS = [
         'GET',
         'POST',
@@ -84,6 +89,7 @@ class Route
             $route_length = count($route) - 1;
 
             for ($i = 0; $i <= $route_length && $i <= $current_length; $i++) {
+                //Continue to next route if current does not match
                 if ($current[$i] != $route[$i] && !empty($route[$i]) &&
                     !self::isGetVar($route[$i]) && !self::isOptionalGetVar($route[$i])) {
                     break;
@@ -100,19 +106,34 @@ class Route
                 if ($i + 1 === $route_length && $i === $current_length &&
                     self::isOptionalGetVar($route[$i + 1]) && self::isValidRoute($key)) {
                     self::setOptionalGetVar($route[$i], $current[$i]);
-                    http_response_code($val['status']);
-                    return $val['function'];
+                    return self::processRoute($val);
                 }
 
-                //Process the route
+                //Finish if in the end
                 if ($i === $route_length && $i === $current_length && self::isValidRoute($key)) {
-                    http_response_code($val['status']);
-                    return $val['function'];
+                    return self::processRoute($val);
                 }
             }
         }
 
         return null;
+    }
+
+
+    /**
+     * Returns the route function after
+     * setting the HTTP response code and the content-type
+     * based on the route
+     *
+     * @param  array  $route  the route array
+     * @return mixed the route function
+     */
+    private static function processRoute(array $route)
+    {
+        http_response_code($route['status']);
+        header("Content-Type: $route[content_type]");
+
+        return $route['function'];
     }
 
 
@@ -136,7 +157,7 @@ class Route
      *
      * @param  string  $url  the url
      * @param  mixed  $function  mixed the function that must be executed when accessing the route
-     * @param  int  $status  the HTTP status code
+     * @param  int  $status  the HTTP response code
      */
     public static function add(string $url, $function, int $status = self::STATUS_OK)
     {
@@ -170,15 +191,32 @@ class Route
      * Add a route to the list
      *
      * @param  mixed  $url  the url
+     * @param  string  $method  the url HTTP method
      * @param  mixed  $function  the url function or controller name
-     * @param  bool  $api  is or not an api route
-     * @param  int  $status  the HTTP status code
+     * @param  int  $status  the HTTP response code
      */
     private static function addRoute($url, string $method, $function, int $status) {
+        $content_type = 'text/html';
+
+        //Xml
+        if (Str::startsWith($url, self::PREFIXES['xml'])) {
+            $url = Str::after($url, self::PREFIXES['xml']);
+            $content_type = 'application/xml';
+        //Json
+        } else if (Str::startsWith($url, self::PREFIXES['json'])) {
+            $url = Str::after($url, self::PREFIXES['json']);
+            $content_type = 'application/json';
+        //Plain
+        } else if (Str::startsWith($url, self::PREFIXES['plain'])) {
+            $url = Str::after($url, self::PREFIXES['plain']);
+            $content_type = 'text/plain';
+        }
+
         self::$routes[$url] = [
-            'function' => $function,
-            'method'   => $method,
-            'status'   => $status
+            'function'     => $function,
+            'method'       => $method,
+            'status'       => $status,
+            'content_type' => $content_type
         ];
     }
 
@@ -188,7 +226,7 @@ class Route
      *
      * @param  mixed  $url  the origin url
      * @param  mixed  $url2  the destiny url
-     * @param  int  $status  the HTTP status code
+     * @param  int  $status  the HTTP response code
      */
     private static function addRedirect($url, $url2, int $status) {
         self::$redirects[$url] = [
