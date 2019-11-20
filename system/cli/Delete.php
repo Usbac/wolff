@@ -104,7 +104,7 @@ class Delete
             return;
         }
 
-        $file_dir = getExtensionDir() . $this->argv[3] . '.php';
+        $file_dir = CORE_CONFIG['extensions_folder'] . $this->argv[3] . '.php';
 
         if (!is_file($file_dir)) {
             echo "\e[1;31m WARNING: the extension '" . $this->argv[3] . "' doesn't exists!\e[0m \n";

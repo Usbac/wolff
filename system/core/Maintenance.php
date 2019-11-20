@@ -165,7 +165,7 @@ class Maintenance
     public static function call()
     {
         header(self::HEADER_503);
-        Controller::call(CORE_CONFIG['maintenance_controller']);
+        Controller::call(CORE_CONFIG['controller_maintenance']);
         exit;
     }
 

@@ -147,21 +147,6 @@ namespace {
         }
     }
 
-    if (!function_exists('getExtensionDir')) {
-
-        /**
-         * Returns the extension directory of the project
-         *
-         * @param  string  $path  the optional path to append
-         *
-         * @return string the extension directory of the project
-         */
-        function getExtensionDir(string $path = '')
-        {
-            return CONFIG['extension_dir'] . $path;
-        }
-    }
-
     if (!function_exists('getCacheDir')) {
 
         /**

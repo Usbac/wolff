@@ -155,7 +155,7 @@ class Create
             return;
         }
 
-        $file_dir = getExtensionDir() . $this->argv[3] . '.php';
+        $file_dir = CORE_CONFIG['extensions_folder'] . $this->argv[3] . '.php';
         Extension::mkdir();
 
         if (file_exists($file_dir)) {

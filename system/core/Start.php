@@ -105,7 +105,7 @@ class Start
     public function load404()
     {
         header(self::HEADER_404);
-        Controller::call(CORE_CONFIG['404_controller']);
+        Controller::call(CORE_CONFIG['controller_404']);
         exit;
     }
 

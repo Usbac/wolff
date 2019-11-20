@@ -296,7 +296,6 @@ class Lister
         echo "\n Project folder: " . getDir();
         echo "\n App folder: " . getAppDir();
         echo "\n Public folder: " . getPublic();
-        echo "\n Extensions folder: " . getExtensionDir();
         echo "\n Cache folder: " . getCacheDir();
         echo "\n";
         echo "\n ->\e[32m GENERAL \e[0m";
