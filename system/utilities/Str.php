@@ -71,6 +71,20 @@ class Str
 
 
     /**
+     * Returns a random generated token
+     *
+     * @param  int  $length  the token length,
+     * by default it is 16 characters
+     *
+     * @return string a random generated token
+     */
+    public static function token(int $length = 16)
+    {
+        return bin2hex(random_bytes($length / 2));
+    }
+
+
+    /**
      * Returns true if a substring is present in another string
      * or false otherwise
      *

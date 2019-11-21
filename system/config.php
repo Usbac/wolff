@@ -1,7 +1,7 @@
 <?php
 
 define('CORE_CONFIG', [
-    'version' => '1.9.1',
+    'version' => '1.10',
     'start'   => microtime(true),
 
     'views_folder'     => 'views',
