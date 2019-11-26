@@ -65,7 +65,7 @@ class Woof
             echo "\n\e[32m ls \e[0m              -> List elements";
             echo "\n\e[32m mk \e[0m              -> Create elements";
             echo "\n\e[32m rm \e[0m              -> Remove elements";
-            echo "\n\e[32m set [key] [val] \e[0m -> Set a config constant (system/config.php)";
+            echo "\n\e[32m set [key] [val] \e[0m -> Set a config constant";
             echo "\n\e[32m export [query] \e[0m  -> Export a query to a csv file";
             echo "\n\e[32m help [command] \e[0m  -> Get help";
             echo "\n\e[32m v \e[0m               -> Get the Wolff version";

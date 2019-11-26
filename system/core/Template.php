@@ -26,7 +26,7 @@ class Template
         'echo'      => '/' . self::NOT_RAW . '\{\{( ?){1,}(.*?)( ?){1,}\}\}/',
         'tag'       => '/' . self::NOT_RAW . '\{%( ?){1,}(.*?)( ?){1,}%\}/',
         'function'  => '/' . self::NOT_RAW . '{func}( ?){1,}\|([^\}!]{1,})/',
-        'include'   => '/' . self::NOT_RAW . '@load\(( |\'?){1,}(.*)(.wlf|.php|.html)( |\'?){1,}\)/',
+        'include'   => '/' . self::NOT_RAW . '@load\(( |\'?){1,}(.*)( |\'?){1,}\)/',
 
         'if'     => '/' . self::NOT_RAW . '\{(\s?){1,}(.*)\?(\s?){1,}\}/',
         'endif'  => '/' . self::NOT_RAW . '\{\?\}/',
@@ -34,9 +34,7 @@ class Template
         'elseif' => '/' . self::NOT_RAW . '\{(\s?){1,}else(\s?){1,}(.*)(\s?){1,}\}/',
 
         'for'        => '/' . self::NOT_RAW . '\{( ?){1,}for( ){1,}(.*)( ){1,}in( ){1,}\((.*)( ?){1,},( ?){1,}(.*)( ?){1,}\)( ?){1,}\}/',
-        'endfor'     => '/' . self::NOT_RAW . '\{( ?){1,}for( ?){1,}\}/',
-        'foreach'    => '/' . self::NOT_RAW . '\{( ?){1,}foreach( ?){1,}(.*)( ?){1,}as( ?){1,}(.*)( ?){1,}\}/',
-        'endforeach' => '/' . self::NOT_RAW . '\{( ?){1,}foreach( ?){1,}\}/',
+        'endfor'     => '/' . self::NOT_RAW . '\{( ?){1,}endfor( ?){1,}\}/'
     ];
 
 
@@ -173,7 +171,7 @@ class Template
      */
     private static function getContent($dir)
     {
-        $file_path = getAppDir() . CORE_CONFIG['views_folder'] . '/' . $dir . CORE_CONFIG['views_format'];
+        $file_path = View::getPath($dir);
 
         if (file_exists($file_path)) {
             return file_get_contents($file_path);
@@ -369,9 +367,6 @@ class Template
         //For
         $content = preg_replace(self::FORMAT['for'], '<?php for (\$$3=$6; \$$3 <= $9; \$$3++): ?>', $content);
         $content = preg_replace(self::FORMAT['endfor'], '<?php endfor; ?>', $content);
-        //Foreach
-        $content = preg_replace(self::FORMAT['foreach'], '<?php foreach ($3 as $6): ?>', $content);
-        $content = preg_replace(self::FORMAT['endforeach'], '<?php endforeach; ?>', $content);
 
         return $content;
     }
