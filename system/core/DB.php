@@ -307,11 +307,11 @@ class DB
      *
      * @param  string  $table  the table for the query
      * @param  string  $conditions  the select conditions
-     * @param  mixed  $args the query arguments
+     * @param  array  $args the query arguments
      *
      * @return string the query result
      */
-    public static function countAll(string $table, string $conditions = '1', $args = null)
+    public static function countAll(string $table, string $conditions = '1', array $args = null)
     {
         $table = self::escape($table);
         $result = DB::run("SELECT COUNT(*) FROM $table WHERE $conditions", $args)->first();
@@ -321,16 +321,55 @@ class DB
 
 
     /**
+     * Moves rows from one table to another, deleting the rows of the
+     * original table in the process
+     * WARNING: The conditions parameter must be manually escaped
+     * NOTE: In case of errors, the changes are completely rolled back
+     *
+     * @param  string  $ori_table  the origin table
+     * @param  string  $dest_table  the destination table
+     * @param  string  $conditions  the conditions
+     * @param  array  $args the query arguments
+     *
+     * @return bool true if the transaction has been made successfully, false otherwise
+     */
+    public static function moveRows(string $ori_table, string $dest_table, string $conditions = '1', $args = null)
+    {
+        $ori_table = self::escape($ori_table);
+        $dest_table = self::escape($dest_table);
+
+        try {
+            $insert_stat = self::getPdo()->prepare("INSERT INTO $dest_table SELECT * FROM $ori_table WHERE $conditions");
+            $delete_stat = self::getPdo()->prepare("DELETE FROM $ori_table WHERE $conditions");
+
+            self::getPdo()->beginTransaction();
+
+            $insert_stat->execute($args);
+            $delete_stat->execute($args);
+
+            self::getPdo()->commit();
+        } catch (\Exception $e) {
+            if ($pdo->inTransaction()) {
+                $pdo->rollback();
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
+    /**
      * Runs a DELETE query
      * WARNING: The conditions parameter must be manually escaped
      *
      * @param  string  $table  the table for the query
      * @param  string  $conditions  the select conditions
-     * @param  mixed  $args the query arguments
+     * @param  array  $args the query arguments
      *
      * @return array the query result as an assosiative array
      */
-    public static function deleteAll(string $table, string $conditions = '1', $args = null)
+    public static function deleteAll(string $table, string $conditions = '1', array $args = null)
     {
         $table = self::escape($table);
 
