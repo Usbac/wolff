@@ -8,16 +8,8 @@ use PDO, PDOException;
 class Factory
 {
 
-    /**
-     * Array of utilities.
-     *
-     * @var array
-     */
-    private static $utilities;
-
     const NAMESPACE_CONTROLLER = 'Controller\\';
-    const NAMESPACE_EXTENSION = 'Extension\\';
-    const NAMESPACE_UTILITY = 'Utilities\\';
+    const NAMESPACE_MIDDLEWARE = 'Middleware\\';
     const DSN = '{dbms}:host={server}; dbname={db}';
 
 
@@ -63,10 +55,7 @@ class Factory
     {
         //Load default Controller
         if (!isset($dir)) {
-            $controller = new Controller;
-            $controller->setUtilities(self::$utilities ?? []);
-
-            return $controller;
+            return new Controller;
         }
 
         $class = self::NAMESPACE_CONTROLLER . Str::pathToNamespace($dir);
@@ -77,82 +66,28 @@ class Factory
             return false;
         }
 
-        $controller = new $class;
-        $controller->setUtilities(self::$utilities ?? []);
-
-        return $controller;
-    }
-
-
-    /**
-     * Set the extension properties
-     *
-     * @param  mixed  $extension  the extension
-     */
-    private static function setExtensionProperties($extension)
-    {
-        if (is_array(self::$utilities)) {
-            foreach(self::$utilities as $key => $class) {
-                $extension->$key = Factory::utility($class);
-            }
-        }
-    }
-
-
-    /**
-     * Returns a extension initialized or false if it doesn't exists
-     *
-     * @param  string  $name  the extension name
-     *
-     * @return object|bool a extension initialized or false if it doesn't exists
-     */
-    public static function extension(string $name)
-    {
-        $class = self::NAMESPACE_EXTENSION . $name;
-
-        if (!class_exists($class)) {
-            Log::error("The extension class '$name' doesn't exists");
-
-            return false;
-        }
-
-        $extension = new $class;
-        self::setExtensionProperties($extension);
-
-        return $extension;
-    }
-
-
-    /**
-     * Returns an utility initialized or false if it doesn't exists
-     *
-     * @param  string  $name  the utility name
-     *
-     * @return object|bool an utility initialized or false if it doesn't exists
-     */
-    public static function utility(string $name)
-    {
-        $class = self::NAMESPACE_UTILITY . $name;
-
-        if (!class_exists($class)) {
-            Log::error("The utility class '$name' doesn't exists");
-
-            return false;
-        }
-
         return new $class;
     }
 
 
     /**
-     * Adds an utility to the list
+     * Returns a middleware initialized or false if it doesn't exists
      *
-     * @param  string  $key  the classname to refer to in the controller
-     * @param  string  $class  the classname
+     * @param  string  $name  the middleware name
+     *
+     * @return object|bool a middleware initialized or false if it doesn't exists
      */
-    public static function addUtility(string $name, string $class)
+    public static function middleware(string $name)
     {
-        self::$utilities[$name] = $class;
+        $class = self::NAMESPACE_MIDDLEWARE . $name;
+
+        if (!class_exists($class)) {
+            Log::error("The middleware class '$name' doesn't exists");
+
+            return false;
+        }
+
+        return new $class;
     }
 
 

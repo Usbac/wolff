@@ -140,8 +140,7 @@ class Validation
             $rule = trim(strtolower($rule));
 
             //Complies min length, max length, min value, max value and regex
-            if (($rule == 'required' && $val && !isset($field)) ||
-                ($rule == 'minlen' && strlen($field) < $val) ||
+            if (($rule == 'minlen' && strlen($field) < $val) ||
                 ($rule == 'maxlen' && strlen($field) > $val) ||
                 ($rule == 'minval' && $field < $val) ||
                 ($rule == 'maxval' && $field > $val) ||
@@ -171,7 +170,7 @@ class Validation
      * @return bool true if the current data complies all the fields rules,
      * false otherwise
      */
-    public function validate()
+    public function isValid()
     {
         foreach ($this->fields as $key => $val) {
             $this->validateField($key);
@@ -179,4 +178,24 @@ class Validation
 
         return empty($this->invalid_values);
     }
+
+
+    /**
+     * Returns true if the given data matches the fields.
+     * This is a proxy method to the setFields, setData
+     * and isValid methods (in that order)
+     *
+     * @param  array  $fields  the associative array
+     * with the fields rules
+     *
+     * @return array the data array to validate
+     *
+     * @return bool true if the current data complies all the fields rules,
+     * false otherwise
+     */
+    public function check($fields, $data)
+    {
+        return $this->setFields($fields)->setData($data)->isValid();
+    }
+
 }

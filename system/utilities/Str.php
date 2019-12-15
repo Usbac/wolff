@@ -79,7 +79,7 @@ class Str
      */
     public static function slug(string $str)
     {
-        $table = [
+        $chars = [
             'Š'=>'S', 'š'=>'s', 'Đ'=>'Dj', 'đ'=>'dj', 'Ž'=>'Z', 'ž'=>'z', 'Č'=>'C', 'č'=>'c', 'Ć'=>'C', 'ć'=>'c',
             'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A', 'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E',
             'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I', 'Ï'=>'I', 'Ñ'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O',
@@ -90,8 +90,16 @@ class Str
             'ÿ'=>'y', 'Ŕ'=>'R', 'ŕ'=>'r', '/' => '-', ' ' => '-'
         ];
 
-        $str = strtr(trim($str), $table);
-        return strtolower(preg_replace('/-{2,}/', '-', preg_replace('/[^a-zA-Z0-9-]+/', '-', $str)));
+        //Trim whitespaces and change special characters by their normal counterpart
+        $str = strtr(trim($str), $chars);
+
+        //Remove remaining special characters
+        $str = preg_replace('/[^a-zA-Z0-9-]+/', '-', $str);
+
+        //Remove followed and duplicated hyphen characters
+        $str = preg_replace('/-{2,}/', '-', $str);
+
+        return strtolower($str);
     }
 
 

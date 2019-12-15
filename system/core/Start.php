@@ -20,11 +20,11 @@ class Start
         $this->validateAccess($url);
         $this->initialize();
 
-        Extension::loadBefore();
+        Middleware::loadBefore();
 
         $this->loadPage($url);
 
-        Extension::loadAfter();
+        Middleware::loadAfter();
     }
 
 

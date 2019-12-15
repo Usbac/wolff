@@ -89,29 +89,14 @@ class Route
             $route_length = count($route) - 1;
 
             for ($i = 0; $i <= $route_length && $i <= $current_length; $i++) {
-                //Continue to next route if current does not match
                 if ($current[$i] != $route[$i] && !empty($route[$i]) &&
-                    !self::isGetVar($route[$i]) && !self::isOptionalGetVar($route[$i])) {
+                    !self::isGetVar($route[$i])) {
                     break;
                 }
 
-                //Set GET variables from url
-                if (self::isGetVar($route[$i])) {
-                    self::setGetVar($route[$i], $current[$i]);
-                } else if (self::isOptionalGetVar($route[$i])) {
-                    self::setOptionalGetVar($route[$i], $current[$i]);
-                }
-
-                //Finish if last GET variable from url is optional
-                if ($i + 1 === $route_length && $i === $current_length &&
-                    self::isOptionalGetVar($route[$i + 1]) && self::isValidRoute($key)) {
-                    self::setOptionalGetVar($route[$i], $current[$i]);
-                    return self::processRoute($val);
-                }
-
-                //Finish if in the end
-                if ($i === $route_length && $i === $current_length && self::isValidRoute($key)) {
-                    return self::processRoute($val);
+                if (($i === $route_length || ($i + 1 === $route_length && self::isOptionalGetVar($route[$i + 1]))) &&
+                    $i === $current_length && self::isValidRoute($key)) {
+                    return self::processRoute($current, $route);
                 }
             }
         }
@@ -125,15 +110,53 @@ class Route
      * setting the HTTP response code and the content-type
      * based on the route
      *
-     * @param  array  $route  the route array
+     * @param  array  $current  the current route array (exploded by /)
+     *
+     * @param  array  $route  the registered route array which matches the
+     * current route (exploded by /)
+     *
      * @return mixed the route function
      */
-    private static function processRoute(array $route)
+    private static function processRoute(array $current, array $route)
     {
+        self::mapParameters($current, $route);
+
+        $route = self::$routes[implode('/', $route)];
         http_response_code($route['status']);
         header("Content-Type: $route[content_type]");
 
         return $route['function'];
+    }
+
+
+    /**
+     * Maps the current route GET parameters
+     *
+     * @param  array  $current  the current route array
+     * (exploded by /)
+     *
+     * @param  array  $route  the registered route array
+     * (exploded by /) which matches the current route
+     */
+    private static function mapParameters(array $current, array $route)
+    {
+        $current_length = count($current) - 1;
+        $route_length = count($route) - 1;
+
+        for ($i = 0; $i <= $route_length && $i <= $current_length; $i++) {
+            if (self::isOptionalGetVar($route[$i])) {
+                self::setOptionalGetVar($route[$i], $current[$i]);
+            } else if (self::isGetVar($route[$i])) {
+                self::setGetVar($route[$i], $current[$i]);
+            }
+
+            //Finish if last GET variable from url is optional
+            if ($i + 1 === $route_length && $i === $current_length &&
+                self::isOptionalGetVar($route[$i + 1])) {
+                self::setOptionalGetVar($route[$i], $current[$i]);
+                return;
+            }
+        }
     }
 
 

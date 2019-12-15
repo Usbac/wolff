@@ -7,9 +7,9 @@ define('CORE_CONFIG', [
     'views_format' => '.wlf',
 
     //Folders
-    'views_folder'      => 'views',
-    'extensions_folder' => 'extensions',
-    'languages_folder'  => 'languages',
+    'views_dir'       => 'views',
+    'middlewares_dir' => 'middlewares',
+    'languages_dir'   => 'languages',
 
     //Default controllers
     'controller_maintenance' => '_maintenance',

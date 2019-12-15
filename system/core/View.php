@@ -7,7 +7,7 @@ use Utilities\Str;
 class View
 {
 
-    const PATH_FORMAT = '{app}' . CORE_CONFIG['views_folder'] . '/{dir}' . CORE_CONFIG['views_format'];
+    const PATH_FORMAT = '{app}' . CORE_CONFIG['views_dir'] . '/{dir}' . CORE_CONFIG['views_format'];
 
 
     /**
@@ -75,10 +75,11 @@ class View
      *
      * @param  string  $dir  the view directory
      * @param  array  $data  the data
+     * @param  bool  $cache  use or not the cache system
      *
      * @return mixed the view rendered or false in case of errors
      */
-    public static function getRender(string $dir, array $data = [], bool $cache = false)
+    public static function getRender(string $dir, array $data = [], bool $cache = true)
     {
         $dir = Str::sanitizePath($dir);
 

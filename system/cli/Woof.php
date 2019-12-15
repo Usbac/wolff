@@ -80,7 +80,7 @@ class Woof
                 echo "\n\e[32m views \e[0m       -> List the available views.";
                 echo "\n\e[32m controllers \e[0m -> List the available controllers.";
                 echo "\n\e[32m languages \e[0m   -> List the available languages.";
-                echo "\n\e[32m extensions \e[0m  -> List the available extensions.";
+                echo "\n\e[32m middlewares \e[0m -> List the available middlewares.";
                 echo "\n\e[32m public \e[0m      -> List all the files in the public folder.";
                 echo "\n\e[32m cache \e[0m       -> List all the cache files.";
                 echo "\n\e[32m ip \e[0m          -> List all the allowed IPs for maintenance mode.";
@@ -93,7 +93,7 @@ class Woof
                 echo "\n\e[32m view [path] \e[0m       -> Create a view.";
                 echo "\n\e[32m controller [path] \e[0m -> Create a controller.";
                 echo "\n\e[32m language [name] \e[0m   -> Create a language.";
-                echo "\n\e[32m extension [name] \e[0m  -> Create a extension.";
+                echo "\n\e[32m middleware [name] \e[0m -> Create a middleware.";
                 echo "\n\e[32m ip [name] \e[0m         -> Add an IP to the maintenance mode whitelist.";
                 echo "\n \n\e[1;30m If the [path] includes folders that doesn't exists, those folders will be created automatically.\e[0m";
 
@@ -107,7 +107,7 @@ class Woof
                 echo "\nREMOVE COMMANDS \n";
                 echo "\n\e[32m view [path] \e[0m        -> Delete a view.";
                 echo "\n\e[32m controller [path] \e[0m  -> Delete a controller.";
-                echo "\n\e[32m extension [path] \e[0m   -> Delete a extension.";
+                echo "\n\e[32m middleware [path] \e[0m  -> Delete a middleware.";
                 echo "\n\e[32m ip [name] \e[0m          -> Remove an IP from the maintenance mode whitelist.";
                 echo "\n\e[32m language [name] \e[0m    -> Delete a language.";
                 echo "\n\e[32m cache [name] \e[0m       -> Delete a cache file, or all if the name is empty.\n\n";

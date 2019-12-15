@@ -2,7 +2,7 @@
 
 namespace Cli;
 
-use Core\{Extension, Maintenance};
+use Core\{Middleware, Maintenance};
 use Utilities\Str;
 
 class Create
@@ -10,6 +10,18 @@ class Create
 
     const TEMPLATE_PATH = __DIR__ . '/templates/';
     const ROUTES_PATH = 'system/definitions/Routes.php';
+    const MIDDLEWARES_FILE = 'system/definitions/Middlewares.php';
+    const OPTIONS = [
+        'page',
+        'controller',
+        'view',
+        'middleware',
+        'language',
+        'route',
+        'block',
+        'redirect',
+        'ip'
+    ];
 
     private $argv;
 
@@ -28,37 +40,10 @@ class Create
             return;
         }
 
-        switch ($this->argv[2]) {
-            case 'page':
-                $this->page();
-                break;
-            case 'controller':
-                $this->controller();
-                break;
-            case 'view':
-                $this->view();
-                break;
-            case 'extension':
-                $this->extension();
-                break;
-            case 'language':
-                $this->language();
-                break;
-            case 'route':
-                $this->route();
-                break;
-            case 'block':
-                $this->block();
-                break;
-            case 'redirect':
-                $this->redirect();
-                break;
-            case 'ip':
-                $this->ip();
-                break;
-            default:
-                echo "\e[1;31m WARNING: Command doesn't exists\e[0m\n";
-                break;
+        if (in_array($this->argv[2], self::OPTIONS)) {
+            $this->{$this->argv[2]}();
+        } else {
+            echo "\e[1;31m WARNING: Command doesn't exists\e[0m\n";
         }
     }
 
@@ -147,7 +132,7 @@ class Create
     }
 
 
-    private function extension()
+    private function middleware()
     {
         if (!isset($this->argv[3]) || empty($this->argv[3])) {
             echo "\e[1;31m WARNING: No name specified!\e[0m \n";
@@ -155,50 +140,46 @@ class Create
             return;
         }
 
-        $file_dir = CORE_CONFIG['extensions_folder'] . $this->argv[3] . '.php';
-        Extension::mkdir();
+        $file_dir = getAppDir() . CORE_CONFIG['middlewares_dir'] . '/' . $this->argv[3] . '.php';
+        Middleware::mkdir();
 
         if (file_exists($file_dir)) {
-            echo "\e[1;31m WARNING: extension " . $this->argv[3] . " already exists!\e[0m \n";
+            echo "\e[1;31m WARNING: middleware " . $this->argv[3] . " already exists!\e[0m \n";
 
             return;
         }
 
-        $file = fopen($file_dir, 'w') or die("WARNING: Cannot create extension file \n");
+        $file = fopen($file_dir, 'w') or die("WARNING: Cannot create middleware file \n");
 
         $name = readline("Name -> ");
         $description = readline("Description -> ");
         $directory = readline("Directory -> ");
         $type = readline("(B)efore / (A)fter? -> ");
-        $version = readline("Version -> ");
-        $author = readline("Author -> ");
 
         $values = [
             'classname'   => $this->argv[3],
             'name'        => $name,
             'description' => $description,
-            'version'     => $version,
-            'author'      => $author,
         ];
 
-        $content = file_get_contents(self::TEMPLATE_PATH . 'extension.txt');
+        $content = file_get_contents(self::TEMPLATE_PATH . 'middleware.txt');
         $content = Str::interpolate($content, $values);
 
         fwrite($file, $content);
         fclose($file);
 
-        //Add extension route to Extensions.php
-        $this->extensionFile($type, $directory, $this->argv[3]);
+        //Add middleware route to Middleware.php
+        $this->middlewareFile($type, $directory, $this->argv[3]);
 
-        echo "\nExtension " . $name . " created successfully! \n";
+        echo "\nMiddleware " . $name . " created successfully! \n";
     }
 
 
-    private function extensionFile($type, $directory, $name)
+    private function middlewareFile($type, $directory, $name)
     {
-        $type = $type === 'B'? 'before':'after';
-        $route = PHP_EOL . "Extension::" . $type . "('" . $directory . "', '" . $name . "');";
-        file_put_contents('system/definitions/Extensions.php', $route, FILE_APPEND | LOCK_EX);
+        $type = $type === 'B' ? 'before' : 'after';
+        $route = PHP_EOL . "Middleware::" . $type . "('" . $directory . "', '" . $name . "');";
+        file_put_contents(self::MIDDLEWARES_FILE, $route, FILE_APPEND | LOCK_EX);
     }
 
 

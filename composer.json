@@ -35,7 +35,7 @@
       "Utilities\\": "system/utilities/",
       "Cli\\": "system/cli/",
       "App\\": "app/",
-      "Extension\\": "app/extensions/",
+      "Middleware\\": "app/middlewares/",
       "Controller\\": "app/controllers/"
     }
   }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Extension;
+namespace Middleware;
 
 class {classname}
 {
@@ -8,8 +8,6 @@ class {classname}
     public $desc = [
         'name'        => "{name}",
         'description' => "{description}",
-        'version'     => "{version}",
-        'author'      => "{author}"
     ];
 
 

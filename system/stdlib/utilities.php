@@ -22,7 +22,7 @@ namespace {
     if (!function_exists('printr')) {
 
         /**
-         * Print an array in a nice looking way
+         * Print the given arrays in a nice looking way
          */
         function printr()
         {
@@ -39,13 +39,18 @@ namespace {
     if (!function_exists('printrd')) {
 
         /**
-         * Print an array in a nice looking way and die
-         *
-         * @param  array  $array  the array to print
+         * Print the given arrays in a nice looking way and die
          */
-        function printrd(array $array)
+        function printrd()
         {
-            printr($array);
+            $args = func_get_args();
+
+            echo "<pre>";
+            foreach ($args as $arg) {
+                print_r($arg);
+            }
+            echo "</pre>";
+
             die();
         }
     }
@@ -171,6 +176,21 @@ namespace {
             }
 
             return $http . $_SERVER['HTTP_HOST'] . $directory . $url;
+        }
+    }
+
+    if (!function_exists('local')) {
+
+        /**
+         * Returns true if the current script is running in localhost,
+         * false otherwise
+         *
+         * @return bool true if the current script is running in localhost,
+         * false otherwise
+         */
+        function local()
+        {
+            return in_array($_SERVER['REMOTE_ADDR'], [ '127.0.0.1', '::1' ]);
         }
     }
 

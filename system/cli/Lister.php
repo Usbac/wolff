@@ -2,19 +2,32 @@
 
 namespace Cli;
 
-use Core\{Cache, Extension, Maintenance, Route};
+use Core\{Cache, Middleware, Maintenance, Route};
 use Utilities\Str;
 
 class Lister
 {
 
-    private $argv;
-
-    const EXTENSIONS_NONE = "\n Extensions: none\n";
+    const MIDDLEWARES_NONE = "\n Middlewares: none\n";
     const ROUTES_NONE = "\n Routes: none\n";
     const BLOCKED_NONE = "\n Blocked: none\n";
     const REDIRECTS_NONE = "\n Redirections: none\n";
     const IP_NONE = "\n Allowed IPs: none\n";
+    CONST OPTIONS = [
+        'middlewares',
+        'views',
+        'controllers',
+        'languages',
+        'public',
+        'cache',
+        'routes',
+        'redirects',
+        'blocked',
+        'config',
+        'ip'
+    ];
+
+    private $argv;
 
 
     public function __construct($argv)
@@ -31,63 +44,29 @@ class Lister
             return;
         }
 
-        switch ($this->argv[2]) {
-            case 'extensions':
-                $this->extensions();
-                break;
-            case 'views':
-                $this->views();
-                break;
-            case 'controllers':
-                $this->controllers();
-                break;
-            case 'languages':
-                $this->languages();
-                break;
-            case 'public':
-                $this->public();
-                break;
-            case 'cache':
-                $this->cache();
-                break;
-            case 'routes':
-                $this->routes();
-                break;
-            case 'redirects':
-                $this->redirects();
-                break;
-            case 'blocked':
-                $this->blocked();
-                break;
-            case 'config':
-                $this->config();
-                break;
-            case 'ip':
-                $this->ip();
-                break;
-            default:
-                echo "\e[1;31m WARNING: Command doesn't exists\e[0m\n";
-                break;
+        if (in_array($this->argv[2], self::OPTIONS)) {
+            $this->{$this->argv[2]}();
+        } else {
+            echo "\e[1;31m WARNING: Command doesn't exists\e[0m\n";
         }
+
     }
 
 
-    private function extensions()
+    private function middlewares()
     {
-        $extensions = Extension::get();
+        $middlewares = Middleware::get();
 
-        if (empty($extensions)) {
-            echo self::EXTENSIONS_NONE;
+        if (empty($middlewares)) {
+            echo self::MIDDLEWARES_NONE;
 
             return;
         }
 
-        foreach ($extensions as $ext) {
-            echo "\n ->\e[32m " . $ext['name'] . "\e[0m";
-            echo "\n Description: " . $ext['description'];
-            echo "\n Version: " . $ext['version'];
-            echo "\n Author: " . $ext['author'];
-            echo "\n Filename: " . $ext['filename'];
+        foreach ($middlewares as $middleware) {
+            echo "\n ->\e[32m " . $middleware['name'] . "\e[0m";
+            echo "\n Description: " . $middleware['description'];
+            echo "\n Filename: " . $middleware['filename'];
             echo "\n";
         }
 
@@ -97,7 +76,7 @@ class Lister
 
     private function views()
     {
-        $views = $this->listViewFiles(getAppDir() . CORE_CONFIG['views_folder']);
+        $views = $this->listViewFiles(getAppDir() . CORE_CONFIG['views_dir']);
 
         foreach ($views as $view) {
             echo "\n" . $view;
@@ -119,7 +98,7 @@ class Lister
 
     private function languages()
     {
-        $languages = glob(getAppDir() . CORE_CONFIG['languages_folder'] . '/*', GLOB_ONLYDIR);
+        $languages = glob(getAppDir() . CORE_CONFIG['languages_dir'] . '/*', GLOB_ONLYDIR);
 
         foreach ($languages as $language) {
             echo "\n" . substr($language, strrpos($language, '/') + 1);
@@ -306,7 +285,7 @@ class Lister
         echo "\n";
         echo "\n ->\e[32m EXTRA \e[0m";
         echo "\n Cache enabled: " . (Cache::isEnabled() ? "yes" : "no");
-        echo "\n Extensions enabled: " . (Extension::isEnabled() ? "yes" : "no");
+        echo "\n Middleware enabled: " . (Middleware::isEnabled() ? "yes" : "no");
         echo "\n Maintenance mode enabled: " . (Maintenance::isEnabled() ? "yes" : "no");
         echo "\n";
     }

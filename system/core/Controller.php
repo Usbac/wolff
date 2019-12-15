@@ -152,21 +152,4 @@ class Controller
         return true;
     }
 
-
-    /**
-     * Set the utilities
-     *
-     * @param  array  $utilities  the utilities array
-     */
-    public function setUtilities(array $utilities)
-    {
-        if (!is_array($utilities)) {
-            return;
-        }
-
-        foreach($utilities as $key => $class) {
-            $this->$key = Factory::utility($class);
-        }
-    }
-
 }

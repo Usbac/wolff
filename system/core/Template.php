@@ -58,32 +58,7 @@ class Template
      */
     public static function render(string $dir, array $data, bool $cache)
     {
-        //Variables in data array
-        if (is_array($data)) {
-            extract($data);
-            unset($data);
-        }
-
-        $content = self::getContent($dir);
-
-        if ($content === false) {
-            return false;
-        }
-
-        if (self::isEnabled()) {
-            $content = self::replaceAll($content);
-        }
-
-        //Cache system
-        if ($cache && Cache::isEnabled()) {
-            include(Cache::set($dir, $content));
-        } else {
-            $tmp_file = tmpfile();
-            fwrite($tmp_file, $content);
-            include(stream_get_meta_data($tmp_file)['uri']);
-            fclose($tmp_file);
-        }
-
+        echo self::getRender($dir, $data, $cache);
     }
 
 
@@ -99,30 +74,31 @@ class Template
      */
     public static function getRender(string $dir, array $data, bool $cache)
     {
+        $content = self::getContent($dir);
+
+        if ($content === false ||
+            !($cache && Cache::isEnabled() && Cache::has($dir))) {
+            return false;
+        }
+
         //Variables in data array
         if (is_array($data)) {
             extract($data);
             unset($data);
         }
 
-        $content = self::getContent($dir);
-
-        if ($content === false) {
-            return false;
-        }
-
-        if (self::isEnabled()) {
-            $content = self::replaceAll($content);
-        }
-
         ob_start();
 
         //Cache system
         if ($cache && Cache::isEnabled()) {
+            if (!Cache::has($dir)) {
+                $content = self::replaceAll($content);
+            }
+
             include(Cache::set($dir, $content));
         } else {
             $tmp_file = tmpfile();
-            fwrite($tmp_file, $content);
+            fwrite($tmp_file, self::replaceAll($content));
             include(stream_get_meta_data($tmp_file)['uri']);
             fclose($tmp_file);
         }
@@ -146,16 +122,16 @@ class Template
      */
     public static function get(string $dir, array $data)
     {
-        //Variables in data array
-        if (is_array($data)) {
-            extract($data);
-            unset($data);
-        }
-
         $content = self::getContent($dir);
 
         if ($content === false) {
             return false;
+        }
+
+        //Variables in data array
+        if (is_array($data)) {
+            extract($data);
+            unset($data);
         }
 
         return self::replaceAll($content);

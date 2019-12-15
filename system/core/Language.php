@@ -10,7 +10,7 @@ class Language
     const EXISTS_ERROR = 'The {language} language for \'{dir}\' doesn\'t exists';
     const EMPTY_WARNING = 'The {language} language content for \'{dir}\' is empty';
     const KEY_WARNING = 'The \'{key}\' key doesn\'t exists in the {language} language array';
-    const PATH_FORMAT = '{app}' . CORE_CONFIG['languages_folder'] . '/{language}/{dir}.php';
+    const PATH_FORMAT = '{app}' . CORE_CONFIG['languages_dir'] . '/{language}/{dir}.php';
 
 
     /**

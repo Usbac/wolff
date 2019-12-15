@@ -7,6 +7,15 @@ use Core\{Cache, Maintenance};
 class Delete
 {
 
+    const OPTIONS = [
+        'controller',
+        'view',
+        'middleware',
+        'language',
+        'ip',
+        'cache'
+    ];
+
     private $argv;
 
 
@@ -24,28 +33,10 @@ class Delete
             return;
         }
 
-        switch ($this->argv[2]) {
-            case 'controller':
-                $this->controller();
-                break;
-            case 'view':
-                $this->view();
-                break;
-            case 'extension':
-                $this->extension();
-                break;
-            case 'language':
-                $this->language();
-                break;
-            case 'ip':
-                $this->ip();
-                break;
-            case 'cache':
-                $this->cache();
-                break;
-            default:
-                echo "\e[1;31m WARNING: Command doesn't exists\e[0m\n";
-                break;
+        if (in_array($this->argv[2], self::OPTIONS)) {
+            $this->{$this->argv[2]}();
+        } else {
+            echo "\e[1;31m WARNING: Command doesn't exists\e[0m\n";
         }
     }
 
@@ -97,25 +88,25 @@ class Delete
     }
 
 
-    private function extension()
+    private function middleware()
     {
         if (empty($this->argv[3])) {
             echo "\e[1;31m WARNING: no name specified!\e[0m \n";
             return;
         }
 
-        $file_dir = CORE_CONFIG['extensions_folder'] . $this->argv[3] . '.php';
+        $file_dir = getAppDir() . CORE_CONFIG['middlewares_dir'] . '/' . $this->argv[3] . '.php';
 
         if (!is_file($file_dir)) {
-            echo "\e[1;31m WARNING: the extension '" . $this->argv[3] . "' doesn't exists!\e[0m \n";
+            echo "\e[1;31m WARNING: the middleware '" . $this->argv[3] . "' doesn't exists!\e[0m \n";
 
             return;
         }
 
-        $response = readline("Are you sure about deleting the " . $this->argv[3] . " extension? [Y/N] \n");
+        $response = readline("Are you sure about deleting the " . $this->argv[3] . " middleware? [Y/N] \n");
         if ($response === 'Y') {
             unlink($file_dir);
-            echo "Extension " . $this->argv[3] . " deleted successfully! \n";
+            echo "Middleware " . $this->argv[3] . " deleted successfully! \n";
         }
     }
 
