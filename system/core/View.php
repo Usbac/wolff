@@ -7,7 +7,7 @@ use Utilities\Str;
 class View
 {
 
-    const PATH_FORMAT = '{app}' . CORE_CONFIG['views_dir'] . '/{dir}' . CORE_CONFIG['views_format'];
+    const PATH_FORMAT = '{app}' . CORE_CONFIG['views_dir'] . '/{dir}.' . CORE_CONFIG['views_format'];
 
 
     /**

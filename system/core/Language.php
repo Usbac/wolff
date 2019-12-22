@@ -111,8 +111,7 @@ class Language
      */
     public static function exists(string $dir, string $language = CONFIG['language'])
     {
-        $dir = Str::sanitizePath($dir);
-        $file_path = self::getPath($language, $dir);
+        $file_path = self::getPath($language, Str::sanitizePath($dir));
 
         return file_exists($file_path);
     }

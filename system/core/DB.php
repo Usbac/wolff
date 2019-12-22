@@ -153,7 +153,7 @@ class DB
      */
     public static function __callStatic($method, $args)
     {
-        return call_user_func_array(array(self::getPdo(), $method), $args);
+        return call_user_func_array([ self::getPdo(), $method], $args);
     }
 
 
@@ -209,7 +209,7 @@ class DB
 
         try {
             $result = self::getPdo()->query("SELECT 1 FROM $table LIMIT 1");
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return false;
         }
 
@@ -385,7 +385,7 @@ class DB
      *
      * @return array the string escaped
      */
-    private static function escape($str)
+    public static function escape($str)
     {
         return preg_replace('/[^A-Za-z0-9_]+/', '', $str);
     }
