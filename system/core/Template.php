@@ -74,10 +74,10 @@ class Template
      */
     public static function getRender(string $dir, array $data, bool $cache)
     {
-        $content = self::getContent($dir);
+        $content = '';
 
-        if ($content === false ||
-            !($cache && Cache::isEnabled() && Cache::has($dir))) {
+        if (!($cache && Cache::isEnabled() && Cache::has($dir)) &&
+            ($content = self::getContent($dir)) === false) {
             return false;
         }
 
@@ -91,9 +91,8 @@ class Template
 
         //Cache system
         if ($cache && Cache::isEnabled()) {
-            if (!Cache::has($dir)) {
-                $content = self::replaceAll($content);
-            }
+            $content = Cache::has($dir) ?
+                Cache::getContent($dir) : self::replaceAll(self::getContent($dir));
 
             include(Cache::set($dir, $content));
         } else {
@@ -120,11 +119,12 @@ class Template
      * @return string|bool the view content with the template format applied
      * or false if it doesn't exists
      */
-    public static function get(string $dir, array $data)
+    public static function get(string $dir, array $data, bool $cache)
     {
-        $content = self::getContent($dir);
+        $content = '';
 
-        if ($content === false) {
+        if (!($cache && Cache::isEnabled() && Cache::has($dir)) &&
+            ($content = self::getContent($dir)) === false) {
             return false;
         }
 
@@ -132,6 +132,10 @@ class Template
         if (is_array($data)) {
             extract($data);
             unset($data);
+        }
+
+        if ($cache && Cache::isEnabled() && Cache::has($dir)) {
+            return Cache::getContent($dir);
         }
 
         return self::replaceAll($content);

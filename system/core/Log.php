@@ -9,7 +9,7 @@ class Log
 
     const FOLDER_NAME = 'log';
     const FILE_PERMISSIONS = 0755;
-    const DATE_FORMAT = 'm-d-Y H:i:s';
+    const DATE_FORMAT = 'H:i:s';
     const FORMAT = '[{date}] [{ip}] {level}: {message}';
 
     const EMERGENCY = 'Emergency';

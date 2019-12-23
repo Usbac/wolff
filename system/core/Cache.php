@@ -40,13 +40,36 @@ class Cache
 
 
     /**
+     * Returns the content of the cache file,
+     * or false in case of errors
+     *
+     * @param  string  $dir  the cache filename
+     *
+     * @return string return the content of the cache file,
+     * or false in case of errors
+     */
+    public static function getContent(string $dir)
+    {
+        $file_path = self::getPath($dir);
+
+        if (file_exists($file_path)) {
+            return file_get_contents($file_path);
+        } else {
+            Log::error("Cache '$dir' doesn't exists");
+
+            return false;
+        }
+    }
+
+
+    /**
      * Return the specified cache file path
      *
      * @param  string  $dir  the cache filename
      *
      * @return string return the specified cache file path
      */
-    public static function get(string $dir)
+    public static function getPath(string $dir)
     {
         return getCacheDir() . self::getFilename($dir);
     }
@@ -62,7 +85,7 @@ class Cache
      */
     public static function set(string $dir, string $content)
     {
-        $file_path = self::get($dir);
+        $file_path = self::getPath($dir);
 
         if (!file_exists($file_path)) {
             self::mkdir();

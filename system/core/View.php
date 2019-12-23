@@ -54,11 +54,12 @@ class View
      *
      * @param  string  $dir  the view directory
      * @param  array  $data  the data
+     * @param  bool  $cache  use or not the cache system
      *
      * @return mixed the view content with the template format applied
      * over it, or false in case of errors
      */
-    public static function get(string $dir, array $data = [])
+    public static function get(string $dir, array $data = [], bool $cache = true)
     {
         $dir = Str::sanitizePath($dir);
 
@@ -66,7 +67,7 @@ class View
             return false;
         }
 
-        return Template::get($dir, $data);
+        return Template::get($dir, $data, $cache);
     }
 
 
