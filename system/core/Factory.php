@@ -26,13 +26,13 @@ class Factory
             return false;
         }
 
-        try {
-            $dsn = Str::interpolate(self::DSN, [
-                'dbms'   => getDBMS(),
-                'server' => getServer(),
-                'db'     => getDB(),
-            ]);
+        $dsn = Str::interpolate(self::DSN, [
+            'dbms'   => getDBMS(),
+            'server' => getServer(),
+            'db'     => getDB(),
+        ]);
 
+        try {
             $connection = new PDO($dsn, getDbUser(), getDbPass(), $options);
         } catch (PDOException $e) {
             Log::critical($e->getMessage());

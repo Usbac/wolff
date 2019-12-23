@@ -23,6 +23,16 @@ class Log
 
 
     /**
+     * Returns true if the log is enabled, false otherwise
+     * @return bool true if the log is enabled, false otherwise
+     */
+    public static function isEnabled()
+    {
+        return CONFIG['log_on'];
+    }
+
+
+    /**
      * Log a emergency message
      *
      * @param  string  $message the message
@@ -118,6 +128,10 @@ class Log
      */
     private static function log(string $level, string $message)
     {
+        if (!self::isEnabled()) {
+            return;
+        }
+
         $values = [
             'date'    => date(self::DATE_FORMAT),
             'ip'      => getClientIP(),

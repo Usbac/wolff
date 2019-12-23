@@ -42,9 +42,9 @@ class DB
      */
     protected static $last_stmt;
 
-    const FETCH_MODE = PDO::FETCH_ASSOC;
-    const ERROR_MODE = PDO::ERRMODE_EXCEPTION;
-    const NAMES_MODE = 'SET NAMES utf8';
+    const DEFAULT_FETCH_MODE = PDO::FETCH_ASSOC;
+    const DEFAULT_ERROR_MODE = PDO::ERRMODE_EXCEPTION;
+    const DEFAULT_NAMES_MODE = 'SET NAMES utf8';
 
 
     /**
@@ -53,9 +53,9 @@ class DB
     public function __construct()
     {
         $options = [
-            PDO::MYSQL_ATTR_INIT_COMMAND => self::NAMES_MODE,
-            PDO::ATTR_DEFAULT_FETCH_MODE => self::FETCH_MODE,
-            PDO::ATTR_ERRMODE            => self::ERROR_MODE
+            PDO::MYSQL_ATTR_INIT_COMMAND => self::DEFAULT_NAMES_MODE,
+            PDO::ATTR_DEFAULT_FETCH_MODE => self::DEFAULT_FETCH_MODE,
+            PDO::ATTR_ERRMODE            => self::DEFAULT_ERROR_MODE
         ];
 
         self::$connection = Factory::connection($options);
