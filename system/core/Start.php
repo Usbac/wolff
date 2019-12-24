@@ -7,6 +7,28 @@ use Utilities\Str;
 class Start
 {
 
+    /**
+     * The current url.
+     *
+     * @var string
+     */
+    private $url;
+
+    /**
+     * The function associated to the current url.
+     *
+     * @var object
+     */
+    private $function;
+
+    /**
+     * The controller name and its method name separated by a @,
+     * used to call it.
+     *
+     * @var string
+     */
+    private $method;
+
     const HEADER_404 = 'HTTP/1.0 404 Not Found';
 
 
@@ -15,21 +37,42 @@ class Start
      */
     public function load()
     {
-        $url = $this->getUrl();
+        $this->url = $this->getUrl();
+        $this->function = Route::getFunc($this->url);
+        $this->method = Str::before($this->url, '/') . '@' . Str::after($this->url, '/');
 
-        $this->validateAccess($url);
+        if (!Maintenance::hasAccess()) {
+            Maintenance::call();
+        }
+
         $this->initialize();
 
-        Middleware::loadBefore();
-
-        $this->loadPage($url);
-
-        Middleware::loadAfter();
+        if ($this->exists()) {
+            Middleware::loadBefore();
+            $this->loadPage();
+            Middleware::loadAfter();
+        } else {
+            self::load404();
+        }
     }
 
 
     /**
-     * Initialize some of the core classes
+     * Returns true if the current route exists, false otherwise
+     *
+     * @return  bool  true if the current route exists, false otherwise
+     */
+    private function exists()
+    {
+        return !Route::isBlocked($this->url) &&
+            (isset($this->function) ||
+            Controller::exists($this->url) ||
+            Controller::methodExists($this->method));
+    }
+
+
+    /**
+     * Initialize the core classes
      */
     private function initialize()
     {
@@ -55,45 +98,15 @@ class Start
 
     /**
      * Load the requested page
-     * This can redirect to the 404 page
-     *
-     * @param  string  $url the page url
      */
-    private function loadPage(string $url)
+    private function loadPage()
     {
-        $function = Route::getFunc($url);
-
-        if (isset($function)) {
-            Controller::closure($function);
-        } elseif (Controller::exists($url)) {
-            Controller::call($url);
-        } else {
-            $method = Str::before($url, '/') . '@' . Str::after($url, '/');
-            if (Controller::methodExists($method)) {
-                Controller::method($method);
-            } else {
-                self::load404();
-            }
-        }
-    }
-
-
-    /**
-     * Validate the client access to the page
-     * This can redirect to the maintenance or the 404 page
-     *
-     * @param  string  $url the page url
-     */
-    private function validateAccess($url)
-    {
-        //Check maintenance mode
-        if (!Maintenance::hasAccess()) {
-            Maintenance::call();
-        }
-
-        //Check blocked route
-        if (Route::isBlocked($url)) {
-            self::load404();
+        if (isset($this->function)) {
+            Controller::closure($this->function);
+        } elseif (Controller::exists($this->url)) {
+            Controller::call($this->url);
+        } elseif (Controller::methodExists($this->method)) {
+            Controller::method($this->method);
         }
     }
 

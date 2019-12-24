@@ -11,7 +11,7 @@ class Session
     /**
      * Destroy and unset the session if the live time is zero or less
      */
-    public function __construct()
+    private static function index()
     {
         if (self::hasExpired()) {
             self::empty();
@@ -25,47 +25,6 @@ class Session
         }
 
         self::unsetExpiredVariables();
-    }
-
-
-    /**
-     * Initialize all the session variables
-     */
-    private function initialize()
-    {
-        self::empty();
-
-        $_SESSION['IPaddress'] = getClientIP();
-        $_SESSION['userAgent'] = getUserAgent();
-        $_SESSION['start_time'] = microtime(true);
-        $_SESSION['vars_tmp_time'] = [];
-    }
-
-
-    /**
-     * Unset all the session variables that have expired
-     */
-    private function unsetExpiredVariables()
-    {
-
-        if (!isset($_SESSION['vars_tmp_time']) || !is_array($_SESSION['vars_tmp_time'])) {
-            $_SESSION['vars_tmp_time'] = [];
-        }
-
-        foreach ($_SESSION['vars_tmp_time'] as $key => $value) {
-            if (time() >= $value) {
-                self::unset($key);
-            }
-        }
-    }
-
-
-    /**
-     * Start the session
-     */
-    public static function start()
-    {
-        session_start();
     }
 
 
@@ -87,7 +46,7 @@ class Session
      * @return bool true if the current IP address and the userAgent are the same
      * than the IP address and userAgent of the previous connection.
      */
-    private function isValid()
+    private static function isValid()
     {
         if (!isset($_SESSION['IPaddress']) || !isset($_SESSION['userAgent'])) {
             return false;
@@ -106,7 +65,49 @@ class Session
 
 
     /**
-     * Get a session variable
+     * Initialize all the session variables
+     */
+    private static function initialize()
+    {
+        self::empty();
+
+        $_SESSION['IPaddress'] = getClientIP();
+        $_SESSION['userAgent'] = getUserAgent();
+        $_SESSION['start_time'] = microtime(true);
+        $_SESSION['vars_tmp_time'] = [];
+    }
+
+
+    /**
+     * Unset all the session variables that have expired
+     */
+    private static function unsetExpiredVariables()
+    {
+
+        if (!isset($_SESSION['vars_tmp_time']) || !is_array($_SESSION['vars_tmp_time'])) {
+            $_SESSION['vars_tmp_time'] = [];
+        }
+
+        foreach ($_SESSION['vars_tmp_time'] as $key => $value) {
+            if (time() >= $value) {
+                self::unset($key);
+            }
+        }
+    }
+
+
+    /**
+     * Starts the session and initializes everything
+     */
+    public static function start()
+    {
+        session_start();
+        self::index();
+    }
+
+
+    /**
+     * Returns a session variable
      *
      * @param  string  $key  the variable key
      *
@@ -131,7 +132,7 @@ class Session
      *
      * @param  string  $key  the variable key
      * @param  mixed  $value the variable value
-     * @param  int  $time the variable live time
+     * @param  int  $time the variable live time in minutes
      */
     public static function set(string $key, $value, int $time = null)
     {
@@ -170,7 +171,7 @@ class Session
 
 
     /**
-     * Get a live time (in minutes) of a session variable
+     * Returns a live time (in minutes) of a session variable
      *
      * @param  string  $key  the variable key
      * @param  bool  $gmdate  return the time in date format

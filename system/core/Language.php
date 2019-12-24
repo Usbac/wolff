@@ -23,20 +23,17 @@ class Language
      * @return mixed the content of a language, or false in case
      * of errors
      */
-    public static function get(string $dir, string $language = null)
+    public static function get(string $dir, string $language = CONFIG['language'])
     {
-        $language = $language ?? getLanguage();
-        $dir = Str::sanitizePath($dir);
         if (Str::contains($dir, '.')) {
             $key = Str::after($dir, '.');
             $dir = Str::before($dir, '.');
         }
 
-        $file_path = self::getPath($dir, $language);
         $data = [];
 
-        if (file_exists($file_path)) {
-            $data = (include $file_path);
+        if (self::exists($dir, $language)) {
+            $data = (include self::getPath($dir, $language));
         } else {
             Log::error(Str::interpolate(self::EXISTS_ERROR, [
                 'language' => $language,
@@ -92,9 +89,9 @@ class Language
     private static function getPath(string $dir, string $language)
     {
         return Str::interpolate(self::PATH_FORMAT, [
-            'app'       => getAppDir(),
-            'language'  => $language,
-            'dir'       => $dir
+            'app'      => CONFIG['app_dir'],
+            'language' => $language,
+            'dir'      => $dir
         ]);
     }
 
@@ -111,7 +108,7 @@ class Language
      */
     public static function exists(string $dir, string $language = CONFIG['language'])
     {
-        $file_path = self::getPath($language, Str::sanitizePath($dir));
+        $file_path = self::getPath($dir, $language);
 
         return file_exists($file_path);
     }

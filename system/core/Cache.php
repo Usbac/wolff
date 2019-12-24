@@ -5,7 +5,7 @@ namespace Core;
 class Cache
 {
 
-    const FILENAME = "tmp_%s.php";
+    const FILENAME = 'tmp_%s.php';
     const EXPIRATION_TIME = 604800; //One week
     const FOLDER_PERMISSIONS = 0755;
 
@@ -19,7 +19,7 @@ class Cache
             return;
         }
 
-        $files = glob(getCacheDir() . '*.php');
+        $files = glob(getCacheDir('*.php'));
 
         foreach ($files as $file) {
             if (self::expired($file)) {
@@ -71,7 +71,7 @@ class Cache
      */
     public static function getPath(string $dir)
     {
-        return getCacheDir() . self::getFilename($dir);
+        return getCacheDir(self::getFilename($dir));
     }
 
 
@@ -136,7 +136,7 @@ class Cache
      */
     public static function has(string $dir)
     {
-        $file_path = getCacheDir() . self::getFilename($dir);
+        $file_path = getCacheDir(self::getFilename($dir));
 
         return is_file($file_path);
     }
@@ -151,7 +151,7 @@ class Cache
      */
     public static function delete(string $dir)
     {
-        $file_path = getCacheDir() . self::getFilename($dir);
+        $file_path = getCacheDir(self::getFilename($dir));
 
         if (is_file($file_path)) {
             unlink($file_path);

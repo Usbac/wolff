@@ -10,7 +10,7 @@ class Controller
     const NAMESPACE = 'Controller\\';
     const METHOD_SEPARATOR = '@';
     const FUNCTION_FORMAT = '{controller}' . self::METHOD_SEPARATOR . '{function}';
-    const EXISTS_ERROR = "The controller class '{controller}' doesn't have a '{function}' method";
+    const EXISTS_ERROR = 'The controller class \'{controller}\' doesn\'t have a \'{function}\' method';
     const PATH_FORMAT = '{app}controllers/{dir}.php';
 
 
@@ -106,7 +106,7 @@ class Controller
     public static function getPath(string $dir)
     {
         return Str::interpolate(self::PATH_FORMAT, [
-            'app' => getAppDir(),
+            'app' => CONFIG['app_dir'],
             'dir' => $dir
         ]);
     }

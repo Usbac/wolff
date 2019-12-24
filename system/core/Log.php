@@ -152,7 +152,7 @@ class Log
     private static function writeToFile(string $data)
     {
         self::mkdir();
-        $filename = getSystemDir() . self::FOLDER_NAME . '/' . date("m-d-Y") . '.log';
+        $filename = CONFIG['system_dir'] . self::FOLDER_NAME . '/' . date('m-d-Y') . '.log';
         file_put_contents($filename, $data . PHP_EOL, FILE_APPEND);
     }
 
@@ -162,7 +162,7 @@ class Log
      */
     private static function mkdir()
     {
-        $folder_path = getSystemDir() . self::FOLDER_NAME;
+        $folder_path = CONFIG['system_dir'] . self::FOLDER_NAME;
 
         if (!file_exists($folder_path)) {
             mkdir($folder_path, self::FILE_PERMISSIONS, true);

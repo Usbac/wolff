@@ -129,7 +129,10 @@ class Response
      */
     public function redirect(string $url, int $status = null)
     {
-        $this->setCode($status);
+        if (isset($status)) {
+            $this->setCode($status);
+        }
+
         $this->url = $url;
 
         return $this;

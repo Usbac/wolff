@@ -246,7 +246,7 @@ class DB
      */
     public static function getSchema()
     {
-        $tables = self::getPdo()->query("SHOW TABLES");
+        $tables = self::getPdo()->query('SHOW TABLES');
 
         if (is_bool($tables)) {
             return false;

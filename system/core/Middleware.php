@@ -137,7 +137,7 @@ class Middleware
      */
     public static function folderExists()
     {
-        return file_exists(getAppDir() . CORE_CONFIG['middlewares_dir']);
+        return file_exists(getAppDir(CORE_CONFIG['middlewares_dir']));
     }
 
 
@@ -147,7 +147,7 @@ class Middleware
     public static function mkdir()
     {
         if (!self::folderExists()) {
-            mkdir(getAppDir() . CORE_CONFIG['middlewares_dir']);
+            mkdir(getAppDir(CORE_CONFIG['middlewares_dir']));
         }
     }
 
@@ -206,7 +206,7 @@ class Middleware
 
         //All the middlewares
         $files = glob(Str::interpolate(self::FILE_PATH, [
-            'app' => getAppDir(),
+            'app' => CONFIG['app_dir'],
             'dir' => self::ALL,
         ]));
 

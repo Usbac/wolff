@@ -102,7 +102,7 @@ class View
     public static function getPath(string $path)
     {
         return Str::interpolate(self::PATH_FORMAT, [
-            'app' => getAppDir(),
+            'app' => CONFIG['app_dir'],
             'dir' => $path
         ]);
     }
