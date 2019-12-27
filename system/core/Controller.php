@@ -8,8 +8,6 @@ class Controller
 {
 
     const NAMESPACE = 'Controller\\';
-    const METHOD_SEPARATOR = '@';
-    const FUNCTION_FORMAT = '{controller}' . self::METHOD_SEPARATOR . '{function}';
     const EXISTS_ERROR = 'The controller class \'{controller}\' doesn\'t have a \'{method}\' method';
     const PATH_FORMAT = '{app}controllers/{dir}.php';
 
