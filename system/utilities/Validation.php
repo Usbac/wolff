@@ -100,12 +100,14 @@ class Validation
 
 
     /**
-     * Returns an associative array with all the invalid values
+     * Returns an associative array with all the invalid values.
+     * This method runs the isValid method.
      *
      * @return array an associative array with all the invalid values
      */
     public function getInvalidValues()
     {
+        $this->isValid();
         return $this->invalid_values;
     }
 
@@ -152,7 +154,7 @@ class Validation
             if ($rule == 'type') {
                 if (($val == 'email' && !Str::isEmail($field)) ||
                     ($val == 'alphanumeric' && !Str::isAlphanumeric($field)) ||
-                    ($val == 'letters' && !Str::isAlpha($field)) ||
+                    ($val == 'alpha' && !Str::isAlpha($field)) ||
                     ($val == 'int' && !isInt($field)) ||
                     ($val == 'float' && !isFloat($field)) ||
                     ($val == 'bool' && !isBool($field))) {

@@ -22,8 +22,14 @@ class Start
     private $function;
 
     /**
-     * The controller name and its method name separated by a @,
-     * used to call it.
+     * The controller name.
+     *
+     * @var string
+     */
+    private $controller;
+
+    /**
+     * The controller method name.
      *
      * @var string
      */
@@ -32,15 +38,20 @@ class Start
     const HEADER_404 = 'HTTP/1.0 404 Not Found';
 
 
+    public function __construct()
+    {
+        $this->url = $this->getUrl();
+        $this->function = Route::getFunc($this->url);
+        $this->controller = Str::before($this->url, '/');
+        $this->method = Str::after($this->url, '/');
+    }
+
+
     /**
      * Start the loading of the page
      */
     public function load()
     {
-        $this->url = $this->getUrl();
-        $this->function = Route::getFunc($this->url);
-        $this->method = Str::before($this->url, '/') . '@' . Str::after($this->url, '/');
-
         if (!Maintenance::hasAccess()) {
             Maintenance::call();
         }
@@ -67,7 +78,7 @@ class Start
         return !Route::isBlocked($this->url) &&
             (isset($this->function) ||
             Controller::exists($this->url) ||
-            Controller::methodExists($this->method));
+            Controller::methodExists($this->controller, $this->method));
     }
 
 
@@ -105,8 +116,8 @@ class Start
             Controller::closure($this->function);
         } elseif (Controller::exists($this->url)) {
             Controller::call($this->url);
-        } elseif (Controller::methodExists($this->method)) {
-            Controller::method($this->method);
+        } elseif (Controller::methodExists($this->controller, $this->method)) {
+            Controller::method($this->controller, $this->method);
         }
     }
 

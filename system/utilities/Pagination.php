@@ -63,13 +63,14 @@ class Pagination
     public function __construct(int $total = 0,
                                 int $per_page = 0,
                                 int $page = 0,
-                                int $side_pages_n = 5)
+                                int $side_pages_n = 5,
+                                string $url_format)
     {
         $this->total = $total;
         $this->per_page = $per_page;
         $this->page = $page;
         $this->side_pages_n = $side_pages_n;
-        $this->url_format = '{' . self::PLACEHOLDER . '}';
+        $this->url_format = $url_format;
         $this->show_ends = true;
     }
 
@@ -103,9 +104,9 @@ class Pagination
 
 
     /**
-     * Set the total number of pages
+     * Set the total number of elements
      *
-     * @param  int  $total  the total number of pages
+     * @param  int  $total  the total number of elements
      *
      * @return Pagination this
      */
@@ -189,7 +190,7 @@ class Pagination
      *
      * @return Pagination this
      */
-    public function setSidePages(int $side_pages_n)
+    public function setSidePages(int $side_pages_n = 5)
     {
         $this->side_pages_n = $side_pages_n;
 
@@ -247,7 +248,7 @@ class Pagination
      *
      * @return Pagination this
      */
-    public function showEnds(bool $show_ends)
+    public function showEnds(bool $show_ends = true)
     {
         $this->show_ends = $show_ends;
 

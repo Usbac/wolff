@@ -33,7 +33,6 @@
       "Core\\": "system/core/",
       "Definitions\\": "system/definitions",
       "Utilities\\": "system/utilities/",
-      "Cli\\": "system/cli/",
       "App\\": "app/",
       "Middleware\\": "app/middlewares/",
       "Controller\\": "app/controllers/"

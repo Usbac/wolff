@@ -10,7 +10,7 @@ class Controller
     const NAMESPACE = 'Controller\\';
     const METHOD_SEPARATOR = '@';
     const FUNCTION_FORMAT = '{controller}' . self::METHOD_SEPARATOR . '{function}';
-    const EXISTS_ERROR = 'The controller class \'{controller}\' doesn\'t have a \'{function}\' method';
+    const EXISTS_ERROR = 'The controller class \'{controller}\' doesn\'t have a \'{method}\' method';
     const PATH_FORMAT = '{app}controllers/{dir}.php';
 
 
@@ -49,29 +49,24 @@ class Controller
      * Returns the return value of the controller's method
      * or null in case of errors
      *
-     * @param  string  $name  the controller's method name
-     * Must have the following format: controller_name@method_name
+     * @param  string  $controller_name  the controller name
+     * @param  string  $method  the controller method
      * @param  array  $params  the method arguments
      *
      * @return mixed the return value of the controller's method
      * or null in case of errors
      */
-    public static function method(string $name, array $params = [])
+    public static function method(string $controller_name, string $method, array $params = [])
     {
-        if (!($controller_name = Str::before($name, self::METHOD_SEPARATOR))) {
-            return null;
-        }
-
         $controller = Factory::controller($controller_name);
-        $function = Str::after($name, self::METHOD_SEPARATOR);
 
-        if (method_exists($controller, $function)) {
-            return call_user_func_array([$controller, $function], $params);
+        if (method_exists($controller, $method)) {
+            return call_user_func_array([$controller, $method], $params);
         }
 
         Log::error(Str::interpolate(self::EXISTS_ERROR, [
             'controller' => $controller_name,
-            'function'   => $function
+            'method'     => $method
         ]));
 
         return null;
@@ -129,15 +124,14 @@ class Controller
     /**
      * Returns true if the controller's method exists, false otherwise
      *
-     * @param  string  $dir  the directory of the controller
+     * @param  string  $controller_name  the controller name
+     * @param  string  $mthod  the controller method name
      *
      * @return boolean true if the controller's method exists, false otherwise
      */
-    public static function methodExists(string $dir)
+    public static function methodExists(string $controller_name, string $method)
     {
-        $controller = Str::before($dir, self::METHOD_SEPARATOR);
-        $method = Str::after($dir, self::METHOD_SEPARATOR);
-        $class = self::NAMESPACE . Str::pathToNamespace($controller);
+        $class = self::NAMESPACE . Str::pathToNamespace($controller_name);
 
         if (!class_exists($class)) {
             return false;
