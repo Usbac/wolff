@@ -11,7 +11,7 @@
     "issues": "https://github.com/Usbac/Wolff/issues",
     "source": "https://github.com/Usbac/Wolff",
     "wiki": "https://github.com/Usbac/Wolff/wiki",
-    "email": "Contacto@usbac.com.ve"
+    "email": "contact@getwolff.com"
   },
   "authors": [
     {
@@ -41,6 +41,5 @@
       "Middleware\\": "app/middlewares/",
       "Controller\\": "app/controllers/"
     }
-  },
-  "minimum-stability": "dev"
+  }
 }
