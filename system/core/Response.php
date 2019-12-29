@@ -51,7 +51,7 @@ class Response
      *
      * @return int the HTTP status code
      */
-    public function getStatusCode()
+    public function getCode()
     {
         return $this->status_code;
     }
@@ -111,7 +111,7 @@ class Response
      *
      * @return Response this
      */
-    public function setStatusCode(int $status = null)
+    public function setCode(int $status = null)
     {
         $this->status_code = $status;
 
@@ -129,7 +129,10 @@ class Response
      */
     public function redirect(string $url, int $status = null)
     {
-        $this->setStatusCode($status);
+        if (isset($status)) {
+            $this->setCode($status);
+        }
+
         $this->url = $url;
 
         return $this;

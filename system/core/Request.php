@@ -5,11 +5,38 @@ namespace Core;
 class Request
 {
 
-    const FIVE_YEARS_TIME = 1577880000000;
+    const FIVE_YEARS_TIME = 157680000;
     const MONTH_TIME = 2629743;
     const DAY_TIME = 86400;
     const HOUR_TIME = 3600;
     const ROOT_PATH = '/';
+    const PHP_INPUT = 'php://input';
+
+
+    /**
+     * Returns the current HTTP method
+     *
+     * @return string the current HTTP method
+     */
+    public static function getMethod()
+    {
+        return $_SERVER['REQUEST_METHOD'];
+    }
+
+
+    /**
+     * Returns true if the given HTTP method is equal to
+     * the current method, false otherwise
+     *
+     * @param  string  $method  the HTTP method to compare
+     *
+     * @return string true if the given HTTP method is equal to
+     * the current method, false otherwise
+     */
+    public static function matchesMethod(string $method)
+    {
+        return $_SERVER['REQUEST_METHOD'] === strtoupper($method);
+    }
 
 
     /**
@@ -127,6 +154,111 @@ class Request
         }
 
         unset($_POST[$key]);
+    }
+
+
+    /**
+     * Returns the PUT array or the specified value
+     *
+     * @param  string  $key  the key
+     *
+     * @return mixed the PUT array or the specified value
+     */
+    public static function put(string $key = null)
+    {
+        parse_str(file_get_contents(Self::PHP_INPUT), $_PUT);
+
+        if (!isset($key)) {
+            return $_PUT;
+        } elseif (!self::hasPost($key)) {
+            Log::notice("Undefined index '$key' for Request::put");
+        }
+
+        return $_PUT[$key] ?? null;
+    }
+
+
+    /**
+     * Returns true if the PUT variable exists, false otherwise
+     *
+     * @param  string  $key  the variable key
+     *
+     * @return bool true if the PUT variable exists, false otherwise
+     */
+    public static function hasPut(string $key = null)
+    {
+        parse_str(file_get_contents(Self::PHP_INPUT), $_PUT);
+        return array_key_exists($key, $_POST);
+    }
+
+
+   /**
+     * Returns the PATCH array or the specified value
+     *
+     * @param  string  $key  the key
+     *
+     * @return mixed the PATCH array or the specified value
+     */
+    public static function patch(string $key = null)
+    {
+        parse_str(file_get_contents(Self::PHP_INPUT), $_PATCH);
+
+        if (!isset($key)) {
+            return $_PATCH;
+        } elseif (!self::hasPatch($key)) {
+            Log::notice("Undefined index '$key' for Request::patch");
+        }
+
+        return $_PATCH[$key] ?? null;
+    }
+
+
+    /**
+     * Returns true if the PATCH variable exists, false otherwise
+     *
+     * @param  string  $key  the variable key
+     *
+     * @return bool true if the PATCH variable exists, false otherwise
+     */
+    public static function hasPatch(string $key = null)
+    {
+        parse_str(file_get_contents(Self::PHP_INPUT), $_PATCH);
+        return array_key_exists($key, $_PATCH);
+    }
+
+
+   /**
+     * Returns the DELETE array or the specified value
+     *
+     * @param  string  $key  the key
+     *
+     * @return mixed the DELETE array or the specified value
+     */
+    public static function delete(string $key = null)
+    {
+        parse_str(file_get_contents(Self::PHP_INPUT), $_DELETE);
+
+        if (!isset($key)) {
+            return $_DELETE;
+        } elseif (!self::hasDelete($key)) {
+            Log::notice("Undefined index '$key' for Request::delete");
+        }
+
+        return $_DELETE[$key] ?? null;
+    }
+
+
+    /**
+     * Returns true if the DELETE variable exists, false otherwise
+     *
+     * @param  string  $key  the variable key
+     *
+     * @return bool true if the DELETE variable exists, false otherwise
+     */
+    public static function hasDelete(string $key = null)
+    {
+        parse_str(file_get_contents(Self::PHP_INPUT), $_DELETE);
+        return array_key_exists($key, $_DELETE);
     }
 
 

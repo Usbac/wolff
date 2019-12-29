@@ -71,7 +71,7 @@ namespace {
      *  DIRECTORIES
      */
 
-    if (!function_exists('getDirectory')) {
+    if (!function_exists('getDir')) {
 
         /**
          * Returns the root directory of the project
@@ -80,13 +80,13 @@ namespace {
          *
          * @return string the root directory of the project
          */
-        function getDirectory(string $path = '')
+        function getDir(string $path = '')
         {
             return CONFIG['root_dir'] . $path;
         }
     }
 
-    if (!function_exists('getProjectDirectory')) {
+    if (!function_exists('getProjectDir')) {
 
         /**
          * Returns the root directory of the project relative to the server root
@@ -95,13 +95,13 @@ namespace {
          *
          * @return string the root directory of the project relative to the server root
          */
-        function getProjectDirectory(string $path = '')
+        function getProjectDir(string $path = '')
         {
             return substr(CONFIG['root_dir'], strlen($_SERVER['DOCUMENT_ROOT'])) . $path;
         }
     }
 
-    if (!function_exists('getSystemDirectory')) {
+    if (!function_exists('getSystemDir')) {
 
         /**
          * Returns the system directory of the project
@@ -110,13 +110,13 @@ namespace {
          *
          * @return string the system directory of the project
          */
-        function getSystemDirectory(string $path = '')
+        function getSystemDir(string $path = '')
         {
             return CONFIG['system_dir'] . $path;
         }
     }
 
-    if (!function_exists('getAppDirectory')) {
+    if (!function_exists('getAppDir')) {
 
         /**
          * Returns the app directory of the project
@@ -125,13 +125,13 @@ namespace {
          *
          * @return string the app directory of the project
          */
-        function getAppDirectory(string $path = '')
+        function getAppDir(string $path = '')
         {
             return CONFIG['app_dir'] . $path;
         }
     }
 
-    if (!function_exists('getPublicDirectory')) {
+    if (!function_exists('getPublic')) {
 
         /**
          * Returns the public directory of the project
@@ -141,28 +141,13 @@ namespace {
          *
          * @return string the public directory of the project
          */
-        function getPublicDirectory(string $path = '')
+        function getPublic(string $path = '')
         {
             return substr(CONFIG['public_dir'], strlen($_SERVER['DOCUMENT_ROOT'])) . $path;
         }
     }
 
-    if (!function_exists('getExtensionDirectory')) {
-
-        /**
-         * Returns the extension directory of the project
-         *
-         * @param  string  $path  the optional path to append
-         *
-         * @return string the extension directory of the project
-         */
-        function getExtensionDirectory(string $path = '')
-        {
-            return CONFIG['extension_dir'] . $path;
-        }
-    }
-
-    if (!function_exists('getCacheDirectory')) {
+    if (!function_exists('getCacheDir')) {
 
         /**
          * Returns the cache directory of the project
@@ -171,7 +156,7 @@ namespace {
          *
          * @return string the cache directory of the project
          */
-        function getCacheDirectory(string $path = '')
+        function getCacheDir(string $path = '')
         {
             return CONFIG['cache_dir'] . $path;
         }

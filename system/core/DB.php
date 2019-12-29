@@ -42,9 +42,9 @@ class DB
      */
     protected static $last_stmt;
 
-    const FETCH_MODE = PDO::FETCH_ASSOC;
-    const ERROR_MODE = PDO::ERRMODE_EXCEPTION;
-    const NAMES_MODE = 'SET NAMES utf8';
+    const DEFAULT_FETCH_MODE = PDO::FETCH_ASSOC;
+    const DEFAULT_ERROR_MODE = PDO::ERRMODE_EXCEPTION;
+    const DEFAULT_NAMES_MODE = 'SET NAMES utf8';
 
 
     /**
@@ -53,9 +53,9 @@ class DB
     public function __construct()
     {
         $options = [
-            PDO::MYSQL_ATTR_INIT_COMMAND => self::NAMES_MODE,
-            PDO::ATTR_DEFAULT_FETCH_MODE => self::FETCH_MODE,
-            PDO::ATTR_ERRMODE            => self::ERROR_MODE
+            PDO::MYSQL_ATTR_INIT_COMMAND => self::DEFAULT_NAMES_MODE,
+            PDO::ATTR_DEFAULT_FETCH_MODE => self::DEFAULT_FETCH_MODE,
+            PDO::ATTR_ERRMODE            => self::DEFAULT_ERROR_MODE
         ];
 
         self::$connection = Factory::connection($options);
@@ -67,9 +67,19 @@ class DB
      */
     public static function initialize()
     {
-        if (!self::$instance) {
+        if (self::isEnabled() && !self::$instance) {
             self::$instance = new self();
         }
+    }
+
+
+    /**
+     * Returns true if the database is enabled, false otherwise
+     * @return bool true if the database is enabled, false otherwise
+     */
+    public static function isEnabled()
+    {
+        return CONFIG['db_on'];
     }
 
 
@@ -143,7 +153,7 @@ class DB
      */
     public static function __callStatic($method, $args)
     {
-        return call_user_func_array(array(self::getPdo(), $method), $args);
+        return call_user_func_array([ self::getPdo(), $method], $args);
     }
 
 
@@ -199,7 +209,7 @@ class DB
 
         try {
             $result = self::getPdo()->query("SELECT 1 FROM $table LIMIT 1");
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return false;
         }
 
@@ -236,7 +246,7 @@ class DB
      */
     public static function getSchema()
     {
-        $tables = self::getPdo()->query("SHOW TABLES");
+        $tables = self::getPdo()->query('SHOW TABLES');
 
         if (is_bool($tables)) {
             return false;
@@ -297,11 +307,11 @@ class DB
      *
      * @param  string  $table  the table for the query
      * @param  string  $conditions  the select conditions
-     * @param  mixed  $args the query arguments
+     * @param  array  $args the query arguments
      *
      * @return string the query result
      */
-    public static function countAll(string $table, string $conditions = '1', $args = null)
+    public static function countAll(string $table, string $conditions = '1', array $args = null)
     {
         $table = self::escape($table);
         $result = DB::run("SELECT COUNT(*) FROM $table WHERE $conditions", $args)->first();
@@ -311,16 +321,55 @@ class DB
 
 
     /**
+     * Moves rows from one table to another, deleting the rows of the
+     * original table in the process
+     * WARNING: The conditions parameter must be manually escaped
+     * NOTE: In case of errors, the changes are completely rolled back
+     *
+     * @param  string  $ori_table  the origin table
+     * @param  string  $dest_table  the destination table
+     * @param  string  $conditions  the conditions
+     * @param  array  $args the query arguments
+     *
+     * @return bool true if the transaction has been made successfully, false otherwise
+     */
+    public static function moveRows(string $ori_table, string $dest_table, string $conditions = '1', $args = null)
+    {
+        $ori_table = self::escape($ori_table);
+        $dest_table = self::escape($dest_table);
+
+        try {
+            $insert_stat = self::getPdo()->prepare("INSERT INTO $dest_table SELECT * FROM $ori_table WHERE $conditions");
+            $delete_stat = self::getPdo()->prepare("DELETE FROM $ori_table WHERE $conditions");
+
+            self::getPdo()->beginTransaction();
+
+            $insert_stat->execute($args);
+            $delete_stat->execute($args);
+
+            self::getPdo()->commit();
+        } catch (\Exception $e) {
+            if ($pdo->inTransaction()) {
+                $pdo->rollback();
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
+    /**
      * Runs a DELETE query
      * WARNING: The conditions parameter must be manually escaped
      *
      * @param  string  $table  the table for the query
      * @param  string  $conditions  the select conditions
-     * @param  mixed  $args the query arguments
+     * @param  array  $args the query arguments
      *
      * @return array the query result as an assosiative array
      */
-    public static function deleteAll(string $table, string $conditions = '1', $args = null)
+    public static function deleteAll(string $table, string $conditions = '1', array $args = null)
     {
         $table = self::escape($table);
 
@@ -336,7 +385,7 @@ class DB
      *
      * @return array the string escaped
      */
-    private static function escape($str)
+    public static function escape($str)
     {
         return preg_replace('/[^A-Za-z0-9_]+/', '', $str);
     }

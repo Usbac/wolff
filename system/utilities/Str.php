@@ -8,7 +8,7 @@ class Str
     /**
      * Sanitize an url
      *
-     * @param  string url the url
+     * @param  string  url the url
      *
      * @return string the url sanitized
      */
@@ -21,7 +21,7 @@ class Str
     /**
      * Sanitize an email
      *
-     * @param  string email the email
+     * @param  string  email the email
      *
      * @return string the email sanitized
      */
@@ -34,7 +34,7 @@ class Str
     /**
      * Sanitize an string to integer (only numbers and +-)
      *
-     * @param  string int the integer
+     * @param  string  int the integer
      *
      * @return string the integer sanitized
      */
@@ -47,7 +47,7 @@ class Str
     /**
      * Sanitize an string to float (only numbers, fractions and +-)
      *
-     * @param  string float the float
+     * @param  string  float the float
      *
      * @return string the float sanitized
      */
@@ -60,13 +60,46 @@ class Str
     /**
      * Sanitize a path for only letters, numbers, underscores, dots and slashes
      *
-     * @param  string path the path
+     * @param  string  path the path
      *
      * @return string the path sanitized
      */
     public static function sanitizePath(string $path)
     {
         return preg_replace('/[^a-zA-Z0-9_\-\/. ]/', '', $path);
+    }
+
+
+    /**
+     * Returns a friendly url string based on the given string.
+     *
+     * @param  string  str the original string
+     *
+     * @return string the url friendly string
+     */
+    public static function slug(string $str)
+    {
+        $chars = [
+            'Š'=>'S', 'š'=>'s', 'Đ'=>'Dj', 'đ'=>'dj', 'Ž'=>'Z', 'ž'=>'z', 'Č'=>'C', 'č'=>'c', 'Ć'=>'C', 'ć'=>'c',
+            'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A', 'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E',
+            'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I', 'Ï'=>'I', 'Ñ'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O',
+            'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ù'=>'U', 'Ú'=>'U', 'Û'=>'U', 'Ü'=>'U', 'Ý'=>'Y', 'Þ'=>'B', 'ß'=>'Ss',
+            'à'=>'a', 'á'=>'a', 'â'=>'a', 'ã'=>'a', 'ä'=>'a', 'å'=>'a', 'æ'=>'a', 'ç'=>'c', 'è'=>'e', 'é'=>'e',
+            'ê'=>'e', 'ë'=>'e', 'ì'=>'i', 'í'=>'i', 'î'=>'i', 'ï'=>'i', 'ð'=>'o', 'ñ'=>'n', 'ò'=>'o', 'ó'=>'o',
+            'ô'=>'o', 'õ'=>'o', 'ö'=>'o', 'ø'=>'o', 'ù'=>'u', 'ú'=>'u', 'û'=>'u', 'ý'=>'y', 'ý'=>'y', 'þ'=>'b',
+            'ÿ'=>'y', 'Ŕ'=>'R', 'ŕ'=>'r', '/' => '-', ' ' => '-'
+        ];
+
+        //Trim whitespaces and change special characters by their normal counterpart
+        $str = strtr(trim($str), $chars);
+
+        //Remove remaining special characters
+        $str = preg_replace('/[^a-zA-Z0-9-]+/', '-', $str);
+
+        //Remove followed and duplicated hyphen characters
+        $str = preg_replace('/-{2,}/', '-', $str);
+
+        return strtolower($str);
     }
 
 
@@ -81,6 +114,51 @@ class Str
     public static function token(int $length = 16)
     {
         return bin2hex(random_bytes($length / 2));
+    }
+
+
+    /**
+     * Returns true if the given string is a valid email,
+     * false otherwise
+     *
+     * @param  string  email the email string
+     *
+     * @return bool Returns true if the given string is a valid email,
+     * false otherwise
+     */
+    public static function isEmail(string $email)
+    {
+        return filter_var($email, FILTER_VALIDATE_EMAIL);
+    }
+
+
+    /**
+     * Returns true if the given string contains only
+     * alphanumeric characters and whitespaces, false otherwise
+     *
+     * @param  string  str the string
+     *
+     * @return bool Returns true if the given string contains only
+     * alphanumeric characters and whitespaces, false otherwise
+     */
+    public static function isAlphanumeric(string $str)
+    {
+        return preg_match('/[A-Za-z0-9 ]+$/', $str);
+    }
+
+
+    /**
+     * Returns true if the given string contains only
+     * letters and whitespaces, false otherwise
+     *
+     * @param  string  str the string
+     *
+     * @return bool Returns true if the given string contains only
+     * letters and whitespaces, false otherwise
+     */
+    public static function isAlpha(string $str)
+    {
+        return preg_match('/[A-Za-z ]+$/', $str);
     }
 
 
@@ -211,29 +289,41 @@ class Str
 
 
     /**
-     * Returns everything after the specified substring
+     * Returns everything after the specified substring,
+     * or false if the substring is not in the string.
      *
      * @param  string  $str  the string
      * @param  string  $needle  substring
      *
-     * @return string a string with everything after the specified substring in it
+     * @return string a string with everything after the specified substring,
+     * or false if the substring is not in the string.
      */
     public static function after(string $str, string $needle)
     {
+        if (!self::contains($str, $needle)) {
+            return false;
+        }
+
         return substr($str, strpos($str, $needle) + strlen($needle));
     }
 
 
     /**
-     * Returns everything before the specified substring
+     * Returns everything before the specified substring,
+     * or false if the substring is not in the string.
      *
      * @param  string  $str  the string
      * @param  string  $needle  the substring
      *
-     * @return string a string with everything before the specified substring in it
+     * @return string a string with everything before the specified substring,
+     * or false if the substring is not in the string.
      */
     public static function before(string $str, string $needle)
     {
+        if (!self::contains($str, $needle)) {
+            return false;
+        }
+
         return substr($str, 0, strpos($str, $needle));
     }
 

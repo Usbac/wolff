@@ -1,8 +1,1 @@
-/vendor/
-/cache/
-/app/
-/public/
-/system/definitions/
-/system/log/
 composer.lock
-.htaccess

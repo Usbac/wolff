@@ -8,32 +8,42 @@ class Start
 {
 
     /**
-     * Loader.
+     * The current url.
      *
-     * @var Core\Loader
+     * @var string
      */
-    public $load;
+    private $url;
 
     /**
-     * Template manager.
+     * The function associated to the current url.
      *
-     * @var Core\Template
+     * @var object
      */
-    public $template;
+    private $function;
 
     /**
-     * Session manager.
+     * The controller name.
      *
-     * @var Core\Session
+     * @var string
      */
-    public $session;
+    private $controller;
+
+    /**
+     * The controller method name.
+     *
+     * @var string
+     */
+    private $method;
+
+    const HEADER_404 = 'HTTP/1.0 404 Not Found';
 
 
     public function __construct()
     {
-        $this->template = Factory::template();
-        $this->session = Factory::session();
-        $this->load = Factory::loader();
+        $this->url = $this->getUrl();
+        $this->function = Route::getFunc($this->url);
+        $this->controller = Str::before($this->url, '/');
+        $this->method = Str::after($this->url, '/');
     }
 
 
@@ -42,23 +52,40 @@ class Start
      */
     public function load()
     {
-        $url = $this->getUrl();
+        if (!Maintenance::hasAccess()) {
+            Maintenance::call();
+        }
 
-        $this->validateAccess($url);
         $this->initialize();
 
-        Extension::loadBefore();
-
-        $this->loadPage($url);
-
-        Extension::loadAfter();
+        if ($this->exists()) {
+            Middleware::loadBefore();
+            $this->loadPage();
+            Middleware::loadAfter();
+        } else {
+            self::load404();
+        }
     }
 
 
     /**
-     * Initialize some of the core classes
+     * Returns true if the current route exists, false otherwise
+     *
+     * @return  bool  true if the current route exists, false otherwise
      */
-    public function initialize()
+    private function exists()
+    {
+        return !Route::isBlocked($this->url) &&
+            (isset($this->function) ||
+            Controller::exists($this->url) ||
+            Controller::methodExists($this->controller, $this->method));
+    }
+
+
+    /**
+     * Initialize the core classes
+     */
+    private function initialize()
     {
         DB::initialize();
         Cache::initialize();
@@ -70,9 +97,10 @@ class Start
      *
      * @return  string  the current url processed
      */
-    public function getUrl()
+    private function getUrl()
     {
-        $url = Request::hasGet('url')? Request::get('url') : getMainPage();
+        $url = Request::hasGet('url') ?
+            Request::get('url') : getMainPage();
         $url = Str::sanitizeUrl($url);
 
         return Route::getRedirection($url) ?? $url;
@@ -81,41 +109,28 @@ class Start
 
     /**
      * Load the requested page
-     * This can redirect to the 404 page
-     *
-     * @param  string  $url the page url
      */
-    public function loadPage(string $url)
+    private function loadPage()
     {
-        $function = Route::get($url);
-
-        if (isset($function)) {
-            $this->load->closure($function);
-        } elseif (controllerExists($url) || functionExists($url)) {
-            $this->load->controller($url);
-        } else {
-            $this->load->redirect404();
+        if (isset($this->function)) {
+            Controller::closure($this->function);
+        } elseif (Controller::exists($this->url)) {
+            Controller::call($this->url);
+        } elseif (Controller::methodExists($this->controller, $this->method)) {
+            Controller::method($this->controller, $this->method);
         }
     }
 
 
     /**
-     * Validate the client access to the page
-     * This can redirect to the maintenance or the 404 page
-     *
-     * @param  string  $url the page url
+     * Load the 404 page
+     * Warning: This method stops the current script
      */
-    public function validateAccess($url)
+    public function load404()
     {
-        //Check maintenance mode
-        if (!Maintenance::hasAccess()) {
-            $this->load->maintenance();
-        }
-
-        //Check blocked route
-        if (Route::isBlocked($url)) {
-            $this->load->redirect404();
-        }
+        header(self::HEADER_404);
+        Controller::call(CORE_CONFIG['controller_404']);
+        exit;
     }
 
 }

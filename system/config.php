@@ -1,12 +1,17 @@
 <?php
 
 define('CORE_CONFIG', [
-    'version' => '1.10',
-    'start'   => microtime(true),
+    //General
+    'version'      => '2.0',
+    'start'        => microtime(true),
+    'views_format' => 'wlf',
 
-    'views_folder'     => 'views',
-    'languages_folder' => 'languages',
+    //Folders
+    'views_dir'       => 'views',
+    'middlewares_dir' => 'middlewares',
+    'languages_dir'   => 'languages',
 
-    'maintenance_controller' => '_maintenance',
-    '404_controller'         => '_404',
+    //Default controllers
+    'controller_maintenance' => '_maintenance',
+    'controller_404'         => '_404',
 ]);

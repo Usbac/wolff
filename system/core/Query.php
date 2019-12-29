@@ -52,7 +52,7 @@ class Query
      */
     public function first(string $column = null)
     {
-        $first = $this->get()[0] ?? null;
+        $first = $this->get()[0];
         if (isset($column, $first)) {
             return $first[$column];
         }
@@ -75,7 +75,7 @@ class Query
         //Only one column to pick
         if (count($columns) == 1) {
             foreach($result as $row) {
-                if (is_string($columns[0]) && array_key_exists($columns[0], $row)) {
+                if (array_key_exists($columns[0], $row)) {
                     $rows[] = $row[$columns[0]];
                 }
             }
@@ -87,7 +87,7 @@ class Query
         foreach($result as $row) {
             $new_row = [];
             foreach ($columns as $column) {
-                if (is_string($column) && array_key_exists($column, $row)) {
+                if (array_key_exists($column, $row)) {
                     $new_row[$column] = $row[$column];
                 }
             }

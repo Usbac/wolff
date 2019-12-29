@@ -26,7 +26,7 @@ class Template
         'echo'      => '/' . self::NOT_RAW . '\{\{( ?){1,}(.*?)( ?){1,}\}\}/',
         'tag'       => '/' . self::NOT_RAW . '\{%( ?){1,}(.*?)( ?){1,}%\}/',
         'function'  => '/' . self::NOT_RAW . '{func}( ?){1,}\|([^\}!]{1,})/',
-        'include'   => '/' . self::NOT_RAW . '@load\(( |\'?){1,}(.*)(.php|.html)( |\'?){1,}\)/',
+        'include'   => '/' . self::NOT_RAW . '@load\(( |\'?){1,}(.*)( |\'?){1,}\)/',
 
         'if'     => '/' . self::NOT_RAW . '\{(\s?){1,}(.*)\?(\s?){1,}\}/',
         'endif'  => '/' . self::NOT_RAW . '\{\?\}/',
@@ -34,15 +34,8 @@ class Template
         'elseif' => '/' . self::NOT_RAW . '\{(\s?){1,}else(\s?){1,}(.*)(\s?){1,}\}/',
 
         'for'        => '/' . self::NOT_RAW . '\{( ?){1,}for( ){1,}(.*)( ){1,}in( ){1,}\((.*)( ?){1,},( ?){1,}(.*)( ?){1,}\)( ?){1,}\}/',
-        'endfor'     => '/' . self::NOT_RAW . '\{( ?){1,}for( ?){1,}\}/',
-        'foreach'    => '/' . self::NOT_RAW . '\{( ?){1,}foreach( ?){1,}(.*)( ?){1,}as( ?){1,}(.*)( ?){1,}\}/',
-        'endforeach' => '/' . self::NOT_RAW . '\{( ?){1,}foreach( ?){1,}\}/',
+        'endfor'     => '/' . self::NOT_RAW . '\{( ?){1,}endfor( ?){1,}\}/'
     ];
-
-
-    public function __construct()
-    {
-    }
 
 
     /**
@@ -63,34 +56,9 @@ class Template
      * @param  array  $data  the data array present in the view
      * @param  bool  $cache  use or not the cache system
      */
-    public function get(string $dir, array $data, bool $cache)
+    public static function render(string $dir, array $data, bool $cache)
     {
-        //Variables in data array
-        if (is_array($data)) {
-            extract($data);
-            unset($data);
-        }
-
-        $content = $this->getContent($dir);
-
-        if ($content === false) {
-            return false;
-        }
-
-        if ($this->isEnabled()) {
-            $content = $this->replaceAll($content);
-        }
-
-        //Cache system
-        if ($cache && Cache::isEnabled()) {
-            include(Cache::set($dir, $content));
-        } else {
-            $temp = tmpfile();
-            fwrite($temp, $content);
-            include(stream_get_meta_data($temp)['uri']);
-            fclose($temp);
-        }
-
+        echo self::getRender($dir, $data, $cache);
     }
 
 
@@ -104,37 +72,37 @@ class Template
      *
      * @return string the view content rendered or false in case of errors.
      */
-    public function render(string $dir, array $data, bool $cache)
+    public static function getRender(string $dir, array $data, bool $cache)
     {
+        $content = '';
+
+        if (!($cache && Cache::isEnabled() && Cache::has($dir)) &&
+            ($content = self::getContent($dir)) === false) {
+            return false;
+        }
+
         //Variables in data array
         if (is_array($data)) {
             extract($data);
             unset($data);
         }
 
-        $content = $this->getContent($dir);
-
-        if ($content === false) {
-            return false;
-        }
-
-        if ($this->isEnabled()) {
-            $content = $this->replaceAll($content);
-        }
-
         ob_start();
 
         //Cache system
         if ($cache && Cache::isEnabled()) {
+            $content = Cache::has($dir) ?
+                Cache::getContent($dir) : self::replaceAll(self::getContent($dir));
+
             include(Cache::set($dir, $content));
         } else {
-            $temp = tmpfile();
-            fwrite($temp, $content);
-            include(stream_get_meta_data($temp)['uri']);
-            fclose($temp);
+            $tmp_file = tmpfile();
+            fwrite($tmp_file, self::replaceAll($content));
+            include(stream_get_meta_data($tmp_file)['uri']);
+            fclose($tmp_file);
         }
 
-        $rendered_content = ob_get_contents(); 
+        $rendered_content = ob_get_contents();
         ob_end_clean();
 
         return $rendered_content;
@@ -142,28 +110,35 @@ class Template
 
 
     /**
-     * Apply the template format over a view content and return it
+     * Returns the view content with the template format applied
+     * or false if it doesn't exists
      *
      * @param  string  $dir  the view directory
      * @param  array  $data  the data array present in the view
      *
-     * @return string|bool the view content or false if it doesn't exists
+     * @return string|bool the view content with the template format applied
+     * or false if it doesn't exists
      */
-    public function getView(string $dir, array $data)
+    public static function get(string $dir, array $data, bool $cache)
     {
+        $content = '';
+
+        if (!($cache && Cache::isEnabled() && Cache::has($dir)) &&
+            ($content = self::getContent($dir)) === false) {
+            return false;
+        }
+
         //Variables in data array
         if (is_array($data)) {
             extract($data);
             unset($data);
         }
 
-        $content = $this->getContent($dir);
-
-        if ($content === false) {
-            return false;
+        if ($cache && Cache::isEnabled() && Cache::has($dir)) {
+            return Cache::getContent($dir);
         }
 
-        return $this->replaceAll($content);
+        return self::replaceAll($content);
     }
 
 
@@ -174,14 +149,12 @@ class Template
      *
      * @return string|bool the view content or false if it doesn't exists
      */
-    private function getContent($dir)
+    private static function getContent($dir)
     {
-        $file_path = getAppDirectory() . CORE_CONFIG['views_folder'] . '/' . $dir;
+        $file_path = View::getPath($dir);
 
-        if (file_exists($file_path . '.php')) {
-            return file_get_contents($file_path . '.php');
-        } elseif (file_exists($file_path . '.html')) {
-            return file_get_contents($file_path . '.html');
+        if (file_exists($file_path)) {
+            return file_get_contents($file_path);
         } else {
             Log::error("View '$dir' doesn't exists");
 
@@ -211,7 +184,7 @@ class Template
      *
      * @return string the view content with the custom templates formatted
      */
-    private function replaceCustom(string $content) {
+    private static function replaceCustom(string $content) {
         if (empty(self::$templates)) {
             return $content;
         }
@@ -231,17 +204,17 @@ class Template
      *
      * @return string the view content with the template replaced
      */
-    private function replaceAll(string $content)
+    private static function replaceAll(string $content)
     {
-        $content = $this->replaceIncludes($content);
-        $content = $this->replaceImports($content);
-        $content = $this->replaceComments($content);
-        $content = $this->replaceFunctions($content);
-        $content = $this->replaceTags($content);
-        $content = $this->replaceConditionals($content);
-        $content = $this->replaceCustom($content);
-        $content = $this->replaceCycles($content);
-        $content = $this->replaceRaws($content);
+        $content = self::replaceIncludes($content);
+        $content = self::replaceImports($content);
+        $content = self::replaceComments($content);
+        $content = self::replaceFunctions($content);
+        $content = self::replaceTags($content);
+        $content = self::replaceConditionals($content);
+        $content = self::replaceCustom($content);
+        $content = self::replaceCycles($content);
+        $content = self::replaceRaws($content);
 
         return $content;
     }
@@ -254,13 +227,13 @@ class Template
      *
      * @return string the view content with the includes formatted
      */
-    private function replaceIncludes($content)
+    private static function replaceIncludes($content)
     {
         preg_match_all(self::FORMAT['include'], $content, $matches, PREG_OFFSET_CAPTURE);
 
         foreach ($matches[1] as $key => $value) {
             $filename = Str::sanitizePath($matches[2][$key][0]);
-            $content = str_replace($matches[0][$key][0], $this->getContent($filename), $content);
+            $content = str_replace($matches[0][$key][0], self::getContent($filename), $content);
         }
 
         return $content;
@@ -274,7 +247,7 @@ class Template
      *
      * @return string the view content with the import tags formatted
      */
-    private function replaceImports($content)
+    private static function replaceImports($content)
     {
         $content = preg_replace(self::FORMAT['style'], '<link rel="stylesheet" type="text/css" href=$4/>', $content);
         $content = preg_replace(self::FORMAT['script'], '<script type="text/javascript" src=$4></script>', $content);
@@ -291,7 +264,7 @@ class Template
      *
      * @return string the view content with the functions formatted
      */
-    private function replaceFunctions($content)
+    private static function replaceFunctions($content)
     {
         $func = '{func}';
 
@@ -334,7 +307,7 @@ class Template
      *
      * @return string the view content with the tags formatted
      */
-    private function replaceTags($content)
+    private static function replaceTags($content)
     {
         $content = preg_replace(self::FORMAT['echo'], '<?php echo htmlspecialchars($2, ENT_QUOTES) ?>', $content);
         $content = preg_replace(self::FORMAT['plainecho'], '<?php echo $2 ?>', $content);
@@ -351,7 +324,7 @@ class Template
      *
      * @return string the view content with the conditionals formatted
      */
-    private function replaceConditionals($content)
+    private static function replaceConditionals($content)
     {
         $content = preg_replace(self::FORMAT['endif'], '<?php endif; ?>', $content);
         $content = preg_replace(self::FORMAT['if'], '<?php if ($2): ?>', $content);
@@ -369,14 +342,11 @@ class Template
      *
      * @return string the view content with the cycles formatted
      */
-    private function replaceCycles($content)
+    private static function replaceCycles($content)
     {
         //For
         $content = preg_replace(self::FORMAT['for'], '<?php for (\$$3=$6; \$$3 <= $9; \$$3++): ?>', $content);
         $content = preg_replace(self::FORMAT['endfor'], '<?php endfor; ?>', $content);
-        //Foreach
-        $content = preg_replace(self::FORMAT['foreach'], '<?php foreach ($3 as $6): ?>', $content);
-        $content = preg_replace(self::FORMAT['endforeach'], '<?php endforeach; ?>', $content);
 
         return $content;
     }
@@ -389,7 +359,7 @@ class Template
      *
      * @return string the view content without the comments
      */
-    private function replaceComments($content)
+    private static function replaceComments($content)
     {
         return preg_replace(self::FORMAT['comment'], '', $content);
     }
@@ -402,7 +372,7 @@ class Template
      *
      * @return string the view content with the raw tag removed from the rest of the tags
      */
-    private function replaceRaws($content)
+    private static function replaceRaws($content)
     {
         foreach (self::FORMAT as $format) {
             $format = trim($format, '/');

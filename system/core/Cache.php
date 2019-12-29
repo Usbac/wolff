@@ -5,14 +5,9 @@ namespace Core;
 class Cache
 {
 
-    const FILENAME = "tmp_%s.php";
+    const FILENAME = 'tmp_%s.php';
     const EXPIRATION_TIME = 604800; //One week
     const FOLDER_PERMISSIONS = 0755;
-
-
-    public function __construct()
-    {
-    }
 
 
     /**
@@ -24,7 +19,7 @@ class Cache
             return;
         }
 
-        $files = glob(getCacheDirectory() . '*.php');
+        $files = glob(getCacheDir('*.php'));
 
         foreach ($files as $file) {
             if (self::expired($file)) {
@@ -45,15 +40,38 @@ class Cache
 
 
     /**
+     * Returns the content of the cache file,
+     * or false in case of errors
+     *
+     * @param  string  $dir  the cache filename
+     *
+     * @return string return the content of the cache file,
+     * or false in case of errors
+     */
+    public static function getContent(string $dir)
+    {
+        $file_path = self::getPath($dir);
+
+        if (file_exists($file_path)) {
+            return file_get_contents($file_path);
+        } else {
+            Log::error("Cache '$dir' doesn't exists");
+
+            return false;
+        }
+    }
+
+
+    /**
      * Return the specified cache file path
      *
      * @param  string  $dir  the cache filename
      *
      * @return string return the specified cache file path
      */
-    public static function get(string $dir)
+    public static function getPath(string $dir)
     {
-        return getCacheDirectory() . self::getFilename($dir);
+        return getCacheDir(self::getFilename($dir));
     }
 
 
@@ -67,11 +85,10 @@ class Cache
      */
     public static function set(string $dir, string $content)
     {
-        $file_path = self::get($dir);
-
-        self::mkdir();
+        $file_path = self::getPath($dir);
 
         if (!file_exists($file_path)) {
+            self::mkdir();
             $file = fopen($file_path, 'w');
             fwrite($file, $content);
             fclose($file);
@@ -103,7 +120,7 @@ class Cache
      */
     public static function mkdir()
     {
-        $folder_path = getCacheDirectory();
+        $folder_path = getCacheDir();
         if (!file_exists($folder_path)) {
             mkdir($folder_path, self::FOLDER_PERMISSIONS, true);
         }
@@ -119,7 +136,7 @@ class Cache
      */
     public static function has(string $dir)
     {
-        $file_path = getCacheDirectory() . self::getFilename($dir);
+        $file_path = getCacheDir(self::getFilename($dir));
 
         return is_file($file_path);
     }
@@ -134,7 +151,7 @@ class Cache
      */
     public static function delete(string $dir)
     {
-        $file_path = getCacheDirectory() . self::getFilename($dir);
+        $file_path = getCacheDir(self::getFilename($dir));
 
         if (is_file($file_path)) {
             unlink($file_path);
@@ -153,7 +170,7 @@ class Cache
      */
     public static function clear()
     {
-        return deleteFilesInDir(getCacheDirectory());
+        return deleteFilesInDir(getCacheDir());
     }
 
 

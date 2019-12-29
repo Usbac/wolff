@@ -19,23 +19,10 @@ namespace {
         }
     }
 
-    if (!function_exists('println')) {
-
-        /**
-         * Print a string with a new line
-         *
-         * @param $str the string to print
-         */
-        function println($str = '')
-        {
-            echo "$str\n";
-        }
-    }
-
     if (!function_exists('printr')) {
 
         /**
-         * Print an array in a nice looking way
+         * Print the given arrays in a nice looking way
          */
         function printr()
         {
@@ -52,13 +39,18 @@ namespace {
     if (!function_exists('printrd')) {
 
         /**
-         * Print an array in a nice looking way and die
-         *
-         * @param  array  $array  the array to print
+         * Print the given arrays in a nice looking way and die
          */
-        function printrd(array $array)
+        function printrd()
         {
-            printr($array);
+            $args = func_get_args();
+
+            echo "<pre>";
+            foreach ($args as $arg) {
+                print_r($arg);
+            }
+            echo "</pre>";
+
             die();
         }
     }
@@ -110,7 +102,7 @@ namespace {
     }
 
     if (!function_exists('isJson')) {
-        
+
         /**
          * Returns true if the given string is a Json, false otherwise
          *
@@ -127,7 +119,7 @@ namespace {
     }
 
     if (!function_exists('toArray')) {
-        
+
         /**
          * Returns the given variable as an associative array
          *
@@ -144,14 +136,14 @@ namespace {
                     $obj = json_decode($obj);
                 }
             }
-    
+
             $new = [];
-            
+
             //Object
             if (is_object($obj)) {
                 $obj = (array) $obj;
             }
-            
+
             //Array
             if (is_array($obj)) {
                 foreach($obj as $key => $val) {
@@ -160,26 +152,8 @@ namespace {
             } else {
                 $new = $obj;
             }
-    
-            return $new;       
-        }
-    }
 
-    if (!function_exists('getLocalUrl')) {
-
-        /**
-         * Returns the complete url relative to the local site
-         *
-         * @param  string  $url  the url to redirect to
-         *
-         * @return string the complete url relative to the local site
-         */
-        function getLocalUrl(string $url = '')
-        {
-            $http = (isset($_SERVER['HTTPS']) ? 'https' : 'http') . '://';
-            $directory = str_replace('\\', '/', getProjectDirectory());
-
-            return $http . $_SERVER['HTTP_HOST'] . $directory . $url;
+            return $new;
         }
     }
 
@@ -194,7 +168,29 @@ namespace {
          */
         function url(string $url = '')
         {
-            return getLocalUrl($url);
+            $http = (isset($_SERVER['HTTPS']) ? 'https' : 'http') . '://';
+            $directory = str_replace('\\', '/', getProjectDir());
+
+            if (substr($directory, -1) != '/' && substr($url, 0, 1) != '/') {
+                $directory .= '/';
+            }
+
+            return $http . $_SERVER['HTTP_HOST'] . $directory . $url;
+        }
+    }
+
+    if (!function_exists('local')) {
+
+        /**
+         * Returns true if the current script is running in localhost,
+         * false otherwise
+         *
+         * @return bool true if the current script is running in localhost,
+         * false otherwise
+         */
+        function local()
+        {
+            return in_array($_SERVER['REMOTE_ADDR'], [ '127.0.0.1', '::1' ]);
         }
     }
 
@@ -295,7 +291,7 @@ namespace {
          */
         function getCurrentPage()
         {
-            return substr($_SERVER['REQUEST_URI'], strlen(getProjectDirectory()));
+            return substr($_SERVER['REQUEST_URI'], strlen(getProjectDir()));
         }
     }
 
@@ -358,6 +354,47 @@ namespace {
                     unlink($file);
                 }
             }
+        }
+    }
+
+    if (!function_exists('isInt')) {
+
+        /**
+         * Returns true if the given variable
+         * complies with an int, false otherwise
+         *
+         * @param  mixed  $int  the variable
+         */
+        function isInt($int) {
+            return filter_var($int, FILTER_VALIDATE_INT) !== false;
+        }
+    }
+
+    if (!function_exists('isFloat')) {
+
+        /**
+         * Returns true if the given variable
+         * complies with an float, false otherwise
+         *
+         * @param  mixed  $float  the variable
+         */
+        function isFloat($float) {
+            return filter_var($float, FILTER_VALIDATE_FLOAT) !== false;
+        }
+    }
+
+    if (!function_exists('isBool')) {
+
+        /**
+         * Returns true if the given variable complies with an boolean,
+         * false otherwise
+         * Only the numeric values 1 and 0, and the strings
+         * 'true', 'false', '1' and '0' are counted as boolean.
+         *
+         * @param  mixed  $bool  the variable
+         */
+        function isBool($bool) {
+            return in_array(strval($bool), ['true', 'false', '1', '0']);
         }
     }
 

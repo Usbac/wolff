@@ -2,16 +2,16 @@
   "name": "usbac/wolff-framework",
   "description": "Ridiculously small PHP framework",
   "keywords": [
-    "framework", "php", "small", "web", "apps", "fast"
+    "framework", "php", "small", "web", "apps", "fast", "full", "db"
   ],
   "type": "project",
-  "version": "1.10",
+  "version": "2.0",
   "license": "MIT",
   "support": {
     "issues": "https://github.com/Usbac/Wolff/issues",
     "source": "https://github.com/Usbac/Wolff",
     "wiki": "https://github.com/Usbac/Wolff/wiki",
-    "email": "Contacto@usbac.com.ve"
+    "email": "contact@getwolff.com"
   },
   "authors": [
     {
@@ -27,16 +27,14 @@
     "files": [
       "system/config.php",
       "system/stdlib/config.php",
-      "system/stdlib/pages.php",
       "system/stdlib/utilities.php"
     ],
     "psr-4": {
       "Core\\": "system/core/",
       "Definitions\\": "system/definitions",
       "Utilities\\": "system/utilities/",
-      "Cli\\": "system/cli/",
       "App\\": "app/",
-      "Extension\\": "app/extensions/",
+      "Middleware\\": "app/middlewares/",
       "Controller\\": "app/controllers/"
     }
   }
