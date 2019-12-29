@@ -2,7 +2,7 @@
   "name": "usbac/wolff-framework",
   "description": "Ridiculously small PHP framework",
   "keywords": [
-    "framework", "php", "small", "web", "apps", "fast"
+    "framework", "php", "small", "web", "apps", "fast", "full", "db"
   ],
   "type": "project",
   "version": "2.0",
@@ -11,7 +11,7 @@
     "issues": "https://github.com/Usbac/Wolff/issues",
     "source": "https://github.com/Usbac/Wolff",
     "wiki": "https://github.com/Usbac/Wolff/wiki",
-    "email": "Contacto@usbac.com.ve"
+    "email": "contact@getwolff.com"
   },
   "authors": [
     {

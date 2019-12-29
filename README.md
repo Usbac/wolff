@@ -27,7 +27,7 @@ Wolff is small, fast, scalable and easy. The perfect solution for building small
 
 * **Simple**: It’s not only small, but simple as well; with a clean documentation and easy way to use.
 
-* **Extensible**: Take advantage of the custom middlewares and templates you can make in Wolff to expand your page.
+* **Extensible**: Take advantage of the custom middlewares, functions and templates you can make in Wolff to expand your page.
 
 * **Clean**: The routes system allows you to have clean and friendly URLs, and the template system makes the php code cleaner while separating the logic from the view.
 
