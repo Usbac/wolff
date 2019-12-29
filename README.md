@@ -9,7 +9,7 @@
 <h4 align="center">Ridiculously small PHP framework.</h4>
 
 <p align="center">
-<img src="https://img.shields.io/badge/stability-stable-green.svg"> <img src="https://img.shields.io/badge/version-1.10-blue.svg"> <img src="https://img.shields.io/badge/license-MIT-orange.svg">
+<img src="https://img.shields.io/badge/stability-stable-green.svg"> <img src="https://img.shields.io/badge/version-2.0-blue.svg"> <img src="https://img.shields.io/badge/license-MIT-orange.svg">
 </p>
 
 Wolff is a ridiculously small and lightweight PHP framework with useful functions and utilities like a route, template, extensions and language system.
@@ -27,7 +27,7 @@ Wolff is small, fast, scalable and easy. The perfect solution for building small
 
 * **Simple**: It’s not only small, but simple as well; with a clean documentation and easy way to use.
 
-* **Extensible**: Take advantage of the custom extensions and templates you can make in Wolff to expand your page.
+* **Extensible**: Take advantage of the custom middlewares, functions and templates you can make in Wolff to expand your page.
 
 * **Clean**: The routes system allows you to have clean and friendly URLs, and the template system makes the php code cleaner while separating the logic from the view.
 
@@ -47,17 +47,11 @@ Wolff is small, fast, scalable and easy. The perfect solution for building small
 
 * **Session**: Have cleaner code using the session class instead of managing the php session variables directly.
 
-* **Extension**: An useful and descriptive extension system which gives you more control over your site.
+* **Middleware**: An useful and descriptive middleware system which gives you more control over your site.
 
 * **Language**: For managing multiple languages easily and quickly.
 
 And more...
-
-## CLI
-
-Take advantage of the [CLI](https://github.com/Usbac/wolff/wiki/CLI) application of Wolff named Wolffie to do a lot of tasks in a fast and easy way using short commands.
-
-With it you can create extensions, routes, export queries to csv files, look at the available pages, change the project configuration, delete elements like controllers, languages and much more.
 
 
 ## Requirements

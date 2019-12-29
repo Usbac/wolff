@@ -5,13 +5,13 @@
     "framework", "php", "small", "web", "apps", "fast", "full", "db"
   ],
   "type": "project",
-  "version": "1.10",
+  "version": "2.0",
   "license": "MIT",
   "support": {
     "issues": "https://github.com/Usbac/Wolff/issues",
     "source": "https://github.com/Usbac/Wolff",
     "wiki": "https://github.com/Usbac/Wolff/wiki",
-    "email": "Contacto@usbac.com.ve"
+    "email": "contact@getwolff.com"
   },
   "authors": [
     {
@@ -22,14 +22,14 @@
   ],
   "require": {
     "php": ">=7.0.0",
-    "usbac/wolff-framework": "~1.10"
+    "usbac/wolff-framework": "~2.0"
   },
   "autoload": {
     "files": [
       "system/config.php",
       "system/definitions/Routes.php",
       "system/definitions/Utilities.php",
-      "system/definitions/Extensions.php",
+      "system/definitions/Middlewares.php",
       "system/definitions/Templates.php"
     ],
     "psr-4": {
@@ -38,7 +38,7 @@
       "Utilities\\": "system/utilities/",
       "Cli\\": "system/cli/",
       "App\\": "app/",
-      "Extension\\": "app/extensions/",
+      "Middleware\\": "app/middlewares/",
       "Controller\\": "app/controllers/"
     }
   }

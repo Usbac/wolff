@@ -2,16 +2,15 @@
 
 namespace Controller;
 
-use Core\Controller;
+use Core\{Controller, Language, View};
 
-Class _404 extends Controller
+class _404 extends Controller
 {
 
     public function index()
     {
-        $this->data['lang'] = $this->load->language('404');
-
-        $this->load->view('404', $this->data);
+        $data['lang'] = Language::get('404');
+        View::render('404', $data);
     }
 
 }

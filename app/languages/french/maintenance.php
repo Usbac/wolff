@@ -1,4 +1,6 @@
 <?php
 
-$data['title'] = 'Maintenance en cours';
-$data['msg']   = 'Revenez plus tard';
+return [
+    'title' => 'Maintenance en cours',
+    'msg'   => 'Revenez plus tard'
+];

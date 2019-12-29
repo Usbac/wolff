@@ -2,16 +2,15 @@
 
 namespace Controller;
 
-use Core\Controller;
+use Core\{Controller, Language, View};
 
-Class _Maintenance extends Controller
+class _Maintenance extends Controller
 {
 
     public function index()
     {
-        $this->data['lang'] = $this->load->language('maintenance');
-
-        $this->load->view('maintenance', $this->data);
+        $data['lang'] = Language::get('maintenance');
+        View::render('maintenance', $data);
     }
 
 }
