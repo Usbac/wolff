@@ -4,7 +4,7 @@ namespace Controller;
 
 use Core\{Controller, Language, View};
 
-Class _404 extends Controller
+class _404 extends Controller
 {
 
     public function index()

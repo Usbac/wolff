@@ -4,7 +4,7 @@ namespace Controller;
 
 use Core\{Controller, Language, View};
 
-Class _Maintenance extends Controller
+class _Maintenance extends Controller
 {
 
     public function index()
