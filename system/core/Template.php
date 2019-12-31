@@ -25,7 +25,7 @@ class Template
         'plainecho' => '/' . self::NOT_RAW . '\{\!( ?){1,}(.*?)( ?){1,}\!\}/',
         'echo'      => '/' . self::NOT_RAW . '\{\{( ?){1,}(.*?)( ?){1,}\}\}/',
         'tag'       => '/' . self::NOT_RAW . '\{%( ?){1,}(.*?)( ?){1,}%\}/',
-        'function'  => '/' . self::NOT_RAW . '{func}( ?){1,}\|([^\}!]{1,})/',
+        'function'  => '/' . self::NOT_RAW . '(.*)( ?){1,}\|([^\}!]{1,})/',
         'include'   => '/' . self::NOT_RAW . '@load\(( |\'?){1,}(.*)( |\'?){1,}\)/',
 
         'if'     => '/' . self::NOT_RAW . '\{(\s?){1,}(.*)\?(\s?){1,}\}/',
@@ -33,8 +33,8 @@ class Template
         'else'   => '/' . self::NOT_RAW . '\{(\s?){1,}else(\s?){1,}\}/',
         'elseif' => '/' . self::NOT_RAW . '\{(\s?){1,}else(\s?){1,}(.*)(\s?){1,}\}/',
 
-        'for'        => '/' . self::NOT_RAW . '\{( ?){1,}for( ){1,}(.*)( ){1,}in( ){1,}\((.*)( ?){1,},( ?){1,}(.*)( ?){1,}\)( ?){1,}\}/',
-        'endfor'     => '/' . self::NOT_RAW . '\{( ?){1,}endfor( ?){1,}\}/'
+        'for'    => '/' . self::NOT_RAW . '\{( ?){1,}for( ){1,}(.*)( ){1,}in( ){1,}\((.*)( ?){1,},( ?){1,}(.*)( ?){1,}\)( ?){1,}\}/',
+        'endfor' => '/' . self::NOT_RAW . '\{( ?){1,}endfor( ?){1,}\}/'
     ];
 
 
@@ -266,7 +266,7 @@ class Template
      */
     private static function replaceFunctions($content)
     {
-        $func = '{func}';
+        $func = '(.*)';
 
         //Escape
         $content = preg_replace(str_replace($func, 'e', self::FORMAT['function']), 'htmlspecialchars(strip_tags($2))',
