@@ -9,7 +9,7 @@
 /* HOME */
 
 body {
-    background-color: #F5F5F5;
+    background-color: #fafafa;
     font-family: 'Open Sans', sans-serif;
     font-size: 0.9em;
 }
@@ -18,15 +18,11 @@ body {
     font-weight: 200;
     font-size: 4.5em;
     opacity: 0.7;
-    margin: 20px 0px 20px 0px;
+    margin: 20px 0px;
 }
 
 .text-center {
     text-align: center;
-}
-
-.options {
-    padding: 20px 0px 20px 0px;
 }
 
 .options > a {
@@ -34,17 +30,14 @@ body {
     color: #555555;
     margin: 15px;
 }
-
 .options > a:hover {
     color: #222222;
 }
 
 .description {
     opacity: 0.8;
-    padding-top: 30px;
+    padding: 30px 0px;
     border-top: 1px #666666 solid;
-    margin-bottom: 15px;
-    margin-top: 15px;
 }
 
 .description > p {
@@ -53,7 +46,7 @@ body {
 
 .version {
     opacity: 0.4;
-    margin-top: 15px;
+    padding-top: 30px;
 }
 
 .center {
@@ -62,8 +55,4 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-}
-
-.opacity-5 {
-    opacity: 0.5;
 }

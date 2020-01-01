@@ -11,7 +11,7 @@
     "issues": "https://github.com/Usbac/Wolff/issues",
     "source": "https://github.com/Usbac/Wolff",
     "wiki": "https://github.com/Usbac/Wolff/wiki",
-    "email": "Contacto@usbac.com.ve"
+    "email": "contact@getwolff.com"
   },
   "authors": [
     {
@@ -29,7 +29,7 @@
       "system/config.php",
       "system/definitions/Routes.php",
       "system/definitions/Utilities.php",
-      "system/definitions/Extensions.php",
+      "system/definitions/Middlewares.php",
       "system/definitions/Templates.php"
     ],
     "psr-4": {
@@ -38,7 +38,7 @@
       "Utilities\\": "system/utilities/",
       "Cli\\": "system/cli/",
       "App\\": "app/",
-      "Extension\\": "app/extensions/",
+      "Middleware\\": "app/middlewares/",
       "Controller\\": "app/controllers/"
     }
   }
