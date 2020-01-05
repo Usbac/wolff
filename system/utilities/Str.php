@@ -5,6 +5,8 @@ namespace Utilities;
 class Str
 {
 
+    const DEFAULT_ENCODING = 'UTF-8';
+
     /**
      * Sanitize an url
      *
@@ -332,13 +334,17 @@ class Str
      * Returns a truncated string with the specified length
      *
      * @param  string  $str  the string
-     * @param  int  $characters  the number of characters
+     * @param  int  $limit  the number of characters to limit
      *
      * @return string a truncated string with the specified length
      */
-    public static function limit(string $str, int $characters)
+    public static function limit(string $str, int $limit)
     {
-        return substr($str, 0, $characters);
+        if (mb_strwidth($str, self::DEFAULT_ENCODING) <= $limit) {
+            return $str;
+        }
+
+        return mb_strimwidth($str, 0, $limit, '', self::DEFAULT_ENCODING);
     }
 
 
@@ -353,6 +359,29 @@ class Str
     public static function unshift(string $str, string $start)
     {
         return $start . $str;
+    }
+
+
+    /**
+     * Returns the given paths concatenated
+     *
+     * @param  string|array  $paths  the paths
+     *
+     * @return string the given paths concatenated
+     */
+    public static function concatPath(...$paths)
+    {
+        $final_path = [];
+
+        foreach ($paths as $path) {
+            if (is_array($path)) {
+                $path = implode('/', $path);
+            }
+
+            $final_path[] = $path;
+        }
+
+        return preg_replace('/\/+/', '/', implode('/', $final_path));
     }
 
 
