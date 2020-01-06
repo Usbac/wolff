@@ -32,7 +32,7 @@ class View
     /**
      * Returns the original view content or false in case of errors
      *
-     * @param  string  $dir  the view directory
+     * @param  string  $view  the view directory
      *
      * @return mixed the original view content or false in case of errors
      */
@@ -95,7 +95,7 @@ class View
     /**
      * Returns a view file path
      *
-     * @param  string  $dir  the view directory
+     * @param  string  $path  the view directory
      *
      * @return string the view file path
      */
@@ -126,8 +126,7 @@ class View
      * Returns true if the view file exists, false otherwise.
      * Warning: This functions logs an error message.
      *
-     * @param  string  $dir  the view directory
-     * @param  array  $data  the data
+     * @param  string  $view  the view directory
      *
      * @return  bool true if the view file exists, false otherwise.
      */

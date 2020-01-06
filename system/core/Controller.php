@@ -123,7 +123,7 @@ class Controller
      * Returns true if the controller's method exists, false otherwise
      *
      * @param  string  $controller_name  the controller name
-     * @param  string  $mthod  the controller method name
+     * @param  string  $method  the controller method name
      *
      * @return boolean true if the controller's method exists, false otherwise
      */

@@ -8,7 +8,7 @@ class Query
     /**
      * The query statement.
      *
-     * @var array
+     * @var \PDOStatement
      */
     private $stmt;
 
