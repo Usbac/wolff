@@ -3,7 +3,7 @@
 define('CONFIG', [
     //Server
     'dbms'        => 'mysql',
-    'server'      => '',
+    'server'      => 'localhost',
     'db'          => '',
     'db_username' => '',
     'db_password' => '',

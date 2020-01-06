@@ -5,7 +5,7 @@
     "framework", "php", "small", "web", "apps", "fast", "full", "db"
   ],
   "type": "project",
-  "version": "2.2",
+  "version": "2.2.2",
   "license": "MIT",
   "support": {
     "issues": "https://github.com/Usbac/Wolff/issues",
@@ -28,15 +28,11 @@
     "files": [
       "system/config.php",
       "system/definitions/Routes.php",
-      "system/definitions/Utilities.php",
       "system/definitions/Middlewares.php",
       "system/definitions/Templates.php"
     ],
     "psr-4": {
       "Core\\": "system/core/",
-      "Definitions\\": "system/definitions",
-      "Utilities\\": "system/utilities/",
-      "Cli\\": "system/cli/",
       "App\\": "app/",
       "Middleware\\": "app/middlewares/",
       "Controller\\": "app/controllers/"

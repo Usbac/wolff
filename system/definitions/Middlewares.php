@@ -1,7 +1,5 @@
 <?php
 
-namespace Definitions;
-
 use Core\Middleware;
 
 /**
