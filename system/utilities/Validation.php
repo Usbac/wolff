@@ -47,7 +47,7 @@ class Validation
      *
      * @param  array  $data  the data array
      *
-     * @return Core\Validation this
+     * @return self
      */
     public function setData(array $data)
     {
@@ -72,7 +72,7 @@ class Validation
      *
      * @param  string  $type  the method type
      *
-     * @return Core\Validation this
+     * @return self
      */
     public function setType(string $type)
     {
@@ -90,7 +90,7 @@ class Validation
      * @param  array  $fields  the associative array
      * with the fields rules
      *
-     * @return Core\Validation this
+     * @return self
      */
     public function setFields(array $fields)
     {
@@ -190,7 +190,7 @@ class Validation
      * @param  array  $fields  the associative array
      * with the fields rules
      *
-     * @return array the data array to validate
+     * @param array $data the data array to validate
      *
      * @return bool true if the current data complies all the fields rules,
      * false otherwise
