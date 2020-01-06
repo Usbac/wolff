@@ -94,7 +94,8 @@ class Factory
     /**
      * Returns a query result as an object
      *
-     * @return Core\Query a query result as an object
+     * @param \PDOStatement $results
+     * @return Query a query result as an object
      */
     public static function query($results)
     {

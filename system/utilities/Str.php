@@ -10,7 +10,7 @@ class Str
     /**
      * Sanitize an url
      *
-     * @param  string  url the url
+     * @param  string  $url the url
      *
      * @return string the url sanitized
      */
@@ -23,7 +23,7 @@ class Str
     /**
      * Sanitize an email
      *
-     * @param  string  email the email
+     * @param  string  $email the email
      *
      * @return string the email sanitized
      */
@@ -36,7 +36,7 @@ class Str
     /**
      * Sanitize an string to integer (only numbers and +-)
      *
-     * @param  string  int the integer
+     * @param  string  $int the integer
      *
      * @return string the integer sanitized
      */
@@ -49,7 +49,7 @@ class Str
     /**
      * Sanitize an string to float (only numbers, fractions and +-)
      *
-     * @param  string  float the float
+     * @param  string  $float the float
      *
      * @return string the float sanitized
      */
@@ -62,7 +62,7 @@ class Str
     /**
      * Sanitize a path for only letters, numbers, underscores, dots and slashes
      *
-     * @param  string  path the path
+     * @param  string  $path the path
      *
      * @return string the path sanitized
      */
@@ -88,7 +88,7 @@ class Str
             'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ù'=>'U', 'Ú'=>'U', 'Û'=>'U', 'Ü'=>'U', 'Ý'=>'Y', 'Þ'=>'B', 'ß'=>'Ss',
             'à'=>'a', 'á'=>'a', 'â'=>'a', 'ã'=>'a', 'ä'=>'a', 'å'=>'a', 'æ'=>'a', 'ç'=>'c', 'è'=>'e', 'é'=>'e',
             'ê'=>'e', 'ë'=>'e', 'ì'=>'i', 'í'=>'i', 'î'=>'i', 'ï'=>'i', 'ð'=>'o', 'ñ'=>'n', 'ò'=>'o', 'ó'=>'o',
-            'ô'=>'o', 'õ'=>'o', 'ö'=>'o', 'ø'=>'o', 'ù'=>'u', 'ú'=>'u', 'û'=>'u', 'ý'=>'y', 'ý'=>'y', 'þ'=>'b',
+            'ô'=>'o', 'õ'=>'o', 'ö'=>'o', 'ø'=>'o', 'ù'=>'u', 'ú'=>'u', 'û'=>'u', 'ý'=>'y', 'þ'=>'b',
             'ÿ'=>'y', 'Ŕ'=>'R', 'ŕ'=>'r', '/' => '-', ' ' => '-'
         ];
 
@@ -123,7 +123,7 @@ class Str
      * Returns true if the given string is a valid email,
      * false otherwise
      *
-     * @param  string  email the email string
+     * @param  string  $email the email string
      *
      * @return bool Returns true if the given string is a valid email,
      * false otherwise
@@ -138,7 +138,7 @@ class Str
      * Returns true if the given string contains only
      * alphanumeric characters and whitespaces, false otherwise
      *
-     * @param  string  str the string
+     * @param  string  $str the string
      *
      * @return bool Returns true if the given string contains only
      * alphanumeric characters and whitespaces, false otherwise
@@ -153,7 +153,7 @@ class Str
      * Returns true if the given string contains only
      * letters and whitespaces, false otherwise
      *
-     * @param  string  str the string
+     * @param  string  $str the string
      *
      * @return bool Returns true if the given string contains only
      * letters and whitespaces, false otherwise
@@ -388,7 +388,7 @@ class Str
     /**
      * Returns all the given strings concatenated into one
      *
-     * @param  string  $str  the strings
+     * @param  string[]  $strings  the strings
      *
      * @return string all the given strings concatenated into one
      */
@@ -409,7 +409,7 @@ class Str
     /**
      * Returns the given value to a string
      *
-     * @param  mixed  $str  the value
+     * @param  mixed  $var  the value
      *
      * @return string the given value as a string
      */

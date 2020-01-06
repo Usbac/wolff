@@ -31,7 +31,7 @@ class DB
     /**
      * The last PDO statement executed.
      *
-     * @var PDOStatement
+     * @var \PDOStatement
      */
     protected static $last_stmt;
 
@@ -99,7 +99,7 @@ class DB
 
     /**
      * Returns the last prepared PDO statement
-     * @return PDOStatement the last prepared PDO statement
+     * @return \PDOStatement the last prepared PDO statement
      */
     public static function getLastStmt()
     {

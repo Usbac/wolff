@@ -193,7 +193,7 @@ class Route
      * Redirect the first url to the second url
      *
      * @param  string  $url  the first url
-     * @param  string  $url2  the second url
+     * @param  string  $url_2  the second url
      * @param  int  $status  The HTTP response code
      */
     public static function redirect(string $url, string $url_2, int $status = self::STATUS_REDIRECT)
