@@ -32,6 +32,7 @@
     "psr-4": {
       "Core\\": "system/core/",
       "Definitions\\": "system/definitions",
+      "Utilities\\": "system/utilities/",
       "App\\": "app/",
       "Middleware\\": "app/middlewares/",
       "Controller\\": "app/controllers/"
