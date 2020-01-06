@@ -119,8 +119,8 @@ class Upload
             return false;
         }
 
-        $dir = getPublicDirectory() . $this->directory;
-        if (!move_uploaded_file($file['tmp_name'], $dir . '/' . $file['name'])) {
+        $dir = getServerRoot() . '/' . $this->directory;
+        if (!move_uploaded_file($file['tmp_name'], $dir . $file['name'])) {
             Log::notice("Upload of '" . $file['name'] . "' failed");
 
             return false;

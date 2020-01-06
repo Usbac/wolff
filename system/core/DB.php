@@ -8,13 +8,6 @@ class DB
 {
 
     /**
-     * Static instance of the connection.
-     *
-     * @var Core\Connection
-     */
-    protected static $instance;
-
-    /**
      * DB connection.
      *
      * @var PDO
@@ -48,28 +41,19 @@ class DB
 
 
     /**
-     * Connects with the database using the constants present in the config file
-     */
-    public function __construct()
-    {
-        $options = [
-            PDO::MYSQL_ATTR_INIT_COMMAND => self::DEFAULT_NAMES_MODE,
-            PDO::ATTR_DEFAULT_FETCH_MODE => self::DEFAULT_FETCH_MODE,
-            PDO::ATTR_ERRMODE            => self::DEFAULT_ERROR_MODE
-        ];
-
-        self::$connection = Factory::connection($options);
-    }
-
-
-    /**
      * Initializes the database connection
      */
     public static function initialize()
     {
-        if (self::isEnabled() && !self::$instance) {
-            self::$instance = new self();
+        if (!self::isEnabled() || self::$connection) {
+            return;
         }
+
+        self::$connection = Factory::connection([
+            PDO::MYSQL_ATTR_INIT_COMMAND => self::DEFAULT_NAMES_MODE,
+            PDO::ATTR_DEFAULT_FETCH_MODE => self::DEFAULT_FETCH_MODE,
+            PDO::ATTR_ERRMODE            => self::DEFAULT_ERROR_MODE
+        ]);
     }
 
 
@@ -192,7 +176,7 @@ class DB
      */
     public static function runLastSql()
     {
-        return run(self::getLastSql(), self::getLastArgs());
+        return self::run(self::getLastSql(), self::getLastArgs());
     }
 
 
@@ -349,8 +333,8 @@ class DB
 
             self::getPdo()->commit();
         } catch (\Exception $e) {
-            if ($pdo->inTransaction()) {
-                $pdo->rollback();
+            if (self::getPdo()->inTransaction()) {
+                self::getPdo()->rollback();
                 return false;
             }
         }

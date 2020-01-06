@@ -2,7 +2,7 @@
 
 define('CORE_CONFIG', [
     //General
-    'version'      => '2.0',
+    'version'      => '2.2.2',
     'start'        => microtime(true),
     'views_format' => 'wlf',
 
