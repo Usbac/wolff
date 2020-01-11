@@ -11,6 +11,7 @@ class Factory
     const NAMESPACE_CONTROLLER = 'Controller\\';
     const NAMESPACE_MIDDLEWARE = 'Middleware\\';
     const DSN = '{dbms}:host={server}; dbname={db}';
+    const DEFAULT_ENCODING = 'set names utf8mb4 collate utf8mb4_unicode_ci';
 
 
     /**
@@ -34,6 +35,7 @@ class Factory
 
         try {
             $connection = new PDO($dsn, getDbUser(), getDbPass(), $options);
+            self::setEncoding($connection);
         } catch (PDOException $e) {
             Log::critical($e->getMessage());
 
@@ -100,6 +102,17 @@ class Factory
     public static function query($results)
     {
         return new Query($results);
+    }
+
+
+    /**
+     * Set the default encoding for the connection
+     *
+     * @param  \PDO  $connection  the connection
+     */
+    private static function setEncoding($connection)
+    {
+        $connection->prepare(self::DEFAULT_ENCODING)->execute();
     }
 
 }

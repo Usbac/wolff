@@ -191,7 +191,7 @@ class Str
      */
     public static function interpolate(string $str, array $values)
     {
-        if (!is_string($str) || !is_array($values) || empty($values)) {
+        if (!is_string($str) || !is_array($values)) {
             return false;
         }
 

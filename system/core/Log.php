@@ -36,10 +36,11 @@ class Log
      * Log a emergency message
      *
      * @param  string  $message the message
+     * @param  array  $values  the values to interpolate
      */
-    public static function emergency(string $message)
+    public static function emergency(string $message, array $values = [])
     {
-        self::log(self::EMERGENCY, $message);
+        self::log(self::EMERGENCY, $message, $values);
     }
 
 
@@ -47,10 +48,11 @@ class Log
      * Log an alert message
      *
      * @param  string  $message the message
+     * @param  array  $values  the values to interpolate
      */
-    public static function alert(string $message)
+    public static function alert(string $message, array $values = [])
     {
-        self::log(self::ALERT, $message);
+        self::log(self::ALERT, $message, $values);
     }
 
 
@@ -58,10 +60,11 @@ class Log
      * Log a critical message
      *
      * @param  string  $message the message
+     * @param  array  $values  the values to interpolate
      */
-    public static function critical(string $message)
+    public static function critical(string $message, array $values = [])
     {
-        self::log(self::CRITICAL, $message);
+        self::log(self::CRITICAL, $message, $values);
     }
 
 
@@ -69,10 +72,11 @@ class Log
      * Log an error message
      *
      * @param  string  $message the message
+     * @param  array  $values  the values to interpolate
      */
-    public static function error(string $message)
+    public static function error(string $message, array $values = [])
     {
-        self::log(self::ERROR, $message);
+        self::log(self::ERROR, $message, $values);
     }
 
 
@@ -80,10 +84,11 @@ class Log
      * Log a warning message
      *
      * @param  string  $message the message
+     * @param  array  $values  the values to interpolate
      */
-    public static function warning(string $message)
+    public static function warning(string $message, array $values = [])
     {
-        self::log(self::WARNING, $message);
+        self::log(self::WARNING, $message, $values);
     }
 
 
@@ -91,10 +96,11 @@ class Log
      * Log a notice message
      *
      * @param  string  $message the message
+     * @param  array  $values  the values to interpolate
      */
-    public static function notice(string $message)
+    public static function notice(string $message, array $values = [])
     {
-        self::log(self::NOTICE, $message);
+        self::log(self::NOTICE, $message, $values);
     }
 
 
@@ -102,10 +108,11 @@ class Log
      * Log an info message
      *
      * @param  string  $message the message
+     * @param  array  $values  the values to interpolate
      */
-    public static function info(string $message)
+    public static function info(string $message, array $values = [])
     {
-        self::log(self::INFO, $message);
+        self::log(self::INFO, $message, $values);
     }
 
 
@@ -113,10 +120,11 @@ class Log
      * Log a debug message
      *
      * @param  string  $message the message
+     * @param  array  $values  the values to interpolate
      */
-    public static function debug(string $message)
+    public static function debug(string $message, array $values = [])
     {
-        self::log(self::DEBUG, $message);
+        self::log(self::DEBUG, $message, $values);
     }
 
 
@@ -125,12 +133,15 @@ class Log
      *
      * @param  string  $level the message level
      * @param  string  $message the message
+     * @param  array  $values  the values to interpolate
      */
-    private static function log(string $level, string $message)
+    private static function log(string $level, string $message, array $values)
     {
         if (!self::isEnabled()) {
             return;
         }
+
+        $message = Str::interpolate($message, $values);
 
         $values = [
             'date'    => date(self::DATE_FORMAT),

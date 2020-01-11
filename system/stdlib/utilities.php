@@ -2,6 +2,38 @@
 
 namespace {
 
+    if (!function_exists('val')) {
+
+        /**
+         * Returns the key value of the
+         * given array, or null if it doesn't exists.
+         *
+         * The key param can use the dot notation.
+         *
+         * @param  array  $arr  the array
+         * @param  string  $key  the array key to obtain
+         *
+         * @return mixed the value of the specified key in the array
+         */
+        function val(array $arr, string $key = null)
+        {
+            $keys = explode('.', $key);
+
+            if (is_null($key)) {
+                return $arr;
+            }
+
+            foreach($keys as $key) {
+                if (!is_array($arr) || !array_key_exists($key, $arr)) {
+                    return null;
+                }
+
+                $arr = &$arr[$key];
+            }
+
+            return $arr;
+        }
+    }
 
     if (!function_exists('echod')) {
 
@@ -94,8 +126,20 @@ namespace {
          * @param  string  $url  the url to redirect to
          * @param  int  $status  the HTTP status code
          */
-        function redirect(string $url, int $status = null)
+        function redirect(string $url = null, int $status = null)
         {
+            //Set url to the homepage when null
+            if (!isset($url)) {
+                $http = (isset($_SERVER['HTTPS']) ? 'https' : 'http') . '://';
+                $directory = str_replace('\\', '/', getProjectDir());
+
+                if (substr($directory, -1) != '/' && substr($url, 0, 1) != '/') {
+                    $directory .= '/';
+                }
+
+                $url = $http . $_SERVER['HTTP_HOST'] . $directory;
+            }
+
             header("Location: $url", true, $status);
             exit;
         }
