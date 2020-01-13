@@ -14,24 +14,24 @@
 
 > **Note:** This repository only contains the core code of the Wolff framework. If you want to build a new Wolff project, visit the main [Wolff repository](https://github.com/usbac/wolff).
 
-Wolff is a ridiculously small and lightweight PHP framework with useful functions and utilities like a route, template, middleware and language system.
+Wolff is a ridiculously small and lightweight PHP framework.
 
-It is intended for those who want to build light websites without having to do everything from scratch or using too large/complicated frameworks.
+It is intended for those who want to build lightweight websites without starting from scratch or dealing with large frameworks.
 
 Wolff is small, fast, scalable and easy. The perfect solution for building small and medium-sized web applications.
 
 
 ## Features
 
-* **Fast**: Due to its small size and simplicity, you don’t have to worry about loading times or resource usage.
-
-* **Simple**: It’s not only small, but simple as well; with a clean documentation and easy way to use.
-
-* **Extensible**: Take advantage of the custom middlewares, functions and templates you can make in Wolff to expand your page.
-
 * **Clean**: The routes system allows you to have clean and friendly URLs, and the template system makes the php code cleaner while separating the logic from the view.
 
 * **Dynamic**: You can work however you want without strictly following the Wolff design or patterns like the MVC.
+
+* **Extensible**: Take advantage of the custom middlewares, functions and templates you can make in Wolff to expand your page.
+
+* **Fast**: Due to its small size and simplicity, you don’t have to worry about loading times or resource usage.
+
+* **Simple**: It’s not only small, but simple as well; with a clean documentation and an easy way to use.
 
 
 ## Contributing
