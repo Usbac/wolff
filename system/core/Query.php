@@ -52,7 +52,7 @@ class Query
      */
     public function first(string $column = null)
     {
-        $first = $this->get()[0];
+        $first = $this->get()[0] ?? [];
         if (isset($column, $first)) {
             return $first[$column];
         }
