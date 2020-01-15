@@ -9,7 +9,7 @@
 <h4 align="center">Ridiculously small PHP framework.</h4>
 
 <p align="center">
-<img src="https://img.shields.io/badge/stability-stable-green.svg"> <img src="https://img.shields.io/badge/version-2.3-blue.svg"> <img src="https://img.shields.io/badge/license-MIT-orange.svg">
+<img src="https://img.shields.io/badge/stability-stable-green.svg"> <img src="https://img.shields.io/badge/version-2.4-blue.svg"> <img src="https://img.shields.io/badge/license-MIT-orange.svg">
 </p>
 
 Wolff is a ridiculously small and lightweight PHP framework.
@@ -37,8 +37,6 @@ Wolff is small, fast, scalable and easy. The perfect solution for building small
 
 ## What's included
 
-* **Routing system**: Have clean URLs, make redirections and block certain pages recursively.
-
 * **Database abstraction layer**: Which simplifies the process of running queries and includes useful functions.
 
 * **DI Container**: For managing class dependencies and performing DI.
@@ -46,6 +44,8 @@ Wolff is small, fast, scalable and easy. The perfect solution for building small
 * **Language system**: For managing multiple languages easily and quickly.
 
 * **Middleware system**: Which gives you more control over your requests/responses.
+
+* **Routing system**: Have clean URLs, make redirections and block certain pages recursively.
 
 * **Standard library**: With numerous incredible functions related to strings, numbers, debugging and arrays.
 
