@@ -26,7 +26,15 @@ class Controller
     }
 
 
-    public static function call(string $dir, array $params = [])
+    /**
+     * Instantiate the controller with the giving name and
+     * call it's index method if it exists
+     *
+     * @param  string  $dir  the controller name
+     *
+     * @return \Core\Controller the controller
+     */
+    public static function call(string $dir)
     {
         $dir = Str::sanitizePath($dir);
 
@@ -84,8 +92,7 @@ class Controller
         }
 
         $controller = Factory::controller();
-        $closure = $closure->bindTo($controller, $controller);
-        $closure();
+        $closure->bindTo($controller, $controller)();
     }
 
 

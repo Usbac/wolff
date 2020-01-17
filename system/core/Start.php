@@ -69,6 +69,30 @@ class Start
 
 
     /**
+     * Load the requested page
+     *
+     * @return  mixed  the method return value
+     */
+    private function loadPage()
+    {
+        //Append the current route closure to a new controller and call it
+        if (isset($this->function)) {
+            return Controller::closure($this->function);
+        }
+
+        //Call controller's index
+        if (Controller::exists($this->url)) {
+            return Controller::call($this->url);
+        }
+
+        //Call controller's method
+        if (Controller::methodExists($this->controller, $this->method)) {
+            return Controller::method($this->controller, $this->method);
+        }
+    }
+
+
+    /**
      * Returns true if the current route exists, false otherwise
      *
      * @return  bool  true if the current route exists, false otherwise
@@ -104,21 +128,6 @@ class Start
         $url = Str::sanitizeUrl($url);
 
         return Route::getRedirection($url) ?? $url;
-    }
-
-
-    /**
-     * Load the requested page
-     */
-    private function loadPage()
-    {
-        if (isset($this->function)) {
-            Controller::closure($this->function);
-        } elseif (Controller::exists($this->url)) {
-            Controller::call($this->url);
-        } elseif (Controller::methodExists($this->controller, $this->method)) {
-            Controller::method($this->controller, $this->method);
-        }
     }
 
 
