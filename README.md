@@ -37,21 +37,21 @@ Wolff is small, fast, scalable and easy. The perfect solution for building small
 
 ## What's included
 
-* **Database abstraction layer**: Which simplifies the process of running queries and includes useful functions.
+* [**Database abstraction layer**](https://github.com/Usbac/wolff/wiki/Database): Which simplifies the process of running queries and includes useful functions.
 
-* **DI Container**: For managing class dependencies and performing DI.
+* [**DI Container**](https://github.com/Usbac/wolff/wiki/Container): For managing class dependencies and performing DI.
 
-* **Language system**: For managing multiple languages easily and quickly.
+* [**Language system**](https://github.com/Usbac/wolff/wiki/Language): For managing multiple languages easily and quickly.
 
-* **Middleware system**: Which gives you more control over your requests/responses.
+* [**Middleware system**](https://github.com/Usbac/wolff/wiki/Middleware): Which gives you more control over your requests/responses.
 
-* **Routing system**: Have clean URLs, make redirections and block certain pages recursively.
+* [**Routing system**](https://github.com/Usbac/wolff/wiki/Routes): Have clean URLs, make redirections and block certain pages recursively.
 
-* **Standard library**: With numerous incredible functions related to strings, numbers, debugging and arrays.
+* [**Standard library**](https://github.com/Usbac/wolff/wiki/Standard-library): With numerous incredible functions related to strings, numbers, debugging and arrays.
 
-* **Template engine**: Which you can use to write cleaner and safer code in your views while avoid things like the php tags.
+* [**Template engine**](https://github.com/Usbac/wolff/wiki/Template): Which you can use to write cleaner and safer code in your views while avoiding things like the php tags.
 
-* **Multiple utilities**: Including a paginate, validate and uploader utility.
+* **Multiple utilities**: Including a [authentication](https://github.com/Usbac/wolff/wiki/Authentication), [pagination](https://github.com/Usbac/wolff/wiki/Pagination), [uploader](https://github.com/Usbac/wolff/wiki/Uploader) and [validation](https://github.com/Usbac/wolff/wiki/Validation) utility.
 
 And more...
 
