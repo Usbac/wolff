@@ -130,7 +130,7 @@ class Str
      */
     public static function isEmail(string $email)
     {
-        return filter_var($email, FILTER_VALIDATE_EMAIL);
+        return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
     }
 
 
@@ -145,7 +145,7 @@ class Str
      */
     public static function isAlphanumeric(string $str)
     {
-        return preg_match('/[A-Za-z0-9 ]+$/', $str);
+        return preg_match('/[A-Za-z0-9 ]+$/', $str) == true;
     }
 
 
@@ -160,7 +160,7 @@ class Str
      */
     public static function isAlpha(string $str)
     {
-        return preg_match('/[A-Za-z ]+$/', $str);
+        return preg_match('/[A-Za-z ]+$/', $str) == true;
     }
 
 

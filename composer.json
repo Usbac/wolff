@@ -5,7 +5,7 @@
     "framework", "php", "small", "web", "apps", "fast", "full", "db"
   ],
   "type": "project",
-  "version": "2.4",
+  "version": "2.5",
   "license": "MIT",
   "support": {
     "issues": "https://github.com/Usbac/Wolff/issues",
@@ -17,7 +17,7 @@
     {
       "name": "Usbac",
       "homepage": "http://www.usbac.com.ve",
-      "email": "Contacto@usbac.com.ve"
+      "email": "contacto@usbac.com.ve"
     }
   ],
   "require": {

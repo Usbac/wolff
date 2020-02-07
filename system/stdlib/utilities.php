@@ -288,8 +288,8 @@ namespace {
          */
         function getClientIP()
         {
-            $http_client_ip = filter_var($_SERVER['HTTP_CLIENT_IP'] ?? "", FILTER_VALIDATE_IP);
-            $http_forwarded = filter_var($_SERVER['HTTP_X_FORWARDED_FOR'] ?? "", FILTER_VALIDATE_IP);
+            $http_client_ip = filter_var($_SERVER['HTTP_CLIENT_IP'] ?? '', FILTER_VALIDATE_IP);
+            $http_forwarded = filter_var($_SERVER['HTTP_X_FORWARDED_FOR'] ?? '', FILTER_VALIDATE_IP);
 
             if (!empty($http_client_ip)) {
                 return $http_client_ip;
@@ -299,7 +299,7 @@ namespace {
                 return $http_forwarded;
             }
 
-            return $_SERVER['REMOTE_ADDR'];
+            return $_SERVER['REMOTE_ADDR'] ?? '';
         }
     }
 

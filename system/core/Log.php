@@ -7,7 +7,7 @@ use Utilities\Str;
 class Log
 {
 
-    const FOLDER_NAME = 'log';
+    const FOLDER_NAME = 'logs';
     const FILE_PERMISSIONS = 0755;
     const DATE_FORMAT = 'H:i:s';
     const FORMAT = '[{date}] [{ip}] {level}: {message}';
