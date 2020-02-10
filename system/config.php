@@ -9,11 +9,11 @@ define('CONFIG', [
     'db_password' => '',
 
     //Directories
-    'root_dir'       => $root = dirname(__DIR__) . '/',
-    'system_dir'     => $root . 'system/',
-    'app_dir'        => $root . 'app/',
-    'cache_dir'      => $root . 'cache/',
-    'public_dir'     => $root . 'public/',
+    'root_dir'   => $root = dirname(__DIR__) . '/',
+    'system_dir' => $root . 'system/',
+    'app_dir'    => $root . 'app/',
+    'cache_dir'  => $root . 'cache/',
+    'public_dir' => $root . 'public/',
 
     //General
     'title'     => 'Wolff',

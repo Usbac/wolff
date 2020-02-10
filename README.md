@@ -11,7 +11,7 @@
 <p align="center">
 <img src="https://img.shields.io/badge/stability-stable-green.svg">
 <a href="https://packagist.org/packages/usbac/wolff"><img src="https://poser.pugx.org/usbac/wolff/d/total.svg"></a>
-<img src="https://img.shields.io/badge/version-2.5-blue.svg">
+<img src="https://img.shields.io/badge/version-2.6-blue.svg">
 <img src="https://img.shields.io/badge/license-MIT-orange.svg">
 </p>
 
@@ -80,6 +80,17 @@ This will download the whole project with everything ready to run (including an 
 
 You can see more information about the installation process in the [Wiki - install](https://github.com/Usbac/Wolff/wiki/Installation) page.
 
+## Testing
+
+First you must have [PHPUnit](https://phpunit.de) installed, once you have it.
+
+Open your favorite terminal, move to your wolff project location and run the following command with high privileges (sudo):
+
+```
+vendor/bin/phpunit
+```
+
+_Running the command with high privileges is required since some files will be created during the testing process._
 
 ## Documentation
 
