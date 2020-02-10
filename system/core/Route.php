@@ -7,6 +7,23 @@ use Utilities\Str;
 class Route
 {
 
+    const STATUS_OK = 200;
+    const STATUS_REDIRECT = 301;
+    const GET_FORMAT = '/\{(.*)\}/';
+    const OPTIONAL_GET_FORMAT = '/\{(.*)\?\}/';
+    const PREFIXES = [
+        'json'  => 'json:',
+        'plain' => 'plain:',
+        'xml'   => 'xml:'
+    ];
+    const HTTP_METHODS = [
+        'GET',
+        'POST',
+        'PUT',
+        'PATCH',
+        'DELETE'
+    ];
+
     /**
      * List of routes.
      *
@@ -29,29 +46,11 @@ class Route
     private static $redirects = [];
 
 
-    const STATUS_OK = 200;
-    const STATUS_REDIRECT = 301;
-    const GET_FORMAT = '/\{(.*)\}/';
-    const OPTIONAL_GET_FORMAT = '/\{(.*)\?\}/';
-    const PREFIXES = [
-        'json'  => 'json:',
-        'plain' => 'plain:',
-        'xml'   => 'xml:'
-    ];
-    const HTTP_METHODS = [
-        'GET',
-        'POST',
-        'PUT',
-        'PATCH',
-        'DELETE'
-    ];
-
-
     /**
-     * Proxy function to the HTTP Methods.
+     * Proxy method to the HTTP Methods.
      *
-     * @param  string  $name the function name
-     * @param  mixed  $args  the function arguments
+     * @param  string  $name the method name
+     * @param  mixed  $args  the method arguments
      */
     public static function __callStatic(string $name, $args)
     {
@@ -61,7 +60,8 @@ class Route
         }
 
         $status = isset($args[2]) && is_numeric($args[2]) ?
-            (int)$args[2] : self::STATUS_OK;
+            (int)$args[2] :
+            self::STATUS_OK;
 
         $url = Str::sanitizeURL($args[0]);
         self::addRoute($url, $method, $args[1], $status);
@@ -171,7 +171,7 @@ class Route
     private static function isValidRoute($key)
     {
         return (self::$routes[$key] &&
-            Request::matchesMethod(self::$routes[$key]['method']));
+            (self::$routes[$key]['method'] === '' || Request::matchesMethod(self::$routes[$key]['method'])));
     }
 
 
@@ -184,8 +184,7 @@ class Route
      */
     public static function add(string $url, $function, int $status = self::STATUS_OK)
     {
-        $url = Str::sanitizeURL($url);
-        self::addRoute($url, 'GET', $function, $status);
+        self::addRoute(Str::sanitizeURL($url), '', $function, $status);
     }
 
 

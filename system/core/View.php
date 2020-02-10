@@ -7,7 +7,7 @@ use Utilities\Str;
 class View
 {
 
-    const PATH_FORMAT = '{app}' . CORE_CONFIG['views_dir'] . '/{dir}.' . CORE_CONFIG['views_format'];
+    const PATH_FORMAT = '{app}/' . CORE_CONFIG['views_dir'] . '/{dir}.' . CORE_CONFIG['views_format'];
 
 
     /**
@@ -124,11 +124,11 @@ class View
 
     /**
      * Returns true if the view file exists, false otherwise.
-     * Warning: This functions logs an error message.
+     * This functions logs an error message
      *
      * @param  string  $view  the view directory
      *
-     * @return  bool true if the view file exists, false otherwise.
+     * @return  bool true if the view file exists, false otherwise
      */
     private static function log(string $view)
     {

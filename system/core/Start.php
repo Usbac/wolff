@@ -7,6 +7,8 @@ use Utilities\Str;
 class Start
 {
 
+    const HEADER_404 = 'HTTP/1.0 404 Not Found';
+
     /**
      * The current url.
      *
@@ -34,8 +36,6 @@ class Start
      * @var string
      */
     private $method;
-
-    const HEADER_404 = 'HTTP/1.0 404 Not Found';
 
 
     public function __construct()
@@ -124,8 +124,7 @@ class Start
     private function getUrl()
     {
         $url = Request::hasGet('url') ?
-            Request::get('url') : getMainPage();
-        $url = Str::sanitizeUrl($url);
+            Str::sanitizeUrl(Request::get('url')) : getMainPage();
 
         return Route::getRedirection($url) ?? $url;
     }

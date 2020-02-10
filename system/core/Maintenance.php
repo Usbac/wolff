@@ -7,16 +7,16 @@ use Utilities\Str;
 class Maintenance
 {
 
+    const HEADER_503 = 'HTTP/1.1 503 Service Temporarily Unavailable';
+    const NO_READABLE = 'Couldn\'t read the maintenance whitelist file';
+    const INVALID_IP = 'Invalid IP format for the maintenance whitelist file';
+
     /**
      * Filename of the ip whitelist file.
      *
      * @var string
      */
-    private static $file = CONFIG['root_dir'] . 'system/definitions/maintenance_whitelist.txt';
-
-    const HEADER_503 = 'HTTP/1.1 503 Service Temporarily Unavailable';
-    const NO_READABLE = 'Couldn\'t read the maintenance whitelist file';
-    const INVALID_IP = 'Invalid IP format for the maintenance whitelist file';
+    private static $file = CONFIG['root_dir'] . '/system/definitions/maintenance_whitelist.txt';
 
 
     /**

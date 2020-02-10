@@ -7,13 +7,6 @@ use Utilities\Str;
 class Template
 {
 
-    /**
-     * List of custom templates
-     *
-     * @var array
-     */
-    private static $templates = [];
-
     const RAW = '~';
     const NOT_RAW = '(?<!' . self::RAW . ')';
     const FORMAT = [
@@ -37,6 +30,12 @@ class Template
         'endfor' => '/' . self::NOT_RAW . '\{( ?){1,}endfor( ?){1,}\}/'
     ];
 
+    /**
+     * List of custom templates
+     *
+     * @var array
+     */
+    private static $templates = [];
 
     /**
      * Returns true if the template system is enabled, false otherwise

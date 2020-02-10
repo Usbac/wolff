@@ -112,7 +112,7 @@ namespace {
          */
         function getDir(string $path = '')
         {
-            return CONFIG['root_dir'] . $path;
+            return CONFIG['root_dir'] . '/' . $path;
         }
     }
 
@@ -142,7 +142,7 @@ namespace {
          */
         function getSystemDir(string $path = '')
         {
-            return CONFIG['system_dir'] . $path;
+            return CONFIG['system_dir'] . '/' . $path;
         }
     }
 
@@ -157,7 +157,7 @@ namespace {
          */
         function getAppDir(string $path = '')
         {
-            return CONFIG['app_dir'] . $path;
+            return CONFIG['app_dir'] . '/' . $path;
         }
     }
 
@@ -173,7 +173,7 @@ namespace {
          */
         function getPublic(string $path = '')
         {
-            return substr(CONFIG['public_dir'], strlen($_SERVER['DOCUMENT_ROOT'])) . $path;
+            return substr(CONFIG['public_dir'], strlen($_SERVER['DOCUMENT_ROOT'])) . '/' . $path;
         }
     }
 
@@ -188,7 +188,7 @@ namespace {
          */
         function getCacheDir(string $path = '')
         {
-            return CONFIG['cache_dir'] . $path;
+            return CONFIG['cache_dir'] . '/' . $path;
         }
     }
 

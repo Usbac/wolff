@@ -118,9 +118,7 @@ class Session
         if (!isset($key)) {
             return $_SESSION;
         } elseif (!self::has($key)) {
-            Log::notice("Undefined index '$key' in Session array");
-
-            return NULL;
+            return null;
         }
 
         return $_SESSION[$key];

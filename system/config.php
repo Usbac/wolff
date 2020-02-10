@@ -2,12 +2,13 @@
 
 define('CORE_CONFIG', [
     //General
-    'version'      => '2.4',
+    'version'      => '2.6',
     'start'        => microtime(true),
     'views_format' => 'wlf',
 
     //Folders
     'views_dir'       => 'views',
+    'controllers_dir' => 'controllers',
     'middlewares_dir' => 'middlewares',
     'languages_dir'   => 'languages',
 

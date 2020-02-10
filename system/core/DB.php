@@ -7,6 +7,9 @@ use PDO;
 class DB
 {
 
+    const DEFAULT_FETCH_MODE = PDO::FETCH_ASSOC;
+    const DEFAULT_ERROR_MODE = PDO::ERRMODE_EXCEPTION;
+
     /**
      * DB connection.
      *
@@ -34,9 +37,6 @@ class DB
      * @var \PDOStatement
      */
     protected static $last_stmt;
-
-    const DEFAULT_FETCH_MODE = PDO::FETCH_ASSOC;
-    const DEFAULT_ERROR_MODE = PDO::ERRMODE_EXCEPTION;
 
 
     /**
@@ -140,12 +140,12 @@ class DB
 
 
     /**
-     * Returns a query result
+     * Returns a query result object
      *
      * @param  string  $sql  the query
      * @param  mixed  $args  the arguments
      *
-     * @return mixed the query result
+     * @return mixed the query result object
      */
     public static function run(string $sql, $args = [])
     {

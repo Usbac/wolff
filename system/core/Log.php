@@ -7,19 +7,20 @@ use Utilities\Str;
 class Log
 {
 
-    const FOLDER_NAME = 'logs';
-    const FILE_PERMISSIONS = 0755;
+    const FOLDER_PATH = CONFIG['system_dir'] . '/logs';
+    const FOLDER_PERMISSIONS = 0755;
     const DATE_FORMAT = 'H:i:s';
     const FORMAT = '[{date}] [{ip}] {level}: {message}';
-
-    const EMERGENCY = 'Emergency';
-    const ALERT     = 'Alert';
-    const CRITICAL  = 'Critical';
-    const ERROR     = 'Error';
-    const WARNING   = 'Warning';
-    const NOTICE    = 'Notice';
-    const INFO      = 'Info';
-    const DEBUG     = 'Debug';
+    const LEVELS = [
+        'emergency',
+        'alert',
+        'critical',
+        'error',
+        'warning',
+        'notice',
+        'info',
+        'debug'
+    ];
 
 
     /**
@@ -33,98 +34,22 @@ class Log
 
 
     /**
-     * Log a emergency message
+     * Proxy method to log the messages in
+     * different levels.
      *
-     * @param  string  $message the message
-     * @param  array  $values  the values to interpolate
+     * @param  string  $method_name the method name
+     * @param  mixed  $args  the method arguments
      */
-    public static function emergency(string $message, array $values = [])
+    public static function __callStatic(string $method_name, $args)
     {
-        self::log(self::EMERGENCY, $message, $values);
-    }
+        if (!in_array($method_name, self::LEVELS) ||
+            ($message = $args[0]) === null) {
+            return;
+        }
 
+        $values = $args[1] ?? [];
 
-    /**
-     * Log an alert message
-     *
-     * @param  string  $message the message
-     * @param  array  $values  the values to interpolate
-     */
-    public static function alert(string $message, array $values = [])
-    {
-        self::log(self::ALERT, $message, $values);
-    }
-
-
-    /**
-     * Log a critical message
-     *
-     * @param  string  $message the message
-     * @param  array  $values  the values to interpolate
-     */
-    public static function critical(string $message, array $values = [])
-    {
-        self::log(self::CRITICAL, $message, $values);
-    }
-
-
-    /**
-     * Log an error message
-     *
-     * @param  string  $message the message
-     * @param  array  $values  the values to interpolate
-     */
-    public static function error(string $message, array $values = [])
-    {
-        self::log(self::ERROR, $message, $values);
-    }
-
-
-    /**
-     * Log a warning message
-     *
-     * @param  string  $message the message
-     * @param  array  $values  the values to interpolate
-     */
-    public static function warning(string $message, array $values = [])
-    {
-        self::log(self::WARNING, $message, $values);
-    }
-
-
-    /**
-     * Log a notice message
-     *
-     * @param  string  $message the message
-     * @param  array  $values  the values to interpolate
-     */
-    public static function notice(string $message, array $values = [])
-    {
-        self::log(self::NOTICE, $message, $values);
-    }
-
-
-    /**
-     * Log an info message
-     *
-     * @param  string  $message the message
-     * @param  array  $values  the values to interpolate
-     */
-    public static function info(string $message, array $values = [])
-    {
-        self::log(self::INFO, $message, $values);
-    }
-
-
-    /**
-     * Log a debug message
-     *
-     * @param  string  $message the message
-     * @param  array  $values  the values to interpolate
-     */
-    public static function debug(string $message, array $values = [])
-    {
-        self::log(self::DEBUG, $message, $values);
+        self::log(ucfirst($method_name), $message, $values);
     }
 
 
@@ -163,7 +88,7 @@ class Log
     private static function writeToFile(string $data)
     {
         self::mkdir();
-        $filename = CONFIG['system_dir'] . self::FOLDER_NAME . '/' . date('m-d-Y') . '.log';
+        $filename = self::FOLDER_PATH . '/' . date('m-d-Y') . '.log';
         file_put_contents($filename, $data . PHP_EOL, FILE_APPEND);
     }
 
@@ -173,10 +98,8 @@ class Log
      */
     private static function mkdir()
     {
-        $folder_path = CONFIG['system_dir'] . self::FOLDER_NAME;
-
-        if (!file_exists($folder_path)) {
-            mkdir($folder_path, self::FILE_PERMISSIONS, true);
+        if (!file_exists(self::FOLDER_PATH)) {
+            mkdir(self::FOLDER_PATH, self::FOLDER_PERMISSIONS, true);
         }
     }
 }

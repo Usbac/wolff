@@ -9,7 +9,7 @@ class Controller
 
     const NAMESPACE = 'Controller\\';
     const EXISTS_ERROR = 'The controller class \'{controller}\' doesn\'t have a \'{method}\' method';
-    const PATH_FORMAT = '{app}controllers/{dir}.php';
+    const PATH_FORMAT = '{app}/' . CORE_CONFIG['controllers_dir'] . '/{dir}.php';
 
 
     /**
@@ -88,11 +88,11 @@ class Controller
     {
         if (is_string($closure)) {
             self::call($closure);
-            return;
+            return null;
         }
 
         $controller = Factory::controller();
-        $closure->bindTo($controller, $controller)();
+        return $closure->bindTo($controller, $controller)();
     }
 
 

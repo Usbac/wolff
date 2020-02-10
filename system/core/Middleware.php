@@ -7,19 +7,19 @@ use Utilities\Str;
 class Middleware
 {
 
+    const NAMESPACE = 'Middleware\\';
+    const FILE = 'system/definitions/Middlewares.php';
+    const FILE_PATH = '{app}/' . CORE_CONFIG['middlewares_dir'] . '/{dir}.php';
+    const BEFORE = 'before';
+    const AFTER = 'after';
+    const ALL = '*';
+
     /**
      * List of middlewares
      *
      * @var array
      */
     private static $middlewares;
-
-    const NAMESPACE = 'Middleware\\';
-    const FILE = 'system/definitions/Middlewares.php';
-    const FILE_PATH = '{app}' . CORE_CONFIG['middlewares_dir'] . '/{dir}.php';
-    const BEFORE = 'before';
-    const AFTER = 'after';
-    const ALL = '*';
 
 
     /**

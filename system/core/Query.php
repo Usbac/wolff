@@ -74,13 +74,7 @@ class Query
 
         //Only one column to pick
         if (count($columns) == 1) {
-            foreach($result as $row) {
-                if (array_key_exists($columns[0], $row)) {
-                    $rows[] = $row[$columns[0]];
-                }
-            }
-
-            return $rows;
+            return array_column($result, $columns[0]);
         }
 
         //Multiple columns to pick
@@ -158,4 +152,5 @@ class Query
     {
         printrd($this->get());
     }
+
 }

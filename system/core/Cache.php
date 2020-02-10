@@ -5,7 +5,7 @@ namespace Core;
 class Cache
 {
 
-    const FILENAME = 'tmp_%s.php';
+    const FILENAME_FORMAT = 'tmp_%s.php';
     const EXPIRATION_TIME = 604800; //One week
     const FOLDER_PERMISSIONS = 0755;
 
@@ -183,7 +183,7 @@ class Cache
      */
     public static function getFilename(string $dir)
     {
-        return sprintf(self::FILENAME, str_replace('/', '_', $dir));
+        return sprintf(self::FILENAME_FORMAT, str_replace('/', '_', $dir));
     }
 
 }
