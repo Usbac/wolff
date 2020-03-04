@@ -12,9 +12,11 @@ class Route
     const GET_FORMAT = '/\{(.*)\}/';
     const OPTIONAL_GET_FORMAT = '/\{(.*)\?\}/';
     const PREFIXES = [
-        'json'  => 'json:',
-        'plain' => 'plain:',
-        'xml'   => 'xml:'
+        'csv'   => 'text/csv',
+        'json'  => 'application/json',
+        'pdf'   => 'application/pdf',
+        'plain' => 'text/plain',
+        'xml'   => 'application/xml'
     ];
     const HTTP_METHODS = [
         'GET',
@@ -220,18 +222,12 @@ class Route
     private static function addRoute($url, string $method, $function, int $status) {
         $content_type = 'text/html';
 
-        //Xml
-        if (Str::startsWith($url, self::PREFIXES['xml'])) {
-            $url = Str::after($url, self::PREFIXES['xml']);
-            $content_type = 'application/xml';
-        //Json
-        } else if (Str::startsWith($url, self::PREFIXES['json'])) {
-            $url = Str::after($url, self::PREFIXES['json']);
-            $content_type = 'application/json';
-        //Plain
-        } else if (Str::startsWith($url, self::PREFIXES['plain'])) {
-            $url = Str::after($url, self::PREFIXES['plain']);
-            $content_type = 'text/plain';
+        foreach (self::PREFIXES as $key => $val) {
+            $prefix_key = $key . ':';
+            if (Str::startsWith($url, $prefix_key)) {
+                $url = Str::after($url, $prefix_key);
+                $content_type = $val;
+            }
         }
 
         self::$routes[$url] = [

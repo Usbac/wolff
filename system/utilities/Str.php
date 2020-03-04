@@ -16,7 +16,7 @@ class Str
      */
     public static function sanitizeUrl(string $url)
     {
-        return filter_var(rtrim(strtolower($url), '/'), FILTER_SANITIZE_URL);
+        return filter_var(rtrim($url, '/'), FILTER_SANITIZE_URL);
     }
 
 
