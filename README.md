@@ -11,7 +11,7 @@
 <p align="center">
 <img src="https://img.shields.io/badge/stability-stable-green.svg">
 <a href="https://packagist.org/packages/usbac/wolff"><img src="https://poser.pugx.org/usbac/wolff/d/total.svg"></a>
-<img src="https://img.shields.io/badge/version-2.7.0-blue.svg">
+<img src="https://img.shields.io/badge/version-2.8.0-blue.svg">
 <img src="https://img.shields.io/badge/license-MIT-orange.svg">
 </p>
 
