@@ -61,17 +61,18 @@ class Route
      */
     public static function __callStatic(string $name, $args)
     {
-        $method = strtoupper($name);
-        if (!in_array($method, self::HTTP_METHODS)) {
+        $http_method = strtoupper($name);
+        if (!in_array($http_method, self::HTTP_METHODS)) {
             return;
         }
 
+        $url = Str::sanitizeURL($args[0]);
+        $function = $args[1];
         $status = isset($args[2]) && is_numeric($args[2]) ?
             (int)$args[2] :
             self::STATUS_OK;
 
-        $url = Str::sanitizeURL($args[0]);
-        self::addRoute($url, $method, $args[1], $status);
+        self::addRoute($url, $http_method, $function, $status);
     }
 
 
@@ -96,7 +97,8 @@ class Route
     {
         $code = http_response_code();
 
-        if (isset(self::$codes[$code]) && is_callable(self::$codes[$code])) {
+        if (isset(self::$codes[$code]) &&
+            is_callable(self::$codes[$code])) {
             self::$codes[$code]();
         }
     }
