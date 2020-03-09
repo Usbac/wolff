@@ -23,6 +23,13 @@ class stdlibTest extends TestCase
             ]
         ];
 
+        $assoc_arr = [
+            'name'    => 'Evan You',
+            'country' => 'China'
+        ];
+
+        $non_assoc_arr = [ 'Evan You', 'China' ];
+
         $this->assertTrue(isJson(self::JSON));
         $this->assertEquals(CONFIG['db_password'], config('db_password'));
         $this->assertEquals($arr['user']['name'], val($arr, 'user.name'));
@@ -34,6 +41,8 @@ class stdlibTest extends TestCase
         $this->assertTrue(isBool('1'));
         $this->assertTrue(local());
         $this->assertTrue(inCli());
+        $this->assertTrue(isAssoc($assoc_arr));
+        $this->assertFalse(isAssoc($non_assoc_arr));
     }
 
 }

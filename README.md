@@ -39,22 +39,16 @@ Wolff is small, fast, scalable and easy. The perfect solution for building small
 
 
 ## What's included
-
-* [**Database abstraction layer**](https://github.com/Usbac/wolff/wiki/Database): Which simplifies the process of running queries and includes useful functions.
-
-* [**DI Container**](https://github.com/Usbac/wolff/wiki/Container): For managing class dependencies and performing DI.
-
-* [**Language system**](https://github.com/Usbac/wolff/wiki/Language): For managing multiple languages easily and quickly.
-
-* [**Middleware system**](https://github.com/Usbac/wolff/wiki/Middleware): Which gives you more control over your requests/responses.
-
-* [**Routing system**](https://github.com/Usbac/wolff/wiki/Routes): Have clean URLs, make redirections and block certain pages recursively.
-
-* [**Standard library**](https://github.com/Usbac/wolff/wiki/Standard-library): With numerous incredible functions related to strings, numbers, debugging and arrays.
-
-* [**Template engine**](https://github.com/Usbac/wolff/wiki/Template): Which you can use to write cleaner and safer code in your views while avoiding things like the php tags.
-
-* **Multiple utilities**: Including a [authentication](https://github.com/Usbac/wolff/wiki/Authentication), [pagination](https://github.com/Usbac/wolff/wiki/Pagination), [uploader](https://github.com/Usbac/wolff/wiki/Uploader) and [validation](https://github.com/Usbac/wolff/wiki/Validation) utility.
+| Element                                                                        | Description                                                                                                                                                                                                                                                                        |
+|--------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [**Database abstraction layer**](https://github.com/Usbac/wolff/wiki/Database) | Which simplifies the process of running queries and includes useful functions.                                                                                                                                                                                                     |
+| [**DI Container**](https://github.com/Usbac/wolff/wiki/Container)              | For managing class dependencies and performing DI.                                                                                                                                                                                                                                 |
+| [**Language system**](https://github.com/Usbac/wolff/wiki/Language)            | For managing multiple languages easily and quickly.                                                                                                                                                                                                                                |
+| [**Middleware system**](https://github.com/Usbac/wolff/wiki/Middleware)        | Which gives you more control over your requests/responses.                                                                                                                                                                                                                         |
+| [**Routing system**](https://github.com/Usbac/wolff/wiki/Routes)               | Have clean URLs, make redirections and block certain pages recursively.                                                                                                                                                                                                            |
+| [**Standard library**](https://github.com/Usbac/wolff/wiki/Standard-library)   | With numerous incredible functions related to strings, numbers, debugging and arrays.                                                                                                                                                                                              |
+| [**Template engine**](https://github.com/Usbac/wolff/wiki/Template)            | Which you can use to write cleaner and safer code in your views while avoiding things like the php tags.                                                                                                                                                                           |
+| **Multiple utilities**                                                         | Including a [authentication](https://github.com/Usbac/wolff/wiki/Authentication), [pagination](https://github.com/Usbac/wolff/wiki/Pagination), [uploader](https://github.com/Usbac/wolff/wiki/Uploader) and [validation](https://github.com/Usbac/wolff/wiki/Validation) utility. |
 
 And more...
 
@@ -96,11 +90,13 @@ _Running the command with high privileges is required since some files will be c
 
 First time using it? Read the [Wiki](https://github.com/Usbac/Wolff/wiki).
 
-Want to create a route/page? Read the [Route page](https://github.com/Usbac/wolff/wiki/Routes).
+### Want to...
 
-Want to use the database or run queries? Read the [DB Page](https://github.com/Usbac/wolff/wiki/Database).
+Create a route/page? Read the [Route page](https://github.com/Usbac/wolff/wiki/Routes).
 
-Want to use the container? Read the [Container Page](https://github.com/Usbac/wolff/wiki/Container).
+Use the database or run queries? Read the [DB Page](https://github.com/Usbac/wolff/wiki/Database).
+
+Use the container? Read the [Container Page](https://github.com/Usbac/wolff/wiki/Container).
 
 ## Contributing
 
