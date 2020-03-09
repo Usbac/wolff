@@ -34,6 +34,11 @@ class Route
     private static $routes = [];
 
     /**
+     * List of routes for status codes.
+     */
+    private static $codes = [];
+
+    /**
      * List of blocked routes.
      *
      * @var array
@@ -67,6 +72,33 @@ class Route
 
         $url = Str::sanitizeURL($args[0]);
         self::addRoute($url, $method, $args[1], $status);
+    }
+
+
+    /**
+     * Add a route that will work
+     * only for a status code
+     *
+     * @param  string  $code  the status code
+     * @param  mixed  $function  mixed the function that must be executed
+     * when getting the status code
+     */
+    public static function code(string $code, $function)
+    {
+        self::$codes[trim($code)] = $function;
+    }
+
+
+    /**
+     * Execute a code route based on the current status code
+     */
+    public static function execCode()
+    {
+        $code = http_response_code();
+
+        if (isset(self::$codes[$code]) && is_callable(self::$codes[$code])) {
+            self::$codes[$code]();
+        }
     }
 
 

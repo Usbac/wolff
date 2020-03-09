@@ -266,6 +266,30 @@ class DB
 
 
     /**
+     * Inserts an array into the specified table
+     * or null in case of errors
+     *
+     * @param  string  $table  the table for the query
+     * @param  array  $data  the data to insert
+     *
+     * @return mixed the query result object or null in
+     * case of errors
+     */
+    public static function insert(string $table, array $data)
+    {
+        if (empty($data) || !isAssoc($data)) {
+            return null;
+        }
+
+        $table = self::escape($table);
+        $columns = implode(', ', array_keys($data));
+        $values = implode(', ', array_fill(1, count($data), '?'));
+
+        return DB::run("INSERT INTO $table ($columns) VALUES ($values)", array_values($data));
+    }
+
+
+    /**
      * Returns the result of a SELECT ALL query
      * WARNING: The conditions parameter must be manually escaped
      *

@@ -2,6 +2,23 @@
 
 namespace {
 
+    if (!function_exists('isAssoc')) {
+
+        /**
+         * Returns true if the given array is
+         * associative (numbers as keys), false otherwise.
+         *
+         * @param  array  $arr  the array
+         *
+         * @return bool true if the given array is associative,
+         * false otherwise
+         */
+        function isAssoc(array $arr)
+        {
+            return (array_keys($arr) !== range(0, count($arr) -1));
+        }
+    }
+
     if (!function_exists('val')) {
 
         /**

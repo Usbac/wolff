@@ -62,7 +62,9 @@ class Start
             Middleware::loadBefore();
             $this->loadPage();
             Middleware::loadAfter();
+            Route::execCode();
         } else {
+            Route::execCode();
             self::load404();
         }
     }
