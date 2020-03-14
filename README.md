@@ -9,7 +9,7 @@
 <h4 align="center">Ridiculously small PHP framework.</h4>
 
 <p align="center">
-<img src="https://img.shields.io/badge/stability-stable-green.svg">
+<a href="https://opencollective.com/wolff" alt="Financial Contributors on Open Collective"><img src="https://opencollective.com/wolff/all/badge.svg?label=financial+contributors" /></a> <img src="https://img.shields.io/badge/stability-stable-green.svg">
 <a href="https://packagist.org/packages/usbac/wolff"><img src="https://poser.pugx.org/usbac/wolff/d/total.svg"></a>
 <img src="https://img.shields.io/badge/version-2.8.0-blue.svg">
 <img src="https://img.shields.io/badge/license-MIT-orange.svg">
@@ -104,6 +104,36 @@ Any contribution or support to this project in the form of a pull request or mes
 
 Don't be shy :)
 
+
+## Contributors
+
+### Code Contributors
+
+This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
+<a href="https://github.com/Usbac/wolff/graphs/contributors"><img src="https://opencollective.com/wolff/contributors.svg?width=890&button=false" /></a>
+
+### Financial Contributors
+
+Become a financial contributor and help us sustain our community. [[Contribute](https://opencollective.com/wolff/contribute)]
+
+#### Individuals
+
+<a href="https://opencollective.com/wolff"><img src="https://opencollective.com/wolff/individuals.svg?width=890"></a>
+
+#### Organizations
+
+Support this project with your organization. Your logo will show up here with a link to your website. [[Contribute](https://opencollective.com/wolff/contribute)]
+
+<a href="https://opencollective.com/wolff/organization/0/website"><img src="https://opencollective.com/wolff/organization/0/avatar.svg"></a>
+<a href="https://opencollective.com/wolff/organization/1/website"><img src="https://opencollective.com/wolff/organization/1/avatar.svg"></a>
+<a href="https://opencollective.com/wolff/organization/2/website"><img src="https://opencollective.com/wolff/organization/2/avatar.svg"></a>
+<a href="https://opencollective.com/wolff/organization/3/website"><img src="https://opencollective.com/wolff/organization/3/avatar.svg"></a>
+<a href="https://opencollective.com/wolff/organization/4/website"><img src="https://opencollective.com/wolff/organization/4/avatar.svg"></a>
+<a href="https://opencollective.com/wolff/organization/5/website"><img src="https://opencollective.com/wolff/organization/5/avatar.svg"></a>
+<a href="https://opencollective.com/wolff/organization/6/website"><img src="https://opencollective.com/wolff/organization/6/avatar.svg"></a>
+<a href="https://opencollective.com/wolff/organization/7/website"><img src="https://opencollective.com/wolff/organization/7/avatar.svg"></a>
+<a href="https://opencollective.com/wolff/organization/8/website"><img src="https://opencollective.com/wolff/organization/8/avatar.svg"></a>
+<a href="https://opencollective.com/wolff/organization/9/website"><img src="https://opencollective.com/wolff/organization/9/avatar.svg"></a>
 
 ## License
 
