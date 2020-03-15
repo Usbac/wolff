@@ -439,30 +439,4 @@ class Str
         return strval($var);
     }
 
-
-    /**
-     * Returns the directory path with the slashes replaced by backslashes
-     *
-     * @param  string  $path  the directory path
-     *
-     * @return string the directory path with the slashes replaced by backslashes
-     */
-    public static function pathToNamespace(string $path)
-    {
-        return str_replace('/', '\\', $path);
-    }
-
-
-    /**
-     * Returns the directory path with the backslashes replaced by slashes
-     *
-     * @param  string  $path  the directory path
-     *
-     * @return string the directory path with the backslashes replaced by slashes
-     */
-    public static function namespaceToPath(string $path)
-    {
-        return str_replace('\\', '/', $path);
-    }
-
 }
