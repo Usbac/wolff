@@ -14,5 +14,4 @@ define('CORE_CONFIG', [
 
     //Default controllers
     'controller_maintenance' => '_maintenance',
-    'controller_404'         => '_404',
 ]);

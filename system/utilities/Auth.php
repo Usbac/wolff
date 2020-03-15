@@ -135,7 +135,7 @@ class Auth extends \Core\DB
         $values = implode(' AND ', $values);
         $table = self::getTable();
 
-        $user = parent::run("SELECT * from `$table` WHERE $values", $data)->first();
+        $user = parent::query("SELECT * from `$table` WHERE $values", $data)->first();
 
         if (!array_key_exists('password', $user)) {
             self::$user = null;

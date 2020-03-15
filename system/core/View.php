@@ -25,7 +25,7 @@ class View
             return;
         }
 
-        Template::render($dir, $data, $cache);
+        echo Template::getRender($dir, $data, $cache);
     }
 
 

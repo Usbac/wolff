@@ -37,6 +37,7 @@ class Template
      */
     private static $templates = [];
 
+
     /**
      * Returns true if the template system is enabled, false otherwise
      * @return bool true if the template system is enabled, false otherwise
@@ -44,20 +45,6 @@ class Template
     public static function isEnabled()
     {
         return CONFIG['template_on'];
-    }
-
-
-    /**
-     * Applies the template format over a view and renders it.
-     * The template format will be applied only if the template is enabled.
-     *
-     * @param  string  $dir  the view directory
-     * @param  array  $data  the data array present in the view
-     * @param  bool  $cache  use or not the cache system
-     */
-    public static function render(string $dir, array $data, bool $cache)
-    {
-        echo self::getRender($dir, $data, $cache);
     }
 
 

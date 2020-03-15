@@ -56,7 +56,7 @@ class Start
             Maintenance::call();
         }
 
-        $this->initialize();
+        Cache::initialize();
 
         if ($this->exists()) {
             Middleware::loadBefore();
@@ -64,8 +64,8 @@ class Start
             Middleware::loadAfter();
             Route::execCode();
         } else {
+            header(self::HEADER_404);
             Route::execCode();
-            self::load404();
         }
     }
 
@@ -109,39 +109,17 @@ class Start
 
 
     /**
-     * Initialize the core classes
-     */
-    private function initialize()
-    {
-        DB::initialize();
-        Cache::initialize();
-    }
-
-
-    /**
      * Returns the current url processed
      *
      * @return  string  the current url processed
      */
     private function getUrl()
     {
-        $url = $_GET['url'] !== null ?
+        $url = isset($_GET['url']) ?
             Str::sanitizeUrl($_GET['url']) :
             (CONFIG['main_page'] ?? '');
 
         return Route::getRedirection($url) ?? $url;
-    }
-
-
-    /**
-     * Load the 404 page
-     * Warning: This method stops the current script
-     */
-    public function load404()
-    {
-        header(self::HEADER_404);
-        Controller::call(CORE_CONFIG['controller_404']);
-        exit;
     }
 
 }

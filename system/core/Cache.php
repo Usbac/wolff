@@ -197,7 +197,7 @@ class Cache
      *
      * @return string the cache directory of the project
      */
-    private function getDir(string $path = '')
+    private static function getDir(string $path = '')
     {
         return CONFIG['cache_dir'] . '/' . $path;
     }
