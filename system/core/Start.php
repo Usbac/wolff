@@ -59,8 +59,9 @@ class Start
         Cache::initialize();
 
         if ($this->exists()) {
+            $req = $this->getRequest();
             Middleware::loadBefore();
-            $this->loadPage();
+            $this->loadPage($req);
             Middleware::loadAfter();
             Route::execCode();
         } else {
@@ -71,30 +72,46 @@ class Start
 
 
     /**
+     * Returns a new request object
+     *
+     * @return  \Core\Http\Request  The new request object
+     */
+    private function getRequest()
+    {
+        return new \Core\Http\Request(
+            $_GET,
+            $_POST,
+            $_FILES,
+            $_SERVER
+        );
+    }
+
+
+    /**
      * Load the requested page
      *
      * @return  mixed  the method return value
      */
-    private function loadPage()
+    private function loadPage(\Core\Http\Request $req)
     {
         //Append the current route closure to a new controller and call it
         if (isset($this->function)) {
             if ($this->function instanceof \Closure) {
-                return ($this->function)();
+                return ($this->function)($req);
             }
 
             $path = explode('@', $this->function);
-            return Controller::method($path[0], $path[1] ?? 'index');
+            return Controller::method($path[0], $path[1] ?? 'index', [ $req ]);
         }
 
         //Call controller's index
         if (Controller::exists($this->url)) {
-            return Controller::call($this->url);
+            return Controller::method($this->url, 'index', [ $req ]);
         }
 
         //Call controller's method
         if (Controller::methodExists($this->controller, $this->method)) {
-            return Controller::method($this->controller, $this->method);
+            return Controller::method($this->controller, $this->method, [ $req ]);
         }
     }
 

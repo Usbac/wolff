@@ -1,6 +1,6 @@
 <?php
 
-namespace Core;
+namespace Core\Http;
 
 class Request
 {
@@ -62,8 +62,12 @@ class Request
      *
      * @return mixed The specified parameter.
      */
-    public function param(string $key)
+    public function param(string $key = null)
     {
+        if (!isset($key)) {
+            return $this->params;
+        }
+
         return val($this->params, $key);
     }
 
@@ -93,6 +97,10 @@ class Request
      */
     public function body(string $key)
     {
+        if (!isset($key)) {
+            return $this->body;
+        }
+
         return val($this->body, $key);
     }
 
@@ -119,8 +127,12 @@ class Request
      *
      * @return mixed The specified file.
      */
-    public function file(string $key)
+    public function file(string $key = null)
     {
+        if (!isset($key)) {
+            return $this->files;
+        }
+
         return $this->files[$key];
     }
 
