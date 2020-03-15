@@ -133,21 +133,11 @@ class Middleware
 
 
     /**
-     * Returns true if the middleware folder exists, false otherwise
-     * @return bool true if the middleware folder exists, false otherwise
-     */
-    private static function folderExists()
-    {
-        return file_exists(self::FOLDER);
-    }
-
-
-    /**
      * Make the middleware folder directory if it doesn't exists
      */
     private static function mkdir()
     {
-        if (!self::folderExists()) {
+        if (!file_exists(self::FOLDER)) {
             mkdir(self::FOLDER);
         }
     }
@@ -184,46 +174,4 @@ class Middleware
         ];
     }
 
-
-    /**
-     * Get the middlewares list
-     *
-     * @param  string the middlewares filename
-     *
-     * @return array the middlewares list if the name is empty or the specified middleware otherwise
-     */
-    public static function get(string $name = null)
-    {
-        //Specified middleware
-        if (isset($name)) {
-            $class = self::NAMESPACE . $name;
-
-            if (class_exists($class)) {
-                return Factory::middleware($name)->desc;
-            }
-
-            return false;
-        }
-
-        //All the middlewares
-        $files = glob(Str::interpolate(self::FILE_PATH, [
-            'app' => CONFIG['app_dir'],
-            'dir' => self::ALL,
-        ]));
-
-        $middlewares = [];
-
-        foreach ($files as $file) {
-            $filename = basename($file, '.php');
-            $middleware = Factory::middleware($filename);
-
-            $middlewares[] = [
-                'name'        => $middleware->desc['name'] ?? '',
-                'description' => $middleware->desc['description'] ?? '',
-                'filename'    => $filename
-            ];
-        }
-
-        return $middlewares;
-    }
 }
