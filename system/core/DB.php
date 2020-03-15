@@ -147,7 +147,7 @@ class DB
      *
      * @return mixed the query result object
      */
-    public static function run(string $sql, $args = [])
+    public static function query(string $sql, $args = [])
     {
         self::$last_sql = $sql;
         self::$last_args = is_array($args) ? $args : [$args];
