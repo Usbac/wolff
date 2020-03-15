@@ -197,17 +197,17 @@ class Route
 
 
     /**
-     * Returns true if the route exists and it's
+     * Returns true if the route exists and its
      * request method matches the current methods
      *
      * @param  string  $key  the route key
-     * @return boolean true if the route exists and it's
+     * @return boolean true if the route exists and its
      * request method matches the current methods
      */
     private static function isValidRoute($key)
     {
-        return (self::$routes[$key] &&
-            (self::$routes[$key]['method'] === '' || Request::matchesMethod(self::$routes[$key]['method'])));
+        return self::$routes[$key] &&
+            in_array(self::$routes[$key]['method'], [ '', $_SERVER['REQUEST_METHOD']]);
     }
 
 
@@ -389,7 +389,7 @@ class Route
     private static function setGetVar(string $key, $value)
     {
         $key = preg_replace(self::GET_FORMAT, '$1', $key);
-        Request::setGet($key, $value);
+        $_GET[$key] = $value;
     }
 
 
@@ -402,7 +402,7 @@ class Route
     private static function setOptionalGetVar(string $key, $value = null)
     {
         $key = preg_replace(self::OPTIONAL_GET_FORMAT, '$1', $key);
-        Request::setGet($key, $value ?? '');
+        $_GET[$key] = $value ?? '';
     }
 
 

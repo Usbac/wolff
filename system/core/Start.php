@@ -125,8 +125,8 @@ class Start
      */
     private function getUrl()
     {
-        $url = Request::hasGet('url') ?
-            Str::sanitizeUrl(Request::get('url')) :
+        $url = $_GET['url'] !== null ?
+            Str::sanitizeUrl($_GET['url']) :
             (CONFIG['main_page'] ?? '');
 
         return Route::getRedirection($url) ?? $url;

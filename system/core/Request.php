@@ -5,352 +5,160 @@ namespace Core;
 class Request
 {
 
-    const FIVE_YEARS_TIME = 157680000;
-    const MONTH_TIME = 2629743;
-    const DAY_TIME = 86400;
-    const HOUR_TIME = 3600;
-    const ROOT_PATH = '/';
-    const PHP_INPUT = 'php://input';
+    /**
+     * List of parameters
+     *
+     * @var array
+     */
+    private $params;
+
+    /**
+     * List of body parameters
+     *
+     * @var array
+     */
+    private $body;
+
+    /**
+     * List of files
+     *
+     * @var array
+     */
+    private $files;
+
+    /**
+     * Current server superglobal
+     *
+     * @var array
+     */
+    private $server;
 
 
     /**
-     * Returns the current HTTP method
+     * Default constructor
      *
-     * @return string the current HTTP method
+     * @param  array  $params  the url parameters
+     * @param  array  $body  the body parameters
+     * @param  array  $files  the files
+     * @param  array  $server  the superglobal server
      */
-    public static function getMethod()
+    public function __construct(array $params,
+                                array $body,
+                                array $files,
+                                array $server)
     {
-        return $_SERVER['REQUEST_METHOD'];
-    }
-
-
-    /**
-     * Returns true if the given HTTP method is equal to
-     * the current method, false otherwise
-     *
-     * @param  string  $method  the HTTP method to compare
-     *
-     * @return string true if the given HTTP method is equal to
-     * the current method, false otherwise
-     */
-    public static function matchesMethod(string $method)
-    {
-        return $_SERVER['REQUEST_METHOD'] === strtoupper($method);
-    }
-
-
-    /**
-     * Returns the superglobal GET array or the specified value
-     *
-     * @param  string  $key  the key
-     *
-     * @return mixed the superglobal GET array or the specified value
-     */
-    public static function get(string $key = null)
-    {
-        if (!isset($key)) {
-            return $_GET;
-        }
-
-        return $_GET[$key] ?? null;
+        $this->params = $_GET;
+        $this->body = $_POST;
+        $this->files = $_FILES;
+        $this->server = $_SERVER;
     }
 
 
     /**
-     * Returns true if the GET variable exists, false otherwise
+     * Returns the specified parameter.
+     * The key parameter accepts dot notation
      *
-     * @param  string  $key  the variable key
+     * @param  string  $key  the parameter key
      *
-     * @return bool true if the GET variable exists, false otherwise
+     * @return mixed The specified parameter.
      */
-    public static function hasGet(string $key)
+    public function param(string $key)
     {
-        return array_key_exists($key, $_GET);
+        return val($this->params, $key);
     }
 
 
     /**
-     * Set a GET variable
+     * Returns true if the specified parameter is set,
+     * false otherwise.
      *
-     * @param  string  $key  the key
-     * @param  mixed  $value  the variable value
+     * @param  string  $key  the parameter key
+     *
+     * @return bool True if the specified parameter is set,
+     * false otherwise.
      */
-    public static function setGet(string $key, $value)
+    public function hasParam(string $key)
     {
-        $_GET[$key] = $value;
+        return val($this->params, $key) !== null;
     }
 
 
     /**
-     * Unset a GET variable
+     * Returns the specified body parameter.
+     * The key parameter accepts dot notation
      *
-     * @param  string  $key  the key
+     * @param  string  $key  the body parameter key
+     *
+     * @return mixed The specified body parameter.
      */
-    public static function unsetGet(string $key = null)
+    public function body(string $key)
     {
-        if (!isset($key)) {
-            $_GET = [];
-        }
-
-        unset($_GET[$key]);
+        return val($this->body, $key);
     }
 
 
     /**
-     * Returns the superglobal POST array or the specified value
+     * Returns true if the specified body parameter is set,
+     * false otherwise.
      *
-     * @param  string  $key  the key
+     * @param  string  $key  the parameter key
      *
-     * @return mixed the superglobal POST array or the specified value
+     * @return bool True if the specified body parameter is set,
+     * false otherwise.
      */
-    public static function post(string $key = null)
+    public function has(string $key)
     {
-        if (!isset($key)) {
-            return $_POST;
-        }
-
-        return $_POST[$key] ?? null;
+        return val($this->body, $key) !== null;
     }
 
 
     /**
-     * Returns true if the POST variable exists, false otherwise
+     * Returns the specified file.
      *
-     * @param  string  $key  the variable key
+     * @param  string  $key  the file key
      *
-     * @return bool true if the POST variable exists, false otherwise
+     * @return mixed The specified file.
      */
-    public static function hasPost(string $key)
+    public function file(string $key)
     {
-        return array_key_exists($key, $_POST);
+        return $this->files[$key];
     }
 
 
     /**
-     * Set a POST variable
+     * Returns true if the specified file is set,
+     * false otherwise.
      *
-     * @param  string  $key  the key
-     * @param  mixed  $value  the variable value
+     * @param  string  $key  the parameter key
+     *
+     * @return bool True if the specified file is set,
+     * false otherwise.
      */
-    public static function setPost(string $key, $value)
+    public function hasFile(string $key)
     {
-        $_POST[$key] = $value;
+        return array_key_exists($key, $this->files);
     }
 
 
     /**
-     * Unset a POST variable
+     * Returns the request method
      *
-     * @param  string  $key  the key
+     * @return string The request method
      */
-    public static function unsetPost(string $key = null)
+    public function getMethod()
     {
-        if (!isset($key)) {
-            $_POST = [];
-        }
-
-        unset($_POST[$key]);
+        return $this->server['REQUEST_METHOD'];
     }
 
 
     /**
-     * Returns the PUT array or the specified value
+     * Returns the request uri
      *
-     * @param  string  $key  the key
-     *
-     * @return mixed the PUT array or the specified value
+     * @return string The request uri
      */
-    public static function put(string $key = null)
+    public function getUrl()
     {
-        parse_str(file_get_contents(Self::PHP_INPUT), $_PUT);
-
-        if (!isset($key)) {
-            return $_PUT;
-        }
-
-        return $_PUT[$key] ?? null;
+        return $this->server['REQUEST_URI'];
     }
 
-
-    /**
-     * Returns true if the PUT variable exists, false otherwise
-     *
-     * @param  string  $key  the variable key
-     *
-     * @return bool true if the PUT variable exists, false otherwise
-     */
-    public static function hasPut(string $key = null)
-    {
-        parse_str(file_get_contents(Self::PHP_INPUT), $_PUT);
-        return array_key_exists($key, $_POST);
-    }
-
-
-   /**
-     * Returns the PATCH array or the specified value
-     *
-     * @param  string  $key  the key
-     *
-     * @return mixed the PATCH array or the specified value
-     */
-    public static function patch(string $key = null)
-    {
-        parse_str(file_get_contents(Self::PHP_INPUT), $_PATCH);
-
-        if (!isset($key)) {
-            return $_PATCH;
-        }
-
-        return $_PATCH[$key] ?? null;
-    }
-
-
-    /**
-     * Returns true if the PATCH variable exists, false otherwise
-     *
-     * @param  string  $key  the variable key
-     *
-     * @return bool true if the PATCH variable exists, false otherwise
-     */
-    public static function hasPatch(string $key = null)
-    {
-        parse_str(file_get_contents(Self::PHP_INPUT), $_PATCH);
-        return array_key_exists($key, $_PATCH);
-    }
-
-
-   /**
-     * Returns the DELETE array or the specified value
-     *
-     * @param  string  $key  the key
-     *
-     * @return mixed the DELETE array or the specified value
-     */
-    public static function delete(string $key = null)
-    {
-        parse_str(file_get_contents(Self::PHP_INPUT), $_DELETE);
-
-        if (!isset($key)) {
-            return $_DELETE;
-        }
-
-        return $_DELETE[$key] ?? null;
-    }
-
-
-    /**
-     * Returns true if the DELETE variable exists, false otherwise
-     *
-     * @param  string  $key  the variable key
-     *
-     * @return bool true if the DELETE variable exists, false otherwise
-     */
-    public static function hasDelete(string $key = null)
-    {
-        parse_str(file_get_contents(Self::PHP_INPUT), $_DELETE);
-        return array_key_exists($key, $_DELETE);
-    }
-
-
-    /**
-     * Returns the superglobal FILES array or the specified value
-     *
-     * @param  string  $key  the key
-     *
-     * @return mixed the superglobal FILES array or the specified value
-     */
-    public static function file(string $key = null)
-    {
-        if (!isset($key)) {
-            return $_FILES;
-        }
-
-        return $_FILES[$key] ?? null;
-    }
-
-
-    /**
-     * Returns true if the FILE variable exists, false otherwise
-     *
-     * @param  string  $key  the variable key
-     *
-     * @return bool true if the FILE variable exists, false otherwise
-     */
-    public static function hasFile(string $key)
-    {
-        return array_key_exists($key, $_FILES);
-    }
-
-
-    /**
-     * Returns the superglobal COOKIE array or the specified value
-     *
-     * @param  string  $key  the key
-     *
-     * @return mixed the superglobal COOKIE array or the specified value
-     */
-    public static function cookie(string $key = null)
-    {
-        if (!isset($key)) {
-            return $_COOKIE;
-        }
-
-        return $_COOKIE[$key] ?? null;
-    }
-
-
-    /**
-     * Returns true if the COOKIE variable exists, false otherwise
-     *
-     * @param  string  $key  the variable key
-     *
-     * @return bool true if the COOKIE variable exists, false otherwise
-     */
-    public static function hasCookie(string $key)
-    {
-        return array_key_exists($key, $_COOKIE);
-    }
-
-
-    /**
-     * Set a COOKIE variable
-     *
-     * @param  string  $key  the cookie key
-     * @param  mixed  $value  the cookie value
-     * @param  mixed  $time  the cookie time
-     * @param  string  $path  the path where the cookie will work
-     */
-    public static function setCookie(string $key, $value, $time, string $path = self::ROOT_PATH)
-    {
-        if ($time === 'forever') {
-            $time = self::FIVE_YEARS_TIME;
-        }
-
-        if ($time === 'month') {
-            $time = self::MONTH_TIME;
-        }
-
-        if ($time === 'day') {
-            $time = self::DAY_TIME;
-        }
-
-        setCookie($key, $value, time() + $time, $path);
-    }
-
-
-    /**
-     * Unset a COOKIE variable
-     *
-     * @param  string  $key  the cookie key
-     */
-    public static function unsetCookie(string $key = null)
-    {
-        if (!isset($key)) {
-            $_COOKIE = [];
-            return;
-        }
-
-        unset($_COOKIE[$key]);
-        setCookie($key, '', time() - self::HOUR_TIME);
-    }
 }
