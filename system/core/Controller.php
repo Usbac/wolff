@@ -28,7 +28,7 @@ class Controller
 
     /**
      * Instantiate the controller with the giving name and
-     * call it's index method if it exists
+     * call its index method if it exists
      *
      * @param  string  $dir  the controller name
      *
@@ -62,7 +62,7 @@ class Controller
      * @return mixed the return value of the controller's method
      * or null in case of errors
      */
-    public static function method(string $controller_name, string $method, array $params = [])
+    public static function method(string $controller_name, string $method = 'index', array $params = [])
     {
         $controller = Factory::controller($controller_name);
 

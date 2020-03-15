@@ -79,7 +79,12 @@ class Start
     {
         //Append the current route closure to a new controller and call it
         if (isset($this->function)) {
-            return Controller::closure($this->function);
+            if ($this->function instanceof \Closure) {
+                return ($this->function)();
+            }
+
+            $path = explode('@', $this->function);
+            return Controller::method($path[0], $path[1] ?? 'index');
         }
 
         //Call controller's index
