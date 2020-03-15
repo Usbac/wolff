@@ -25,14 +25,13 @@
   },
   "autoload": {
     "files": [
-      "system/config.php",
-      "system/stdlib/config.php",
-      "system/stdlib/utilities.php"
+      "src/config.php",
+      "src/stdlib.php"
     ],
     "psr-4": {
-      "Core\\": "system/core/",
-      "Definitions\\": "system/definitions",
-      "Utilities\\": "system/utilities/",
+      "Wolff\\": "src/core/",
+      "Definitions\\": "src/definitions",
+      "Utilities\\": "src/utilities/",
       "App\\": "app/",
       "Middleware\\": "app/middlewares/",
       "Controller\\": "app/controllers/"
