@@ -2,7 +2,6 @@
 
 namespace Utilities;
 
-use Core\Request;
 use Utilities\Str;
 
 class Validation
@@ -14,13 +13,6 @@ class Validation
      * @var array
      */
     private $data = [];
-
-    /**
-     * The request method data to evaluate.
-     *
-     * @var array
-     */
-    private $type;
 
     /**
      * The fields rules.
