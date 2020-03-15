@@ -78,8 +78,7 @@ class Response
      */
     public function header(string $key, string $value)
     {
-        $key = trim($key);
-        $this->headers[$key] = $value;
+        $this->headers[trim($key)] = $value;
 
         return $this;
     }

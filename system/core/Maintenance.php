@@ -136,7 +136,7 @@ class Maintenance
     /**
      * Create the text file with the IP whitelist
      */
-    public static function createFile()
+    private static function createFile()
     {
         if (!is_file(self::$file)) {
             file_put_contents(self::$file, '');
@@ -148,7 +148,7 @@ class Maintenance
      * Returns true if the current client IP is in the whitelist, false otherwise
      * @return bool true if the current client IP is in the whitelist, false otherwise
      */
-    public static function isClientAllowed()
+    private static function isClientAllowed()
     {
         if (self::getAllowedIPs() === false) {
             return false;
