@@ -119,7 +119,7 @@ class Upload
             return false;
         }
 
-        $dir = getServerRoot() . '/' . $this->directory;
+        $dir = $_SERVER['DOCUMENT_ROOT'] . '/' . $this->directory;
         if (!move_uploaded_file($file['tmp_name'], $dir . $file['name'])) {
             Log::notice("Upload of '" . $file['name'] . "' failed");
 

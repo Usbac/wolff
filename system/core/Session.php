@@ -56,7 +56,7 @@ class Session
             return false;
         }
 
-        if ($_SESSION['userAgent'] != getUserAgent()) {
+        if ($_SESSION['userAgent'] != $_SERVER['HTTP_USER_AGENT']) {
             return false;
         }
 
@@ -72,7 +72,7 @@ class Session
         self::empty();
 
         $_SESSION['IPaddress'] = getClientIP();
-        $_SESSION['userAgent'] = getUserAgent();
+        $_SESSION['userAgent'] = $_SERVER['HTTP_USER_AGENT'];
         $_SESSION['start_time'] = microtime(true);
         $_SESSION['vars_tmp_time'] = [];
     }

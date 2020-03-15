@@ -294,30 +294,6 @@ namespace {
         }
     }
 
-    if (!function_exists('getUserAgent')) {
-
-        /**
-         * Returns the HTTP user agent
-         * @return string the HTTP user agent
-         */
-        function getUserAgent()
-        {
-            return $_SERVER['HTTP_USER_AGENT'];
-        }
-    }
-
-    if (!function_exists('getServerRoot')) {
-
-        /**
-         * Returns the server root directory
-         * @return string the server root directory
-         */
-        function getServerRoot()
-        {
-            return $_SERVER['DOCUMENT_ROOT'];
-        }
-    }
-
     if (!function_exists('getCurrentPage')) {
 
         /**
@@ -371,25 +347,6 @@ namespace {
         function inCli()
         {
             return (php_sapi_name() === 'cli');
-        }
-    }
-
-    if (!function_exists('deleteFilesInDir')) {
-
-        /**
-         * Delete all the files in the given directory
-         *
-         * @param  string  $dir  the directory path
-         */
-        function deleteFilesInDir($dir)
-        {
-            $files = glob($dir . '/*');
-
-            foreach ($files as $file) {
-                if (is_file($file)) {
-                    unlink($file);
-                }
-            }
         }
     }
 

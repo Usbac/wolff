@@ -164,12 +164,16 @@ class Cache
 
     /**
      * Delete all the cache files
-     *
-     * @return bool true if the item was successfully removed, false otherwise
      */
     public static function clear()
     {
-        return deleteFilesInDir(self::getDir());
+        $files = glob(self::getDir() . '/*');
+
+        foreach ($files as $file) {
+            if (is_file($file)) {
+                unlink($file);
+            }
+        }
     }
 
 
