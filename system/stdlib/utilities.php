@@ -269,48 +269,6 @@ namespace {
         }
     }
 
-    if (!function_exists('arrayToCsv')) {
-
-        /**
-         * Convert an array content into a csv file and download it
-         *
-         * @param  string  $filename  the desired filename without extension
-         * @param  array  $array  the array
-         * @param  bool  $printKeys  print the array keys or not
-         */
-        function arrayToCsv(string $filename, array $array, bool $printKeys = true)
-        {
-            $filename .= ".csv";
-            $file = fopen($filename, 'w');
-
-            //Single array
-            if (count($array) === count($array, COUNT_RECURSIVE)) {
-                if ($printKeys) {
-                    fputcsv($file, array_keys($array));
-                }
-
-                fputcsv($file, $array);
-            //Multidimensional array
-            } else {
-                if ($printKeys) {
-                    fputcsv($file, array_keys($array[0]));
-                }
-
-                foreach ($array as $row) {
-                    fputcsv($file, $row);
-                }
-            }
-
-            fclose($file);
-
-            header('Content-Description: File Transfer');
-            header('Content-Type: text/csv; charset=utf-8');
-            header('Content-Disposition: attachment; filename=' . basename($filename));
-            header('Content-Length: ' . filesize($filename));
-            readfile($filename);
-        }
-    }
-
     if (!function_exists('getClientIP')) {
 
         /**
