@@ -50,7 +50,7 @@ class Cache
      */
     public static function getContent(string $dir)
     {
-        $file_path = self::getPath($dir);
+        $file_path = self::getDir(self::getFilename($dir));
 
         if (file_exists($file_path)) {
             return file_get_contents($file_path);
@@ -59,19 +59,6 @@ class Cache
 
             return false;
         }
-    }
-
-
-    /**
-     * Return the specified cache file path
-     *
-     * @param  string  $dir  the cache filename
-     *
-     * @return string return the specified cache file path
-     */
-    public static function getPath(string $dir)
-    {
-        return self::getDir(self::getFilename($dir));
     }
 
 
@@ -85,7 +72,7 @@ class Cache
      */
     public static function set(string $dir, string $content)
     {
-        $file_path = self::getPath($dir);
+        $file_path = self::getDir(self::getFilename($dir));
 
         if (!file_exists($file_path)) {
             self::mkdir();
@@ -105,7 +92,7 @@ class Cache
      *
      * @return bool true if the cache file has expired, false otherwise
      */
-    public static function expired($dir)
+    private static function expired($dir)
     {
         if (!file_exists($dir)) {
             return false;
@@ -184,7 +171,7 @@ class Cache
      *
      * @return string the filename with the cache format
      */
-    public static function getFilename(string $dir)
+    private static function getFilename(string $dir)
     {
         return sprintf(self::FILENAME_FORMAT, str_replace('/', '_', $dir));
     }
