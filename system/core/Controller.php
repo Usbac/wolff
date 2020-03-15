@@ -136,7 +136,7 @@ class Controller
      */
     public static function methodExists(string $controller_name, string $method)
     {
-        $class = self::NAMESPACE . Str::pathToNamespace($controller_name);
+        $class = self::NAMESPACE . str_replace('/', '\\', $controller_name);
 
         if (!class_exists($class)) {
             return false;

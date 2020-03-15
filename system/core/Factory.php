@@ -63,7 +63,7 @@ class Factory
             return new Controller;
         }
 
-        $class = self::NAMESPACE_CONTROLLER . Str::pathToNamespace($dir);
+        $class = self::NAMESPACE_CONTROLLER . str_replace('/', '\\', $dir);
 
         if (!class_exists($class)) {
             Log::error("The controller class '$dir' doesn't exists");
