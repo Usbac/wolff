@@ -23,18 +23,21 @@ class Factory
      */
     public static function connection(array $options)
     {
-        if (empty($options) || empty(getDB())) {
+        if (empty($options) || empty(CONFIG['db'])) {
             return false;
         }
 
         $dsn = Str::interpolate(self::DSN, [
-            'dbms'   => getDBMS(),
-            'server' => getServer(),
-            'db'     => getDB(),
+            'dbms'   => CONFIG['dbms'] ?? '',
+            'server' => CONFIG['server'] ?? '',
+            'db'     => CONFIG['db'] ?? '',
         ]);
 
+        $username = CONFIG['db_username'] ?? '';
+        $password = CONFIG['db_password'] ?? '';
+
         try {
-            $connection = new PDO($dsn, getDbUser(), getDbPass(), $options);
+            $connection = new PDO($dsn, $username, $password, $options);
             self::setEncoding($connection);
         } catch (PDOException $e) {
             Log::critical($e->getMessage());

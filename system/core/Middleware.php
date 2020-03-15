@@ -9,6 +9,7 @@ class Middleware
 
     const NAMESPACE = 'Middleware\\';
     const FILE = 'system/definitions/Middlewares.php';
+    const FOLDER = CONFIG['app_dir'] . '/' . CORE_CONFIG['middlewares_dir'];
     const FILE_PATH = '{app}/' . CORE_CONFIG['middlewares_dir'] . '/{dir}.php';
     const BEFORE = 'before';
     const AFTER = 'after';
@@ -63,7 +64,7 @@ class Middleware
      */
     public static function loadBefore()
     {
-        return self::load(Middleware::BEFORE);
+        return self::load(self::BEFORE);
     }
 
 
@@ -74,7 +75,7 @@ class Middleware
      */
     public static function loadAfter()
     {
-        return self::load(Middleware::AFTER);
+        return self::load(self::AFTER);
     }
 
 
@@ -135,19 +136,19 @@ class Middleware
      * Returns true if the middleware folder exists, false otherwise
      * @return bool true if the middleware folder exists, false otherwise
      */
-    public static function folderExists()
+    private static function folderExists()
     {
-        return file_exists(getAppDir(CORE_CONFIG['middlewares_dir']));
+        return file_exists(self::FOLDER);
     }
 
 
     /**
      * Make the middleware folder directory if it doesn't exists
      */
-    public static function mkdir()
+    private static function mkdir()
     {
         if (!self::folderExists()) {
-            mkdir(getAppDir(CORE_CONFIG['middlewares_dir']));
+            mkdir(self::FOLDER);
         }
     }
 

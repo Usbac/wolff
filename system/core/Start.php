@@ -126,7 +126,7 @@ class Start
     private function getUrl()
     {
         $url = Request::hasGet('url') ?
-            Str::sanitizeUrl(Request::get('url')) : getMainPage();
+            Str::sanitizeUrl(Request::get('url')) : (CONFIG['main_page'] ?? '');
 
         return Route::getRedirection($url) ?? $url;
     }

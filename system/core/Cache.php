@@ -19,7 +19,7 @@ class Cache
             return;
         }
 
-        $files = glob(getCacheDir('*.php'));
+        $files = glob(self::getDir('*.php'));
 
         foreach ($files as $file) {
             if (self::expired($file)) {
@@ -71,7 +71,7 @@ class Cache
      */
     public static function getPath(string $dir)
     {
-        return getCacheDir(self::getFilename($dir));
+        return self::getDir(self::getFilename($dir));
     }
 
 
@@ -120,9 +120,8 @@ class Cache
      */
     public static function mkdir()
     {
-        $folder_path = getCacheDir();
-        if (!file_exists($folder_path)) {
-            mkdir($folder_path, self::FOLDER_PERMISSIONS, true);
+        if (!file_exists(self::getDir())) {
+            mkdir(self::getDir(), self::FOLDER_PERMISSIONS, true);
         }
     }
 
@@ -136,7 +135,7 @@ class Cache
      */
     public static function has(string $dir)
     {
-        $file_path = getCacheDir(self::getFilename($dir));
+        $file_path = self::getDir(self::getFilename($dir));
 
         return is_file($file_path);
     }
@@ -151,7 +150,7 @@ class Cache
      */
     public static function delete(string $dir)
     {
-        $file_path = getCacheDir(self::getFilename($dir));
+        $file_path = self::getDir(self::getFilename($dir));
 
         if (is_file($file_path)) {
             unlink($file_path);
@@ -170,7 +169,7 @@ class Cache
      */
     public static function clear()
     {
-        return deleteFilesInDir(getCacheDir());
+        return deleteFilesInDir(self::getDir());
     }
 
 
@@ -184,6 +183,19 @@ class Cache
     public static function getFilename(string $dir)
     {
         return sprintf(self::FILENAME_FORMAT, str_replace('/', '_', $dir));
+    }
+
+
+    /**
+     * Returns the cache directory of the project
+     *
+     * @param  string  $path  the optional path to append
+     *
+     * @return string the cache directory of the project
+     */
+    private function getDir(string $path = '')
+    {
+        return CONFIG['cache_dir'] . '/' . $path;
     }
 
 }
