@@ -68,23 +68,6 @@ class Validation
 
 
     /**
-     * Set a request method array as the data to validate
-     *
-     * @param  string  $type  the method type
-     *
-     * @return self
-     */
-    public function setType(string $type)
-    {
-        if (in_array(strtoupper($type), self::HTTP_METHODS)) {
-            $this->data = Request::{strtolower($type)}();
-        }
-
-        return $this;
-    }
-
-
-    /**
      * Set the fields rules
      *
      * @param  array  $fields  the associative array
