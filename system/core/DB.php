@@ -7,61 +7,54 @@ use PDO;
 class DB
 {
 
-    const DEFAULT_FETCH_MODE = PDO::FETCH_ASSOC;
-    const DEFAULT_ERROR_MODE = PDO::ERRMODE_EXCEPTION;
+    const DEFAULT_OPTIONS = [
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION
+    ];
 
     /**
      * DB connection.
      *
      * @var PDO
      */
-    protected static $connection;
+    protected $connection;
 
     /**
      * The last query executed.
      *
      * @var string
      */
-    protected static $last_sql;
+    protected $last_sql;
 
     /**
      * The arguments of the last query executed.
      *
      * @var array
      */
-    protected static $last_args;
+    protected $last_args;
 
     /**
      * The last PDO statement executed.
      *
      * @var \PDOStatement
      */
-    protected static $last_stmt;
+    protected $last_stmt;
 
 
     /**
      * Initializes the database connection
      */
-    public static function initialize()
+    public function __construct(array $data = null, array $options = null)
     {
-        if (!self::isEnabled() || self::$connection) {
-            return;
+        if ($data === null) {
+            $data = CONFIG;
         }
 
-        self::$connection = Factory::connection([
-            PDO::ATTR_DEFAULT_FETCH_MODE => self::DEFAULT_FETCH_MODE,
-            PDO::ATTR_ERRMODE            => self::DEFAULT_ERROR_MODE
-        ]);
-    }
+        if ($options === null) {
+            $options = self::DEFAULT_OPTIONS;
+        }
 
-
-    /**
-     * Returns true if the database is enabled, false otherwise
-     * @return bool true if the database is enabled, false otherwise
-     */
-    public static function isEnabled()
-    {
-        return CONFIG['db_on'];
+        $this->connection = Factory::connection($data, $options);
     }
 
 
@@ -69,9 +62,9 @@ class DB
      * Returns the PDO connection
      * @return PDO the PDO connection
      */
-    public static function getPdo()
+    public function getPdo()
     {
-        return self::$connection;
+        return $this->connection;
     }
 
 
@@ -79,9 +72,9 @@ class DB
      * Returns the last query executed
      * @return string the last query executed
      */
-    public static function getLastSql()
+    public function getLastSql()
     {
-        return self::$last_sql;
+        return $this->last_sql;
     }
 
 
@@ -89,9 +82,9 @@ class DB
      * Returns the arguments of the last query executed
      * @return array the arguments of the last query executed
      */
-    public static function getLastArgs()
+    public function getLastArgs()
     {
-        return self::$last_args;
+        return $this->last_args;
     }
 
 
@@ -99,9 +92,9 @@ class DB
      * Returns the last prepared PDO statement
      * @return \PDOStatement the last prepared PDO statement
      */
-    public static function getLastStmt()
+    public function getLastStmt()
     {
-        return self::$last_stmt;
+        return $this->last_stmt;
     }
 
 
@@ -109,9 +102,9 @@ class DB
      * Returns the last inserted id in the database
      * @return string the last inserted id in the database
      */
-    public static function getLastId()
+    public function getLastId()
     {
-        return self::getPdo()->lastInsertId();
+        return $this->connection->lastInsertId();
     }
 
 
@@ -119,9 +112,9 @@ class DB
      * Returns the number of rows affected by the last query
      * @return int|null the number of rows affected by the last query
      */
-    public static function getAffectedRows()
+    public function getAffectedRows()
     {
-        return self::$last_stmt ? self::$last_stmt->rowCount() : null;
+        return $this->last_stmt ? $this->last_stmt->rowCount() : null;
     }
 
 
@@ -133,9 +126,9 @@ class DB
      *
      * @return mixed the function result
      */
-    public static function __callStatic($method, $args)
+    public function __call($method, $args)
     {
-        return call_user_func_array([ self::getPdo(), $method], $args);
+        return call_user_func_array([ $this->connection, $method ], $args);
     }
 
 
@@ -147,21 +140,21 @@ class DB
      *
      * @return mixed the query result object
      */
-    public static function query(string $sql, $args = [])
+    public function query(string $sql, $args = [])
     {
-        self::$last_sql = $sql;
-        self::$last_args = is_array($args) ? $args : [$args];
+        $this->last_sql = $sql;
+        $this->last_args = is_array($args) ? $args : [$args];
 
         //Query without args
-        if (!isset(self::$last_args)) {
-            $result = self::getPdo()->query($sql);
+        if (!isset($this->last_args)) {
+            $result = $this->connection->query($sql);
             return Factory::query($result);
         }
 
         //Query with args
-        $stmt = self::getPdo()->prepare($sql);
-        $stmt->execute(self::$last_args);
-        self::$last_stmt = $stmt;
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute($this->last_args);
+        $this->last_stmt = $stmt;
 
         return Factory::query($stmt);
     }
@@ -172,9 +165,9 @@ class DB
      *
      * @return mixed the last query result
      */
-    public static function runLastSql()
+    public function runLastSql()
     {
-        return self::run(self::getLastSql(), self::getLastArgs());
+        return $this->run($this->getLastSql(), $this->getLastArgs());
     }
 
 
@@ -185,12 +178,12 @@ class DB
      *
      * @return bool true if the specified table exists in the database, false otherwise
      */
-    public static function tableExists(string $table)
+    public function tableExists(string $table)
     {
-        $table = self::escape($table);
+        $table = $this->escape($table);
 
         try {
-            $result = self::getPdo()->query("SELECT 1 FROM $table LIMIT 1");
+            $result = $this->connection->query("SELECT 1 FROM $table LIMIT 1");
         } catch (\Exception $e) {
             return false;
         }
@@ -207,12 +200,12 @@ class DB
      *
      * @return bool true if the specified column exists in the table of the database, false otherwise
      */
-    public static function columnExists(string $table, string $column)
+    public function columnExists(string $table, string $column)
     {
-        $table = self::escape($table);
-        $column = self::escape($column);
+        $table = $this->escape($table);
+        $column = $this->escape($column);
 
-        $result = self::getPdo()->query("SHOW COLUMNS FROM $table LIKE $column");
+        $result = $this->connection->query("SHOW COLUMNS FROM $table LIKE $column");
         if (is_bool($result)) {
             return false;
         }
@@ -226,9 +219,9 @@ class DB
      *
      * @return array|bool the database schema or false if no tables exist in the database
      */
-    public static function getSchema()
+    public function getSchema()
     {
-        $tables = self::getPdo()->query('SHOW TABLES');
+        $tables = $this->connection->query('SHOW TABLES');
 
         if (is_bool($tables)) {
             return false;
@@ -237,7 +230,7 @@ class DB
         $database = [];
 
         while ($table = $tables->fetch(PDO::FETCH_NUM)[0]) {
-            $database[$table] = self::getTableSchema($table);
+            $database[$table] = $this->getTableSchema($table);
         }
 
         return $database;
@@ -252,10 +245,10 @@ class DB
      * @return array|bool the table schema from the database,
      * or false if the table columns doesn't exists
      */
-    public static function getTableSchema(string $table)
+    public function getTableSchema(string $table)
     {
-        $table = self::escape($table);
-        $result = self::getPdo()->query("SHOW COLUMNS FROM $table");
+        $table = $this->escape($table);
+        $result = $this->connection->query("SHOW COLUMNS FROM $table");
 
         if (is_bool($result)) {
             return false;
@@ -275,17 +268,17 @@ class DB
      * @return mixed the query result object or null in
      * case of errors
      */
-    public static function insert(string $table, array $data)
+    public function insert(string $table, array $data)
     {
         if (empty($data) || !isAssoc($data)) {
             return null;
         }
 
-        $table = self::escape($table);
+        $table = $this->escape($table);
         $columns = implode(', ', array_keys($data));
         $values = implode(', ', array_fill(1, count($data), '?'));
 
-        return DB::run("INSERT INTO $table ($columns) VALUES ($values)", array_values($data));
+        return $this->query("INSERT INTO $table ($columns) VALUES ($values)", array_values($data));
     }
 
 
@@ -299,11 +292,11 @@ class DB
      *
      * @return array the query result as an assosiative array
      */
-    public static function selectAll(string $table, string $conditions = '1', $args = null)
+    public function selectAll(string $table, string $conditions = '1', $args = null)
     {
-        $table = self::escape($table);
+        $table = $this->escape($table);
 
-        return DB::run("SELECT * FROM $table WHERE $conditions", $args)->get();
+        return $this->query("SELECT * FROM $table WHERE $conditions", $args)->get();
     }
 
 
@@ -317,10 +310,10 @@ class DB
      *
      * @return string the query result
      */
-    public static function countAll(string $table, string $conditions = '1', array $args = null)
+    public function countAll(string $table, string $conditions = '1', array $args = null)
     {
-        $table = self::escape($table);
-        $result = DB::run("SELECT COUNT(*) FROM $table WHERE $conditions", $args)->first();
+        $table = $this->escape($table);
+        $result = $this->query("SELECT COUNT(*) FROM $table WHERE $conditions", $args)->first();
 
         return empty($result) ? 0 : $result['COUNT(*)'];
     }
@@ -339,24 +332,24 @@ class DB
      *
      * @return bool true if the transaction has been made successfully, false otherwise
      */
-    public static function moveRows(string $ori_table, string $dest_table, string $conditions = '1', $args = null)
+    public function moveRows(string $ori_table, string $dest_table, string $conditions = '1', $args = null)
     {
-        $ori_table = self::escape($ori_table);
-        $dest_table = self::escape($dest_table);
+        $ori_table = $this->escape($ori_table);
+        $dest_table = $this->escape($dest_table);
 
         try {
-            $insert_stat = self::getPdo()->prepare("INSERT INTO $dest_table SELECT * FROM $ori_table WHERE $conditions");
-            $delete_stat = self::getPdo()->prepare("DELETE FROM $ori_table WHERE $conditions");
+            $insert_stat = $this->connection->prepare("INSERT INTO $dest_table SELECT * FROM $ori_table WHERE $conditions");
+            $delete_stat = $this->connection->prepare("DELETE FROM $ori_table WHERE $conditions");
 
-            self::getPdo()->beginTransaction();
+            $this->connection->beginTransaction();
 
             $insert_stat->execute($args);
             $delete_stat->execute($args);
 
-            self::getPdo()->commit();
+            $this->connection->commit();
         } catch (\Exception $e) {
-            if (self::getPdo()->inTransaction()) {
-                self::getPdo()->rollback();
+            if ($this->connection->inTransaction()) {
+                $this->connection->rollback();
                 return false;
             }
         }
@@ -375,11 +368,11 @@ class DB
      *
      * @return array the query result as an assosiative array
      */
-    public static function deleteAll(string $table, string $conditions = '1', array $args = null)
+    public function deleteAll(string $table, string $conditions = '1', array $args = null)
     {
-        $table = self::escape($table);
+        $table = $this->escape($table);
 
-        return DB::run("DELETE FROM $table WHERE $conditions", $args)->get();
+        return $this->query("DELETE FROM $table WHERE $conditions", $args)->get();
     }
 
 
@@ -391,7 +384,7 @@ class DB
      *
      * @return array the string escaped
      */
-    public static function escape($str)
+    public function escape($str)
     {
         return preg_replace('/[^A-Za-z0-9_]+/', '', $str);
     }

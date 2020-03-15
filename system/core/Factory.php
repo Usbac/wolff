@@ -15,34 +15,35 @@ class Factory
 
 
     /**
-     * Returns a PDO connection or false in case of errors
+     * Returns a PDO connection or null in case of errors
      *
+     * @param  array  $data  the data to connect to the database
      * @param  array  $options  the connection options
      *
-     * @return PDO|bool a PDO connection or false in case of errors
+     * @return PDO a PDO connection or null in case of errors
      */
-    public static function connection(array $options)
+    public static function connection(array $data, array $options)
     {
-        if (empty($options) || empty(CONFIG['db'])) {
-            return false;
+        if (empty($options) || empty($data['db'])) {
+            return null;
         }
 
         $dsn = Str::interpolate(self::DSN, [
-            'dbms'   => CONFIG['dbms'] ?? '',
-            'server' => CONFIG['server'] ?? '',
-            'db'     => CONFIG['db'] ?? '',
+            'dbms'   => $data['dbms'] ?? '',
+            'server' => $data['server'] ?? '',
+            'db'     => $data['db'] ?? '',
         ]);
 
-        $username = CONFIG['db_username'] ?? '';
-        $password = CONFIG['db_password'] ?? '';
+        $username = $data['db_username'] ?? '';
+        $password = $data['db_password'] ?? '';
 
         try {
             $connection = new PDO($dsn, $username, $password, $options);
-            self::setEncoding($connection);
+            $connection->prepare(self::DEFAULT_ENCODING)->execute();
         } catch (PDOException $e) {
             Log::critical($e->getMessage());
 
-            return false;
+            return null;
         }
 
         return $connection;
@@ -105,17 +106,6 @@ class Factory
     public static function query($results)
     {
         return new Query($results);
-    }
-
-
-    /**
-     * Set the default encoding for the connection
-     *
-     * @param  \PDO  $connection  the connection
-     */
-    private static function setEncoding($connection)
-    {
-        $connection->prepare(self::DEFAULT_ENCODING)->execute();
     }
 
 }
