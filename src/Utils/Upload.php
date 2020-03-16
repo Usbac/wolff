@@ -1,6 +1,6 @@
 <?php
 
-namespace Utilities;
+namespace Wolff\Utils;
 
 use Core\Log;
 

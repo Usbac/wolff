@@ -1,6 +1,6 @@
 <?php
 
-namespace Core;
+namespace Wolff\Core;
 
 class Cache
 {
@@ -13,7 +13,7 @@ class Cache
     /**
      * Delete the cache files that have expired
      */
-    public static function initialize()
+    public static function init()
     {
         if (!self::isEnabled()) {
             return;

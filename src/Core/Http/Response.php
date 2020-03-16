@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Http;
+namespace Wolff\Core\Http;
 
 class Response
 {

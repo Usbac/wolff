@@ -1,8 +1,8 @@
 <?php
 
-namespace Core;
+namespace Wolff\Core;
 
-use Utilities\Str;
+use Wolff\Utils\Str;
 
 class Start
 {
@@ -56,7 +56,7 @@ class Start
             Maintenance::call();
         }
 
-        Cache::initialize();
+        Cache::init();
 
         if ($this->exists()) {
             $req = $this->getRequest();
@@ -74,11 +74,11 @@ class Start
     /**
      * Returns a new request object
      *
-     * @return  \Core\Http\Request  The new request object
+     * @return  Http\Request  The new request object
      */
     private function getRequest()
     {
-        return new \Core\Http\Request(
+        return new Http\Request(
             $_GET,
             $_POST,
             $_FILES,
@@ -92,7 +92,7 @@ class Start
      *
      * @return  mixed  the method return value
      */
-    private function loadPage(\Core\Http\Request $req)
+    private function loadPage(Http\Request $req)
     {
         //Append the current route closure to a new controller and call it
         if (isset($this->function)) {

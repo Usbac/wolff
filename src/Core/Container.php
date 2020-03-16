@@ -1,6 +1,6 @@
 <?php
 
-namespace Core;
+namespace Wolff\Core;
 
 class Container implements ContainerInterface
 {

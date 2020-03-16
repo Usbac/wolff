@@ -1,8 +1,8 @@
 <?php
 
-namespace Utilities;
+namespace Wolff\Utils;
 
-class Auth extends \Core\DB
+class Auth extends \Wolff\Core\DB
 {
 
     const DEFAULT_TABLE = 'user';
@@ -12,7 +12,7 @@ class Auth extends \Core\DB
      *
      * @var array
      */
-    private static $options = [
+    private $options = [
         'cost' => '10',
     ];
 
@@ -21,7 +21,7 @@ class Auth extends \Core\DB
      *
      * @var string
      */
-    private static $table = self::DEFAULT_TABLE;
+    private $table = self::DEFAULT_TABLE;
 
     /**
      * The last currently authenticated
@@ -29,14 +29,26 @@ class Auth extends \Core\DB
      *
      * @var array
      */
-    private static $user = null;
+    private $user = null;
 
     /**
      * The last inserted user id.
      *
      * @var int
      */
-    private static $last_id = 0;
+    private $last_id = 0;
+
+
+    /**
+     * Initializes the database connection
+     *
+     * @param  array  $data  The array containing database authentication data
+     * @param  array  $options  The PDO connection options
+     */
+    public function __construct(array $data = null, array $options = null)
+    {
+        parent::__construct($data, $options);
+    }
 
 
     /**
@@ -44,7 +56,7 @@ class Auth extends \Core\DB
      *
      * @param  string  $table  the database table
      */
-    public static function setTable(string $table = self::DEFAULT_TABLE)
+    public function setTable(string $table = self::DEFAULT_TABLE)
     {
         self::$table = parent::escape($table);
     }
@@ -55,7 +67,7 @@ class Auth extends \Core\DB
      *
      * @return string the database table to be used
      */
-    public static function getTable()
+    public function getTable()
     {
         return self::$table;
     }
@@ -66,7 +78,7 @@ class Auth extends \Core\DB
      *
      * @param  array  $options  the password hash options
      */
-    public static function setOptions(array $options)
+    public function setOptions(array $options)
     {
         self::$options = $options;
     }
@@ -77,7 +89,7 @@ class Auth extends \Core\DB
      *
      * @return array the password hash options
      */
-    public static function getOptions()
+    public function getOptions()
     {
         return self::$options;
     }
@@ -88,7 +100,7 @@ class Auth extends \Core\DB
      *
      * @return int the last inserted id
      */
-    public static function getId()
+    public function getId()
     {
         return self::$last_id;
     }
@@ -101,7 +113,7 @@ class Auth extends \Core\DB
      * @return array the currently authenticated
      * user's data
      */
-    public static function getUser()
+    public function getUser()
     {
         return self::$user;
     }
@@ -117,7 +129,7 @@ class Auth extends \Core\DB
      * @return bool true if the given user data exists in the database
      * and is valid, false otherwise
      */
-    public static function login(array $data)
+    public function login(array $data)
     {
         //Fields validation
         if (!array_key_exists('password', $data)) {
@@ -162,7 +174,7 @@ class Auth extends \Core\DB
      * @return bool true if the registration has been successfully made,
      * false otherwise
      */
-    public static function register(array $data)
+    public function register(array $data)
     {
         //Fields validation
         if (!self::passwordMatches($data)) {
@@ -191,7 +203,7 @@ class Auth extends \Core\DB
      * @return bool true if the 'password' and the 'password_confirm' values
      * of the given array are equal, false otherwise
      */
-    private static function passwordMatches(array $data)
+    private function passwordMatches(array $data)
     {
         return (array_key_exists('password', $data) &&
                 array_key_exists('password_confirm', $data) &&
@@ -207,7 +219,7 @@ class Auth extends \Core\DB
      *
      * @return string the hashed password
      */
-    private static function getPassword(string $password)
+    private function getPassword(string $password)
     {
         return password_hash($password, PASSWORD_BCRYPT, self::$options);
     }
@@ -221,7 +233,7 @@ class Auth extends \Core\DB
      * @return bool true if the insertion has been successfully made,
      * false otherwise
      */
-    private static function insert($data)
+    private function insert($data)
     {
         $array_keys = array_keys($data);
 

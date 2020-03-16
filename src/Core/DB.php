@@ -1,6 +1,6 @@
 <?php
 
-namespace Core;
+namespace Wolff\Core;
 
 use PDO;
 
@@ -43,6 +43,9 @@ class DB
 
     /**
      * Initializes the database connection
+     *
+     * @param  array  $data  The array containing database authentication data
+     * @param  array  $options  The PDO connection options
      */
     public function __construct(array $data = null, array $options = null)
     {

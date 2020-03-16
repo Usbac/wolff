@@ -1,8 +1,8 @@
 <?php
 
-namespace Utilities;
+namespace Wolff\Utils;
 
-use Utilities\Str;
+use Wolff\Utils\Str;
 
 class Validation
 {

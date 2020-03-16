@@ -29,12 +29,7 @@
       "src/stdlib.php"
     ],
     "psr-4": {
-      "Wolff\\": "src/core/",
-      "Definitions\\": "src/definitions",
-      "Utilities\\": "src/utilities/",
-      "App\\": "app/",
-      "Middleware\\": "app/middlewares/",
-      "Controller\\": "app/controllers/"
+      "Wolff\\": "src/"
     }
   }
 }

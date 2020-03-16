@@ -1,8 +1,8 @@
 <?php
 
-namespace Core;
+namespace Wolff\Core;
 
-use Utilities\Str;
+use Wolff\Utils\Str;
 
 class View
 {
