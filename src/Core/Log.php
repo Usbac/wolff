@@ -10,7 +10,7 @@ class Log
     const FOLDER_PATH = CONFIG['system_dir'] . '/logs';
     const FOLDER_PERMISSIONS = 0755;
     const DATE_FORMAT = 'H:i:s';
-    const FORMAT = '[{date}] [{ip}] {level}: {message}';
+    const FORMAT = '[%s] [%s] %s: %s';
     const LEVELS = [
         'emergency',
         'alert',
@@ -67,15 +67,7 @@ class Log
         }
 
         $message = Str::interpolate($message, $values);
-
-        $values = [
-            'date'    => date(self::DATE_FORMAT),
-            'ip'      => getClientIP(),
-            'level'   => $level,
-            'message' => $message
-        ];
-
-        $log = Str::interpolate(self::FORMAT, $values);
+        $log = sprintf(self::FORMAT, date(self::DATE_FORMAT), \getClientIP(), $level, $message);
         self::writeToFile($log);
     }
 

@@ -52,7 +52,7 @@ class Start
      */
     public function load()
     {
-        if (!Maintenance::hasAccess()) {
+        if (CONFIG['maintenance_on'] && !Maintenance::hasAccess()) {
             Maintenance::call();
         }
 
@@ -60,9 +60,9 @@ class Start
 
         if ($this->exists()) {
             $req = $this->getRequest();
-            Middleware::loadBefore();
+            Middleware::loadBefore($this->url, $req);
             $this->loadPage($req);
-            Middleware::loadAfter();
+            Middleware::loadAfter($this->url, $req);
             Route::execCode();
         } else {
             header(self::HEADER_404);

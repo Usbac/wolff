@@ -139,13 +139,11 @@ class Template
     {
         $file_path = View::getPath($dir);
 
-        if (file_exists($file_path)) {
-            return file_get_contents($file_path);
-        } else {
-            Log::error("View '$dir' doesn't exists");
-
-            return false;
+        if (!file_exists($file_path)) {
+            throw new \Error("View '$dir' doesn't exists");
         }
+
+        return file_get_contents($file_path);
     }
 
 

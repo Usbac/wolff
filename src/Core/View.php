@@ -7,7 +7,7 @@ use Wolff\Utils\Str;
 class View
 {
 
-    const PATH_FORMAT = '{app}/' . CORE_CONFIG['views_dir'] . '/{dir}.' . CORE_CONFIG['views_format'];
+    const PATH_FORMAT = '%s/' . CORE_CONFIG['views_dir'] . '/%s.' . CORE_CONFIG['views_format'];
 
 
     /**
@@ -21,8 +21,8 @@ class View
     {
         $dir = Str::sanitizePath($dir);
 
-        if (!self::log($dir)) {
-            return;
+        if (!self::exists($dir)) {
+            throw new \Error("View '$dir' doesn't exists");
         }
 
         echo Template::getRender($dir, $data, $cache);
@@ -30,18 +30,18 @@ class View
 
 
     /**
-     * Returns the original view content or false in case of errors
+     * Returns the original view content
      *
      * @param  string  $view  the view directory
      *
-     * @return mixed the original view content or false in case of errors
+     * @return mixed the original view content
      */
     public static function getSource(string $view)
     {
         $view = Str::sanitizePath($view);
 
-        if (!self::log($view)) {
-            return false;
+        if (!self::exists($view)) {
+            throw new \Error("View '$view' doesn't exists");
         }
 
         return file_get_contents(self::getPath($view));
@@ -50,21 +50,21 @@ class View
 
     /**
      * Returns the view content with the template format applied
-     * over it, or false in case of errors
+     * over it
      *
      * @param  string  $dir  the view directory
      * @param  array  $data  the data
      * @param  bool  $cache  use or not the cache system
      *
      * @return mixed the view content with the template format applied
-     * over it, or false in case of errors
+     * over it
      */
     public static function get(string $dir, array $data = [], bool $cache = true)
     {
         $dir = Str::sanitizePath($dir);
 
-        if (!self::log($dir)) {
-            return false;
+        if (!self::exists($view)) {
+            throw new \Error("View '$view' doesn't exists");
         }
 
         return Template::get($dir, $data, $cache);
@@ -84,8 +84,8 @@ class View
     {
         $dir = Str::sanitizePath($dir);
 
-        if (!self::log($dir)) {
-            return false;
+        if (!self::exists($dir)) {
+            throw new \Error("View '$dir' doesn't exists");
         }
 
         return Template::getRender($dir, $data, $cache);
@@ -101,10 +101,7 @@ class View
      */
     public static function getPath(string $path)
     {
-        return Str::interpolate(self::PATH_FORMAT, [
-            'app' => CONFIG['app_dir'],
-            'dir' => $path
-        ]);
+        return sprintf(self::PATH_FORMAT, CONFIG['app_dir'], $path);
     }
 
 
@@ -119,26 +116,6 @@ class View
     public static function exists(string $dir)
     {
         return file_exists(self::getPath($dir));
-    }
-
-
-    /**
-     * Returns true if the view file exists, false otherwise.
-     * This functions logs an error message
-     *
-     * @param  string  $view  the view directory
-     *
-     * @return  bool true if the view file exists, false otherwise
-     */
-    private static function log(string $view)
-    {
-        if (!self::exists($view)) {
-            Log::error("View '$view' doesn't exists");
-
-            return false;
-        }
-
-        return true;
     }
 
 }

@@ -95,8 +95,6 @@ class Response
     {
         if (key_exists($key, $this->headers)) {
             unset($this->headers[$key]);
-        } else {
-            Log::notice("Undefined header '$key' in Response");
         }
 
         return $this;

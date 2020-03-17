@@ -2,8 +2,6 @@
 
 namespace Wolff\Utils;
 
-use Core\Log;
-
 class Upload
 {
 
@@ -114,15 +112,11 @@ class Upload
         $file = $_FILES[$filename];
 
         if (isset($this->maxSize) && $file['size'] > $this->maxSize) {
-            Log::notice("File '" . $file['name'] . "' exceeds maximum upload size");
-
             return false;
         }
 
         $dir = $_SERVER['DOCUMENT_ROOT'] . '/' . $this->directory;
         if (!move_uploaded_file($file['tmp_name'], $dir . $file['name'])) {
-            Log::notice("Upload of '" . $file['name'] . "' failed");
-
             return false;
         }
 

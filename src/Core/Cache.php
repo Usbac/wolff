@@ -40,13 +40,11 @@ class Cache
 
 
     /**
-     * Returns the content of the cache file,
-     * or false in case of errors
+     * Returns the content of the cache file
      *
      * @param  string  $dir  the cache filename
      *
-     * @return string return the content of the cache file,
-     * or false in case of errors
+     * @return string return the content of the cache file
      */
     public static function getContent(string $dir)
     {
@@ -54,11 +52,9 @@ class Cache
 
         if (file_exists($file_path)) {
             return file_get_contents($file_path);
-        } else {
-            Log::error("Cache '$dir' doesn't exists");
-
-            return false;
         }
+
+        throw new \Error("Cache '$dir' doesn't exists");
     }
 
 

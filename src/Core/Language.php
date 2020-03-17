@@ -7,22 +7,19 @@ use Wolff\Utils\Str;
 class Language
 {
 
-    const BAD_FILE_ERROR = 'The {language} language file for \'{dir}\' doesn\'t return an associative array';
-    const EXISTS_ERROR = 'The {language} language for \'{dir}\' doesn\'t exists';
-    const EMPTY_WARNING = 'The {language} language content for \'{dir}\' is empty';
-    const KEY_WARNING = 'The \'{key}\' key doesn\'t exists in the {language} language array';
-    const PATH_FORMAT = '{app}/' . CORE_CONFIG['languages_dir'] . '/{language}/{dir}.php';
+    const BAD_FILE_ERROR = 'The %s language file for \'%s\' doesn\'t return an associative array';
+    const PATH_FORMAT = '%s/' . CORE_CONFIG['languages_dir'] . '/%s/%s.php';
 
 
     /**
-     * Returns the content of a language, or false in case
-     * of errors
+     * Returns the content of a language, or false if
+     * it doesn't exists
      *
      * @param  string  $dir  the language directory
      * @param  string  $language  the language selected
      *
-     * @return mixed the content of a language, or false in case
-     * of errors
+     * @return mixed the content of a language, or false if
+     * it doesn't exists
      */
     public static function get(string $dir, string $language = CONFIG['language'])
     {
@@ -36,42 +33,14 @@ class Language
         if (self::exists($dir, $language)) {
             $data = (include self::getPath($dir, $language));
         } else {
-            Log::error(Str::interpolate(self::EXISTS_ERROR, [
-                'language' => $language,
-                'dir'      => $dir
-            ]));
-
             return false;
         }
 
         if (!is_array($data)) {
-            Log::error(Str::interpolate(self::BAD_FILE_ERROR, [
-                'language' => $language,
-                'dir'      => $dir
-            ]));
-
-            return false;
-        }
-
-        if (empty($data)) {
-            Log::warning(Str::interpolate(self::EMPTY_WARNING, [
-                'language' => $language,
-                'dir'      => $dir
-            ]));
-
-            return false;
+            throw new \Error(sprintf(self::BAD_FILE_ERROR, $language, $dir));
         }
 
         if (isset($key)) {
-            if (!array_key_exists($key, $data)) {
-                Log::warning(Str::interpolate(self::KEY_WARNING, [
-                    'key'      => $key,
-                    'language' => $language
-                ]));
-
-                return false;
-            }
-
             return $data[$key];
         }
 
@@ -89,11 +58,7 @@ class Language
      */
     private static function getPath(string $dir, string $language)
     {
-        return Str::interpolate(self::PATH_FORMAT, [
-            'app'      => CONFIG['app_dir'],
-            'language' => $language,
-            'dir'      => $dir
-        ]);
+        return sprintf(self::PATH_FORMAT, CONFIG['app_dir'], $language, $dir);
     }
 
 

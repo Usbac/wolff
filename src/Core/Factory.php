@@ -10,17 +10,17 @@ class Factory
 
     const NAMESPACE_CONTROLLER = 'Controller\\';
     const NAMESPACE_MIDDLEWARE = 'Middleware\\';
-    const DSN = '{dbms}:host={server}; dbname={db}';
+    const DSN = '%s:host=%s; dbname=%s';
     const DEFAULT_ENCODING = 'set names utf8mb4 collate utf8mb4_unicode_ci';
 
 
     /**
-     * Returns a PDO connection or null in case of errors
+     * Returns a PDO connection
      *
      * @param  array  $data  the data to connect to the database
      * @param  array  $options  the connection options
      *
-     * @return PDO a PDO connection or null in case of errors
+     * @return PDO a PDO connection
      */
     public static function connection(array $data, array $options)
     {
@@ -28,11 +28,7 @@ class Factory
             return null;
         }
 
-        $dsn = Str::interpolate(self::DSN, [
-            'dbms'   => $data['dbms'] ?? '',
-            'server' => $data['server'] ?? '',
-            'db'     => $data['db'] ?? '',
-        ]);
+        $dsn = sprintf(self::DSN, $data['dbms'] ?? '', $data['server'] ?? '', $data['db'] ?? '');
 
         $username = $data['db_username'] ?? '';
         $password = $data['db_password'] ?? '';
@@ -40,10 +36,8 @@ class Factory
         try {
             $connection = new PDO($dsn, $username, $password, $options);
             $connection->prepare(self::DEFAULT_ENCODING)->execute();
-        } catch (PDOException $e) {
-            Log::critical($e->getMessage());
-
-            return null;
+        } catch (PDOException $err) {
+            throw $err;
         }
 
         return $connection;
@@ -51,11 +45,11 @@ class Factory
 
 
     /**
-     * Returns a controller initialized or false if it doesn't exists
+     * Returns a controller initialized
      *
      * @param  string  $dir  the controller directory
      *
-     * @return object|bool a controller initialized or false if it doesn't exists
+     * @return object|bool a controller initialized
      */
     public static function controller(string $dir = null)
     {
@@ -67,9 +61,7 @@ class Factory
         $class = self::NAMESPACE_CONTROLLER . str_replace('/', '\\', $dir);
 
         if (!class_exists($class)) {
-            Log::error("The controller class '$dir' doesn't exists");
-
-            return false;
+            throw new \Error("The controller class '$dir' doesn't exists");
         }
 
         return new $class;
@@ -77,20 +69,18 @@ class Factory
 
 
     /**
-     * Returns a middleware initialized or false if it doesn't exists
+     * Returns a middleware initialized
      *
      * @param  string  $name  the middleware name
      *
-     * @return object|bool a middleware initialized or false if it doesn't exists
+     * @return object|bool a middleware initialized
      */
     public static function middleware(string $name)
     {
         $class = self::NAMESPACE_MIDDLEWARE . $name;
 
         if (!class_exists($class)) {
-            Log::error("The middleware class '$name' doesn't exists");
-
-            return false;
+            throw new \Error("The middleware class '$dir' doesn't exists");
         }
 
         return new $class;

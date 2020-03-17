@@ -7,171 +7,115 @@ use Wolff\Utils\Str;
 class Middleware
 {
 
-    const NAMESPACE = 'Middleware\\';
-    const FILE = 'system/definitions/Middlewares.php';
-    const FOLDER = CONFIG['app_dir'] . '/' . CORE_CONFIG['middlewares_dir'];
-    const FILE_PATH = '{app}/' . CORE_CONFIG['middlewares_dir'] . '/{dir}.php';
-    const BEFORE = 'before';
-    const AFTER = 'after';
-    const ALL = '*';
-
     /**
      * List of middlewares
+     * of type before
      *
      * @var array
      */
-    private static $middlewares;
+    private static $middlewares_before = [];
+
+    /**
+     * List of middlewares
+     * of type after
+     *
+     * @var array
+     */
+    private static $middlewares_after = [];
+
+    /**
+     * Continue or not to the
+     * next middleware
+     *
+     * @var bool
+     */
+    private static $next = false;
 
 
     /**
      * Load all the middlewares files that matches the current route
      *
      * @param  string  $type  the type of middlewares to load
-     *
-     * @return bool true if the middlewares have been loaded, false otherwise
+     * @param  string  $url  the url to match the middlewares
+     * @param  Http\Request  $req  the request object
      */
-    private static function load(string $type)
+    private static function load(string $type, string $url, Http\Request $req)
     {
-        if (!self::isEnabled() || empty(self::$middlewares)) {
-            return false;
+        if (empty(self::${'middlewares_' . $type})) {
+            return;
         }
 
-        self::mkdir();
+        $middlewares = self::${'middlewares_' . $type};
+        self::$next = false;
 
-        foreach (self::$middlewares as $ext) {
-            if ($ext['type'] !== $type || !self::matchesRoute($ext['route']) ||
-                !class_exists(self::NAMESPACE . $ext['name'])) {
-                continue;
+        $url = explode('/', $url);
+        $url_length = count($url) - 1;
+        foreach ($middlewares as $key => $val) {
+            $middleware = explode('/', $val['url']);
+            $middleware_length = count($val['url']) - 1;
+
+            for ($i = 0; $i <= $middleware_length && $i <= $url_length; $i++) {
+                if ($url[$i] !== $middleware[$i] && $middleware[$i] !== '*') {
+                    break;
+                }
+
+                if ($middleware[$i] === '*' ||
+                    ($i === $url_length && $i === $middleware_length)) {
+                    $val['function']($req, function() {
+                        self::$next = true;
+                    });
+                    break;
+                }
             }
 
-            $middleware = Factory::middleware($ext['name']);
-
-            if (method_exists($middleware, 'index')) {
-                $middleware->index();
-            } else {
-                Log::error("The middleware '" . $ext['name'] . "' doesn't have an index method");
+            if (!self::$next) {
+                break;
             }
         }
-
-        return true;
     }
 
 
     /**
      * Load the middlewares files of type before that matches the current route
      *
-     * @return bool true if the middlewares have been loaded, false otherwise
+     * @param  string  $url  the url to match the middlewares
+     * @param  Http\Request  $req  the request object
      */
-    public static function loadBefore()
+    public static function loadBefore(string $url, Http\Request $req)
     {
-        return self::load(self::BEFORE);
+        self::load('before', $url, $req);
     }
 
 
     /**
      * Load the middlewares files of type after that matches the current route
      *
-     * @return bool true if the middlewares have been loaded, false otherwise
+     * @param  string  $url  the url to match the middlewares
+     * @param  Http\Request  $req  the request object
      */
-    public static function loadAfter()
+    public static function loadAfter(string $url, Http\Request $req)
     {
-        return self::load(self::AFTER);
+        self::load('after', $url, $req);
     }
 
 
     /**
-     * Returns true if the middlewares are enabled, false otherwise
-     * @return bool true if the middlewares are enabled, false otherwise
-     */
-    public static function isEnabled()
-    {
-        return CONFIG['middlewares_on'];
-    }
-
-
-    /**
-     * Returns true if the directory matches the current url, false otherwise
+     * Proxy to call the middlewares of type
+     * before and after
      *
-     * @param  string  $dir  the directory
-     *
-     * @return bool true if the directory matches the current url, false otherwise
+     * @param  string  $type  the type of middlewares to load
+     * @param  array  $args  the arguments
      */
-    private static function matchesRoute(string $dir)
+    public static function __callStatic(string $type, $args)
     {
-        if (empty($dir)) {
-            return false;
+        if (!in_array($type, [ 'before', 'after' ])) {
+            return;
         }
 
-        $dir = explode('/', Str::sanitizeURL($dir));
-        $dir_length = count($dir) - 1;
-
-        $url = explode('/', Str::sanitizeURL(getCurrentPage()));
-        $url_length = count($url) - 1;
-
-        for ($i = 0; $i <= $dir_length && $i <= $url_length; $i++) {
-            if ($dir[$i] === self::ALL) {
-                return true;
-            }
-
-            if ($url[$i] != $dir[$i] && !empty($dir[$i]) && !Route::isGetVar($dir[$i])) {
-                return false;
-            }
-
-            //Finish if last GET variable from url is empty
-            if ($i + 1 === $dir_length && $i === $url_length && Route::isGetVar($dir[$i + 1])) {
-                return true;
-            }
-
-            //Finish if in the end of the route
-            if ($i === $dir_length && $i === $url_length) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-
-    /**
-     * Make the middleware folder directory if it doesn't exists
-     */
-    private static function mkdir()
-    {
-        if (!file_exists(self::FOLDER)) {
-            mkdir(self::FOLDER);
-        }
-    }
-
-
-    /**
-     * Add an middleware of type after
-     *
-     * @param  string  $route  the desired route where it will work
-     * @param  string  $middleware_name  the middleware name
-     */
-    public static function after(string $route, string $middleware_name)
-    {
-        self::$middlewares[] = [
-            'name'  => $middleware_name,
-            'route' => $route,
-            'type'  => self::AFTER
-        ];
-    }
-
-
-    /**
-     * Add an middleware of type before
-     *
-     * @param  string  $route  the desired route where it will work
-     * @param  string  $middleware_name  the middleware name
-     */
-    public static function before(string $route, string $middleware_name)
-    {
-        self::$middlewares[] = [
-            'name'  => $middleware_name,
-            'route' => $route,
-            'type'  => self::BEFORE
-        ];
+        array_push(self::${'middlewares_' . $type}, [
+            'url'      => Str::sanitizeURL($args[0]),
+            'function' => $args[1]
+        ]);
     }
 
 }

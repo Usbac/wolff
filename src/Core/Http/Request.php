@@ -95,7 +95,7 @@ class Request
      *
      * @return mixed The specified body parameter.
      */
-    public function body(string $key)
+    public function body(string $key = null)
     {
         if (!isset($key)) {
             return $this->body;

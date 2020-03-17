@@ -8,8 +8,8 @@ class Controller
 {
 
     const NAMESPACE = 'Controller\\';
-    const EXISTS_ERROR = 'The controller class \'{controller}\' doesn\'t have a \'{method}\' method';
-    const PATH_FORMAT = '{app}/' . CORE_CONFIG['controllers_dir'] . '/{dir}.php';
+    const EXISTS_ERROR = 'The controller class \'%s\' doesn\'t have a \'%s\' method';
+    const PATH_FORMAT = '%s/' . CORE_CONFIG['controllers_dir'] . '/%s.php';
 
 
     /**
@@ -20,6 +20,9 @@ class Controller
     protected $data;
 
 
+    /**
+     * Default constructor
+     */
     public function __construct()
     {
         $this->data = [];
@@ -32,7 +35,7 @@ class Controller
      *
      * @param  string  $dir  the controller name
      *
-     * @return \Core\Controller the controller
+     * @return \Wolff\Core\Controller the controller
      */
     public static function call(string $dir)
     {
@@ -70,17 +73,14 @@ class Controller
             return call_user_func_array([$controller, $method], $params);
         }
 
-        Log::error(Str::interpolate(self::EXISTS_ERROR, [
-            'controller' => $controller_name,
-            'method'     => $method
-        ]));
+        throw new \Error(sprintf(self::EXISTS_ERROR, $controller_name, $method));
 
         return null;
     }
 
 
     /**
-     * Append a function to the Core\Controller class and execute it
+     * Append a function to the \Wolff\Core\Controller class and execute it
      *
      * @param  mixed  $closure  the anonymous function
      */
@@ -105,10 +105,7 @@ class Controller
      */
     public static function getPath(string $dir)
     {
-        return Str::interpolate(self::PATH_FORMAT, [
-            'app' => CONFIG['app_dir'],
-            'dir' => $dir
-        ]);
+        return sprintf(self::PATH_FORMAT, CONFIG['app_dir'], $dir);
     }
 
 

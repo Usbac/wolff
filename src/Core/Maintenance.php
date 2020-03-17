@@ -16,33 +16,12 @@ class Maintenance
      *
      * @var string
      */
-    private static $file = CONFIG['root_dir'] . '/system/definitions/maintenance_whitelist.txt';
-
-
-    /**
-     * Returns true if the maintenance mode is enabled, false otherwise
-     * @return bool true if the maintenance mode is enabled, false otherwise
-     */
-    public static function isEnabled()
-    {
-        return CONFIG['maintenance_on'];
-    }
-
-
-    /**
-     * Returns true if the client has access to the page, false otherwise
-     *
-     * @return bool true if the client has access to the page, false otherwise
-     */
-    public static function hasAccess()
-    {
-        return !self::isEnabled() || self::isClientAllowed();
-    }
+    private static $file = CONFIG['root_dir'] . '/system/maintenance_whitelist.txt';
 
 
     /**
      * Returns an array of the IPs in the whitelist
-     * @return array An array of the IPs in the whitelist, false in case of errors
+     * @return array An array of the IPs in the whitelist
      */
     public static function getAllowedIPs()
     {
@@ -50,10 +29,8 @@ class Maintenance
             return false;
         }
 
-        if (!$content = file_get_contents(self::$file)) {
-            Log::warning(self::NO_READABLE);
-
-            return false;
+        if (($content = file_get_contents(self::$file)) === false) {
+            throw new \Error(self::NO_READABLE);
         }
 
         return explode(PHP_EOL, $content);
@@ -65,13 +42,11 @@ class Maintenance
      *
      * @param  string  $ip  the IP to add
      *
-     * @return bool true if the IP is added/exists in the whitelist, false otherwise
+     * @return bool true if the IP is added/exists in the whitelist
      */
     public static function addAllowedIP(string $ip)
     {
         if (!$ip = filter_var($ip, FILTER_VALIDATE_IP)) {
-            Log::warning(self::INVALID_IP);
-
             return false;
         }
 
@@ -83,9 +58,8 @@ class Maintenance
 
                 return true;
             }
-            Log::warning(self::NO_READABLE);
 
-            return false;
+            throw new \Error(self::NO_READABLE);
         }
 
         if (Str::contains($content, $ip)) {
@@ -108,15 +82,13 @@ class Maintenance
     public static function removeAllowedIP(string $ip)
     {
         if (!$ip = filter_var($ip, FILTER_VALIDATE_IP)) {
-            Log::warning(self::INVALID_IP);
-
             return false;
         }
 
         self::createFile();
 
         if (!$content = file_get_contents(self::$file)) {
-            Log::warning(self::NO_READABLE);
+            throw new \Error(self::NO_READABLE);
 
             return false;
         }
@@ -148,7 +120,7 @@ class Maintenance
      * Returns true if the current client IP is in the whitelist, false otherwise
      * @return bool true if the current client IP is in the whitelist, false otherwise
      */
-    private static function isClientAllowed()
+    public static function hasAccess()
     {
         if (self::getAllowedIPs() === false) {
             return false;

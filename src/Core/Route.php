@@ -309,22 +309,19 @@ class Route
     public static function isBlocked(string $url)
     {
         $url = explode('/', $url);
-        $url_length = count($url);
+        $url_length = count($url) - 1;
 
         foreach (self::$blocked as $blocked) {
             $blocked = explode('/', $blocked);
-            $blocked_length = count($blocked);
+            $blocked_length = count($blocked) - 1;
 
-            for ($i = 0; $i < $blocked_length && $i < $url_length; $i++) {
+            for ($i = 0; $i <= $blocked_length && $i <= $url_length; $i++) {
                 if ($url[$i] !== $blocked[$i] && $blocked[$i] !== '*') {
                     return false;
                 }
 
-                if ($blocked[$i] === '*') {
-                    return true;
-                }
-
-                if ($i === $url_length - 1 && $i === $blocked_length - 1) {
+                if ($blocked[$i] === '*' ||
+                    ($i === $url_length && $i === $blocked_length)) {
                     return true;
                 }
             }
@@ -361,7 +358,7 @@ class Route
      *
      * @return boolean true if the string has the format of a route GET variable, false otherwise
      */
-    public static function isGetVar(string $str)
+    private static function isGetVar(string $str)
     {
         return preg_match(self::GET_FORMAT, $str);
     }
@@ -374,7 +371,7 @@ class Route
      *
      * @return boolean true if the string has the format of an optional route GET variable, false otherwise
      */
-    public static function isOptionalGetVar(string $str)
+    private static function isOptionalGetVar(string $str)
     {
         return preg_match(self::OPTIONAL_GET_FORMAT, $str);
     }
