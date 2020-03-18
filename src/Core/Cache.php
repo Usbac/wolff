@@ -11,7 +11,7 @@ class Cache
 
 
     /**
-     * Delete the cache files that have expired
+     * Deletes all the cache files that have expired
      */
     public static function init()
     {
@@ -59,7 +59,7 @@ class Cache
 
 
     /**
-     * Create the cache file if doesn't exists and return its path
+     * Creates the cache file if doesn't exists and return its path
      *
      * @param  string  $dir  the cache filename
      * @param  string  $content  the original file content
@@ -99,7 +99,7 @@ class Cache
 
 
     /**
-     * Create the cache folder if it doesn't exists
+     * Creates the cache folder if it doesn't exists
      */
     public static function mkdir()
     {
@@ -125,7 +125,7 @@ class Cache
 
 
     /**
-     * Delete the specified cache file
+     * Deletes the specified cache file
      *
      * @param  string  $dir  the cache to delete
      *
@@ -146,7 +146,7 @@ class Cache
 
 
     /**
-     * Delete all the cache files
+     * Deletes all of the cache files
      */
     public static function clear()
     {
@@ -161,11 +161,11 @@ class Cache
 
 
     /**
-     * Get the cache format name of a file
+     * Returns the cache format name of a file
      *
      * @param  string  $dir  the cache file
      *
-     * @return string the filename with the cache format
+     * @return string the cache format name of a file
      */
     private static function getFilename(string $dir)
     {

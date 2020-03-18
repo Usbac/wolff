@@ -164,7 +164,7 @@ class DB
 
 
     /**
-     * Run the last query executed
+     * Runs the last query executed
      *
      * @return mixed the last query result
      */

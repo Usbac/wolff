@@ -109,9 +109,7 @@ class Kernel
 
 
     /**
-     * Load the requested page
-     *
-     * @return  mixed  the method return value
+     * Loads the requested page
      */
     private function loadPage(Http\Request $req)
     {
@@ -125,6 +123,13 @@ class Kernel
     }
 
 
+    /**
+     * Returns true if the current route is accessible,
+     * false otherwise
+     *
+     * @return bool true if the current route is accessible,
+     * false otherwise
+     */
     private function isAccessible()
     {
         return (!Route::isBlocked($this->url) &&

@@ -54,7 +54,7 @@ class Log
 
 
     /**
-     * Log a general message
+     * Logs a general message
      *
      * @param  string  $level the message level
      * @param  string  $message the message
@@ -73,7 +73,7 @@ class Log
 
 
     /**
-     * Write content to the current log file
+     * Writes content to the current log file
      *
      * @param  string  $data the content to append
      */
@@ -86,7 +86,7 @@ class Log
 
 
     /**
-     * Create the logs folder if it doesn't exists
+     * Creates the logs folder if it doesn't exists
      */
     private static function mkdir()
     {

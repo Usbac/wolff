@@ -44,7 +44,7 @@ class Cookie
 
 
     /**
-     * Set a cookie
+     * Sets a cookie
      *
      * @param  string  $key  the cookie key
      * @param  mixed  $value  the cookie value
@@ -66,7 +66,7 @@ class Cookie
 
 
     /**
-     * Unset a cookie
+     * Unsets a cookie
      *
      * @param  string  $key  the cookie key
      */

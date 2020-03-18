@@ -30,7 +30,7 @@ class Upload
 
 
     /**
-     * Set the files maximum size
+     * Sets the files maximum size
      *
      * @param  float  $max_size  the files maximum size
      *
@@ -45,7 +45,7 @@ class Upload
 
 
     /**
-     * Get the files maximum size
+     * Returns the files maximum size
      * @return float the files maximum size
      */
     public function getMaxSize()
@@ -55,7 +55,7 @@ class Upload
 
 
     /**
-     * Set the file upload directory
+     * Sets the file upload directory
      *
      * @param  string  $dir  the file upload directory
      *
@@ -70,8 +70,8 @@ class Upload
 
 
     /**
-     * Get the file upload directory
-     * @return float the file upload directory
+     * Returns the file upload directory
+     * @return string the file upload directory
      */
     public function getDir()
     {
@@ -80,7 +80,8 @@ class Upload
 
 
     /**
-     * Check if a file matches one or more formats
+     * Returns true if a file matches one or more formats,
+     * false otherwise
      *
      * @param $filename the file name
      * @param $formats the formats for comparision
@@ -101,7 +102,7 @@ class Upload
 
 
     /**
-     * Upload a file
+     * Uploads a file
      *
      * @param  string  $filename  the file name
      *
@@ -136,7 +137,7 @@ class Upload
 
 
     /**
-     * Get info about the last file uploaded
+     * Returns information about the last file uploaded
      * @return array the info about the last file uploaded as an associative array
      */
     public function getLastFile()

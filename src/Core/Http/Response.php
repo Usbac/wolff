@@ -27,6 +27,9 @@ class Response
     private $headers;
 
 
+    /**
+     * Default constructor
+     */
     public function __construct()
     {
         $this->status_code = null;
@@ -36,7 +39,7 @@ class Response
 
 
     /**
-     * Return the HTTP headers
+     * Returns the HTTP headers
      *
      * @return array the HTTP headers
      */
@@ -47,7 +50,7 @@ class Response
 
 
     /**
-     * Return the HTTP status code
+     * Returns the HTTP status code
      *
      * @return int the HTTP status code
      */
@@ -58,7 +61,7 @@ class Response
 
 
     /**
-     * Return the header location
+     * Returns the header location
      *
      * @return string the header location
      */
@@ -69,7 +72,7 @@ class Response
 
 
     /**
-     * Set the value of an existent or new header
+     * Sets the value of an existent or new header
      *
      * @param  string  $key  the header key
      * @param  string  $value  the header value
@@ -85,7 +88,7 @@ class Response
 
 
     /**
-     * Unset an existent header
+     * Unsets an existent header
      *
      * @param  string  $key  the header key
      *
@@ -102,7 +105,7 @@ class Response
 
 
     /**
-     * Set the HTTP status code
+     * Sets the HTTP status code
      *
      * @param  int  $status  the HTTP status code
      *
@@ -117,7 +120,7 @@ class Response
 
 
     /**
-     * Set the header location and HTTP status code
+     * Sets the header location and HTTP status code
      *
      * @param  string  $url  the header location
      * @param  int  $status  the HTTP status code
@@ -137,7 +140,7 @@ class Response
 
 
     /**
-     * Execute the response with the available values
+     * Executes the response with the available values
      */
     public function go()
     {

@@ -104,7 +104,7 @@ class Pagination
 
 
     /**
-     * Set the total number of elements
+     * Sets the total number of elements
      *
      * @param  int  $total  the total number of elements
      *

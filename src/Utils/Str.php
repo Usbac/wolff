@@ -8,7 +8,7 @@ class Str
     const DEFAULT_ENCODING = 'UTF-8';
 
     /**
-     * Sanitize an url
+     * Sanitizes an url
      *
      * @param  string  $url the url
      *
@@ -21,7 +21,7 @@ class Str
 
 
     /**
-     * Sanitize an email
+     * Sanitizes an email
      *
      * @param  string  $email the email
      *
@@ -34,7 +34,7 @@ class Str
 
 
     /**
-     * Sanitize an string to integer (only numbers and +-)
+     * Sanitizes an string to integer (only numbers and +-)
      *
      * @param  string  $int the integer
      *
@@ -47,7 +47,7 @@ class Str
 
 
     /**
-     * Sanitize an string to float (only numbers, fractions and +-)
+     * Sanitizes an string to float (only numbers, fractions and +-)
      *
      * @param  string  $float the float
      *
@@ -60,7 +60,7 @@ class Str
 
 
     /**
-     * Sanitize a path for only letters, numbers, underscores, dots and slashes
+     * Sanitizes the given path for only letters, numbers, underscores, dots and slashes
      *
      * @param  string  $path the path
      *

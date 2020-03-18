@@ -77,7 +77,7 @@ class Route
 
 
     /**
-     * Add a route that will work
+     * Adds a route that will work
      * only for a status code
      *
      * @param  string  $code  the status code
@@ -91,7 +91,7 @@ class Route
 
 
     /**
-     * Execute a code route based on the current status code
+     * Executes a code route based on the current status code
      */
     public static function execCode()
     {
@@ -212,7 +212,7 @@ class Route
 
 
     /**
-     * Add a route with get method
+     * Adds a route with get method
      *
      * @param  string  $url  the url
      * @param  mixed  $function  mixed the function that must be executed when accessing the route
@@ -225,7 +225,7 @@ class Route
 
 
     /**
-     * Redirect the first url to the second url
+     * Redirects the first url to the second url
      *
      * @param  string  $url  the first url
      * @param  string  $url_2  the second url
@@ -246,7 +246,7 @@ class Route
 
 
     /**
-     * Add a route to the list
+     * Adds a route to the list
      *
      * @param  mixed  $url  the url
      * @param  string  $method  the url HTTP method
@@ -275,7 +275,7 @@ class Route
 
 
     /**
-     * Add a redirection to the list
+     * Adds a redirection to the list
      *
      * @param  mixed  $url  the origin url
      * @param  mixed  $url2  the destiny url
@@ -290,7 +290,7 @@ class Route
 
 
     /**
-     * Block an url
+     * Blocks an url
      *
      * @param  string  $url  the url
      */

@@ -52,7 +52,7 @@ class Auth extends \Wolff\Core\DB
 
 
     /**
-     * Set the database table to be used
+     * Sets the database table to be used
      *
      * @param  string  $table  the database table
      */
@@ -74,7 +74,7 @@ class Auth extends \Wolff\Core\DB
 
 
     /**
-     * Set the password hash options
+     * Sets the password hash options
      *
      * @param  array  $options  the password hash options
      */
@@ -226,7 +226,7 @@ class Auth extends \Wolff\Core\DB
 
 
     /**
-     * Insert the given values into the database
+     * Inserts the given values into the database
      *
      * @param  array  $data  the array containing the data
      *

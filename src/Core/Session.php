@@ -9,7 +9,8 @@ class Session
 
 
     /**
-     * Destroy and unset the session if the live time is zero or less
+     * Destroys and unsets the session
+     * if the live time is zero or less
      */
     private static function index()
     {
@@ -65,7 +66,7 @@ class Session
 
 
     /**
-     * Initialize all the session variables
+     * Initializes all the session variables
      */
     private static function init()
     {
@@ -79,7 +80,7 @@ class Session
 
 
     /**
-     * Unset all the session variables that have expired
+     * Unsets all the session variables that have expired
      */
     private static function unsetExpiredVariables()
     {
@@ -126,7 +127,7 @@ class Session
 
 
     /**
-     * Set a session variable
+     * Sets a session variable
      *
      * @param  string  $key  the variable key
      * @param  mixed  $value the variable value
@@ -192,7 +193,7 @@ class Session
 
 
     /**
-     * Set a live time (in minutes) to a session variable
+     * Sets a live time (in minutes) to a session variable
      *
      * @param  string  $key  the variable key
      * @param  int  $time  the variable live time in minutes
@@ -208,7 +209,7 @@ class Session
 
 
     /**
-     * Add more live time (in minutes) to a session variable
+     * Adds more live time (in minutes) to a session variable
      *
      * @param  string  $key  the variable key
      * @param  int  $time  the variable time to add
@@ -220,7 +221,7 @@ class Session
 
 
     /**
-     * Add time to the session live time (in minutes)
+     * Adds time to the session live time (in minutes)
      *
      * @param  int  $time  the session live time to add
      */
@@ -231,7 +232,7 @@ class Session
 
 
     /**
-     * Set the session live time (in minutes) starting from
+     * Sets the session live time (in minutes) starting from
      * the moment this function is called
      *
      * @param  int  $time  the time
@@ -308,7 +309,7 @@ class Session
 
 
     /**
-     * Unset a session variable
+     * Unsets a session variable
      *
      * @param  string  $key  the variable key
      */
@@ -320,7 +321,7 @@ class Session
 
 
     /**
-     * Unset the session data
+     * Unsets the session data
      */
     public static function empty()
     {
@@ -329,7 +330,7 @@ class Session
 
 
     /**
-     * Destroy the session
+     * Destroys the session
      */
     public static function kill()
     {

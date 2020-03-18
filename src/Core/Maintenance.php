@@ -25,7 +25,7 @@ class Maintenance
 
 
     /**
-     * Set the function to execute in maintenance mode.
+     * Sets the function to execute in maintenance mode.
      *
      * @param  \Closure  $function  the function
      */
@@ -54,7 +54,7 @@ class Maintenance
 
 
     /**
-     * Add an IP to the whitelist
+     * Adds an IP to the whitelist
      *
      * @param  string  $ip  the IP to add
      *
@@ -89,7 +89,7 @@ class Maintenance
 
 
     /**
-     * Remove an IP from the whitelist
+     * Removes an IP from the whitelist
      *
      * @param  string  $ip  the IP to remove
      *

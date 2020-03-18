@@ -129,11 +129,11 @@ class Template
 
 
     /**
-     * Get the content of a view file
+     * Returns the content of a view file
      *
      * @param  string  $dir  the view directory
      *
-     * @return string|bool the view content or false if it doesn't exists
+     * @return string The content of a view file
      */
     private static function getContent($dir)
     {
@@ -148,7 +148,7 @@ class Template
 
 
     /**
-     * Add a custom template
+     * Adds a custom template
      *
      * @param  mixed  $function  the function with the custom template
      */
@@ -162,7 +162,7 @@ class Template
 
 
     /**
-     * Apply the custom templates
+     * Applies the custom templates
      *
      * @param  string  $content  the view content
      *
@@ -182,7 +182,7 @@ class Template
 
 
     /**
-     * Apply all the replace methods of the template
+     * Applis all the replace methods of the template
      *
      * @param  string  $content  the view content
      *
@@ -205,7 +205,7 @@ class Template
 
 
     /**
-     * Apply the template includes
+     * Applies the template includes
      *
      * @param  string  $content  the view content
      *
@@ -225,7 +225,7 @@ class Template
 
 
     /**
-     * Apply the template imports
+     * Applies the template imports
      *
      * @param  string  $content  the view content
      *
@@ -242,7 +242,7 @@ class Template
 
 
     /**
-     * Apply the template functions
+     * Applies the template functions
      *
      * @param  string  $content  the view content
      *
@@ -285,7 +285,7 @@ class Template
 
 
     /**
-     * Apply the template format over the tags of a content
+     * Applies the template format over the tags of a content
      *
      * @param  string  $content  the view content
      *
@@ -302,7 +302,7 @@ class Template
 
 
     /**
-     * Apply the template format over the conditionals of a content
+     * Applies the template format over the conditionals of a content
      *
      * @param  string  $content  the view content
      *
@@ -320,7 +320,7 @@ class Template
 
 
     /**
-     * Apply the template format over the cycles of a content
+     * Applies the template format over the cycles of a content
      *
      * @param  string  $content  the view content
      *
@@ -337,7 +337,7 @@ class Template
 
 
     /**
-     * Remove the comments of a content
+     * Removes the comments of a content
      *
      * @param  string  $content  the view content
      *
@@ -350,7 +350,7 @@ class Template
 
 
     /**
-     * Remove the raw tag from the rest of the tags
+     * Removes the raw tag from the rest of the tags
      *
      * @param  string  $content  the view content
      *
