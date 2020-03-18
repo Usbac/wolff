@@ -43,6 +43,9 @@ class Kernel
      */
     public function __construct()
     {
+        Config::init();
+        Cache::init();
+
         $this->url = $this->getUrl();
         $this->function = Route::getVal($this->url);
 
@@ -62,9 +65,7 @@ class Kernel
      */
     public function start()
     {
-        Cache::init();
-
-        if (CONFIG['maintenance_on'] &&
+        if (Config::get('maintenance_on') &&
             !Maintenance::hasAccess()) {
             Maintenance::call();
         }
@@ -79,7 +80,7 @@ class Kernel
      */
     private function load()
     {
-        if (!$this->isAccesible()) {
+        if (!$this->isAccessible()) {
             header(self::HEADER_404);
             return;
         }
@@ -124,7 +125,7 @@ class Kernel
     }
 
 
-    private function isAccesible()
+    private function isAccessible()
     {
         return (!Route::isBlocked($this->url) &&
             ($this->function instanceof \Closure ||
@@ -142,7 +143,7 @@ class Kernel
     {
         $url = isset($_GET['url']) ?
             Str::sanitizeUrl($_GET['url']) :
-            (CONFIG['main_page'] ?? '');
+            (Config::get('main_page') ?? '');
 
         return Route::getRedirection($url) ?? $url;
     }

@@ -21,8 +21,12 @@ class Language
      * @return mixed the content of a language, or false if
      * it doesn't exists
      */
-    public static function get(string $dir, string $language = CONFIG['language'])
+    public static function get(string $dir, string $language = null)
     {
+        if (!isset($language)) {
+            $language = Config::get('language');
+        }
+
         if (strpos($dir, '.') !== false) {
             $key = Str::after($dir, '.');
             $dir = Str::before($dir, '.');
@@ -58,7 +62,7 @@ class Language
      */
     private static function getPath(string $dir, string $language)
     {
-        return sprintf(self::PATH_FORMAT, CONFIG['app_dir'], $language, $dir);
+        return sprintf(self::PATH_FORMAT, Config::get('app_dir'), $language, $dir);
     }
 
 
@@ -72,8 +76,12 @@ class Language
      * @return string true if the specified language exists,
      * false otherwise
      */
-    public static function exists(string $dir, string $language = CONFIG['language'])
+    public static function exists(string $dir, string $language = null)
     {
+        if (!isset($language)) {
+            $language = Config::get('language');
+        }
+
         $file_path = self::getPath($dir, $language);
 
         return file_exists($file_path);

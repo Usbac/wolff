@@ -14,12 +14,16 @@ namespace {
          * @return mixed the given key of the CONFIG array or null
          * if it does not exists.
          */
-        function config(string $key)
+        function config(string $key = null)
         {
             $keys = explode('.', $key);
-            $arr = CONFIG;
+            $arr = \Wolff\Core\Config::get();
 
-            foreach($keys as $key) {
+            if (!isset($key)) {
+                return $arr;
+            }
+
+            foreach ($keys as $key) {
                 if (!is_array($arr) || !array_key_exists($key, $arr)) {
                     return null;
                 }
@@ -43,7 +47,7 @@ namespace {
          */
         function getPublic(string $path = '')
         {
-            return substr(CONFIG['public_dir'], strlen($_SERVER['DOCUMENT_ROOT'])) . '/' . $path;
+            return substr(\Wolff\Core\Config::get('public_dir'), strlen($_SERVER['DOCUMENT_ROOT'])) . '/' . $path;
         }
     }
 
@@ -205,7 +209,7 @@ namespace {
             //Set url to the homepage when null
             if (!isset($url)) {
                 $http = (isset($_SERVER['HTTPS']) ? 'https' : 'http') . '://';
-                $project_dir = substr(CONFIG['root_dir'], strlen($_SERVER['DOCUMENT_ROOT']));
+                $project_dir = substr(\Wolff\Core\Config::get('root_dir'), strlen($_SERVER['DOCUMENT_ROOT']));
                 $directory = str_replace('\\', '/', $project_dir);
 
                 if (substr($directory, -1) != '/' && substr($url, 0, 1) != '/') {
@@ -288,7 +292,7 @@ namespace {
         function url(string $url = '')
         {
             $http = (isset($_SERVER['HTTPS']) ? 'https' : 'http') . '://';
-            $project_dir = substr(CONFIG['root_dir'], strlen($_SERVER['DOCUMENT_ROOT']));
+            $project_dir = substr(\Wolff\Core\Config::get('root_dir'), strlen($_SERVER['DOCUMENT_ROOT']));
             $directory = str_replace('\\', '/', $project_dir);
 
             if (substr($directory, -1) != '/' && substr($url, 0, 1) != '/') {
@@ -359,7 +363,7 @@ namespace {
          */
         function getCurrentPage()
         {
-            $project_dir = substr(CONFIG['root_dir'], strlen($_SERVER['DOCUMENT_ROOT']));
+            $project_dir = substr(\Wolff\Core\Config::get('root_dir'), strlen($_SERVER['DOCUMENT_ROOT']));
             return substr($_SERVER['REQUEST_URI'], strlen($project_dir));
         }
     }

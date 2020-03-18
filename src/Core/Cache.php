@@ -35,7 +35,7 @@ class Cache
      */
     public static function isEnabled()
     {
-        return CONFIG['cache_on'];
+        return Config::get('cache_on');
     }
 
 
@@ -182,7 +182,7 @@ class Cache
      */
     private static function getDir(string $path = '')
     {
-        return CONFIG['cache_dir'] . '/' . $path;
+        return Config::get('cache_dir') . '/' . $path;
     }
 
 }
