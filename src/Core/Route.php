@@ -318,7 +318,7 @@ class Route
 
             for ($i = 0; $i <= $blocked_length && $i <= $url_length; $i++) {
                 if ($url[$i] !== $blocked[$i] && $blocked[$i] !== '*') {
-                    return false;
+                    break;
                 }
 
                 if ($blocked[$i] === '*' ||

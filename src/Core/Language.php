@@ -24,7 +24,7 @@ class Language
     public static function get(string $dir, string $language = null)
     {
         if (!isset($language)) {
-            $language = Config::get('language');
+            $language = CONFIG['language'];
         }
 
         if (strpos($dir, '.') !== false) {
@@ -62,7 +62,7 @@ class Language
      */
     private static function getPath(string $dir, string $language)
     {
-        return sprintf(self::PATH_FORMAT, Config::get('app_dir'), $language, $dir);
+        return sprintf(self::PATH_FORMAT, CONFIG['app_dir'], $language, $dir);
     }
 
 
@@ -79,7 +79,7 @@ class Language
     public static function exists(string $dir, string $language = null)
     {
         if (!isset($language)) {
-            $language = Config::get('language');
+            $language = CONFIG['language'];
         }
 
         $file_path = self::getPath($dir, $language);

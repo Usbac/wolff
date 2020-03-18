@@ -101,7 +101,7 @@ class View
      */
     public static function getPath(string $path)
     {
-        return sprintf(self::PATH_FORMAT, Config::get('app_dir'), $path);
+        return sprintf(self::PATH_FORMAT, CONFIG['app_dir'], $path);
     }
 
 

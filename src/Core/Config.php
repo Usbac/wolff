@@ -12,6 +12,10 @@ class Config
     private static $data = [];
 
 
+    /**
+     * Path of the environment file
+     * @var string
+     */
     private static $env_path = CONFIG['root_dir'] . '.env';
 
 

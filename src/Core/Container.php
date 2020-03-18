@@ -85,12 +85,12 @@ class Container implements ContainerInterface
 
         //Singleton
         if (!isset(self::$singletons[$key])) {
-            return self::$singletons[$key];
+            self::$singletons[$key] = is_callable($service['value']) ?
+                call_user_func_array($service['value'], $args) :
+                new $service['value'];
         }
 
-        self::$singletons[$key] = is_callable($service['value']) ?
-            call_user_func_array($service['value'], $args) :
-            new $service['value'];
+        return self::$singletons[$key];
     }
 
 

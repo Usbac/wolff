@@ -44,7 +44,7 @@ class Template
      */
     public static function isEnabled()
     {
-        return Config::get('template_on');
+        return CONFIG['template_on'];
     }
 
 

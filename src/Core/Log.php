@@ -28,7 +28,7 @@ class Log
      */
     public static function isEnabled()
     {
-        return Config::get('log_on');
+        return CONFIG['log_on'];
     }
 
 
@@ -80,7 +80,7 @@ class Log
     private static function writeToFile(string $data)
     {
         self::mkdir();
-        $filename = Config::get('system_dir') . '/logs/' . date('m-d-Y') . '.log';
+        $filename = CONFIG['system_dir'] . '/logs/' . date('m-d-Y') . '.log';
         file_put_contents($filename, $data . PHP_EOL, FILE_APPEND);
     }
 
@@ -90,7 +90,7 @@ class Log
      */
     private static function mkdir()
     {
-        $folder_path = Config::get('system_dir') . '/logs';
+        $folder_path = CONFIG['system_dir'] . '/logs';
 
         if (!file_exists($folder_path)) {
             mkdir($folder_path, self::FOLDER_PERMISSIONS, true);

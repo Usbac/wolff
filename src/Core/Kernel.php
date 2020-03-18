@@ -65,7 +65,7 @@ class Kernel
      */
     public function start()
     {
-        if (Config::get('maintenance_on') &&
+        if (CONFIG['maintenance_on'] &&
             !Maintenance::hasAccess()) {
             Maintenance::call();
         }
@@ -143,7 +143,7 @@ class Kernel
     {
         $url = isset($_GET['url']) ?
             Str::sanitizeUrl($_GET['url']) :
-            (Config::get('main_page') ?? '');
+            (CONFIG['main_page'] ?? '');
 
         return Route::getRedirection($url) ?? $url;
     }
