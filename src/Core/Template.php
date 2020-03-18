@@ -182,7 +182,7 @@ class Template
 
 
     /**
-     * Applis all the replace methods of the template
+     * Applies all the replace methods of the template
      *
      * @param  string  $content  the view content
      *

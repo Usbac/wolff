@@ -130,7 +130,7 @@ class Pagination
 
 
     /**
-     * Set the number of elements per page
+     * Sets the number of elements per page
      *
      * @param  int  $per_page  the number of elements per page
      *
@@ -156,7 +156,7 @@ class Pagination
 
 
     /**
-     * Set the current page
+     * Sets the current page
      *
      * @param  int  $page  the current page
      *
@@ -212,7 +212,7 @@ class Pagination
 
 
     /**
-     * Set the pages url
+     * Sets the pages url
      * The placeholder for the page number in the string
      * must have the following format: {page}
      *
@@ -240,8 +240,8 @@ class Pagination
 
 
     /**
-     * Show or not the first and
-     * last page
+     * Sets if the first and
+     * last page will be shown
      *
      * @param  bool  $show_ends  true for showing the first
      * and last page in the pagination, false for not showing it
@@ -270,7 +270,7 @@ class Pagination
 
 
     /**
-     * Add the first and last page to the pagination array
+     * Adds the first and last page to the pagination array
      *
      * @param  array  &$pagination  the pagination array
      */
