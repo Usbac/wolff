@@ -7,9 +7,7 @@ use Wolff\Utils\Str;
 class Maintenance
 {
 
-    const HEADER_503 = 'HTTP/1.1 503 Service Temporarily Unavailable';
     const NO_READABLE = 'Couldn\'t read the maintenance whitelist file';
-    const INVALID_IP = 'Invalid IP format for the maintenance whitelist file';
 
     /**
      * Filename of the ip whitelist file.
@@ -17,6 +15,24 @@ class Maintenance
      * @var string
      */
     private static $file = CONFIG['root_dir'] . '/system/maintenance_whitelist.txt';
+
+    /**
+     * Function to execute in maintenance mode.
+     *
+     * @var \Closure
+     */
+    private static $function;
+
+
+    /**
+     * Set the function to execute in maintenance mode.
+     *
+     * @param  \Closure  $function  the function
+     */
+    public static function set(\Closure $function)
+    {
+        self::$function = $function;
+    }
 
 
     /**
@@ -62,7 +78,7 @@ class Maintenance
             throw new \Error(self::NO_READABLE);
         }
 
-        if (Str::contains($content, $ip)) {
+        if (strpos($content, $ip) !== false) {
             return true;
         }
 
@@ -77,7 +93,7 @@ class Maintenance
      *
      * @param  string  $ip  the IP to remove
      *
-     * @return bool true if the IP is removed/doesn't exists in the whitelist, false otherwise
+     * @return bool true if the IP has been removed/doesn't exists in the whitelist, false otherwise
      */
     public static function removeAllowedIP(string $ip)
     {
@@ -85,15 +101,11 @@ class Maintenance
             return false;
         }
 
-        self::createFile();
-
-        if (!$content = file_get_contents(self::$file)) {
+        if (($content = file_get_contents(self::$file)) === false) {
             throw new \Error(self::NO_READABLE);
-
-            return false;
         }
 
-        if (!Str::contains($content, $ip)) {
+        if (strpos($content, $ip) === false) {
             return true;
         }
 
@@ -122,11 +134,12 @@ class Maintenance
      */
     public static function hasAccess()
     {
-        if (self::getAllowedIPs() === false) {
+        $allowed_ips = self::getAllowedIPs();
+        if ($allowed_ips === false) {
             return false;
         }
 
-        return in_array(getClientIP(), self::getAllowedIPs());
+        return in_array(getClientIP(), $allowed_ips);
     }
 
 
@@ -136,8 +149,10 @@ class Maintenance
      */
     public static function call()
     {
-        header(self::HEADER_503);
-        Controller::call(CORE_CONFIG['controller_maintenance']);
+        if (self::$closure !== null) {
+            self::$closure();
+        }
+
         exit;
     }
 

@@ -9,9 +9,5 @@ define('CORE_CONFIG', [
     //Folders
     'views_dir'       => 'views',
     'controllers_dir' => 'controllers',
-    'middlewares_dir' => 'middlewares',
-    'languages_dir'   => 'languages',
-
-    //Default controllers
-    'controller_maintenance' => '_maintenance',
+    'languages_dir'   => 'languages'
 ]);

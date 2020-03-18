@@ -28,11 +28,6 @@ class Validation
      */
     private $invalid_values = [];
 
-    const HTTP_METHODS = [
-        'GET',
-        'POST'
-    ];
-
 
     /**
      * Set the data array to validate

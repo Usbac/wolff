@@ -105,13 +105,13 @@ class Route
 
 
     /**
-     * Returns the function of a route
+     * Returns the value of a route
      *
      * @param  string  $url  the url
      *
-     * @return object the function associated to the route
+     * @return mixed the value associated to the route
      */
-    public static function getFunc(string $url)
+    public static function getVal(string $url)
     {
         $current = explode('/', Str::sanitizeURL($url));
         $current_length = count($current) - 1;
@@ -258,7 +258,8 @@ class Route
 
         foreach (self::PREFIXES as $key => $val) {
             $prefix_key = $key . ':';
-            if (Str::startsWith($url, $prefix_key)) {
+
+            if (strpos($url, $prefix_key) === 0) {
                 $url = Str::after($url, $prefix_key);
                 $content_type = $val;
             }

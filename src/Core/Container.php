@@ -64,9 +64,9 @@ class Container implements ContainerInterface
     /**
      * {@inheritdoc}
      *
-     * If no entry is found, the function will return null
+     * If no entry is found, null will be returned
      */
-    public static function get(string $key, array $params = [])
+    public static function get(string $key, array $args = [])
     {
         if (!self::has($key)) {
             return null;
@@ -77,7 +77,7 @@ class Container implements ContainerInterface
 
         if (!$service['singleton']) {
             if (is_callable($service['value'])) {
-                return call_user_func_array($service['value'], $params);
+                return call_user_func_array($service['value'], $args);
             }
 
             return new $service['value'];
@@ -85,11 +85,12 @@ class Container implements ContainerInterface
 
         //Singleton
         if (!isset(self::$singletons[$key])) {
-            self::$singletons[$key] = is_callable($service['value']) ?
-                call_user_func_array($service['value'], $params) : new $service['value'];
+            return self::$singletons[$key];
         }
 
-        return self::$singletons[$key];
+        self::$singletons[$key] = is_callable($service['value']) ?
+            call_user_func_array($service['value'], $args) :
+            new $service['value'];
     }
 
 

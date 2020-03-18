@@ -21,7 +21,7 @@ class Session
         }
 
         if (!self::isValid()) {
-            self::initialize();
+            self::init();
         }
 
         self::unsetExpiredVariables();
@@ -67,7 +67,7 @@ class Session
     /**
      * Initialize all the session variables
      */
-    private static function initialize()
+    private static function init()
     {
         self::empty();
 

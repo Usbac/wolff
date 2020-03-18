@@ -299,7 +299,8 @@ class DB
     {
         $table = $this->escape($table);
 
-        return $this->query("SELECT * FROM $table WHERE $conditions", $args)->get();
+        return $this->query("SELECT * FROM $table
+            WHERE $conditions", $args)->get();
     }
 
 
@@ -316,7 +317,8 @@ class DB
     public function countAll(string $table, string $conditions = '1', array $args = null)
     {
         $table = $this->escape($table);
-        $result = $this->query("SELECT COUNT(*) FROM $table WHERE $conditions", $args)->first();
+        $result = $this->query("SELECT COUNT(*) FROM $table
+            WHERE $conditions", $args)->first();
 
         return empty($result) ? 0 : $result['COUNT(*)'];
     }
@@ -375,7 +377,8 @@ class DB
     {
         $table = $this->escape($table);
 
-        return $this->query("DELETE FROM $table WHERE $conditions", $args)->get();
+        return $this->query("DELETE FROM $table
+            WHERE $conditions", $args)->get();
     }
 
 

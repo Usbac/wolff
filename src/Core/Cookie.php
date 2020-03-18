@@ -5,10 +5,13 @@ namespace Wolff\Core;
 class Cookie
 {
 
-    const FIVE_YEARS_TIME = 157680000;
-    const MONTH_TIME = 2629743;
-    const DAY_TIME = 86400;
-    const HOUR_TIME = 3600;
+    const TIME = [
+        'FOREVER' => 157680000, // Five years
+        'MONTH'   => 2629743,
+        'DAY'     => 86400,
+        'HOUR'    => 3600
+    ];
+
 
     /**
      * Returns the cookies or the specified cookie
@@ -50,16 +53,12 @@ class Cookie
      */
     public static function set(string $key, $value, $time, string $path = '/')
     {
-        if ($time === 'forever') {
-            $time = self::FIVE_YEARS_TIME;
+        if (is_string($time)) {
+            $time = \strtoupper($time);
         }
 
-        if ($time === 'month') {
-            $time = self::MONTH_TIME;
-        }
-
-        if ($time === 'day') {
-            $time = self::DAY_TIME;
+        if (array_key_exists($time, self::TIME)) {
+            $time = self::TIME[$time];
         }
 
         setCookie($key, $value, time() + $time, $path);

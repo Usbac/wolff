@@ -23,7 +23,7 @@ class Language
      */
     public static function get(string $dir, string $language = CONFIG['language'])
     {
-        if (Str::contains($dir, '.')) {
+        if (strpos($dir, '.') !== false) {
             $key = Str::after($dir, '.');
             $dir = Str::before($dir, '.');
         }

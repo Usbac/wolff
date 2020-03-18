@@ -258,7 +258,7 @@ class Str
      */
     public static function startsWith(string $str, string $needle)
     {
-        return substr($str, 0, strlen($needle)) === $needle;
+        return strpos($str, $needle) === 0;
     }
 
 

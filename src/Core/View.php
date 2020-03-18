@@ -32,19 +32,19 @@ class View
     /**
      * Returns the original view content
      *
-     * @param  string  $view  the view directory
+     * @param  string  $dir  the view directory
      *
-     * @return mixed the original view content
+     * @return string the original view content
      */
-    public static function getSource(string $view)
+    public static function getSource(string $dir)
     {
-        $view = Str::sanitizePath($view);
+        $dir = Str::sanitizePath($dir);
 
-        if (!self::exists($view)) {
-            throw new \Error("View '$view' doesn't exists");
+        if (!self::exists($dir)) {
+            throw new \Error("View '$dir' doesn't exists");
         }
 
-        return file_get_contents(self::getPath($view));
+        return file_get_contents(self::getPath($dir));
     }
 
 
@@ -63,8 +63,8 @@ class View
     {
         $dir = Str::sanitizePath($dir);
 
-        if (!self::exists($view)) {
-            throw new \Error("View '$view' doesn't exists");
+        if (!self::exists($dir)) {
+            throw new \Error("View '$dir' doesn't exists");
         }
 
         return Template::get($dir, $data, $cache);

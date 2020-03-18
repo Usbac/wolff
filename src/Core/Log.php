@@ -42,6 +42,7 @@ class Log
      */
     public static function __callStatic(string $method_name, $args)
     {
+        //If the method is not for logging something or if the log message is empty
         if (!in_array($method_name, self::LEVELS) ||
             ($message = $args[0]) === null) {
             return;

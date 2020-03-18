@@ -12,7 +12,7 @@ class Upload
      *
      * @var int
      */
-    private $maxSize;
+    private $max_size;
 
     /**
      * File upload directory.
@@ -26,19 +26,19 @@ class Upload
      *
      * @var array
      */
-    private $lastFile;
+    private $last_file;
 
 
     /**
      * Set the files maximum size
      *
-     * @param  float  $maxSize  the files maximum size
+     * @param  float  $max_size  the files maximum size
      *
      * @return self this
      */
-    public function setMaxSize(float $maxSize)
+    public function setMaxSize(float $max_size)
     {
-        $this->maxSize = $maxSize * 1024;
+        $this->max_size = $max_size * 1024;
 
         return $this;
     }
@@ -50,20 +50,20 @@ class Upload
      */
     public function getMaxSize()
     {
-        return $this->maxSize;
+        return $this->max_size;
     }
 
 
     /**
      * Set the file upload directory
      *
-     * @param  string  $directory  the file upload directory
+     * @param  string  $dir  the file upload directory
      *
      * @return self this
      */
-    public function setDirectory(string $directory)
+    public function setDir(string $dir)
     {
-        $this->directory = $directory;
+        $this->directory = $dir;
 
         return $this;
     }
@@ -111,7 +111,7 @@ class Upload
     {
         $file = $_FILES[$filename];
 
-        if (isset($this->maxSize) && $file['size'] > $this->maxSize) {
+        if (isset($this->max_size) && $file['size'] > $this->max_size) {
             return false;
         }
 
@@ -120,7 +120,7 @@ class Upload
             return false;
         }
 
-        $this->lastFile = [
+        $this->last_file = [
             'name'        => $file['name'],
             'type'        => $file['type'],
             'tmp_name'    => $file['tmp_name'],
@@ -141,6 +141,6 @@ class Upload
      */
     public function getLastFile()
     {
-        return $this->lastFile;
+        return $this->last_file;
     }
 }
