@@ -28,11 +28,12 @@ class Config
             self::$env_path = CONFIG['env_file'];
         }
 
-        foreach (CONFIG as $key => $val) {
-            self::$data[$key] = $val;
-        }
-
+        self::$data = CONFIG;
         self::mapEnv();
+
+        if (CONFIG['env_override'] ?? false) {
+            array_merge(self::$data, $_ENV);
+        }
     }
 
 
@@ -69,16 +70,12 @@ class Config
 
             $key = trim(substr($line, 0, $index_equal));
             $val = trim(substr($line, $index_equal + 1));
-            // Anything between single or double quotes, excluding the hashtag comment character after it
+            // Anything between or not single/double quotes, excluding the hashtag character after it
             $val = preg_match("/'(.*)'|\"(.*)\"|(^[^#]+)/", $val, $matches);
             $val = trim($matches[0] ?? '', '\'" ');
 
             putenv("$key=$val");
             $_ENV[$key] = $val;
-
-            if (CONFIG['env_override'] ?? false) {
-                self::$data[strtolower($key)] = $val;
-            }
         }
     }
 

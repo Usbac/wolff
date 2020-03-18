@@ -57,19 +57,6 @@ class Controller
 
 
     /**
-     * Returns the complete path of the controller
-     *
-     * @param  string  $path  the path of the controller
-     *
-     * @return string the complete path of the controller
-     */
-    public static function getPath(string $path)
-    {
-        return sprintf(self::PATH_FORMAT, CONFIG['app_dir'], $path);
-    }
-
-
-    /**
      * Returns true if the controller exists,
      * false otherwise
      *
@@ -79,7 +66,7 @@ class Controller
      */
     public static function exists(string $path)
     {
-        return file_exists(self::getPath($path));
+        return class_exists(self::NAMESPACE . str_replace('/', '\\', $path));
     }
 
 
@@ -95,17 +82,11 @@ class Controller
     {
         $class = self::NAMESPACE . str_replace('/', '\\', $path);
 
-        if (!class_exists($class)) {
+        if (!self::exists($class)) {
             return false;
         }
 
-        $class = new \ReflectionClass($class);
-
-        if (!$class->hasMethod($method)) {
-            return false;
-        }
-
-        return true;
+        return (new \ReflectionClass($class))->hasMethod($method);
     }
 
 }
