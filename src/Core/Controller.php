@@ -10,7 +10,6 @@ class Controller
     const NAMESPACE = 'Controller\\';
     const EXISTS_ERROR = 'The controller class \'%s\' doesn\'t exists';
     const METHOD_EXISTS_ERROR = 'The controller class \'%s\' doesn\'t have a \'%s\' method';
-    const PATH_FORMAT = '%s/' . CORE_CONFIG['controllers_dir'] . '/%s.php';
 
 
     /**

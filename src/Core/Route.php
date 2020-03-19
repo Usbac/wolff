@@ -113,7 +113,7 @@ class Route
      */
     public static function getVal(string $url)
     {
-        $current = explode('/', Str::sanitizeURL($url));
+        $current = array_filter(explode('/', $url));
         $current_length = count($current) - 1;
 
         if (empty(self::$routes)) {
@@ -121,12 +121,15 @@ class Route
         }
 
         foreach (self::$routes as $key => $val) {
-            $route = explode('/', $key);
+            $route = array_filter(explode('/', $key));
             $route_length = count($route) - 1;
 
+            if (empty($current) && empty($route)) {
+                return self::processRoute($current, $route);
+            }
+
             for ($i = 0; $i <= $route_length && $i <= $current_length; $i++) {
-                if ($current[$i] != $route[$i] && !empty($route[$i]) &&
-                    !self::isGetVar($route[$i])) {
+                if ($current[$i] !== $route[$i] && !self::isGetVar($route[$i])) {
                     break;
                 }
 

@@ -7,7 +7,8 @@ use Wolff\Utils\Str;
 class View
 {
 
-    const PATH_FORMAT = '%s/' . CORE_CONFIG['views_dir'] . '/%s.' . CORE_CONFIG['views_format'];
+    const VIEW_FORMAT = 'wlf';
+    const PATH_FORMAT = CONFIG['root_dir'] . CONFIG['app_dir'] . 'views/%s.' . self::VIEW_FORMAT;
 
 
     /**
@@ -101,7 +102,7 @@ class View
      */
     public static function getPath(string $path)
     {
-        return sprintf(self::PATH_FORMAT, CONFIG['app_dir'], $path);
+        return sprintf(self::PATH_FORMAT, $path);
     }
 
 

@@ -25,7 +25,7 @@ class Config
     public static function init()
     {
         if (is_string(CONFIG['env_file'] ?? null)) {
-            self::$env_path = CONFIG['env_file'];
+            self::$env_path = CONFIG['root_dir'] . CONFIG['env_file'];
         }
 
         self::$data = CONFIG;

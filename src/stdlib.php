@@ -47,7 +47,12 @@ namespace {
          */
         function getPublic(string $path = '')
         {
-            return substr(CONFIG['public_dir'], strlen($_SERVER['DOCUMENT_ROOT'])) . '/' . $path;
+            if (strpos(CONFIG['root_dir'], $_SERVER['DOCUMENT_ROOT']) !== 0) {
+                return $path;
+            }
+
+            $project_dir = substr(CONFIG['root_dir'], strlen($_SERVER['DOCUMENT_ROOT']));
+            return $project_dir . CONFIG['public_dir'] . $path;
         }
     }
 
@@ -285,10 +290,15 @@ namespace {
         function url(string $url = '')
         {
             $http = (isset($_SERVER['HTTPS']) ? 'https' : 'http') . '://';
-            $project_dir = substr(CONFIG['root_dir'], strlen($_SERVER['DOCUMENT_ROOT']));
+
+            $project_dir = '';
+            if (strpos(CONFIG['root_dir'], $_SERVER['DOCUMENT_ROOT']) === 0) {
+                $project_dir = substr(CONFIG['root_dir'], strlen($_SERVER['DOCUMENT_ROOT']));
+            }
+
             $directory = str_replace('\\', '/', $project_dir);
 
-            if (substr($directory, -1) != '/' && substr($url, 0, 1) != '/') {
+            if (substr($directory, -1) !== '/') {
                 $directory .= '/';
             }
 
@@ -389,18 +399,6 @@ namespace {
         function getBenchmark()
         {
             return microtime(true) - CORE_CONFIG['start'];
-        }
-    }
-
-    if (!function_exists('inCli')) {
-
-        /**
-         * Returns true if running from command line interface, false otherwise
-         * @return bool true if running from command line interface, false otherwise
-         */
-        function inCli()
-        {
-            return (php_sapi_name() === 'cli');
         }
     }
 

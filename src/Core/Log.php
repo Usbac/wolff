@@ -10,6 +10,7 @@ class Log
     const FOLDER_PERMISSIONS = 0755;
     const DATE_FORMAT = 'H:i:s';
     const FORMAT = '[%s] [%s] %s: %s';
+    const FOLDER_PATH = CONFIG['root_dir'] . CONFIG['system_dir'] . 'logs';
     const LEVELS = [
         'emergency',
         'alert',
@@ -80,7 +81,7 @@ class Log
     private static function writeToFile(string $data)
     {
         self::mkdir();
-        $filename = CONFIG['system_dir'] . '/logs/' . date('m-d-Y') . '.log';
+        $filename = self::FOLDER_PATH . '/' . date('m-d-Y') . '.log';
         file_put_contents($filename, $data . PHP_EOL, FILE_APPEND);
     }
 
@@ -90,10 +91,8 @@ class Log
      */
     private static function mkdir()
     {
-        $folder_path = CONFIG['system_dir'] . '/logs';
-
-        if (!file_exists($folder_path)) {
-            mkdir($folder_path, self::FOLDER_PERMISSIONS, true);
+        if (!file_exists(self::FOLDER_PATH)) {
+            mkdir(self::FOLDER_PATH, self::FOLDER_PERMISSIONS, true);
         }
     }
 }
