@@ -33,7 +33,7 @@ class Middleware
 
 
     /**
-     * Load all the middlewares files that matches the current route
+     * Loads all the middlewares files that matches the current route
      *
      * @param  string  $type  the type of middlewares to load
      * @param  string  $url  the url to match the middlewares
@@ -76,7 +76,7 @@ class Middleware
 
 
     /**
-     * Load the middlewares files of type before that matches the current route
+     * Loads the middlewares files of type before that matches the current route
      *
      * @param  string  $url  the url to match the middlewares
      * @param  Http\Request  $req  the request object
@@ -88,7 +88,7 @@ class Middleware
 
 
     /**
-     * Load the middlewares files of type after that matches the current route
+     * Loads the middlewares files of type after that matches the current route
      *
      * @param  string  $url  the url to match the middlewares
      * @param  Http\Request  $req  the request object

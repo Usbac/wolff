@@ -5,7 +5,7 @@ namespace Wolff\Utils;
 class Pagination
 {
 
-    const PLACEHOLDER = 'page';
+    const PLACEHOLDER = '{page}';
 
     /**
      * The total of elements.
@@ -301,9 +301,7 @@ class Pagination
         return [
             'index'        => $index,
             'current_page' => $index === $this->page,
-            'url'          => Str::interpolate($this->url_format, [
-                self::PLACEHOLDER => $index
-            ])
+            'url'          => \str_replace(self::PLACEHOLDER, $index, $this->url_format)
         ];
     }
 

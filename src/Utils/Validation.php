@@ -30,7 +30,7 @@ class Validation
 
 
     /**
-     * Set the data array to validate
+     * Sets the data array to validate
      *
      * @param  array  $data  the data array
      *
@@ -55,7 +55,7 @@ class Validation
 
 
     /**
-     * Set the fields rules
+     * Sets the fields rules
      *
      * @param  array  $fields  the associative array
      * with the fields rules
@@ -83,7 +83,7 @@ class Validation
 
 
     /**
-     * Add an invalid value
+     * Adds an invalid value
      *
      * @param  string  $key  the value key
      * @param  string  $field  the field that the value doesn't complies

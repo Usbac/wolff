@@ -146,15 +146,10 @@ class Auth extends \Wolff\Core\DB
 
         $values = implode(' AND ', $values);
         $table = self::getTable();
-
         $user = parent::query("SELECT * from `$table` WHERE $values", $data)->first();
 
-        if (!array_key_exists('password', $user)) {
-            self::$user = null;
-            return false;
-        }
-
-        if (password_verify($password, $user['password'])) {
+        if (array_key_exists('password', $user) &&
+            password_verify($password, $user['password'])) {
             self::$user = $user;
             return true;
         }

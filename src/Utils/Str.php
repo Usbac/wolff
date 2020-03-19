@@ -197,7 +197,7 @@ class Str
 
         foreach ($values as $key => $val) {
             if (!is_array($val) && (!is_object($val) || method_exists($val, '__toString'))) {
-                $str = str_replace('{' . $key . '}', $val, $str);
+                $str = str_replace("{$key}", $val, $str);
             }
         }
 
@@ -238,7 +238,8 @@ class Str
      * @return string the string encoded in UTF-8
      */
     public static function toUtf8($str) {
-        $encoded = iconv(mb_detect_encoding($str, mb_detect_order(), true), "UTF-8", $str);
+        $encoding = mb_detect_encoding($str, mb_detect_order(), true);
+        $encoded = iconv($encoding, 'UTF-8', $str);
 
         if (empty($encoded)) {
             return utf8_encode($str);
@@ -345,20 +346,6 @@ class Str
         }
 
         return mb_strimwidth($str, 0, $limit, '', self::DEFAULT_ENCODING);
-    }
-
-
-    /**
-     * Adds the given value at the start of the string and returns it
-     *
-     * @param  string  $str  the string
-     * @param  string  $start  the string to start with
-     *
-     * @return string a string starting with the given value
-     */
-    public static function unshift(string $str, string $start)
-    {
-        return $start . $str;
     }
 
 

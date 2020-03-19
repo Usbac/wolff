@@ -76,7 +76,7 @@ namespace {
          */
         function isAssoc(array $arr)
         {
-            return (array_keys($arr) !== range(0, count($arr) -1));
+            return (array_keys($arr) !== range(0, count($arr) - 1));
         }
     }
 
@@ -138,11 +138,9 @@ namespace {
         {
             $args = func_get_args();
 
-            echo "<pre>";
-            foreach ($args as $arg) {
-                print_r($arg);
-            }
-            echo "</pre>";
+            echo '<pre>';
+            array_map('print_r', $args);
+            echo '</pre>';
         }
     }
 
@@ -155,11 +153,9 @@ namespace {
         {
             $args = func_get_args();
 
-            echo "<pre>";
-            foreach ($args as $arg) {
-                print_r($arg);
-            }
-            echo "</pre>";
+            echo '<pre>';
+            array_map('print_r', $args);
+            echo '</pre>';
 
             die();
         }
@@ -173,10 +169,7 @@ namespace {
         function dumpd()
         {
             $args = func_get_args();
-            foreach ($args as $arg) {
-                var_dump($arg);
-            }
-
+            array_map('var_dump', $args);
             die();
         }
     }
@@ -227,7 +220,8 @@ namespace {
     if (!function_exists('isJson')) {
 
         /**
-         * Returns true if the given string is a Json, false otherwise
+         * Returns true if the given string is a Json, false otherwise.
+         * Notice: This function modifies the 'json_last_error' value
          *
          * @param  string  $str  the string
          *
@@ -235,8 +229,7 @@ namespace {
          */
         function isJson(string $str)
         {
-            $str = json_decode($str);
-
+            json_decode($str);
             return json_last_error() === JSON_ERROR_NONE;
         }
     }

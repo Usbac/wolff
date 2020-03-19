@@ -72,7 +72,7 @@ class Container implements ContainerInterface
             return null;
         }
 
-        //Normal
+        //Service
         $service = self::$services[$key];
 
         if (!$service['singleton']) {
