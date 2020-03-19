@@ -122,9 +122,9 @@ class Validation
 
             //Complies type
             if ($rule == 'type') {
-                if (($val == 'email' && !Str::isEmail($field)) ||
-                    ($val == 'alphanumeric' && !Str::isAlphanumeric($field)) ||
-                    ($val == 'alpha' && !Str::isAlpha($field)) ||
+                if (($val == 'email' && filter_var($email, FILTER_VALIDATE_EMAIL) === false) ||
+                    ($val == 'alphanumeric' && !preg_match('/[A-Za-z0-9 ]+$/', $str)) ||
+                    ($val == 'alpha' && !preg_match('/[A-Za-z ]+$/', $str)) ||
                     ($val == 'int' && !isInt($field)) ||
                     ($val == 'float' && !isFloat($field)) ||
                     ($val == 'bool' && !isBool($field))) {

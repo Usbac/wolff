@@ -360,7 +360,7 @@ class Template
     {
         foreach (self::FORMAT as $format) {
             $format = trim($format, '/');
-            $format = Str::remove($format, self::NOT_RAW);
+            $format = str_replace(self::NOT_RAW, '', $format);
 
             $content = preg_replace('/' . self::RAW . '(' . $format . ')/', '$1', $content);
         }

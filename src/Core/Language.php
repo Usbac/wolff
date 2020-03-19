@@ -27,9 +27,9 @@ class Language
             $language = CONFIG['language'];
         }
 
-        if (strpos($dir, '.') !== false) {
-            $key = Str::after($dir, '.');
-            $dir = Str::before($dir, '.');
+        if (($dot_pos = strpos($dir, '.')) !== false) {
+            $dir = substr($dir, 0, $dot_pos);
+            $key = substr($dir, $dot_pos + 1);
         }
 
         $data = [];

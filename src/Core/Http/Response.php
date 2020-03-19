@@ -88,7 +88,7 @@ class Response
 
 
     /**
-     * Unsets an existent header
+     * Removes an existent header
      *
      * @param  string  $key  the header key
      *

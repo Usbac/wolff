@@ -54,8 +54,8 @@ class Kernel
             $this->controller = $path[0];
             $this->method = empty($path[1]) ? 'index' : $path[1];
         } else {
-            $this->controller = Str::before($this->url, '/');
-            $this->method = Str::after($this->url, '/');
+            $this->controller = substr($this->url, 0, strpos($this->url, '/'));
+            $this->method = substr($this->url, strpos($this->url, '/') + 1);
         }
     }
 

@@ -66,7 +66,7 @@ class Cookie
 
 
     /**
-     * Unsets a cookie
+     * Removes a cookie
      *
      * @param  string  $key  the cookie key
      */

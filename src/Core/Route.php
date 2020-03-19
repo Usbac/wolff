@@ -256,11 +256,12 @@ class Route
     private static function addRoute($url, string $method, $function, int $status) {
         $content_type = 'text/html';
 
+        //Remove content-type prefix from route
         foreach (self::PREFIXES as $key => $val) {
-            $prefix_key = $key . ':';
+            $prefix_key = "$key:";
 
             if (strpos($url, $prefix_key) === 0) {
-                $url = Str::after($url, $prefix_key);
+                $url = substr($url, strpos($url, $prefix_key) + strlen($prefix_key));
                 $content_type = $val;
             }
         }

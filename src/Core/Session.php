@@ -9,7 +9,7 @@ class Session
 
 
     /**
-     * Destroys and unsets the session
+     * Destroys the session
      * if the live time is zero or less
      */
     private static function index()
@@ -80,7 +80,7 @@ class Session
 
 
     /**
-     * Unsets all the session variables that have expired
+     * Removes all the session variables that have expired
      */
     private static function unsetExpiredVariables()
     {
@@ -309,7 +309,7 @@ class Session
 
 
     /**
-     * Unsets a session variable
+     * Removes a session variable
      *
      * @param  string  $key  the variable key
      */
@@ -321,7 +321,7 @@ class Session
 
 
     /**
-     * Unsets the session data
+     * Removes the session data
      */
     public static function empty()
     {
