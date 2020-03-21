@@ -51,6 +51,31 @@ class Request
         $this->body = $_POST;
         $this->files = $_FILES;
         $this->server = $_SERVER;
+        $this->headers = $this->parseHeaders($_SERVER);
+    }
+
+
+    /**
+     * Returns the headers parsed
+     *
+     * @param  array  $server  the superglobal server array
+     *
+     * @return array The headers parsed
+     */
+    private function parseHeaders(array $server)
+    {
+        $headers = [];
+
+        foreach ($server as $header => $val) {
+            if (substr($header, 0, 5) !== 'HTTP_') {
+                continue;
+            }
+
+            $key = ucwords(str_replace('_', '-', strtolower(substr($header, 5))), '-');
+            $headers[$key] = $val;
+        }
+
+        return $headers;
     }
 
 
@@ -149,6 +174,25 @@ class Request
     public function hasFile(string $key)
     {
         return array_key_exists($key, $this->files);
+    }
+
+
+    /**
+     * Returns the headers array,
+     * or the specified header key
+     *
+     * @param  string  $key  the header key to get
+     *
+     * @return mixed The headers array,
+     * or the specified header key
+     */
+    public function getHeader(string $key = null)
+    {
+        if (!isset($key)) {
+            return $this->headers;
+        }
+
+        return $this->headers[$key];
     }
 
 

@@ -148,7 +148,7 @@ class Kernel
     {
         $url = $_SERVER['REQUEST_URI'];
 
-        //Remove project folder from url
+        //Remove possible project folder from url
         if (strpos(CONFIG['root_dir'], $_SERVER['DOCUMENT_ROOT']) === 0) {
             $project_dir = substr(CONFIG['root_dir'], strlen($_SERVER['DOCUMENT_ROOT']));
             $url = substr($url, strlen($project_dir));
@@ -163,7 +163,14 @@ class Kernel
 
         $url = Str::sanitizeUrl($url);
 
-        return Route::getRedirection($url) ?? $url;
+        //Redirection
+        $redirect = Route::getRedirection($url);
+        if (isset($redirect)) {
+            http_response_code($redirect['code']);
+            return $redirect['destiny'];
+        }
+
+        return $url;
     }
 
 }

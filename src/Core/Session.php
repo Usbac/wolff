@@ -9,12 +9,13 @@ class Session
 
 
     /**
-     * Destroys the session
-     * if the live time is zero or less
+     * Starts the session
      */
-    private static function index()
+    public static function start()
     {
-        if (self::hasExpired()) {
+        session_start();
+
+        if (self::expired()) {
             self::empty();
             self::kill();
 
@@ -33,35 +34,25 @@ class Session
      * Returns true if the current session has expired, false otherwise
      * @return bool true if the current session has expired, false otherwise
      */
-    public static function hasExpired()
+    public static function expired()
     {
         return isset($_SESSION['end_time']) && time() >= $_SESSION['end_time'];
     }
 
 
     /**
-     * Returns true if the current IP and the userAgent are the same
-     * than the IP and userAgent of the previous connection.
+     * Returns true if the current IP and the User-Agent are the same
+     * than the IP and User-Agent of the previous connection.
      * This is done for preventing session hijacking.
      *
-     * @return bool true if the current IP address and the userAgent are the same
-     * than the IP address and userAgent of the previous connection.
+     * @return bool true if the current IP address and the User-Agent are the same
+     * than the IP address and User-Agent of the previous connection.
      */
     private static function isValid()
     {
-        if (!isset($_SESSION['IPaddress']) || !isset($_SESSION['userAgent'])) {
-            return false;
-        }
-
-        if ($_SESSION['IPaddress'] != getClientIP()) {
-            return false;
-        }
-
-        if ($_SESSION['userAgent'] != $_SERVER['HTTP_USER_AGENT']) {
-            return false;
-        }
-
-        return true;
+        return (isset($_SESSION['ip_address'], $_SESSION['user_agent']) &&
+            $_SESSION['ip_address'] === getClientIP() &&
+            $_SESSION['user_agent'] === $_SERVER['HTTP_USER_AGENT']);
     }
 
 
@@ -72,8 +63,8 @@ class Session
     {
         self::empty();
 
-        $_SESSION['IPaddress'] = getClientIP();
-        $_SESSION['userAgent'] = $_SERVER['HTTP_USER_AGENT'];
+        $_SESSION['ip_address'] = getClientIP();
+        $_SESSION['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
         $_SESSION['start_time'] = microtime(true);
         $_SESSION['vars_tmp_time'] = [];
     }
@@ -85,7 +76,8 @@ class Session
     private static function unsetExpiredVariables()
     {
 
-        if (!isset($_SESSION['vars_tmp_time']) || !is_array($_SESSION['vars_tmp_time'])) {
+        if (!isset($_SESSION['vars_tmp_time']) ||
+            !is_array($_SESSION['vars_tmp_time'])) {
             $_SESSION['vars_tmp_time'] = [];
         }
 
@@ -94,16 +86,6 @@ class Session
                 self::unset($key);
             }
         }
-    }
-
-
-    /**
-     * Starts the session and initializes everything
-     */
-    public static function start()
-    {
-        session_start();
-        self::index();
     }
 
 
@@ -118,8 +100,6 @@ class Session
     {
         if (!isset($key)) {
             return $_SESSION;
-        } elseif (!self::has($key)) {
-            return null;
         }
 
         return $_SESSION[$key];
@@ -200,11 +180,9 @@ class Session
      */
     public static function setVarTime(string $key, int $time = 1)
     {
-        if (!isset($_SESSION[$key])) {
-            return;
+        if (isset($_SESSION[$key])) {
+            $_SESSION['vars_tmp_time'][$key] = time() + ($time * 60);
         }
-
-        $_SESSION['vars_tmp_time'][$key] = time() + ($time * 60);
     }
 
 
@@ -241,23 +219,6 @@ class Session
     {
         $_SESSION['live_time'] = ($time * 60);
         $_SESSION['end_time'] = time() + ($time * 60);
-    }
-
-
-    /**
-     * Returns the session creation time
-     *
-     * @param  bool  $gmdate  format the time in H:i:s
-     *
-     * @return mixed the session creation time
-     */
-    public static function getStartTime(bool $gmdate = false)
-    {
-        if ($gmdate) {
-            return gmdate(self::DATE_FORMAT, $_SESSION['start_time']);
-        }
-
-        return $_SESSION['start_time'];
     }
 
 

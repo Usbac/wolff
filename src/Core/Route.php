@@ -70,7 +70,7 @@ class Route
         $function = $args[1];
         $status = isset($args[2]) && is_numeric($args[2]) ?
             (int)$args[2] :
-            self::STATUS_OK;
+            null;
 
         self::addRoute($url, $http_method, $function, $status);
     }
@@ -121,6 +121,10 @@ class Route
         }
 
         foreach (self::$routes as $key => $val) {
+            if (!self::isValidRoute($key)) {
+                continue;
+            }
+
             $route = array_filter(explode('/', $key));
             $route_length = count($route) - 1;
 
@@ -129,12 +133,12 @@ class Route
             }
 
             for ($i = 0; $i <= $route_length && $i <= $current_length; $i++) {
-                if ($current[$i] !== $route[$i] && !self::isGetVar($route[$i])) {
+                if ($current[$i] !== $route[$i] && !self::isGet($route[$i])) {
                     break;
                 }
 
-                if (($i === $route_length || ($i + 1 === $route_length && self::isOptionalGetVar($route[$i + 1]))) &&
-                    $i === $current_length && self::isValidRoute($key)) {
+                if (($i === $route_length || ($i + 1 === $route_length && self::isOptionalGet($route[$i + 1]))) &&
+                    $i === $current_length) {
                     return self::processRoute($current, $route);
                 }
             }
@@ -161,8 +165,10 @@ class Route
         self::mapParameters($current, $route);
 
         $route = self::$routes[implode('/', $route)];
-        http_response_code($route['status']);
         header("Content-Type: $route[content_type]");
+        if (isset($route['status'])) {
+            http_response_code($route['status']);
+        }
 
         return $route['function'];
     }
@@ -183,15 +189,15 @@ class Route
         $route_length = count($route) - 1;
 
         for ($i = 0; $i <= $route_length && $i <= $current_length; $i++) {
-            if (self::isOptionalGetVar($route[$i])) {
+            if (self::isOptionalGet($route[$i])) {
                 self::setOptionalGetVar($route[$i], $current[$i]);
-            } else if (self::isGetVar($route[$i])) {
-                self::setGetVar($route[$i], $current[$i]);
+            } else if (self::isGet($route[$i])) {
+                self::setGet($route[$i], $current[$i]);
             }
 
             //Finish if last GET variable from url is optional
             if ($i + 1 === $route_length && $i === $current_length &&
-                self::isOptionalGetVar($route[$i + 1])) {
+                self::isOptionalGet($route[$i + 1])) {
                 self::setOptionalGetVar($route[$i], $current[$i]);
                 return;
             }
@@ -230,21 +236,16 @@ class Route
     /**
      * Redirects the first url to the second url
      *
-     * @param  string  $url  the first url
-     * @param  string  $url_2  the second url
-     * @param  int  $status  The HTTP response code
+     * @param  string  $from  the origin url
+     * @param  string  $to  the destiny url
+     * @param  int  $code  The HTTP response code
      */
-    public static function redirect(string $url, string $url_2, int $status = self::STATUS_REDIRECT)
+    public static function redirect(string $from, string $to, int $code = self::STATUS_REDIRECT)
     {
-        $url = Str::sanitizeURL($url);
-        $url_2 = Str::sanitizeURL($url_2);
-
-        //Get the controller default route if the second url isn't a defined custom route
-        $function = isset(self::$routes[$url_2]) ?
-            self::$routes[$url_2]['function'] : $url_2;
-
-        self::addRoute($url, self::$routes[$url_2]['method'], $function, $status);
-        self::addRedirect($url, $url_2, $status);
+        self::$redirects[Str::sanitizeURL($from)] = [
+            'destiny' => Str::sanitizeURL($to),
+            'code'    => $code
+        ];
     }
 
 
@@ -256,7 +257,7 @@ class Route
      * @param  mixed  $function  the url function or controller name
      * @param  int  $status  the HTTP response code
      */
-    private static function addRoute($url, string $method, $function, int $status) {
+    private static function addRoute($url, string $method, $function, $status) {
         $content_type = 'text/html';
 
         //Remove content-type prefix from route
@@ -274,21 +275,6 @@ class Route
             'method'       => $method,
             'status'       => $status,
             'content_type' => $content_type
-        ];
-    }
-
-
-    /**
-     * Adds a redirection to the list
-     *
-     * @param  mixed  $url  the origin url
-     * @param  mixed  $url2  the destiny url
-     * @param  int  $status  the HTTP response code
-     */
-    private static function addRedirect($url, $url2, int $status) {
-        self::$redirects[$url] = [
-            'destiny' => $url2,
-            'code'    => $status
         ];
     }
 
@@ -321,7 +307,7 @@ class Route
             $blocked_length = count($blocked) - 1;
 
             for ($i = 0; $i <= $blocked_length && $i <= $url_length; $i++) {
-                if ($url[$i] !== $blocked[$i] && $blocked[$i] !== '*') {
+                if (!in_array($blocked[$i], [ '*', $url[$i] ])) {
                     break;
                 }
 
@@ -363,7 +349,7 @@ class Route
      *
      * @return boolean true if the string has the format of a route GET variable, false otherwise
      */
-    private static function isGetVar(string $str)
+    private static function isGet(string $str)
     {
         return preg_match(self::GET_FORMAT, $str);
     }
@@ -376,7 +362,7 @@ class Route
      *
      * @return boolean true if the string has the format of an optional route GET variable, false otherwise
      */
-    private static function isOptionalGetVar(string $str)
+    private static function isOptionalGet(string $str)
     {
         return preg_match(self::OPTIONAL_GET_FORMAT, $str);
     }
@@ -388,7 +374,7 @@ class Route
      * @param  string  $key  the variable key
      * @param  string  $value  the variable value
      */
-    private static function setGetVar(string $key, $value)
+    private static function setGet(string $key, $value)
     {
         $key = preg_replace(self::GET_FORMAT, '$1', $key);
         $_GET[$key] = $value;
@@ -442,7 +428,7 @@ class Route
             return null;
         }
 
-        return self::$redirects[$url]['destiny'] ?? null;
+        return self::$redirects[$url];
     }
 
 

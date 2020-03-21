@@ -29,7 +29,6 @@ class Factory
         }
 
         $dsn = sprintf(self::DSN, $data['dbms'] ?? '', $data['server'] ?? '', $data['db'] ?? '');
-
         $username = $data['db_username'] ?? '';
         $password = $data['db_password'] ?? '';
 
