@@ -1,0 +1,5 @@
+Options -Indexes
+
+RewriteEngine on
+RewriteRule ^$ public/ [L]
+RewriteRule ^((?!public/).*)$ public/$1 [L,NC]

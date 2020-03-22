@@ -1,0 +1,58 @@
+/* 404 */
+
+.title-404 {
+    font-size: 7em;
+    font-weight: 400;
+    margin: 0px;
+}
+
+/* HOME */
+
+body {
+    background-color: #fafafa;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.9em;
+}
+
+.title {
+    font-weight: 200;
+    font-size: 4.5em;
+    opacity: 0.7;
+    margin: 20px 0px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.options > a {
+    text-decoration: none;
+    color: #555555;
+    margin: 15px;
+}
+.options > a:hover {
+    color: #222222;
+}
+
+.description {
+    opacity: 0.8;
+    padding: 30px 0px;
+    border-top: 1px #666666 solid;
+}
+
+.description > p {
+    margin: 5px 0px 5px 0px;
+}
+
+.version {
+    opacity: 0.4;
+    padding-top: 30px;
+}
+
+.center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

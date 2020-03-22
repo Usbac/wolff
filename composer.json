@@ -1,5 +1,5 @@
 {
-  "name": "usbac/wolff-framework",
+  "name": "usbac/wolff",
   "description": "Ridiculously small PHP framework",
   "keywords": [
     "framework", "php", "small", "web", "apps", "fast", "full", "db"
@@ -21,15 +21,22 @@
     }
   ],
   "require": {
-    "php": ">=7.0.0"
+    "php": ">=7.0.0",
+    "usbac/wolff-framework": "~2.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "8.*"
   },
   "autoload": {
     "files": [
-      "src/config.php",
-      "src/stdlib.php"
+      "system/config.php",
+      "system/web.php"
     ],
     "psr-4": {
-      "Wolff\\": "src/"
+      "App\\": "app/",
+      "Test\\": "test/",
+      "Middleware\\": "app/middlewares/",
+      "Controller\\": "app/controllers/"
     }
   }
 }
