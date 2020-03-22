@@ -123,9 +123,8 @@ namespace {
         /**
          * Print a string and die
          */
-        function echod()
+        function echod(...$args)
         {
-            $args = func_get_args();
             foreach ($args as $arg) {
                 echo $arg;
             }
@@ -137,12 +136,10 @@ namespace {
     if (!function_exists('printr')) {
 
         /**
-         * Print the given arrays in a nice looking way
+         * Print the given values in a nice looking way
          */
-        function printr()
+        function printr(...$args)
         {
-            $args = func_get_args();
-
             echo '<pre>';
             array_map('print_r', $args);
             echo '</pre>';
@@ -152,12 +149,10 @@ namespace {
     if (!function_exists('printrd')) {
 
         /**
-         * Print the given arrays in a nice looking way and die
+         * Print the given values in a nice looking way and die
          */
-        function printrd()
+        function printrd(...$args)
         {
-            $args = func_get_args();
-
             echo '<pre>';
             array_map('print_r', $args);
             echo '</pre>';
@@ -169,11 +164,10 @@ namespace {
     if (!function_exists('dumpd')) {
 
         /**
-         * Var dump a variable and die
+         * Var dump the given values and die
          */
-        function dumpd()
+        function dumpd(...$args)
         {
-            $args = func_get_args();
             array_map('var_dump', $args);
             die();
         }

@@ -9,6 +9,7 @@ class Template
 
     const RAW = '~';
     const NOT_RAW = '(?<!' . self::RAW . ')';
+    const BLOCK_NAME = '[a-zA-Z0-9_]+';
     const FORMAT = [
         'style'  => '/' . self::NOT_RAW . '\{%(\s?){1,}style( ?){1,}=( ?){1,}(.*)(\s?){1,}%\}/',
         'script' => '/' . self::NOT_RAW . '\{%(\s?){1,}script( ?){1,}=( ?){1,}(.*)(\s?){1,}%\}/',
@@ -21,13 +22,12 @@ class Template
         'function'  => '/' . self::NOT_RAW . '(.*)( ?){1,}\|([^\}!]{1,})/',
         'include'   => '/' . self::NOT_RAW . '@load\(( |\'?){1,}(.*)( |\'?){1,}\)/',
 
-        'if'     => '/' . self::NOT_RAW . '\{(\s?){1,}(.*)\?(\s?){1,}\}/',
-        'endif'  => '/' . self::NOT_RAW . '\{\?\}/',
-        'else'   => '/' . self::NOT_RAW . '\{(\s?){1,}else(\s?){1,}\}/',
-        'elseif' => '/' . self::NOT_RAW . '\{(\s?){1,}else(\s?){1,}(.*)(\s?){1,}\}/',
-
         'for'    => '/' . self::NOT_RAW . '\{( ?){1,}for( ){1,}(.*)( ){1,}in( ){1,}\((.*)( ?){1,},( ?){1,}(.*)( ?){1,}\)( ?){1,}\}/',
-        'endfor' => '/' . self::NOT_RAW . '\{( ?){1,}endfor( ?){1,}\}/'
+        'endfor' => '/' . self::NOT_RAW . '\{( ?){1,}endfor( ?){1,}\}/',
+
+        'extends'      => '/' . self::NOT_RAW . '@extends\(\'(.*)\'\)/',
+        'block'        => '/' . self::NOT_RAW . '{\[[ ?]{1,}block[ ]{1,}(' . self::BLOCK_NAME . ')[ ?]{1,}]}([\s\S]*?){\[[ ?]{1,}endblock[ ?]{1,}]}[\s]/',
+        'parent_block' => '/' . self::NOT_RAW . '{\[[ ?]{1,}parent[ ]{1,}(' . self::BLOCK_NAME . ')[ ?]{1,}]}/'
     ];
 
     /**
@@ -78,7 +78,8 @@ class Template
         //Cache system
         if ($cache && Cache::isEnabled()) {
             $content = Cache::has($dir) ?
-                Cache::getContent($dir) : self::replaceAll(self::getContent($dir));
+                Cache::getContent($dir) :
+                self::replaceAll(self::getContent($dir));
 
             include(Cache::set($dir, $content));
         } else {
@@ -148,6 +149,78 @@ class Template
 
 
     /**
+     * Applies all the replace methods of the template
+     *
+     * @param  string  $content  the view content
+     *
+     * @return string the view content with the template replaced
+     */
+    private static function replaceAll(string $content)
+    {
+        with (self) {
+
+        }
+        $content = self::replaceExtend($content);
+        $content = self::replaceIncludes($content);
+        $content = self::replaceImports($content);
+        $content = self::replaceComments($content);
+        $content = self::replaceFunctions($content);
+        $content = self::replaceTags($content);
+        $content = self::replaceCustom($content);
+        $content = self::replaceCycles($content);
+        $content = self::replaceRaws($content);
+
+        return $content;
+    }
+
+
+    /**
+     * Applies the template extends
+     *
+     * @param  string  $content  the view content
+     *
+     * @return string the child view content rendered
+     * based on its parent
+     */
+    private static function replaceExtend(string $content)
+    {
+        preg_match(self::FORMAT['extends'], $content, $matches);
+
+        if (!isset($matches[1])) {
+            return $content;
+        }
+
+        $filename = Str::sanitizePath($matches[1]);
+        $parent_content = self::getContent($filename);
+
+        //Replace parent block imports in child view
+        preg_match_all(self::FORMAT['parent_block'], $content, $parent_blocks);
+
+        foreach ($parent_blocks[1] as $block_name) {
+            $block_regex = str_replace(self::BLOCK_NAME, $block_name, self::FORMAT['block']);
+            $parent_block_regex = str_replace(self::BLOCK_NAME, $block_name, self::FORMAT['parent_block']);
+            preg_match($block_regex, $parent_content, $block_content);
+
+            $content = preg_replace($parent_block_regex, trim($block_content[2] ?? ''), $content);
+        }
+
+        //Replace parent blocks with child blocks content
+        preg_match_all(self::FORMAT['block'], $content, $child_blocks);
+
+        foreach ($child_blocks[1] as $key => $block_name) {
+            $block_regex = str_replace(self::BLOCK_NAME, $block_name, self::FORMAT['block']);
+            $parent_content = preg_replace($block_regex, trim($child_blocks[2][$key]), $parent_content);
+        }
+
+        //Remove remaining tags
+        $parent_content = preg_replace(self::FORMAT['block'], '', $parent_content);
+        $parent_content = preg_replace(self::FORMAT['parent_block'], '', $parent_content);
+
+        return $parent_content;
+    }
+
+
+    /**
      * Adds a custom template
      *
      * @param  mixed  $function  the function with the custom template
@@ -176,29 +249,6 @@ class Template
         foreach(self::$templates as $template) {
             $content = $template($content);
         }
-
-        return $content;
-    }
-
-
-    /**
-     * Applies all the replace methods of the template
-     *
-     * @param  string  $content  the view content
-     *
-     * @return string the view content with the template replaced
-     */
-    private static function replaceAll(string $content)
-    {
-        $content = self::replaceIncludes($content);
-        $content = self::replaceImports($content);
-        $content = self::replaceComments($content);
-        $content = self::replaceFunctions($content);
-        $content = self::replaceTags($content);
-        $content = self::replaceConditionals($content);
-        $content = self::replaceCustom($content);
-        $content = self::replaceCycles($content);
-        $content = self::replaceRaws($content);
 
         return $content;
     }
@@ -302,24 +352,6 @@ class Template
 
 
     /**
-     * Applies the template format over the conditionals of a content
-     *
-     * @param  string  $content  the view content
-     *
-     * @return string the view content with the conditionals formatted
-     */
-    private static function replaceConditionals($content)
-    {
-        $content = preg_replace(self::FORMAT['endif'], '<?php endif; ?>', $content);
-        $content = preg_replace(self::FORMAT['if'], '<?php if ($2): ?>', $content);
-        $content = preg_replace(self::FORMAT['else'], '<?php else: ?>', $content);
-        $content = preg_replace(self::FORMAT['elseif'], '<?php elseif ($3): ?>', $content);
-
-        return $content;
-    }
-
-
-    /**
      * Applies the template format over the cycles of a content
      *
      * @param  string  $content  the view content
@@ -328,7 +360,6 @@ class Template
      */
     private static function replaceCycles($content)
     {
-        //For
         $content = preg_replace(self::FORMAT['for'], '<?php for (\$$3=$6; \$$3 <= $9; \$$3++): ?>', $content);
         $content = preg_replace(self::FORMAT['endfor'], '<?php endfor; ?>', $content);
 

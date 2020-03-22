@@ -119,17 +119,6 @@ class Pagination
 
 
     /**
-     * Returns the total number of pages
-     *
-     * @return int the total number of pages
-     */
-    public function getTotal()
-    {
-        return $this->total;
-    }
-
-
-    /**
      * Sets the number of elements per page
      *
      * @param  int  $per_page  the number of elements per page
@@ -145,17 +134,6 @@ class Pagination
 
 
     /**
-     * Returns the total number of elements per page
-     *
-     * @return int the total number of elements per page
-     */
-    public function getPageSize()
-    {
-        return $this->per_page;
-    }
-
-
-    /**
      * Sets the current page
      *
      * @param  int  $page  the current page
@@ -167,17 +145,6 @@ class Pagination
         $this->page = $page;
 
         return $this;
-    }
-
-
-    /**
-     * Returns the current page
-     *
-     * @return int the current page
-     */
-    public function getPage()
-    {
-        return $this->page;
     }
 
 
@@ -199,19 +166,6 @@ class Pagination
 
 
     /**
-     * Returns the number of pages that will
-     * be beside the current page
-     *
-     * @return int the number of pages that will
-     * be beside the current page
-     */
-    public function getSidePages()
-    {
-        return $this->side_pages_n;
-    }
-
-
-    /**
      * Sets the pages url
      * The placeholder for the page number in the string
      * must have the following format: {page}
@@ -229,17 +183,6 @@ class Pagination
 
 
     /**
-     * Returns the pages url
-     *
-     * @return string the pages url
-     */
-    public function getUrl()
-    {
-        return $this->url_format;
-    }
-
-
-    /**
      * Sets if the first and
      * last page will be shown
      *
@@ -253,19 +196,6 @@ class Pagination
         $this->show_ends = $show_ends;
 
         return $this;
-    }
-
-
-    /**
-     * Returns true if the first and last page
-     * will be shown, false otherwise
-     *
-     * @return bool true if the first and last page
-     * will be shown, false otherwise
-     */
-    public function getShowEnds()
-    {
-        return $this->show_ends;
     }
 
 

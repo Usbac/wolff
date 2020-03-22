@@ -45,16 +45,6 @@ class Upload
 
 
     /**
-     * Returns the files maximum size
-     * @return float the files maximum size
-     */
-    public function getMaxSize()
-    {
-        return $this->max_size;
-    }
-
-
-    /**
      * Sets the file upload directory
      *
      * @param  string  $dir  the file upload directory
@@ -70,25 +60,15 @@ class Upload
 
 
     /**
-     * Returns the file upload directory
-     * @return string the file upload directory
-     */
-    public function getDir()
-    {
-        return $this->directory ?? '';
-    }
-
-
-    /**
      * Returns true if a file matches one or more formats,
      * false otherwise
      *
-     * @param $filename the file name
-     * @param $formats the formats for comparision
+     * @param  string  $filename  the file name
+     * @param  mixed  $formats  the formats for comparision
      *
      * @return bool true if the file matches the formats, false otherwise
      */
-    public function matchFormat($filename, $formats)
+    public function matchFormat(string $filename, $formats)
     {
         $file = $_FILES[$filename]['name'];
         if (!is_array($formats)) {
@@ -144,4 +124,5 @@ class Upload
     {
         return $this->last_file;
     }
+
 }

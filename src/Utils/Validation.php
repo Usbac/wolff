@@ -44,17 +44,6 @@ class Validation
 
 
     /**
-     * Returns the data array to validate
-     *
-     * @return array the data array to validate
-     */
-    public function getData()
-    {
-        return $this->data;
-    }
-
-
-    /**
      * Sets the fields rules
      *
      * @param  array  $fields  the associative array
@@ -167,7 +156,9 @@ class Validation
      */
     public function check($fields, $data)
     {
-        return $this->setFields($fields)->setData($data)->isValid();
+        return $this->setFields($fields)
+                    ->setData($data)
+                    ->isValid();
     }
 
 }

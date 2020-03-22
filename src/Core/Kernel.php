@@ -7,8 +7,6 @@ use Wolff\Utils\Str;
 class Kernel
 {
 
-    const HEADER_404 = 'HTTP/1.0 404 Not Found';
-
     /**
      * The current url.
      *
@@ -70,6 +68,11 @@ class Kernel
             Maintenance::call();
         }
 
+        if (!$this->isAccessible()) {
+            http_response_code(404);
+            return;
+        }
+
         $this->load();
         Route::execCode();
     }
@@ -80,11 +83,6 @@ class Kernel
      */
     private function load()
     {
-        if (!$this->isAccessible()) {
-            header(self::HEADER_404);
-            return;
-        }
-
         $req = $this->getRequest();
         Middleware::loadBefore($this->url, $req);
         $this->loadPage($req);
