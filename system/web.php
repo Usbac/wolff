@@ -8,6 +8,6 @@ use \Wolff\Core\{Controller, Route};
 
 Route::get('/', 'home@index');
 
-Route::code('404', function() {
+Route::code('404', function () {
     Controller::method('_404');
 });

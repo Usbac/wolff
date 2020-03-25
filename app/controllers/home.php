@@ -12,5 +12,4 @@ class Home extends Controller
         $data['lang'] = Language::get('home');
         View::render('home', $data);
     }
-
 }

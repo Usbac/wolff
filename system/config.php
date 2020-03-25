@@ -9,11 +9,11 @@ define('CONFIG', [
     'db_password' => '',
 
     //Directories
-    'root_dir'   => dirname(__DIR__) . '/',
-    'system_dir' => 'system/',
-    'app_dir'    => 'app/',
-    'cache_dir'  => 'cache/',
-    'public_dir' => 'public/',
+    'root_dir'   => dirname(__DIR__),
+    'system_dir' => 'system',
+    'app_dir'    => 'app',
+    'cache_dir'  => 'cache',
+    'public_dir' => 'public',
 
     //Environment
     'env_file'     => 'system/.env',
@@ -27,6 +27,6 @@ define('CONFIG', [
     'log_on'         => true,
     'development_on' => true,
     'template_on'    => true,
-    'cache_on'       => false,
+    'cache_on'       => true,
     'maintenance_on' => false
 ]);
