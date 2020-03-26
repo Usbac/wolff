@@ -1,6 +1,6 @@
-New responses can be made throught the Wolff `Response` class. 
+`Wolff\Core\Http\Response`
 
-Remember to `use Core\Response`.
+New responses can be made throught the Wolff Response class.
 
 ## Basics
 
@@ -10,8 +10,7 @@ Creating a new Response:
 $response = new Response();
 ```
 
-The `header`, `remove`, `setCode` and `redirect` methods can be used as chained methods.
-Making the process of creating a new Response easier and quicker.
+The response methods can be chained, making the process of creating a new Response easier and quicker.
 
 ```php
 $response->header('Content-Type', 'text/html; charset=utf-8')
@@ -20,63 +19,43 @@ $response->header('Content-Type', 'text/html; charset=utf-8')
          ->go();
 ```
 
-## Methods
+## General Methods
 
 ### Set HTTP code
 
-Set the HTTP status code.
+`setCode([int $status])`
+
+Sets the HTTP status code.
 
 ```php
 $response->setCode(200);
 ```
 
-### Get HTTP code
-
-Returns the response HTTP status code.
-
-```php
-$response->getCode();
-```
-
-### Get redirect url
-
-Returns the response url.
-
-```php
-$response->getRedirect();
-```
-
 ### Add header
 
-Add a new header to the response.
+`header(string $key, string $value)`
+
+Adds a new header to the response.
 
 ```php
 $response->header('Content-Type', 'text/html; charset=utf-8');
 ```
 
-The first parameter is the header's key, the second is the header's value.
-
-### Get headers
-
-Returns all the response headers (as an associative array).
-
-```php
-$response->getHeaders();
-```
-
 ### Remove header
 
-Remove a header if it exists.
+`remove(string $key)`
+
+Removes the specified header.
 
 ```php
 $response->remove('Content-Type');
 ```
 
-The parameter must be the desired header's key to delete.
-
 ### Redirect url
 
-Set the Response's url. 
+`redirect(string $url[, int $status])`
+
+Sets the Response's url.
 
 ```php
 $response->redirect('https://getwolff.com');
@@ -90,7 +69,9 @@ $response->redirect('https://getwolff.com', 200);
 
 ### Go
 
-Execute the response with all of its values.
+`go()`
+
+Executes the response with all of its values.
 
 ```php
 $response->go();

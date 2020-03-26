@@ -6,9 +6,11 @@ These functions are accessible from anywhere inside Wolff just like the native P
 
 ### Is associative
 
-Returns true if the given array is associative, false otherwise.
+`isAssoc(array $arr)`
 
-Take in mind that in the context of the function, an associative array is an array with non-numeric keys.
+Returns `true` if the given array is associative, `false` otherwise.
+
+_Keep in mind that in the context of the function, an associative array is an array with non-numeric keys._
 
 ```php
 $arr = [
@@ -28,6 +30,8 @@ isAssoc([ 'Margaret', 'Thomas', 'Edward' ]);
 That should return `false`.
 
 ### Value
+
+`val(array $arr[, string $key])`
 
 Returns the specified key from the given array. If the given key doesn't exists it will simply return `null`.
 
@@ -52,6 +56,8 @@ That should be the equivalent to `$arr['user']['name']`.
 
 ### Average
 
+`average(array $arr)`
+
 Returns the average value of the given numbers array.
 
 ```php
@@ -62,15 +68,25 @@ That should return `5.24`.
 
 ### Echo and die
 
+`echod(...$args)`
+
 Echo a variable and then die (for debugging purposes).
 
 ```php
 echod('Lorem ipsum dolor sit amet');
 ```
 
-### Print array
+Multiple parameters can be passed.
 
-Print an array in a nice looking way
+```php
+echod('Lorem', 'ipsum', 'dolor');
+```
+
+### Print
+
+`printr(...$args)`
+
+Prints the given variables in a nice looking way.
 
 ```php
 $array = ['laravel', 'codeigniter', 'wolff', 'yii'];
@@ -83,12 +99,14 @@ This function can take any number of parameters.
 printr($array, $array2, $array3...);
 ```
 
-### Print array and die
+### Print and die
 
-Print an array in a nice looking way and then die
+`printrd(...$args)`
+
+Prints the given variables in a nice looking way and then die.
 
 ```php
-$array = ['laravel', 'codeigniter', 'wolff', 'yii'];
+$array = ['laravel', 'wolff', 'yii'];
 printrd($array);
 ```
 
@@ -100,6 +118,8 @@ printrd($array, $array2, $array3...);
 
 ### Var dump and die
 
+`dumpd(...$args)`
+
 Var dump a variable and then die (for debugging purposes).
 
 ```php
@@ -109,7 +129,9 @@ dumpd($str);
 
 ### Var dump all
 
-Var dump all the current variables.
+`dumpAll()`
+
+Var dump all the current `$_GLOBAL` variables.
 
 ```php
 dumpAll();
@@ -117,7 +139,9 @@ dumpAll();
 
 ### Is int
 
-Returns true if the given parameter complies with an integer.
+`isInt($int)`
+
+Returns `true` if the given parameter complies with an integer, `false` otherwise.
 
 ```php
 isInt('1');
@@ -128,7 +152,9 @@ Both of the calls showed above will return true.
 
 ### Is float
 
-Returns true if the given parameter complies with an integer.
+`isFloat($float)`
+
+Returns `true` if the given parameter complies with a float, `false` otherwise.
 
 ```php
 isFloat('1.5');
@@ -139,7 +165,9 @@ Both of the calls showed above will return true.
 
 ### Is bool
 
-Returns true if the given parameter complies with an boolean.
+`isBool($bool)`
+
+Returns `true` if the given parameter complies with an boolean, `false` otherwise.
 
 ```php
 isBool(true);
@@ -152,48 +180,35 @@ Only the numeric values 1 and 0, and the strings 'true', 'false', '1' and '0' ar
 
 ### Is json
 
-Returns true if the given string is a json.
+`isJson(string $str)`
+
+Returns `true` if the given string is a json, `false` otherwise.
+
+_Notice: This function modifies the `json_last_error` value._
 
 ```php
 $json = '{name: "John", age: 21, city: "New York"}';
 isJson($json);
 ```
 
-That will return true.
+That will return `true`.
 
 ### To array
 
-Returns the given variable as a associative array.
+`toArray($obj)`
 
-Useful when it is necessary to turn a multidimensional json or std object to an array.
+Returns the given variable as an associative array.
+
+Useful when it is necessary to turn a multidimensional json or std object into an array.
 
 ```php
 $json = '{name: "John", age: 21, city: "New York"}';
 toArray($json);
 ```
 
-### Array to csv
-
-Convert an array result into a csv file and then downloads it.
-
-```php
-$array = [
-    0 => [
-        'name' => 'John Doe',
-        'email' => 'john@example.com'
-    ],
-    1 => [
-        'name' => 'Jane Doe',
-        'email' => 'jane@example.com'
-    ],
-];
-
-//The first parameter is the array, the second is the desired file name (without extension).
-
-arrayToCsv($array, 'filename');
-```
-
 ### Get url
+
+`url([string $url])`
 
 Returns the given string as a local url. Useful for redirections.
 
@@ -209,212 +224,93 @@ If the project is located at `https://www.getWolff.com`, the function will retur
 
 ### Get client Ip
 
+`getClientIP()`
+
 Returns the current client IP.
 
 ```php
 getClientIP();
-//In localhost it will return ::1
 ```
 
-### Get user agent
-
-Returns the HTTP User Agent information (equivalent to `$_SERVER['HTTP_USER_AGENT']`).
-
-```php
-getUserAgent();
-```
-
-### Get server root
-
-Returns the server root path (equivalent to `$_SERVER['DOCUMENT_ROOT']`).
-
-```php
-getServerRoot();
-```
+In localhost it will return `::1`.
 
 ### Local
 
-Returns true if the current request is running in localhost.
+`local()`
+
+Returns `true` if the current request is running in localhost, `false` otherwise.
 
 ```php
 local();
 ```
 
-### In CLI
-
-Returns true if the current code is running in a Command Line Interface, false otherwise.
-
-```php
-inCli();
-```
-
 ### Get current page
-Returns the current url relative to the project root directory.
+
+`getCurrentPage()`
+
+Returns the current url.
 
 ```php
 getCurrentPage();
-//If the current url is localhost/wolff/homepage it will return 'homepage'.
 ```
 
 ### Get pure current page
-Returns the complete current url without parameters.
+
+`getPureCurrentPage()`
+
+Returns the current url without parameters.
 
 ```php
 getPureCurrentPage();
-//If the current url is http://example.com/homepage?id=2 it will return 'http://example.com/homepage'.
 ```
 
+If the current url is `example.com/homepage?id=2` it will return `example.com/homepage`.
+
 ### Get benchmark time
+
+`getBenchmark()`
+
 Returns the time between the page load start and the current time in seconds as float.
 
 ```php
 getBenchmark();
 ```
 
-## Config
+### Get public
 
-You can get the configuration constants through the following functions.
+`getPublic([string $path])`
 
-_Keep in mind that the paths returned by the `config.php` functions are relative to the server root, except for the `getPublic` and `getProjectDir` functions._
-
-_The functions related to directories can take a string as a parameter which will be concatenated to the directory returned. Example:_
-
-```php
-getPublic('home.png');
-//In this case it will return 'localhost/wolff/public/home.png'
-```
-
-### Get config value
-
-Returns the specified key value from the `CONFIG` array. If the given key doesn't exists it will simply return `null`.
-
-```php
-config('root_dir');
-```
-
-That is the equivalent to `CONFIG['root_dir']`.
-
-The key accepts dot notation:
-
-```php
-config('db.password');
-```
-
-That is the equivalent to `CONFIG['db']['password']`.
-
-### Get server
-
-Returns the current server.
-
-```php
-getServer();
-```
-
-### Get database
-
-Returns the current database name.
-
-```php
-getDB();
-```
-
-### Get database management system
-
-Returns the current database management system.
-
-```php
-getDBMS();
-```
-
-### Get database user
-
-Returns the current database username.
-
-```php
-getDbUser();
-```
-
-### Get database password
-
-Returns the current database username password.
-
-```php
-getDbPass();
-```
-
-### Get language
-
-Returns the current language being used by Wolff.
-
-```php
-getLanguage();
-```
-
-### Get directory
-
-Returns the project root path.
-
-```php
-getDir();
-```
-
-### Get project directory
-
-Returns the project root path relative to the server root.
-
-```php
-getProjectDir();
-```
-
-### Get system directory
-
-Returns the system folder path.
-
-```php
-getSystemDir();
-```
-
-### Get app directory
-
-Returns the app folder path.
-
-```php
-getAppDir();
-```
-
-### Get public path
-
-Returns the public folder path.
+Returns the public of the project.
 
 ```php
 getPublic();
 ```
 
-### Get cache directory
-
-Returns the cache folder path.
+If you pass a string, it will be concatenated to the public path.
 
 ```php
-getCacheDir();
+getPublic('favicon.ico');
 ```
 
-### Get page title
+### Get config
 
-Returns the current page title.
+`config(string $key)`
+
+Returns the specified key value from the `CONFIG` array, or from the environment file if `env_override` is set to `true`.
 
 ```php
-getPageTitle();
+config('root_dir');
 ```
 
-### Get main page
-
-Returns the current main page.
+The key accepts dot notation.
 
 ```php
-getMainPage();
+config('db.password');
 ```
 
 ### Get Wolff version
+
+`wolffVersion()`
 
 Returns the current version of Wolff.
 
@@ -427,7 +323,7 @@ wolffVersion();
 
 You can add your own functions to the standard library this way.
 
-1. Create a php file with the following structure in the `system/definitions` folder:
+1. Create a php file with the following structure in the `system` folder:
 
 ```php
 <?php
@@ -444,7 +340,7 @@ namespace {
 3. After that add the following line to your composer.json file inside the autoload > files array
 
 ```
-"system/definitions/yourfilename.php",
+"system/yourfilename.php",
 ```
 
 4. Remember to run `composer dump-autoload` for the changes to take effect.

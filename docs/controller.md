@@ -1,21 +1,66 @@
-You can access to some useful methods related to the Controllers in the `Core\Controller` class.
+`Wolff\Core\Controller`
+
+The routing system is tied to the controllers.
+
+The controllers are a great way to keep your code organized instead of defining everything in the `system/web.php` file.
+
+## Usage
+
+Let's create a controller, first it must extend the `Wolff\Core\Controller` class and be in the `Controller` namespace.
+
+Any public method is supposed to be accesible through a route, and it must take a parameter (the `Wolff\Core\Http\Request` request object).
+
+The `index` method will be called by default when no method name is given.
+
+app/controllers/home.php:
+
+```php
+namespace Controller;
+
+class Home extends Controller
+{
+
+    public function index($request)
+    {
+        echo 'hello world';
+    }
+
+    public function sayHi($request)
+    {
+        echo 'hi';
+    }
+}
+```
+
+Given that example:
+
+* `http://localhost/home` should render `hello world` in your browser.
+
+* `http://localhost/home/sayHi` should render `hi`.
+
+### Sub folders
+
+You can store controllers in sub folders, if you put the above controller in an `app/controllers/sub` folder. It will be accessible through `http://localhost/sub/home`.
 
 ## General methods
 
-Just remember to `use Core\Controller`.
+The `Wolff\Core\Controller` class offers some useful static methods you can use.
 
-### Call
+### Get controller
+
+`get(string $path)`
 
 Returns a new instantiated controller.
-This method calls the `index` function of the requested controller if it's defined.
 
 ```php
-Controller::call('home');
+Controller::get('home');
 ```
 
-That will return the home controller and run its `index` method
+That will return the home controller.
 
-### Method
+### Call controller method
+
+`method(string $path[, string $method[, array $args]])`
 
 Returns the value of a controller method.
 The first parameter must be the controller name, the second parameter must be the method name, the third and last parameter must be an array with the parameters that will be used for the method.
@@ -26,48 +71,28 @@ Controller::method('client', 'getClientById', [ $client_id ]);
 
 That will call the `getClientById` method of the `client` controller using the third parameter as the parameters.
 
-### Closure
-
-Appends a closure to a new controller and calls it.
-
-If the given parameter is not a closure and it's a string, it will work like the `Controller::call` method.
-
-```php
-$func = function() {
-    echo 'Hello World';
-}
-
-Controller::closure($func);
-```
-
-### Get path
-
-Returns the file path of the given controller.
-
-```php
-Controller::getPath('sub/home');
-```
-
-By default that will return `app/controllers/sub/home.php`
-
 ### Exists
 
-Returns true if the given controller file exists, false otherwise.
+`exists(string $path)`
+
+Returns true if the specified controller exists, false otherwise.
 
 ```php
 Controller::exists('home');
 ```
 
-That will return true only if the `app/controllers/home.php` file exists, false otherwise. 
+That will return true only if the `app/controllers/home.php` controller exists, false otherwise.
 
-### Method exists
+### Has method
 
-Returns true if the method of a controller exists, false otherwise.
+`hasMethod(string $path, string $method)`
+
+Returns true if the specified method of the controller exists, false otherwise.
 
 The first parameter must be the controller name. The second parameter must be the method name.
 
 ```php
-Controller::methodExists('places/info@getInfoById');
+Controller::hasMethod('places/info', 'getInfoById');
 ```
 
 That will return true only if the `places/info` controller class has a `getInfoById` method.

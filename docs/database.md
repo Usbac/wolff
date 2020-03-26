@@ -1,84 +1,121 @@
-You can run queries using the DB connection. First you need to `use Core\DB` in your class, then you can use the following methods.
+`Wolff\Core\DB`
 
-The `run` method returns a Query object.
+You can run queries using the Database class of Wolff. It's basically an abstraction layer builded on top of PDO, meaning that it simplifies the process of running queries and is also safe and reliable.
+
+## Configuration
+
+The database constructor looks like this.
+
+`__construct([array $data = null[, array $options = null ]])`
+
+It takes two parameters, an array with the database credentials, and an array which will be used as the options for the `PDO` instance that the utility uses internally.
+
+If no data array is passed, it will use the credentials defined in the `system/config.php` file.
 
 ```php
-DB::run('SELECT * FROM table');
+$db = new Wolff\Core\DB();
+```
+
+```php
+$credentials = [
+    'dbms'        => 'mysql',
+    'server'      => 'localhost',
+    'db'          => 'wolff',
+    'db_username' => 'root',
+    'db_password' => '12345',
+];
+
+$db = new Wolff\Core\DB($credentials);
+```
+
+Both examples are right.
+
+## Running queries
+
+`query(string $sql [, $args])`
+
+The `query` method returns a `Wolff\Core\Query` object.
+
+```php
+$db->query('SELECT * FROM table');
 ```
 
 You can prepare a query passing an array or single variable as the second parameter.
 
 ```php
-DB::run('SELECT * FROM users WHERE id = ?', $id); 
+$db->query('SELECT * FROM users WHERE id = ?', $id);
 ```
 
-### Is enabled
+## Query
 
-You can check whetever or not the database system is enabled with the `isEnabled` method.
-
-```php
-DB::isEnabled();
-```
-
-That returns true if the database system is enabled, false otherwise.
-
-## Query methods
+The `Wolff\Core\Query` object returned by the `query` method has the following method.
 
 ### Get
 
-Get the query result as an associative array with the `get` method.
+`get()`
+
+Returns the query result as an associative array.
 
 ```php
-DB::run('SELECT * FROM table')->get();
+$db->query('SELECT * FROM table')->get();
 ```
 
 ### To Json
 
-Get the result as a JSON instead of an array.
+`toJson()`
+
+Returns the result as a JSON.
 
 ```php
-DB::run('SELECT * FROM table')->toJson(); 
+$db->query('SELECT * FROM table')->toJson();
 ```
 
 ### Limit
 
-Get the query result as an associative array sliced.
+`limit(int $start[, int $end])`
+
+Returns the query result as an associative array sliced.
 
 ```php
-DB::run('SELECT * FROM table')->limit(0, 5);
-//Only the 5 first rows will be returned
+$db->query('SELECT * FROM table')->limit(0, 5);
 ```
+
+In that example only 5 rows will be returned.
 
 ### First
 
-Get the first element of the query result with the `first` method.
+`first([string $column])`
+
+Returns the first element of the query result.
 
 ```php
-DB::run('SELECT * FROM table')->first();
+$db->query('SELECT * FROM table')->first();
 ```
 
-You can pass a column name as parameter to the `first` method.
-
-That will return only the specified column value of the first element.
+You can pass a column name to the method. That will return only the specified column value of the first element.
 
 ```php
-DB::run('SELECT * FROM table')->first('column');
+$db->query('SELECT * FROM table')->first('column');
 ```
 
 ### Count
 
-Count the query rows.
+`count()`
+
+Returns the number of query rows.
 
 ```php
-DB::run('SELECT * FROM table')->count();
+$db->query('SELECT * FROM table')->count();
 ```
 
 ### Pick
 
-Get the query result only with the specified columns.
+`pick(...$columns)`
+
+Returns the query result only with the specified columns.
 
 ```php
-DB::run('SELECT * FROM users')->pick('name');
+$db->query('SELECT * FROM users')->pick('name');
 ```
 
 That would return something like this:
@@ -92,7 +129,7 @@ Array
 ```
 
 ```php
-DB::run('SELECT * FROM users')->pick('name', 'age');
+$db->query('SELECT * FROM users')->pick('name', 'age');
 ```
 
 That would return something like this:
@@ -116,103 +153,125 @@ Array
 
 ### Var dump
 
+`dumpd()`
+
 Var dump the query result.
 
 ```php
-DB::run('SELECT * FROM table')->dump(); 
+$db->query('SELECT * FROM table')->dump();
 ```
 
 ### Var dump and die
 
+`dumpd()`
+
 Var dump the query result and die.
 
 ```php
-DB::run('SELECT * FROM table')->dumpd(); 
+$db->query('SELECT * FROM table')->dumpd();
 ```
 
 ### Print result
 
-Print the query result in a nice looking way.
+`printr()`
+
+Prints the query result in a nice looking way.
 
 ```php
-DB::run('SELECT * FROM table')->printr(); 
+$db->query('SELECT * FROM table')->printr();
 ```
 
 ### Print result and die
 
-Print the query result in a nice looking way and die.
+`printrd()`
+
+Prints the query result in a nice looking way and die.
 
 ```php
-DB::run('SELECT * FROM table')->printrd(); 
+$db->query('SELECT * FROM table')->printrd();
 ```
 
 ## General methods
 
 ### Get Pdo
 
+`getPdo()`
+
 Returns the PDO object.
 
 ```php
-DB::getPdo();
+$db->getPdo();
 ```
 
 ### Get last id
 
+`getLastId()`
+
 Returns the last inserted ID in the database.
 
 ```php
-DB::getLastId();
+$db->getLastId();
 ```
 
 ### Get last statement
 
+`getLastStmt()`
+
 Returns the last PDO statement executed.
 
 ```php
-DB::getLastStmt();
+$db->getLastStmt();
 ```
 
 ### Get last query
 
+`getLastSql()`
+
 Returns the last query executed.
 
 ```php
-DB::getLastSql();
+$db->getLastSql();
 ```
 
 And you can get its arguments with `getLastArgs`.
 
 ```php
-DB::getLastArgs();
+$db->getLastArgs();
 ```
 
-Finally you can re run the last query:
+Finally you can re run the last query with `runLastSql`.
 
 ```php
-DB::runLastSql();
+$db->runLastSql();
 ```
 
 ### Table exists
 
+`tableExists(string $table)`
+
 Returns true if the specified table exists, false otherwise.
 
 ```php
-DB::tableExists('users');
+$db->tableExists('users');
 ```
 
 ### Column exists
 
+`columnExists(string $table, string $column)`
+
 Returns true if the specified column exists, false otherwise.
 
 ```php
-DB::columnExists('users', 'user_id');
+$db->columnExists('users', 'user_id');
 ```
 
 The first parameter is the table where the column is, the second is the column name.
 
 ### Get schema
 
-Returns the complete database schema 
+`getSchema([string $table])`
+
+Returns the complete database schema
 
 ```php
 DB::getSchema();
@@ -231,7 +290,7 @@ Array
                     [Type] => int(11)
                     [Null] => NO
                     [Key] => PRI
-                    [Default] => 
+                    [Default] =>
                     [Extra] => auto_increment
                 )
 
@@ -240,9 +299,9 @@ Array
                     [Field] => name
                     [Type] => varchar(155)
                     [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
+                    [Key] =>
+                    [Default] =>
+                    [Extra] =>
                 )
         )
 
@@ -255,7 +314,7 @@ Array
                     [Type] => int(11)
                     [Null] => NO
                     [Key] => PRI
-                    [Default] => 
+                    [Default] =>
                     [Extra] => auto_increment
                 )
 
@@ -264,59 +323,48 @@ Array
                     [Field] => title
                     [Type] => varchar(150)
                     [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
+                    [Key] =>
+                    [Default] =>
+                    [Extra] =>
                 )
 
             [2] => Array
-                (
-                    [Field] => description
-                    [Type] => varchar(255)
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                )
-
-            [3] => Array
                 (
                     [Field] => category_id
                     [Type] => int(11)
                     [Null] => NO
                     [Key] => MUL
-                    [Default] => 
-                    [Extra] => 
+                    [Default] =>
+                    [Extra] =>
                 )
         )
 )
 ```
-
-### Get table schema
-
-Returns the schema of the specified table.
+You can pass a table name to get only the schema of that table
 
 ```php
-DB::getTableSchema('user');
+$db->getSchema('portfolio');
 ```
 
 ## Fast methods
 
-The DB class has some fast methods you can use
+The DB class has some fast methods you can use.
 
 ### Insert
 
-Will insert the given data into the specified table.
+`insert(string $table, array $data)`
+
+Inserts the given data into the specified table.
 
 The first parameter must be the table name where the data will be inserted, the second parameter must be an associative array with data.
 
 Take in mind that the array keys will be directly mapped to the column names.
 
 ```php
-DB::insert('product', [
-        'name'     => 'phone',
-        'model'    => 'PHN001'
-        'quantity' => 5
+$db->insert('product', [
+    'name'     => 'phone',
+    'model'    => 'PHN001'
+    'quantity' => 5
 ]);
 ```
 
@@ -324,27 +372,36 @@ That will be the same as `INSERT INTO 'product' (name, model, quantity) VALUES (
 
 ### Select all
 
-Will return the result of a `SELECT * FROM` query.
+`selectAll(string $table[, string $conditions[, $args ]])`
+
+Returns the result of a `SELECT * FROM` query.
+
+_Warning: The conditions parameter must NOT come from external/user input since it's not escaped._
+
 ```php
-DB::selectAll('users'); 
+$db->selectAll('users');
 ```
 Equivalent to: `SELECT * FROM users`.
 
 You can do the same with conditions:
 
 ```php
-DB::selectAll('users', 'id = ?', [1]); 
+$db->selectAll('users', 'id = ?', [1]);
 ```
 Equivalent to: `SELECT * FROM users WHERE id = 1`.
 
-The first parameter is the table name, the second is the where condition, the third is the argument array.
+The first parameter is the table name, the second is the `WHERE` condition, the third is the argument array.
 
 ### Count all
 
-Will return the result of a `SELECT COUNT(*) FROM` query.
+`countAll(string $table[, string $conditions[, $args ]])`
+
+Returns the result of a `SELECT COUNT(*) FROM` query.
+
+_Warning: The conditions parameter must NOT come from external/user input since it's not escaped._
 
 ```php
-DB::countAll('users'); 
+$db->countAll('users');
 ```
 
 Equivalent to: `SELECT COUNT(*) FROM users`.
@@ -352,26 +409,30 @@ Equivalent to: `SELECT COUNT(*) FROM users`.
 You can do the same with conditions:
 
 ```php
-DB::countAll('users', 'id = ?', [1]); 
+$db->countAll('users', 'id = ?', [1]);
 ```
 
 Equivalent to: `SELECT COUNT(*) FROM users WHERE id = 1`.
 
 The first parameter is the table name, the second is the where condition, the third is the argument array.
 
-
 ### Delete all
 
-Will return the result of a `DELETE FROM` query.
+`deleteAll(string $table[, string $conditions[, $args ]])`
+
+Returns the result of a `DELETE FROM` query.
+
+_Warning: The conditions parameter must NOT come from external/user input since it's not escaped._
+
 ```php
-DB::deleteAll('users'); 
+$db->deleteAll('users');
 ```
 Equivalent to: `DELETE FROM users`.
 
 You can do the same with conditions:
 
 ```php
-DB::deleteAll('users', 'id = ?', [1]); 
+$db->deleteAll('users', 'id = ?', [1]);
 ```
 
 Equivalent to: `DELETE FROM users WHERE id = 1`.

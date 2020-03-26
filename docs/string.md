@@ -1,45 +1,54 @@
+`Wolff\Utils\Str`
+
 In PHP, using functions related to strings is quite common, that's why Wolff includes a class with some functions related to strings which can be quite useful.
 
-Just remember to `use Utilities\Str`.
+## General Methods
 
-## Sanitize
+### Sanitize
 
 Sanitize strings is an important thing to do. So the String class have some functions related to it.
 
-Sanitizing an URL:
+`sanitizeUrl(string $url)`
+`sanitizeEmail(string $email)`
+`sanitizeInt(string $int)`
+`sanitizeFloat(string $float)`
+`sanitizePath(string $path)`
+
+Example:
 
 ```php
 $url = Str::sanitizeURL($url);
-//The function will return the $url variable sanitized
 ```
 
-Exactly the same can be applied with the `sanitizeEmail`, `sanitizeInt`, `sanitizeFloat` and `sanitizePath` functions.
+### Is Email
 
-## Others
+`isEmail(string $email)`
 
-### Is email
-
-Returns true if the given string complies with an email format.
+Returns `true` if the given string complies with an email format, `false` otherwise.
 
 ```php
 Str::isEmail('contact@getwolff.com');
 ```
 
-That will return true.
+That will return `true`.
 
-### Is alphanumeric
+### Is Alphanumeric
 
-Returns true if the given string contains only alphanumeric characters and whitespaces.
+`isAlphanumeric(string $str)`
+
+Returns `true` if the given string contains only alphanumeric characters and whitespaces, `false` otherwise.
 
 ```php
 Str::isAlphanumeric('abcdefg1234567 890');
 ```
 
-That will return true.
+That will return `true`.
 
-### Is alpha
+### Is Alpha
 
-Returns true if the given string contains only letters and whitespaces.
+`isAlpha(string $str)`
+
+Returns `true` if the given string contains only letters and whitespaces, `false` otherwise.
 
 ```php
 Str::isAlpha('abc def g');
@@ -48,6 +57,8 @@ Str::isAlpha('abc def g');
 That will return true.
 
 ### Token
+
+`token([int $length])`
 
 Returns a random generated token.
 
@@ -65,6 +76,8 @@ That will return a token with 24 characters length.
 
 ### Slug
 
+`slug(string $str)`
+
 Returns a url friendly string.
 
 ```php
@@ -78,15 +91,19 @@ Basically this function replaces special letters by their normal counterpart, pu
 
 ### Contains
 
-Returns true if a string contains a substring.
+`contains(string $str, string $needle)`
+
+Returns `true` if a string contains a substring, `false` otherwise.
 
 ```php
 Str::contains('Lorem ipsum dolor sit amet', 'sit');
 ```
 
-That will return true.
+That will return `true`.
 
 ### Interpolate
+
+`interpolate(string $str, array $values)`
 
 Returns a string with its placeholders replaced by context values.
 
@@ -103,7 +120,9 @@ That will return `Your firstname is john and your lastname is doe`.
 
 _If the given array is empty, the method will return the original string._
 
-### swap
+### Swap
+
+`swap(string $str, string $first_str, string $second_str)`
 
 Returns a string with the two indicated substrings swapped.
 
@@ -115,9 +134,11 @@ That will return `I'm the Omega, the Alpha, everything in between`.
 
 The first parameter is the string, the remaining two are the substrings to be swapped.
 
-### toUtf8
+### To UTF8
 
-Converts a string with any encoding to UTF-8 and returns it.
+`toUtf8(string $str)`
+
+Returns the given string from any encoding to UTF-8.
 
 Keep in mind that the string encoding detection is not perfect.
 
@@ -125,7 +146,9 @@ Keep in mind that the string encoding detection is not perfect.
 Str::toUtf8($string);
 ```
 
-### limit
+### Limit
+
+`limit(string $str, int $limit)`
 
 Returns a truncated string with the specified length.
 
@@ -135,17 +158,9 @@ Str::limit('Lorem ipsum dolor sit amet', '4');
 
 That will return `Lore`.
 
-### unShift
+### Concatenate Path
 
-Adds the given value at the start of the string and returns it.
-
-```php
-Str::unShift('psum dolor sit amet', 'Lorem i');
-```
-
-That will return `Lorem ipsum dolor sit amet`.
-
-### concat Path
+`concatPath(...$paths)`
 
 Returns all the given strings and/or arrays of strings concatenated as a path.
 
@@ -159,7 +174,9 @@ Str::concatPath(['home', 'public'], 'logo.svg');
 
 Both examples are the same and will return `home/public/logo.svg`.
 
-### concat
+### Concatenate
+
+`concat(...$strings)`
 
 Returns all the given strings concatenated into one.
 
@@ -169,14 +186,17 @@ Str::concat('Lorem ', 'ipsum ', 'dolor');
 
 Returns `Lorem ipsum dolor`.
 
-### toString
+### To String
+
+`toString($var)`
 
 Returns the given value as a string.
 
 ```php
 Str::toString(true);
-//Returns 'true'
 ```
+
+That will return 'true'.
 
 Booleans will be converted to a 'true' or 'false' string.
 
@@ -184,9 +204,11 @@ Arrays will be imploded to a normal string.
 
 Numeric values will be converted to a string using the `strval` function.
 
-### startsWith
+### Starts with
 
-Returns true if a string starts with a substring.
+`startsWith(string $str, string $needle)`
+
+Returns `true` if a string starts with a substring, `false` otherwise.
 
 ```php
 Str::startsWith('Lorem ipsum dolor sit amet', 'Lorem');
@@ -194,9 +216,11 @@ Str::startsWith('Lorem ipsum dolor sit amet', 'Lorem');
 
 That will return `true`.
 
-### endsWith
+### Ends with
 
-Returns true if a string ends with a substring.
+`endsWith(string $str, string $needle)`
+
+Returns `true` if a string ends with a substring, `false` otherwise.
 
 ```php
 Str::endsWith('Lorem ipsum dolor sit amet', 'amet');
@@ -204,7 +228,9 @@ Str::endsWith('Lorem ipsum dolor sit amet', 'amet');
 
 That will return `true`.
 
-### remove
+### Remove substring
+
+`remove(string $str, string $needle)`
 
 Removes all the ocurrences of a subtring in a string.
 
@@ -216,7 +242,9 @@ Str::remove('Lorem ipsum dolor sit amet', 'sit');
 
 That will return `Lorem ipsum dolor  amet`.
 
-### after
+### After substring
+
+`after(string $str, string $needle)`
 
 Returns everything after the specified substring.
 
@@ -228,7 +256,9 @@ Str::after('Lorem ipsum dolor sit amet', 'dolor');
 
 That will return ` sit amet`.
 
-### before
+### Before substring
+
+`before(string $str, string $needle)`
 
 Returns everything before the specified substring.
 
@@ -239,23 +269,3 @@ Str::before('Lorem ipsum dolor sit amet', 'dolor');
 ```
 
 That will return `Lorem ipsum `.
-
-### pathToNamespace
-
-Turns a directory path into a namespace path, it replaces slashes by backslashes.
-
-```php
-pathToNamespace('sub/home');
-```
-
-That will return `sub\home`.
-
-### namespaceToPath
-
-Turns a namespace path into a directory path, it replaces backslashes by slashes.
-
-```php
-namespaceToPath('sub\home');
-```
-
-That will return `sub/home`.

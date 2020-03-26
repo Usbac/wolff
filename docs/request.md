@@ -1,240 +1,145 @@
-Instead of managing the superglobal arrays of PHP directly, Wolff gives you an abstraction layer throught the `Request` class.
+`Wolff\Core\Http\Request`
+
+Instead of managing the superglobals of PHP, Wolff offers a request object which helps to centralize the handling of the request and give it a more OO syntax.
+
+This request object is the one that must be passed as parameter to the Controller's public functions, route functions, and middleware functions.
+
+### Route:
+```php
+Route::get('/', function($request) {
+});
+```
+
+### Middleware:
+```php
+Middleware::before('/', function($request) {
+});
+```
+
+### Controller:
+```php
+namespace Controller;
+
+class Home extends Controller
+{
+    public function index($request)
+    {
+    }
+}
+```
 
 ## General methods
 
-Just remember to `use Core\Request`.
+### Get parameter
+
+`param([string $key])`
+
+Returns the requested parameter (usually available in the `$_GET` superglobal array).
+
+Given the route `localhost/wolff?foo=bar`.
+
+```php
+$request->param('foo');
+```
+
+It will return `bar`.
+
+_If no parameter is passed, it will return an array with all the parameters._
+
+### Has parameter
+
+`hasParam(string $key)`
+
+Returns `true` if the given parameter key exists, `false` otherwise.
+
+```php
+$request->hasParam('foo');
+```
+
+Given the route `localhost/wolff?foo=bar` it should return `true`.
+
+### Get body parameter
+
+`body([string $key])`
+
+Returns the specified body parameter (usually available in the `$_POST` superglobal array).
+
+```php
+$request->body('username');
+```
+
+_If no parameter is passed, it will return an array with all the body parameters._
+
+### Has body parameter
+
+`has(string $key)`
+
+Returns `true` if the given body parameter key exists, `false` otherwise.
+
+```php
+$request->has('username');
+```
+
+### Get file
+
+`file([string $key])`
+
+Returns the specified file (usually available in the `$_FILE` superglobal array).
+
+```php
+$request->file('profile')
+```
+
+Keep in mind that these files are an instance of `Wolff\Core\File` (builded on top of the `$_FILE` array). You can look at the `File` page of this documentation for more information.
+
+_If no parameter is passed, it will return an array with all the files._
+
+### Has file
+
+`hasFile(string $key)`
+
+Returns `true` if the given file key exists, `false` otherwise.
+
+```php
+$request->hasFile('profile_image');
+```
+
+### File options
+
+`fileOptions(array $arr`
+
+Defines the options for uploading the request files, explained more in the file page of this documentation.
+
+### Get header
+
+`getHeader([string $key])`
+
+Returns the specified request header.
+
+```php
+$request->getHeader('Content-type');
+```
+
+_If no parameter is passed, it will return an array with all the headers._
 
 ### Get method
 
-Returns the current request method. It is the equivalent to `$_SERVER['REQUEST_METHOD']`.
+`getMethod()`
+
+Returns the HTTP method.
 
 ```php
-Request::getMethod();
+$request->getMethod();
 ```
 
-### Matches method
+In a request of type post it will return `POST`.
 
-Returns true if the given method matches the current request method, false otherwise.
+### Get Url
+
+`getUrl()`
+
+Returns the request uri.
 
 ```php
-Request::matchesMethod('POST');
+$request->getUrl();
 ```
-
-That will return true if the current request method is POST.
-
-*The parameter doesn't need to be in uppercase.*
-
-## GET
-
-### Get
-
-Get a GET variable:
-
-```php
-Request::get('name');
-```
-
-If no parameter is passed to the function, it will retrieve all the `$_GET` array content.
-
-### Has
-
-Check if a GET variable exists:
-
-```php
-Request::hasGet('name');
-```
-
-### Set
-
-Set a GET variable:
-
-```php
-Request::setGet('name', 'Margaret Brown');
-```
-
-### Unset
-
-Unset a GET variable:
-
-```php
-Request::unsetGet('name');
-```
-
-If no parameter is passed to the function, all of the `$_GET` array content will be unset.
-
-
-## POST
-
-### Get
-
-Get a POST variable:
-
-```php
-Request::post('name');
-```
-
-If no parameter is passed to the function, it will retrieve all the `$_POST` array content.
-
-### Has
-
-Check if a POST variable exists:
-
-```php
-Request::hasPost('name');
-```
-
-### Set
-
-Set a POST variable:
-
-```php
-Request::setPost('name', 'Margaret Brown');
-```
-
-### Unset
-
-Unset a POST variable:
-
-```php
-Request::unsetPost('name');
-```
-
-If no parameter is passed to the function, all of the `$_POST` array content will be unset.
-
-## PUT
-
-### Get
-
-Get a PUT variable:
-
-```php
-Request::put('name');
-```
-
-If no parameter is passed to the function, it will retrieve all the PUT values.
-
-### Has
-
-Check if a PUT variable exists:
-
-```php
-Request::hasPut('name');
-```
-
-## PATCH
-
-### Get
-
-Get a PATCH variable:
-
-```php
-Request::patch('name');
-```
-
-If no parameter is passed to the function, it will retrieve all the PATCH values.
-
-### Has
-
-Check if a PATCH variable exists:
-
-```php
-Request::hasPatch('name');
-```
-
-## DELETE
-
-### Get
-
-Get a DELETE variable:
-
-```php
-Request::delete('name');
-```
-
-If no parameter is passed to the function, it will retrieve all the DELETE values.
-
-### Has
-
-Check if a DELETE variable exists:
-
-```php
-Request::hasDelete('name');
-```
-
-## FILES
-
-### Get
-
-Get a FILE variable:
-
-```php
-Request::file('name');
-```
-
-If no parameter is passed to the function, it will retrieve all of the `$_FILES` array content.
-
-### Has
-
-Check if a FILE variable exists:
-
-```php
-Request::hasFile('name');
-```
-
-## COOKIE
-
-### Get
-
-Get a COOKIE variable:
-
-```php
-Request::cookie('name');
-```
-
-If no parameter is passed to the function, it will retrieve all the `$_COOKIE` array content.
-
-### Has
-
-Check if a COOKIE variable exists:
-
-```php
-Request::hasCookie('name');
-```
-
-### Set
-
-Set a COOKIE variable:
-
-```php
-Request::setCookie('name', 'value', 60);
-```
-
-The first parameter is the variable key, the second is the value, the third is the time expressed in seconds, the fourth and last value is the path where the variable will work, it's optional.
-
-If the path is not specified, the cookie will be available in all of the page.
-
-You can pass a string as the time too:
-
-| String    | Time                |
-| ----------|---------------------|
-| forever   | 5 Years from now    |
-| month     | 30 days from now    |
-| day       | 24 hours from now   |
-
-**Example**
-
-```php
-Request::setCookie('user_id', '1234', 'forever', 'profile/');
-```
-
-The `user_id` variable will be available for the next 5 years only in the 'profile' pages.
-
-### Unset
-
-Unset a COOKIE variable:
-
-```php
-Request::unsetCookie('name');
-```
-
-If no parameter is passed to the function, all of the `$_COOKIE` array content will be unset.

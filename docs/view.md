@@ -1,10 +1,12 @@
-Every core method related to views is available in the `Core\View` class.
+`Wolff\Core\View`
+
+The Wolff view class is the one responsible for rendering and managing views.
 
 ## General methods
 
-Just remember to `use Core\View`.
-
 ### Render
+
+`render(string $dir[, array $data[, bool $cache]])`
 
 Renders a view content.
 
@@ -18,7 +20,9 @@ That will basically render the content of the `app/views/sub/home.wlf` file usin
 
 ### Get source file
 
-Returns a view content or false if it doesn't exists.
+`getSource(string $dir)`
+
+Returns a view content.
 
 The parameter must be the view name.
 
@@ -30,7 +34,9 @@ That will return the content of the `app/views/sub/home.wlf` file.
 
 ### Get render
 
-Returns a view content rendered or false if it doesn't exists.
+`getRender(string $dir[, array $data[, bool $cache]])`
+
+Returns a view content rendered.
 
 The first parameter must be the view name, the second the associative array with the content that will be used in the view, the third and optional parameter is to use or not the cache file/system.
 
@@ -50,6 +56,8 @@ Take in mind that it can increase the loading time.
 
 ### Get path
 
+`getPath(string $path)`
+
 Returns the file path of the given view.
 
 ```php
@@ -60,10 +68,12 @@ By default that will return `app/views/sub/home.wlf`
 
 ### Exists
 
-Returns true if the given view file exists, false otherwise.
+`exists(string $dir)`
+
+Returns `true` if the given view file exists, `false` otherwise.
 
 ```php
 View::exists('home');
 ```
 
-That will return true only if the `app/views/home.wlf` file exists, false otherwise. 
+That will return true only if the `app/views/home.wlf` file exists, false otherwise.

@@ -1,12 +1,12 @@
-The template system of Wolff allows you to write cleaner PHP code in your views, avoiding things like the PHP tags.
+The template system of Wolff allows you to write cleaner and safer PHP code in your views, avoiding things like the PHP tags and automatically escaping all the variables.
 
 It only works in the views and is completely optional, so you can write normal PHP code if you want to.
 
-The template system can be completely disabled if the `template_on` key in the `system/config.php` file is equal to false.
+The template system can be completely disabled if the `template_on` key in the `system/config.php` file is equal to `false`.
 
 ## Variables
 
-### Load 
+### Load
 
 When loading a view from a controller, you can pass as parameter an associative array with data in it:
 
@@ -15,14 +15,16 @@ $data['message'] = 'Hello world';
 View::render('page', $data);
 ```
 
-### Display
+## Print
 
  Then in the view you can print the variables that are in that array using the brackets tag, this way:
 ```php
 {{ $message }}
 ```
 
-This will print the 'message' key in the data array, keep in mind that the content will be automatically escaped for your safety. 
+This will print the 'message' key in the data array, keep in mind that the content will be automatically escaped for your safety.
+
+### Print raw
 
 If you don't want your data to be escaped use the following tags:
 
@@ -49,7 +51,7 @@ The template system have an advantage over the common comments and that is that 
 You can do multiline comments too.
 
 ```html
-{# This is a 
+{# This is a
 multiline
 comment #}
 ```
@@ -74,34 +76,6 @@ You can do this:
 {% endfor %}
 ```
 
-## Conditionals
-
-To write conditional statements, put your variable/condition before an interrogation symbol, all of this inside brackets. 
-
-```php
-{ $foo? }
-    // code
-{?}
-```
-
-That is the equivalent to this:
-
-```php
-<?php if ($foo): ?>
-    // code
-<?php endif; ?>
-```
-
-To write else if:
-
-```php
-{ $foo? }
-    // code
-{ else $foo2 }
-    // more code
-{?}
-```
-
 ## Loops
 
 You can write traditional for loops in a short way:
@@ -124,7 +98,7 @@ The same but using variables:
 
 The template system of Wolff has some abbreviated functions to make the code cleaner.
 
-To use a function only write its' name followed by a vertical bar and then the variable. 
+To use a function only write its' name followed by a vertical bar and then the variable.
 Like this:
 
 ```php
@@ -167,16 +141,19 @@ Instead of using the html script and link tags for importing external files, you
 ```
 {% style="styles.css" %}
 ```
+
 Equivalent to: `<link rel="stylesheet" type="text/css" href="styles.css"/>`
 
 ```
 {% script="scripts.js" %}
 ```
+
 Equivalent to: `<script type="text/javascript" src="scripts.js"></script>`
 
 ```
 {% icon="img.svg" %}
 ```
+
 Equivalent to: `<link rel="icon" href="img.svg">`
 
 
@@ -208,15 +185,91 @@ Example:
 
 That will put all the `header.wlf` view content inside the div tags.
 
+## View inheritance
+
+View inheritance is a great feature to reduce repeated code.
+
+_Wolff supports view inheritance, but not multiple view inheritance._
+
+### Extending the view
+
+The parent view can have multiple blocks which will be used by the child views to redefine what is inside them.
+
+A child view must extend from a parent, and for that, use the following syntax.
+
+```html
+@extends('parent_view')
+```
+
+### Print parent block
+
+You can print the content of a parent's block anywhere in the child view with the following syntax.
+
+```html
+{[ parent block_name ]}
+```
+
+### Example
+
+app/views/base.wlf:
+
+```html
+<!DOCTYPE html>
+<head>
+    {[ block head ]}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {[ endblock ]}
+</head>
+<body>
+    {[ block body ]}
+    {[ endblock ]}
+</body>
+</html>
+```
+
+app/views/child.wlf:
+
+```html
+@extends('base')
+
+{[ block head ]}
+    {[ parent head ]}
+    <title>Tundra</title>
+{[ endblock ]}
+
+{[ block body ]}
+    <div>Hello world</div>
+{[ endblock ]}
+```
+
+Given the examples of above, the following code:
+
+```php
+View::render('child');
+```
+
+Will render this:
+```html
+<!DOCTYPE html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tundra</title>
+</head>
+<body>
+    <div>Hello world</div>
+</body>
+</html>
+```
+
 ## Extending the template
 
 You can extend the template engine and make your own tags or rules using regular expressions and the `custom` function.
 
-The custom content must be defined in the `system/Definitions/Templates.php` file.
-
 The custom function takes a closure, which must take a parameter that is suposed to be the view content and finally it must return it.
 
-If you add the following code to the `system/Templates.php` file:
+If you add the following code to the `system/web.php` file:
 
 ```php
 Template::custom(function ($content) {

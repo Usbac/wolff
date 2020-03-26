@@ -1,13 +1,17 @@
-The pagination utility makes incredibly easy the process of creating a page with pagination.
+`Wolff\Utils\Pagination`
 
-## Usability
+The pagination utility makes incredibly easy the process of creating a web page with pagination.
 
-Its main method `get` returns an array with the elements that will be shown in a pagination view.
+Its constructor looks like this:
+
+`__construct([int $total[, int $per_page[, int $page[, int $side_pages_n[, string $url_format]]]]])`
+
+And its main method `get` returns an array with the elements that will be shown in a pagination view.
 
 ### Example
 
 ```php
-$pagination = new \Utilities\Pagination(
+$pagination = new Pagination(
     50, //Total of elements
     10, //Elements per page
     3, //Current page
@@ -24,14 +28,14 @@ Array
     [0] => Array
         (
             [index] => 1
-            [current_page] => 
+            [current_page] =>
             [url] => http://localhost/wolff/blog/1
         )
 
     [1] => Array
         (
             [index] => 2
-            [current_page] => 
+            [current_page] =>
             [url] => http://localhost/wolff/blog/2
         )
 
@@ -45,7 +49,7 @@ Array
     [3] => Array
         (
             [index] => 4
-            [current_page] => 
+            [current_page] =>
             [url] => http://localhost/wolff/blog/4
         )
 
@@ -94,9 +98,7 @@ The pagination utility has the following options:
 
 ## General methods
 
-In the method examples a `pagination` variable will be used which is an instance of `\Utilities\Pagination`.
-
-Keep in mind that the set methods can be chained for syntactic sugar, so the following code is valid:
+Keep in mind that the methods can be chained for syntactic sugar, so the following code is valid:
 
 ```php
 $pagination->setTotal(100)
@@ -109,21 +111,17 @@ $pagination->setTotal(100)
 
 ### Set total
 
-Set the total number of elements.
+`setTotal(int $total)`
+
+Sets the total number of elements.
 
 ```php
 $pagination->setTotal(100);
 ```
 
-### Get total
+### Set page size
 
-Get the total number of elements.
-
-```php
-$pagination->getTotal();
-```
-
-### Set page size 
+`setPageSize(int $per_page)`
 
 Set the total number of elements per page.
 
@@ -131,15 +129,9 @@ Set the total number of elements per page.
 $pagination->setPageSize(10);
 ```
 
-### Get page size
-
-Get the total number of elements per page.
-
-```php
-$pagination->getPageSize();
-```
-
 ### Set current page
+
+`setPage([int $page])`
 
 Set the current page.
 
@@ -147,17 +139,11 @@ Set the current page.
 $pagination->setPage(5);
 ```
 
-By default it's zero (0).
-
-### Get current page
-
-Getting the current page.
-
-```php
-$pagination->getPage();
-```
+By default it's zero `0`.
 
 ### Set number of side pages
+
+`setSidePages([int $side_pages_n])`
 
 Set the number of pages that will be at the left and right side of the current page.
 
@@ -173,17 +159,11 @@ $pagination->setSidePages(1);
 
 Giving the example shown above, if the current page is 5, the pagination utility will show the pages `4 5 6`.
 
-By default it's five (5).
-
-### Get number of side pages
-
-Get the number of pages that will be at the left and right side of the current page.
-
-```php
-$pagination->getSidePages();
-```
+By default it's five `5`.
 
 ### Set pages url
+
+`setUrl(string $url_format)`
 
 Set the url format used for the views.
 
@@ -195,15 +175,9 @@ $pagination->setUrl('blog/posts/{page}');
 
 Giving the example shown above, the page 3 should have the following value in its url: `blog/posts/3`.
 
-### Get pages url
-
-Get the url format used for the views.
-
-```php
-$pagination->getUrl();
-```
-
 ### Set show ends
+
+`showEnds([bool $show_ends])`
 
 Set on or off the display of the first and last page.
 
@@ -212,12 +186,3 @@ $pagination->showEnds(true);
 ```
 
 By default the value is `true`.
-
-### Get show ends
-
-Get the status of the display of the first and last page.
-True if they will be displayed, false otherwise.
-
-```php
-$pagination->getShowEnds();
-```
