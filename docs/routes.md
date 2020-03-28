@@ -58,12 +58,14 @@ That will set the content-type of the route to `application/json`.
 
 ## Routes by code
 
-`code(string $code, $function)`
+`code(int $code, $function)`
 
 You can define routes that will be executed based on an HTTP status code using the `code` method.
 
+The function parameter must take a parameter which is the request object (instance of `Wolff\Core\Http\Request`).
+
 ```php
-Route::code('404', function() {
+Route::code(404, function($req) {
     echo 'Not found :(';
 });
 ```

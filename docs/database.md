@@ -6,7 +6,7 @@ You can run queries using the Database class of Wolff. It's basically an abstrac
 
 The database constructor looks like this.
 
-`__construct([array $data = null[, array $options = null ]])`
+`__construct([array $data[, array $options ]])`
 
 It takes two parameters, an array with the database credentials, and an array which will be used as the options for the `PDO` instance that the utility uses internally.
 
@@ -32,7 +32,7 @@ Both examples are right.
 
 ## Running queries
 
-`query(string $sql [, $args])`
+`query(string $sql[, $args])`
 
 The `query` method returns a `Wolff\Core\Query` object.
 
@@ -60,7 +60,7 @@ Returns the query result as an associative array.
 $db->query('SELECT * FROM table')->get();
 ```
 
-### To Json
+### Get Json
 
 `toJson()`
 
@@ -271,7 +271,7 @@ The first parameter is the table where the column is, the second is the column n
 
 `getSchema([string $table])`
 
-Returns the complete database schema
+Returns the database schema
 
 ```php
 DB::getSchema();
@@ -370,71 +370,47 @@ $db->insert('product', [
 
 That will be the same as `INSERT INTO 'product' (name, model, quantity) VALUES ('phone', 'PHN001', '5')`.
 
-### Select all
+### All
 
-`selectAll(string $table[, string $conditions[, $args ]])`
+The `DB` class has the following methods for running queries.
 
-Returns the result of a `SELECT * FROM` query.
+```
+selectAll(string $table[, string $conditions[, $args ]])
+countAll(string $table[, string $conditions[, $args ]])
+deleteAll(string $table[, string $conditions[, $args ]])
+```
 
-_Warning: The conditions parameter must NOT come from external/user input since it's not escaped._
+#### _Warning: The conditions parameter must NOT come from external/user input since it's NOT escaped._
 
 ```php
 $db->selectAll('users');
+$db->selectAll('users', 'id = ?', [ 1 ]);
 ```
-Equivalent to: `SELECT * FROM users`.
 
-You can do the same with conditions:
+Equivalent to:
 
-```php
-$db->selectAll('users', 'id = ?', [1]);
-```
-Equivalent to: `SELECT * FROM users WHERE id = 1`.
+`SELECT * FROM users`
 
-The first parameter is the table name, the second is the `WHERE` condition, the third is the argument array.
-
-### Count all
-
-`countAll(string $table[, string $conditions[, $args ]])`
-
-Returns the result of a `SELECT COUNT(*) FROM` query.
-
-_Warning: The conditions parameter must NOT come from external/user input since it's not escaped._
+`SELECT * FROM users WHERE id = 1`.
 
 ```php
 $db->countAll('users');
+$db->countAll('users', 'id = ?', [ 1 ]);
 ```
 
-Equivalent to: `SELECT COUNT(*) FROM users`.
+Equivalent to:
 
-You can do the same with conditions:
+`SELECT COUNT(*) * FROM users`
 
-```php
-$db->countAll('users', 'id = ?', [1]);
-```
-
-Equivalent to: `SELECT COUNT(*) FROM users WHERE id = 1`.
-
-The first parameter is the table name, the second is the where condition, the third is the argument array.
-
-### Delete all
-
-`deleteAll(string $table[, string $conditions[, $args ]])`
-
-Returns the result of a `DELETE FROM` query.
-
-_Warning: The conditions parameter must NOT come from external/user input since it's not escaped._
+`SELECT COUNT(*) * FROM users WHERE id = 1`.
 
 ```php
 $db->deleteAll('users');
-```
-Equivalent to: `DELETE FROM users`.
-
-You can do the same with conditions:
-
-```php
-$db->deleteAll('users', 'id = ?', [1]);
+$db->deleteAll('users', 'id = ?', [ 1 ]);
 ```
 
-Equivalent to: `DELETE FROM users WHERE id = 1`.
+Equivalent to:
 
-The first parameter is the table name, the second is the where condition, the third is the argument array.
+`DELETE * FROM users`
+
+`DELETE * FROM users WHERE id = 1`.

@@ -1,4 +1,6 @@
-The request object of Wolff has an array of uploaded files, each one of the elements in that array is an instance of `Wolff\Core\File`.
+`Wolff\Core\Http\File`
+
+The request object of Wolff has an array of uploaded files, each one of the elements in that array is an instance of `Wolff\Core\Http\File`.
 
 ```php
 $request->file();

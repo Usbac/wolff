@@ -12,8 +12,10 @@ When under maintenance, the function defined with the `set` method will be execu
 
 Defines the function that will be executed under maintenance mode.
 
+The function parameter must take a parameter which is the request object (instance of `Wolff\Core\Http\Request`).
+
 ```php
-Maintenance::set(function() {
+Maintenance::set(function($req) {
     echo 'Sorry, under maintenance :(. Come back later';
 });
 ```

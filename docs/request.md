@@ -143,3 +143,13 @@ Returns the request uri.
 ```php
 $request->getUrl();
 ```
+
+### Is secure
+
+`isSecure()`
+
+Returns `true` if the current request protocol is secure (HTTPS), `false` otherwise.
+
+```php
+$request->isSecure();
+```
