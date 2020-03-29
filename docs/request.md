@@ -90,7 +90,7 @@ Returns the specified file (usually available in the `$_FILE` superglobal array)
 $request->file('profile')
 ```
 
-Keep in mind that these files are an instance of `Wolff\Core\File` (builded on top of the `$_FILE` array). You can look at the `File` page of this documentation for more information.
+Keep in mind that these files are an instance of `Wolff\Core\Http\File` (builded on top of the `$_FILE` array). You can look at the `File` page of this documentation for more information.
 
 _If no parameter is passed, it will return an array with all the files._
 
@@ -106,7 +106,7 @@ $request->hasFile('profile_image');
 
 ### File options
 
-`fileOptions(array $arr`
+`fileOptions(array $arr)`
 
 Defines the options for uploading the request files, explained more in the file page of this documentation.
 

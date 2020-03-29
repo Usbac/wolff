@@ -1,3 +1,5 @@
+`Wolff\Core\Template`
+
 The template system of Wolff allows you to write cleaner and safer PHP code in your views, avoiding things like the PHP tags and automatically escaping all the variables.
 
 It only works in the views and is completely optional, so you can write normal PHP code if you want to.
@@ -22,7 +24,9 @@ View::render('page', $data);
 {{ $message }}
 ```
 
-This will print the 'message' key in the data array, keep in mind that the content will be automatically escaped for your safety.
+This will print the 'message' key in the data array.
+
+_Keep in mind that the content will be automatically escaped for your safety._
 
 ### Print raw
 
@@ -38,11 +42,11 @@ That is the equivalent to:
 <?php echo $data['message']; ?>
 ```
 
-All the variables in the data array are accessible from the view without needing to refer to the data array. This `$variable` is the equivalent to this `$data['variable']`.
+All the variables in the data array are accessible from the view without needing to refer to the given array. This `$variable` is the equivalent to this `$data['variable']`.
 
 ## Comments
 
-The template system have an advantage over the common comments and that is that the comments of the template system aren't included in the final HTML returned to the user.
+The template system comments have an advantage over the common comments and that is that the comments of the template system aren't included in the final HTML returned to the user.
 
 ```html
 {# This is a simple comment #}
@@ -81,17 +85,19 @@ You can do this:
 You can write traditional for loops in a short way:
 
 ```php
-{ for i in (0, 10) }
+{% for $i in (0, 10) %}
     {{$i}}
-{endfor}
+{% endfor %}
 ```
+
+That should print `012345678910`.
 
 The same but using variables:
 
 ```php
-{ for i in (0, length|$text) }
+{% for $i in (0, length|$text) %}
     {{$i}}
-{endfor}
+{% endfor %}
 ```
 
 ## Functions

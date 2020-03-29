@@ -16,7 +16,7 @@ Every logging file represents a day and contains logs with the following format:
 
 `isEnabled()`
 
-You can check whetever or not the log system is enabled with the `isEnabled` method.
+Returns `true` if the log system is enabled, `false` otherwise.
 
 ```php
 Log::isEnabled();
