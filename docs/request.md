@@ -1,12 +1,17 @@
 `Wolff\Core\Http\Request`
 
-Instead of managing the superglobals of PHP, Wolff offers a request object which helps to centralize the handling of the request and give it a more OO syntax.
+Wolff offers you a quite useful and complete request object.
+
+This can be done to avoid the superglobals of PHP, giving you a more object oriented syntax.
 
 This request object is the one that must be passed as parameter to the Controller's public functions, route functions, and middleware functions.
 
 ### Route:
 ```php
 Route::get('/', function($request) {
+});
+
+Route::code(404, function($request) {
 });
 ```
 
@@ -32,14 +37,14 @@ class Home extends Controller
 
 ### Get parameter
 
-`param([string $key])`
+`query([string $key])`
 
 Returns the requested parameter (usually available in the `$_GET` superglobal array).
 
 Given the route `localhost/wolff?foo=bar`.
 
 ```php
-$request->param('foo');
+$request->query('foo');
 ```
 
 It will return `bar`.
@@ -48,12 +53,12 @@ _If no parameter is passed, it will return an array with all the parameters._
 
 ### Has parameter
 
-`hasParam(string $key)`
+`hasQuery(string $key)`
 
 Returns `true` if the given parameter key exists, `false` otherwise.
 
 ```php
-$request->hasParam('foo');
+$request->hasQuery('foo');
 ```
 
 Given the route `localhost/wolff?foo=bar` it should return `true`.
@@ -110,6 +115,28 @@ $request->hasFile('profile_image');
 
 Defines the options for uploading the request files, explained more in the file page of this documentation.
 
+### Get cookie
+
+`cookie([string $key])`
+
+Returns the specified cookie (usually available in the `$_COOKIE` superglobal array).
+
+```php
+$request->cookie('user_session');
+```
+
+_If no parameter is passed, it will return an array with all the cookies._
+
+### Has cookie
+
+`hasCookie(string $key)`
+
+Returns `true` if the given cookie key exists, `false` otherwise.
+
+```php
+$request->hasCookie('user_session');
+```
+
 ### Get header
 
 `getHeader([string $key])`
@@ -136,12 +163,12 @@ In a request of type post it will return `POST`.
 
 ### Get Url
 
-`getUrl()`
+`getUri()`
 
 Returns the request uri.
 
 ```php
-$request->getUrl();
+$request->getUri();
 ```
 
 ### Is secure

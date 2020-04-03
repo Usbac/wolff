@@ -8,7 +8,7 @@ The controllers are a great way to keep your code organized instead of defining 
 
 Let's create a controller, first it must extend the `Wolff\Core\Controller` class and be in the `Controller` namespace.
 
-Any public method is supposed to be accesible through a route, and it must take a parameter (the `Wolff\Core\Http\Request` request object).
+Any public method is supposed to be accesible through a route, and it must take two parameters which are the request object and the response object (instance of `Wolff\Core\Http\Request` and `Wolff\Core\Http\Response`).
 
 The `index` method will be called by default when no method name is given.
 
@@ -20,14 +20,14 @@ namespace Controller;
 class Home extends Controller
 {
 
-    public function index($request)
+    public function index($req, $res)
     {
-        echo 'hello world';
+        $res->write('hello world');
     }
 
-    public function sayHi($request)
+    public function sayHi($req, $res)
     {
-        echo 'hi';
+        $res->write('hi');
     }
 }
 ```

@@ -62,11 +62,11 @@ That will set the content-type of the route to `application/json`.
 
 You can define routes that will be executed based on an HTTP status code using the `code` method.
 
-The function parameter must take a parameter which is the request object (instance of `Wolff\Core\Http\Request`).
+The function parameter must take two parameters which are the request object and the response object (instance of `Wolff\Core\Http\Request` and `Wolff\Core\Http\Response`).
 
 ```php
-Route::code(404, function($req) {
-    echo 'Not found :(';
+Route::code(404, function($req, $res) {
+    $res->write('Not found :(');
 });
 ```
 
@@ -91,7 +91,7 @@ You can use get parameters in the URL
 The following block of code
 
 ```php
-Route::add('main_page/{name}', function($req) {
+Route::add('main_page/{name}', function($req, $res) {
 	echo $req->param('name');
 });
 ```
@@ -107,7 +107,7 @@ You can also use optional get parameters in the URL
 The following block of code
 
 ```php
-Route::add('main_page/{name?}', function($req) {
+Route::add('main_page/{name?}', function($req, $res) {
 	echo $req->param('name');
 });
 ```

@@ -54,6 +54,8 @@ _It's recommended not to modify these constants._
 
 * **cache_on**: the cache status, true for enabling the use of cache, false for disable it.
 
+* **stdlib_on**: the standard library status, true for enabling its functions in the global namespace, false for disable them.
+
 * **maintenance_on**: the maintenance mode status, true for putting the page in maintenance, false for not.
 
 ## Environment

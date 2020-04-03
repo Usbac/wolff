@@ -12,12 +12,12 @@ use Wolff\Core\View;
 
 Route::get('/', 'home@index');
 
-Route::code(404, function ($req) {
+Route::code(404, function ($req, $res) {
     $data['lang'] = Language::get('404');
     View::render('404', $data);
 });
 
-Maintenance::set(function ($req) {
+Maintenance::set(function ($req, $res) {
     $data['lang'] = Language::get('maintenance');
     View::render('maintenance', $data);
 });

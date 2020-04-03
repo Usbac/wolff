@@ -62,12 +62,12 @@ $db->query('SELECT * FROM table')->get();
 
 ### Get Json
 
-`toJson()`
+`getJson()`
 
 Returns the result as a JSON.
 
 ```php
-$db->query('SELECT * FROM table')->toJson();
+$db->query('SELECT * FROM table')->getJson();
 ```
 
 ### Limit
