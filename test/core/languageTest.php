@@ -5,21 +5,32 @@ namespace Test;
 use PHPUnit\Framework\TestCase;
 use Wolff\Core\Language;
 
-class languageTest extends TestCase
+class LanguageTest extends TestCase
 {
 
-    const LANGUAGE_FOLDER = CONFIG['app_dir'] . '/' . CORE_CONFIG['languages_dir'] . '/phpunit/';
-    const LANGUAGE_PATH = self::LANGUAGE_FOLDER . 'testing.php';
-    const LANGUAGE_CONTENT = "<?php
+    const FOLDER = CONFIG['app_dir'] . '/languages/phpunit';
+    const PATH = self::FOLDER . '/testing.php';
+    const CONTENT = "<?php
         return [
             'title' => 'Wolff framework',
             'msg'   => 'hello world'
         ];";
 
 
+    public function setUp():void
+    {
+        if (!file_exists(self::FOLDER)) {
+            mkdir(self::FOLDER);
+        }
+
+        $language_file = fopen(self::PATH, "w") or die();
+        fwrite($language_file, self::CONTENT);
+        fclose($language_file);
+    }
+
+
     public function testInit()
     {
-        $this->createLanguageFile();
         $non_existent = 'testing_' . rand(0, 10000);
         $language_array = [
             'title' => 'Wolff framework',
@@ -30,21 +41,13 @@ class languageTest extends TestCase
         $this->assertFalse(Language::exists($non_existent, 'phpunit'));
         $this->assertEquals($language_array, Language::get('testing', 'phpunit'));
         $this->assertEquals('Wolff framework', Language::get('testing.title', 'phpunit'));
-
-        unlink(self::LANGUAGE_PATH);
-        rmdir(self::LANGUAGE_FOLDER);
+        $this->assertNull(Language::get('testing.title2', 'phpunit'));
     }
 
 
-    private function createLanguageFile()
+    public function tearDown():void
     {
-        if (!file_exists(self::LANGUAGE_FOLDER)) {
-            mkdir(self::LANGUAGE_FOLDER);
-        }
-
-        $language_file = fopen(self::LANGUAGE_PATH, "w") or die();
-        fwrite($language_file, self::LANGUAGE_CONTENT);
-        fclose($language_file);
+        unlink(self::PATH);
+        rmdir(self::FOLDER);
     }
-
 }

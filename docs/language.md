@@ -32,6 +32,8 @@ Language::get('home');
 
 That will basically return the array declared above.
 
+If the language file doesn't exists it will return `null`.
+
 ### Getting an especific language
 
 If the language is set to english in the `system/config.php` file that will return the content of the `app/language/english/home.php` file.
@@ -56,6 +58,8 @@ Language::get('home.message');
 
 That will return the message key value of the home language array.
 
+If the language file or the key don't exist it will return `null`.
+
 ## Language exists
 
 `exists(string $dir[, string $language])`
@@ -68,7 +72,7 @@ Language::exists('home');
 
 If the system language is set to english that will return true if the english language of home exists, false otherwise.
 
-But you can specify a specific language using the second parameter.
+But you can specify a language using the second parameter.
 
 ```php
 Language::exists('home', 'spanish');

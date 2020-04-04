@@ -119,7 +119,7 @@ $db->query('SELECT * FROM users')->pick('name');
 ```
 
 That would return something like this:
-```
+```php
 Array
 (
     [0] => Margaret Brown
@@ -133,7 +133,7 @@ $db->query('SELECT * FROM users')->pick('name', 'age');
 ```
 
 That would return something like this:
-```
+```php
 Array
 (
     [0] => Array
@@ -374,13 +374,12 @@ That will be the same as `INSERT INTO 'product' (name, model, quantity) VALUES (
 
 The `DB` class has the following methods for running queries.
 
-```
-selectAll(string $table[, string $conditions[, $args ]])
-countAll(string $table[, string $conditions[, $args ]])
-deleteAll(string $table[, string $conditions[, $args ]])
-```
+`selectAll(string $table[, string $conditions[, $args ]])`  
+`countAll(string $table[, string $conditions[, $args ]])`  
+`deleteAll(string $table[, string $conditions[, $args ]])`  
 
-#### _Warning: The conditions parameter must NOT come from external/user input since it's NOT escaped._
+
+_Warning: The conditions parameter must NOT come from external/user input since it's NOT escaped._
 
 ```php
 $db->selectAll('users');
@@ -389,8 +388,7 @@ $db->selectAll('users', 'id = ?', [ 1 ]);
 
 Equivalent to:
 
-`SELECT * FROM users`
-
+`SELECT * FROM users`  
 `SELECT * FROM users WHERE id = 1`.
 
 ```php
@@ -400,8 +398,7 @@ $db->countAll('users', 'id = ?', [ 1 ]);
 
 Equivalent to:
 
-`SELECT COUNT(*) * FROM users`
-
+`SELECT COUNT(*) * FROM users`  
 `SELECT COUNT(*) * FROM users WHERE id = 1`.
 
 ```php
@@ -411,6 +408,5 @@ $db->deleteAll('users', 'id = ?', [ 1 ]);
 
 Equivalent to:
 
-`DELETE * FROM users`
-
+`DELETE * FROM users`  
 `DELETE * FROM users WHERE id = 1`.

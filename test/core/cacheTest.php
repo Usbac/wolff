@@ -5,7 +5,7 @@ namespace Test;
 use PHPUnit\Framework\TestCase;
 use Wolff\Core\Cache;
 
-class cacheTest extends TestCase
+class CacheTest extends TestCase
 {
 
     const FILE_CONTENT = '<h2>Hello</h2>';
@@ -20,9 +20,8 @@ class cacheTest extends TestCase
     public function testInit()
     {
         $this->assertTrue(Cache::has('phpunit_testing'));
-        $this->assertEquals(self::FILE_CONTENT, Cache::getContent('phpunit_testing'));
+        $this->assertEquals(self::FILE_CONTENT, Cache::get('phpunit_testing'));
         Cache::delete('phpunit_testing');
         $this->assertFalse(Cache::has('phpunit_testing'));
     }
-
 }

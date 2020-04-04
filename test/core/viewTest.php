@@ -5,13 +5,13 @@ namespace Test;
 use PHPUnit\Framework\TestCase;
 use Wolff\Core\View;
 
-class viewTest extends TestCase
+class ViewTest extends TestCase
 {
 
-    const VIEW_NAME = 'phpunit_testing';
-    const VIEW_PATH = CONFIG['app_dir'] . '/' . CORE_CONFIG['views_dir'] . '/' . self::VIEW_NAME . '.' . CORE_CONFIG['views_format'];
-    const VIEW_CONTENT = '<h1>{! $msg !}</h1><br/>';
-    const VIEW_CONTENT_RENDERED = '<h1>Hello world</h1><br/>';
+    const VIEW_NAME = 'phpunit_testing_view';
+    const PATH = CONFIG['app_dir'] . '/views/' . self::VIEW_NAME . '.wlf';
+    const CONTENT = '<h1>{! $msg !}</h1><br/>';
+    const CONTENT_RENDERED = '<h1>Hello world</h1><br/>';
 
     private $non_existent;
     private $data;
@@ -24,8 +24,8 @@ class viewTest extends TestCase
             'msg' => 'Hello world'
         ];
 
-        $view_file = fopen(self::VIEW_PATH, "w") or die();
-        fwrite($view_file, self::VIEW_CONTENT);
+        $view_file = fopen(self::PATH, "w") or die();
+        fwrite($view_file, self::CONTENT);
         fclose($view_file);
     }
 
@@ -34,10 +34,13 @@ class viewTest extends TestCase
     {
         $this->assertTrue(View::exists(self::VIEW_NAME));
         $this->assertFalse(View::exists($this->non_existent));
-        $this->assertEquals(self::VIEW_CONTENT, View::getSource(self::VIEW_NAME, $this->data, false));
-        $this->assertEquals(self::VIEW_CONTENT_RENDERED, View::getRender(self::VIEW_NAME, $this->data, false));
-
-        unlink(self::VIEW_PATH);
+        $this->assertEquals(self::CONTENT, View::getSource(self::VIEW_NAME, $this->data, false));
+        $this->assertEquals(self::CONTENT_RENDERED, View::getRender(self::VIEW_NAME, $this->data, false));
     }
 
+
+    public function tearDown():void
+    {
+        unlink(self::PATH);
+    }
 }

@@ -5,7 +5,7 @@ namespace Test;
 use PHPUnit\Framework\TestCase;
 use Wolff\Core\Route;
 
-class routeTest extends TestCase
+class RouteTest extends TestCase
 {
 
     const TEST_MSG = 'Parameter: ';
@@ -14,19 +14,19 @@ class routeTest extends TestCase
 
     public function setUp(): void
     {
-        Route::get('home', function() {
+        Route::get('home', function () {
             return 'hello world';
         });
 
-        Route::get('home2', function() {
+        Route::get('home2', function () {
             return 'redirected';
         });
 
-        Route::get('home/{id}', function() {
+        Route::get('home/{id}', function () {
             return self::TEST_MSG . $_GET['id'];
         });
 
-        Route::get('optional/{id2?}', function() {
+        Route::get('optional/{id2?}', function () {
             return self::TEST_MSG . ($_GET['id2'] ?? '');
         });
     }
@@ -34,9 +34,6 @@ class routeTest extends TestCase
 
     public function testInit()
     {
-        $route_func = @Route::getVal('home/' . self::PARAMETER);
-        $route2_func = @Route::getVal('optional/');
-
         $this->assertTrue(Route::exists('home'));
         $this->assertTrue(Route::exists('home/{}'));
         $this->assertNotEmpty(Route::getRoutes());
@@ -45,13 +42,16 @@ class routeTest extends TestCase
         $this->assertEmpty(Route::getRedirects());
         Route::redirect('page1', 'home2');
         $this->assertNotEmpty(Route::getRedirects());
-
-        $redirect_func = @Route::getVal('page1');
-        $this->assertEquals('redirected', $redirect_func());
+        $redirection = [
+            'destiny' => 'home2',
+            'code'    => 301
+        ];
+        $this->assertEquals($redirection, Route::getRedirection('page1'));
+        $this->assertEquals('redirected', @Route::getVal('home2')());
 
         //Route functions
-        $this->assertEquals(self::TEST_MSG . self::PARAMETER, $route_func());
-        $this->assertEquals(self::TEST_MSG, $route2_func());
+        $this->assertEquals(self::TEST_MSG . self::PARAMETER, @Route::getVal('home/' . self::PARAMETER)());
+        $this->assertEquals(self::TEST_MSG, @Route::getVal('optional/')());
 
         //Blocked
         $this->assertEmpty(Route::getBlocked());
@@ -62,6 +62,6 @@ class routeTest extends TestCase
         $this->assertFalse(Route::isBlocked('home2/testing'));
         Route::block('*');
         $this->assertTrue(Route::isBlocked('home'));
+        $this->assertTrue(Route::isBlocked('another_route'));
     }
-
 }

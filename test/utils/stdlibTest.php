@@ -4,7 +4,7 @@ namespace Test;
 
 use PHPUnit\Framework\TestCase;
 
-class stdlibTest extends TestCase
+class StdlibTest extends TestCase
 {
 
     const JSON = ' {
@@ -12,6 +12,12 @@ class stdlibTest extends TestCase
         "age": 21,
         "city": "New York"
     }';
+
+
+    public function setUp():void
+    {
+        require dirname(__DIR__, 2) . '/vendor/usbac/wolff-framework/src/stdlib.php';
+    }
 
 
     public function testInit()
@@ -40,9 +46,7 @@ class stdlibTest extends TestCase
         $this->assertTrue(isFloat('1.5'));
         $this->assertTrue(isBool('1'));
         $this->assertTrue(local());
-        $this->assertTrue(inCli());
         $this->assertTrue(isAssoc($assoc_arr));
         $this->assertFalse(isAssoc($non_assoc_arr));
     }
-
 }

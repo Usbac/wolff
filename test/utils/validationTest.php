@@ -5,23 +5,28 @@ namespace Test;
 use PHPUnit\Framework\TestCase;
 use Wolff\Utils\Validation;
 
-class validationTest extends TestCase
+class ValidationTest extends TestCase
 {
 
-    private $validation, $validation_2;
+    private $validation;
+    private $validation_2;
 
 
     public function setUp(): void
     {
         $data_1 = [
-            'name' => 'Thomas Andrews',
-            'age'  => 39
+            'name'  => 'Thomas Andrews',
+            'email' => 'thomas@wolff.com',
+            'age'   => 39
         ];
 
         $fields_1 = [
             'name' => [
                 'minlen' => 10,
                 'type'   => 'alpha'
+            ],
+            'email' => [
+                'type'   => 'email'
             ],
             'age' => [
                 'minval' => 18,
@@ -63,5 +68,4 @@ class validationTest extends TestCase
         $this->assertFalse($this->validation_2->isValid());
         $this->assertNotEmpty($this->validation_2->getInvalidValues());
     }
-
 }

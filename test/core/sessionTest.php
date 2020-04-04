@@ -5,7 +5,7 @@ namespace Test;
 use PHPUnit\Framework\TestCase;
 use Wolff\Core\Session;
 
-class sessionTest extends TestCase
+class SessionTest extends TestCase
 {
 
     const TEST_MSG = 'Hello world';
@@ -22,6 +22,7 @@ class sessionTest extends TestCase
     public function testInit()
     {
         $this->assertTrue(Session::has('msg'));
+        $this->assertFalse(Session::has('another_msg'));
         /* 2 because of the msg variable declared and the variable
            keeping track of the variables time. */
         $this->assertEquals(2, Session::count());
@@ -30,7 +31,6 @@ class sessionTest extends TestCase
         $this->assertEquals((10 + 10) * 60, Session::getVarTime('msg'));
 
         Session::unset('msg');
-        $this->assertEquals(null, Session::get('msg'));
+        $this->assertNull(Session::get('msg'));
     }
-
 }

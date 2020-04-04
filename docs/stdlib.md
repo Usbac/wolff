@@ -129,16 +129,6 @@ $str = 'Hello world';
 dumpd($str);
 ```
 
-### Var dump all
-
-`dumpAll()`
-
-Var dump all the current `$_GLOBAL` variables.
-
-```php
-dumpAll();
-```
-
 ### Is int
 
 `isInt($int)`

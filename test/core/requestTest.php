@@ -3,9 +3,10 @@
 namespace Test;
 
 use PHPUnit\Framework\TestCase;
-use \Wolff\Core\Http\{Request, Response};
+use Wolff\Core\Http\Request;
+use Wolff\Core\Http\Response;
 
-class httpTest extends TestCase
+class RequestTest extends TestCase
 {
 
     const TEST_MSG = 'Hello world';
@@ -14,7 +15,6 @@ class httpTest extends TestCase
     const TEST_PASSWORD = 'notapassword';
     const TEST_SECOND_MSG = 'Lorem Ipsum';
     const RESPONSE_CODE = 200;
-    const RESPONSE_REDIRECT = 'https://getwolff.com';
 
     private $request;
 
@@ -32,21 +32,31 @@ class httpTest extends TestCase
             'password' => self::TEST_PASSWORD
         ];
 
+        $_FILES = [
+            'image' => [
+                'name'     => 'file.jpg',
+                'type'     => 'image/jpeg',
+                'tmp_name' => '/tmp/php/php6hst32',
+                'size'     => 98174
+            ]
+        ];
+
         $this->request = new Request(
             $_GET,
             $_POST,
             $_FILES,
-            $_SERVER
+            $_SERVER,
+            $_FILES
         );
     }
 
 
-    public function testRequest()
+    public function testInit()
     {
-        $this->assertTrue($this->request->hasParam('msg'));
-        $this->assertFalse($this->request->hasParam('another'));
-        $this->assertEquals($this->request->param('name'), self::TEST_NAME);
-        $this->assertEquals($this->request->param(), [
+        $this->assertTrue($this->request->hasQuery('msg'));
+        $this->assertFalse($this->request->hasQuery('another'));
+        $this->assertEquals($this->request->query('name'), self::TEST_NAME);
+        $this->assertEquals($this->request->query(), [
             'name' => self::TEST_NAME,
             'msg'  => self::TEST_MSG
         ]);
@@ -58,24 +68,12 @@ class httpTest extends TestCase
             'username' => self::TEST_USERNAME,
             'password' => self::TEST_PASSWORD
         ]);
+
+        $this->assertTrue($this->request->hasFile('image'));
+        $this->assertFalse($this->request->hasFile('another_image'));
+        $this->assertInstanceOf(\Wolff\Core\Http\File::class, $this->request->file('image'));
+
+        $this->assertEquals($_SERVER['REQUEST_METHOD'], $this->request->getMethod());
+        $this->assertFalse($this->request->isSecure());
     }
-
-
-    public function testResponse()
-    {
-        $response = new Response();
-        $response->header('Content-Type', 'text/html; charset=utf-8')
-            ->setCode(self::RESPONSE_CODE)
-            ->redirect(self::RESPONSE_REDIRECT);
-        $headers = [
-            'Content-Type' => 'text/html; charset=utf-8'
-        ];
-
-        $this->assertEquals($headers, $response->getHeaders());
-        $response->remove('Content-Type');
-        $this->assertEmpty($response->getHeaders());
-        $this->assertEquals(self::RESPONSE_CODE, $response->getCode());
-        $this->assertEquals(self::RESPONSE_REDIRECT, $response->getRedirect());
-    }
-
 }

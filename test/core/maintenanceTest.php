@@ -5,7 +5,7 @@ namespace Test;
 use PHPUnit\Framework\TestCase;
 use Wolff\Core\Maintenance;
 
-class maintenanceTest extends TestCase
+class MaintenanceTest extends TestCase
 {
 
     const ALLOWED_IP = '192.168.1.2';
@@ -15,6 +15,7 @@ class maintenanceTest extends TestCase
     public function setUp(): void
     {
         Maintenance::addAllowedIP(self::ALLOWED_IP);
+        Maintenance::addAllowedIP('');
     }
 
 
@@ -22,14 +23,8 @@ class maintenanceTest extends TestCase
     {
         $this->assertFileExists(self::MAINTENANCE_FILE);
         $this->assertContains(self::ALLOWED_IP, Maintenance::getAllowedIPs());
+        $this->assertNotContains('192.168.1.3', Maintenance::getAllowedIPs());
         Maintenance::removeAllowedIP(self::ALLOWED_IP);
-
-        $allowed_ips = Maintenance::getAllowedIPs();
-        if (!$allowed_ips) {
-            $allowed_ips = [];
-        }
-
-        $this->assertNotContains(self::ALLOWED_IP, $allowed_ips);
+        $this->assertNotContains(self::ALLOWED_IP, Maintenance::getAllowedIPs());
     }
-
 }

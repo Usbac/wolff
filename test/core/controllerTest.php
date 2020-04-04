@@ -5,7 +5,7 @@ namespace Test;
 use PHPUnit\Framework\TestCase;
 use Wolff\Core\Controller;
 
-class controllerTest extends TestCase
+class ControllerTest extends TestCase
 {
 
     const METHOD_NAME = 'sayHello';
@@ -46,15 +46,13 @@ class controllerTest extends TestCase
 
     public function testInit()
     {
-        $func = function() {
-            return 'Hello from closure';
-        };
-
+        $this->assertInstanceOf(\Wolff\Core\Controller::class, Controller::get(self::CONTROLLER_NAME));
         $this->assertTrue(Controller::exists(self::CONTROLLER_NAME));
+        $this->assertFalse(Controller::exists('unit_test/sub/anothercontroller'));
         $this->assertTrue(Controller::hasMethod(self::CONTROLLER_NAME, self::METHOD_NAME));
+        $this->assertFalse(Controller::hasMethod(self::CONTROLLER_NAME, 'getOtherMsg'));
         $this->assertEquals('Hello in controller', Controller::method(self::CONTROLLER_NAME, self::METHOD_NAME));
 
         unlink(self::CONTROLLER_PATH);
     }
-
 }

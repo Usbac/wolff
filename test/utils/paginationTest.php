@@ -5,19 +5,26 @@ namespace Test;
 use PHPUnit\Framework\TestCase;
 use Wolff\Utils\Pagination;
 
-class paginationTest extends TestCase
+class PaginationTest extends TestCase
 {
 
-    public function testInit()
+    private $pagination;
+
+
+    public function setUp(): void
     {
-        $pagination = new Pagination(
+        $this->pagination = new Pagination(
             50, //Total of elements
             10, //Elements per page
             3, //Current page
             4, //Number of side pages
             'blog/{page}' //Url format
         );
+    }
 
+
+    public function testInit()
+    {
         $expected_array = [
             [
                 'index'        => 1,
@@ -46,21 +53,43 @@ class paginationTest extends TestCase
             ],
         ];
 
-        $result = $pagination->get();
-        $pagination->setTotal(100);
-        $pagination->setPageSize(10);
-        $pagination->setPage(5);
-        $pagination->setSidePages(3);
-        $pagination->setUrl('blog/posts/{page}');
-        $pagination->showEnds(true);
+        $this->assertEquals($expected_array, $this->pagination->get());
 
-        $this->assertEquals($expected_array, $result);
-        $this->assertEquals(100, $pagination->getTotal());
-        $this->assertEquals(10, $pagination->getPageSize());
-        $this->assertEquals(5, $pagination->getPage());
-        $this->assertEquals(3, $pagination->getSidePages());
-        $this->assertEquals('blog/posts/{page}', $pagination->getUrl());
-        $this->assertTrue($pagination->getShowEnds());
+        $this->pagination->setTotal(100);
+        $this->pagination->setPageSize(10);
+        $this->pagination->setPage(5);
+        $this->pagination->setSidePages(1);
+        $this->pagination->setUrl('blog/posts/{page}');
+        $this->pagination->showEnds(true);
+
+        $expected_array = [
+            [
+                'index'        => 1,
+                'current_page' => false,
+                'url'          => 'blog/posts/1'
+            ],
+            [
+                'index'        => 4,
+                'current_page' => false,
+                'url'          => 'blog/posts/4'
+            ],
+            [
+                'index'        => 5,
+                'current_page' => true,
+                'url'          => 'blog/posts/5'
+            ],
+            [
+                'index'        => 6,
+                'current_page' => false,
+                'url'          => 'blog/posts/6'
+            ],
+            [
+                'index'        => 10,
+                'current_page' => false,
+                'url'          => 'blog/posts/10'
+            ],
+        ];
+
+        $this->assertEquals($expected_array, $this->pagination->get());
     }
-
 }
