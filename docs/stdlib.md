@@ -6,6 +6,19 @@ The standard library can be disabled, meaning that its functions won't be availa
 
 ## General
 
+### Path
+
+`path([string $path])`
+
+Returns the absolute path of the given relative path. 
+Keep in mind that the given path is supposed to be relative to the project root folder.
+
+```php
+path('app/controllers');
+```
+
+If the wolff project is located at `/var/www/html/wolff`, it will return `/var/www/html/wolff/app/controllers`.
+
 ### Is associative
 
 `isAssoc(array $arr)`
