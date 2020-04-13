@@ -2,49 +2,25 @@ Configuration is a vital part of any application, the Wolff configuration can be
 
 ## Config file
 
-The config file has the following definitions/keys inside an array named `CONFIG`:
+The config file has the following definitions/keys inside an array that is being returned by the file itself.
 
-_Keep in mind that these paths are relative to the project root folder._
+* **db**:
 
-### Server
+    * **dbms**: the database driver, you can choose between `mysql`, `pgsql` and `sqlite`.
 
-* **dbms**: the database driver, you can choose between `mysql`, `pgsql` and `sqlite`.
+    * **server**: the database host name (usually it’s refered to as localhost).
 
-* **server**: the database host name (usually it’s refered to as localhost).
+    * **name**: the database name.
 
-* **db**: the database name.
+    * **username**: the database username.
 
-* **db_username**: the database username.
-
-* **db_password**: the database username password.
-
-### Directories
-
-* **root_dir**: the directory of the Wolff project.
-
-* **system_dir**: the directory of the system folder.
-
-* **app_dir**: the directory of the app folder.
-
-* **cache_dir**: the directory of the cache folder.
-
-* **public_dir**: the directory of the public folder.
-
-_It's recommended not to modify these constants._
-
-### Environment
+    * **password**: the database username password.
 
 * **env_file**: The path of the .env file, by default it's `.env`.
 
 * **env_override**: If true the environment variables will override the config data in the `Wolff\Core\Config` class and the `config` function helper. (The environment keys are converted to lowercase in the override proccess).
 
-### General
-
-* **title**: the page meta title.
-
 * **language**: the site's main language.
-
-### Others
 
 * **log_on**: the log status, true for enabling the use of the log system, false for disabling it.
 
@@ -84,12 +60,12 @@ It returns the config or environment value of the given key (depending if the `e
 system/config.php:
 
 ```php
-define('CONFIG', [
+return [
     'language' => 'english',
 
     'env_file'     => 'system/.env',
     'env_override' => false,
-]);
+];
 ```
 
 system/.env:

@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'title'         => 'Wolff 3',
+    'title'         => 'Wolff',
     'description'   => 'Desarrollo web hecho simplemente bien.',
     'description_2' => 'Puedes empezar creando tu propia página como esta.',
 

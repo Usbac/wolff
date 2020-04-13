@@ -165,7 +165,17 @@ In a request of type post it will return `POST`.
 
 `getUri()`
 
-Returns the request uri.
+Returns the request uri (without the query).
+
+```php
+$request->getUri();
+```
+
+### Get full Url
+
+`getFullUri()`
+
+Returns the full request uri.
 
 ```php
 $request->getUri();

@@ -1,5 +1,6 @@
 <?php
 
 return [
-    'msg' => 'Esta página no existe :('
+    'title' => 'Wolff',
+    'msg'   => 'Esta página no existe :('
 ];

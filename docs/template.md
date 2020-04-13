@@ -179,17 +179,19 @@ That will leave this in the HTML returned to the client:
 
 ## Include
 
-Instead of using the php include function. You can include other views using the `load` method.
+Instead of using the php include function. You can include other views using the `include` method.
 
 Example:
 
 ```html
 <div>
-    @load(header)
+    @include('header')
 </div>
 ```
 
 That will put all the `header.wlf` view content inside the div tags.
+
+The included view has access to all the variables in the current scope.
 
 ## View inheritance
 

@@ -2,7 +2,6 @@
 
 use Wolff\Core\Language;
 use Wolff\Core\Maintenance;
-use Wolff\Core\Middleware;
 use Wolff\Core\Route;
 use Wolff\Core\View;
 

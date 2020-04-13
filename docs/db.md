@@ -18,11 +18,11 @@ $db = new Wolff\Core\DB();
 
 ```php
 $credentials = [
-    'dbms'        => 'mysql',
-    'server'      => 'localhost',
-    'db'          => 'wolff',
-    'db_username' => 'root',
-    'db_password' => '12345',
+    'dbms'   => 'mysql',
+    'server' => 'localhost',
+    'name'   => 'wolff',
+    'username' => 'root',
+    'password' => '12345'
 ];
 
 $db = new Wolff\Core\DB($credentials);
@@ -32,7 +32,7 @@ Both examples are right.
 
 ## Running queries
 
-`query(string $sql[, $args])`
+`query(string $sql[, ...$args])`
 
 The `query` method returns a `Wolff\Core\Query` object.
 
@@ -40,10 +40,14 @@ The `query` method returns a `Wolff\Core\Query` object.
 $db->query('SELECT * FROM table');
 ```
 
-You can prepare a query passing an array or single variable as the second parameter.
+You can prepare a query passing multiple parameters after the first one.
 
 ```php
-$db->query('SELECT * FROM users WHERE id = ?', $id);
+$db->query('SELECT * FROM user WHERE id = ?', $id);
+```
+
+```php
+$db->query('SELECT * FROM user WHERE name = ? and email = ?', $name, $email);
 ```
 
 ## Query
@@ -259,7 +263,7 @@ $db->tableExists('users');
 
 `columnExists(string $table, string $column)`
 
-Returns true if the specified column exists, false otherwise.
+Returns true if the specified table and column exists, false otherwise.
 
 ```php
 $db->columnExists('users', 'user_id');
@@ -274,7 +278,7 @@ The first parameter is the table where the column is, the second is the column n
 Returns the database schema
 
 ```php
-DB::getSchema();
+$db->getSchema();
 ```
 
 Example result:
@@ -363,37 +367,40 @@ Take in mind that the array keys will be directly mapped to the column names.
 ```php
 $db->insert('product', [
     'name'     => 'phone',
-    'model'    => 'PHN001'
+    'model'    => 'PHN001',
     'quantity' => 5
 ]);
 ```
 
 That will be the same as `INSERT INTO 'product' (name, model, quantity) VALUES ('phone', 'PHN001', '5')`.
 
-### All
+### Select
 
-The `DB` class has the following methods for running queries.
+`select(string $table[, string $conditions[, ...$args ]])`  
 
-`selectAll(string $table[, string $conditions[, $args ]])`  
-`countAll(string $table[, string $conditions[, $args ]])`  
-`deleteAll(string $table[, string $conditions[, $args ]])`  
-
-
-_Warning: The conditions parameter must NOT come from external/user input since it's NOT escaped._
+Runs a select query in the specified table. This method returns the result as an associative array, and accepts dot notation.
 
 ```php
-$db->selectAll('users');
-$db->selectAll('users', 'id = ?', [ 1 ]);
+$db->select('users');
+$db->select('users', 'id = ?', 1);
+$db->select('users.name');
 ```
 
 Equivalent to:
 
 `SELECT * FROM users`  
-`SELECT * FROM users WHERE id = 1`.
+`SELECT * FROM users WHERE id = 1`.  
+`SELECT name FROM users`.
+
+### Count
+
+`count(string $table[, string $conditions[, ...$args ]])`
+
+Returns the number of rows in the specified table, as an `int`.
 
 ```php
-$db->countAll('users');
-$db->countAll('users', 'id = ?', [ 1 ]);
+$db->count('users');
+$db->count('users', 'id = ?', 1);
 ```
 
 Equivalent to:
@@ -401,9 +408,16 @@ Equivalent to:
 `SELECT COUNT(*) * FROM users`  
 `SELECT COUNT(*) * FROM users WHERE id = 1`.
 
+### Delete
+
+`delete(string $table[, string $conditions[, ...$args ]])`  
+
+Deletes the rows in the specified table.
+This method returns `true` in case of success, `false` otherwise.
+
 ```php
-$db->deleteAll('users');
-$db->deleteAll('users', 'id = ?', [ 1 ]);
+$db->delete('users');
+$db->delete('users', 'id = ?', 1);
 ```
 
 Equivalent to:

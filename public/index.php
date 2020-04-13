@@ -2,4 +2,7 @@
 
 require('../vendor/autoload.php');
 
-(new Wolff\Kernel)->start();
+$config = require('../system/config.php');
+
+$wolff = new Wolff\Kernel($config);
+$wolff->start();

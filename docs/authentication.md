@@ -16,11 +16,11 @@ If no data array is passed, it will use the credentials defined in the `system/c
 
 ```php
 $credentials = [
-    'dbms'        => 'mysql',
-    'server'      => 'localhost',
-    'db'          => 'wolff',
-    'db_username' => 'root',
-    'db_password' => '12345',
+    'dbms'   => 'mysql',
+    'server' => 'localhost',
+    'name'   => 'wolff',
+    'username' => 'root',
+    'password' => '12345'
 ];
 
 $options = [
@@ -40,7 +40,7 @@ Register a new user into the database.
 
 The only required keys that the given array must have are `password` and `password_confirm`, both values must be a string and equal.
 
-This method returns true if the user has been successfully inserted into the database, false otherwise.
+This method returns `true` if the user has been successfully inserted into the database, `false` otherwise.
 
 ```php
 $user = [

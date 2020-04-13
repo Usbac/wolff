@@ -26,6 +26,18 @@ A white list file is the one that defines which IP address will still have acces
 
 It should be located under the `system/` directory and should be named `maintenance_whitelist.txt`.
 
+### Set white list file
+
+`setFile([string $path])`
+
+With the `setFile` method you can change the default white list file.
+
+```php
+Maintenance::setFile('system/ips.txt');
+```
+
+_The given path is relative to the project root folder._
+
 ### Add IP
 
 `addAllowedIP(string $ip)`

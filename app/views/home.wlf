@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ config('title') }} - Home</title>
+    <title>{{ $lang['title'] }} - Home</title>
     {% style="{{ getPublic('assets/css/styles.css') }}" %}
     {% icon="{{ getPublic('favicon.ico') }}" %}
 </head>

@@ -6,7 +6,7 @@ The controllers are a great way to keep your code organized instead of defining 
 
 ## Usage
 
-Let's create a controller, first it must extend the `Wolff\Core\Controller` class and be in the `Controller` namespace.
+Let's create a controller, it must be in the `Controller` namespace.
 
 Any public method is supposed to be accesible through a route, and it must take two parameters which are the request object and the response object (instance of `Wolff\Core\Http\Request` and `Wolff\Core\Http\Response`).
 
@@ -17,7 +17,7 @@ app/controllers/home.php:
 ```php
 namespace Controller;
 
-class Home extends Controller
+class Home
 {
 
     public function index($req, $res)
@@ -87,7 +87,7 @@ That will return true only if the `app/controllers/home.php` controller exists, 
 
 `hasMethod(string $path, string $method)`
 
-Returns true if the specified method of the controller exists, false otherwise.
+Returns `true` if the specified method of the controller exists and is accessible, `false` otherwise.
 
 The first parameter must be the controller name. The second parameter must be the method name.
 
