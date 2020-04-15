@@ -6,16 +6,16 @@ In the `system/web.php` file you can define routes, its parameters and what to d
 
 ## Adding routes
 
-`add(string $url, $function[, int $status])`
+`any(string $url, $function[, int $status])`
 
-The `add` method let's you add a route that will work in any http method.
+The `any` method let's you add a route that will work in any http method.
 
 The first parameter is the desired route, the second is the function that will be executed when accessing to the route, the third optional parameter is the HTTP code.
 
 The function parameter must take a parameter which is the request object (instance of `Wolff\Core\Http\Request`).
 
 ```php
-Route::add('main_page', function($req) {
+Route::any('main_page', function($req) {
     echo 'hello';
 });
 ```
@@ -23,7 +23,7 @@ Route::add('main_page', function($req) {
 The same route but with a HTTP 301 response code:
 
 ```php
-Route::add('main_page', function($req) {
+Route::any('main_page', function($req) {
 	echo 'hello';
 }, 301);
 ```
@@ -91,7 +91,7 @@ You can use get parameters in the URL
 The following block of code
 
 ```php
-Route::add('main_page/{name}', function($req, $res) {
+Route::get('main_page/{name}', function($req, $res) {
 	echo $req->param('name');
 });
 ```
@@ -107,7 +107,7 @@ You can also use optional get parameters in the URL
 The following block of code
 
 ```php
-Route::add('main_page/{name?}', function($req, $res) {
+Route::get('main_page/{name?}', function($req, $res) {
 	echo $req->param('name');
 });
 ```

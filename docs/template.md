@@ -6,9 +6,7 @@ It only works in the views and is completely optional, so you can write normal P
 
 The template system can be completely disabled if the `template_on` key in the `system/config.php` file is equal to `false`.
 
-## Variables
-
-### Load
+## Sending data to views
 
 When loading a view from a controller, you can pass as parameter an associative array with data in it:
 
@@ -139,6 +137,36 @@ This are the available functions and their PHP equivalent:
 | join(var)   | implode          | Join an array by a text (var)                  |
 | repeat(var) | str_repeat       | repeat a string fixed number of times (var)    |
 
+## CSRF
+
+The template engine has a tag which can be used to avoid csrf.
+
+```
+@csrf
+```
+
+Internally it creates a `__token` cookie if it doesn't exists and replaces the csrf tag with a hidden input which value is the same of the cookie.
+
+_Keep in mind that the cookie has a live time of one hour and is http only._
+
+```html
+<form action="theurl" method="post">
+    @csrf
+    <input type="text" name="username"/>
+    <button type="submit">Send</button>
+</form>
+```
+
+Then you can use the `validateCsrf` function of the standard library to verify the incoming form.
+
+```php
+if (validateCsrf()) {
+    echo 'Safe, continue';
+    // Code
+} else {
+    echo 'You shall not pass';
+}
+```
 
 ## Import
 

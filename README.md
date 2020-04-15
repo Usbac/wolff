@@ -6,7 +6,7 @@
   <br>
 </h1>
 
-<h4 align="center">Ridiculously small PHP framework.</h4>
+<h4 align="center">Web development made just right.</h4>
 
 <p align="center">
 <img src="https://img.shields.io/badge/stability-stable-green.svg">
@@ -21,9 +21,7 @@ It is intended for those who want to build lightweight websites without starting
 
 Wolff is small, fast, scalable and easy. The perfect solution for building small and medium-sized web applications.
 
-
 > **Note:** The core code of the framework is available at [Wolff-framework](https://github.com/usbac/wolff-framework).
-
 
 ## Features
 
@@ -47,13 +45,11 @@ Wolff is small, fast, scalable and easy. The perfect solution for building small
 
 And more...
 
-
 ## Requirements
 
 * PHP version 7.0 or higher
 
 * Composer
-
 
 ## Install
 

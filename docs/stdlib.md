@@ -142,6 +142,40 @@ $str = 'Hello world';
 dumpd($str);
 ```
 
+### Validate CSRF
+
+`validateCsrf()`
+
+Returns `true` if the current request is safe from csrf (cross site request forgery), `false` otherwise.
+
+This simply verifies that the current user is the one who made the request to the application.
+
+```php
+if (validateCsrf()) {
+    echo 'The incoming form was made by the user, continue :)';
+    // Code
+} else {
+    echo 'You shall not pass';
+}
+```
+
+This can be combined with the `@csrf` tag available in the template engine.
+
+If you don't want to turn on the standard library just for using this function, you can make your own implementation.
+
+```php
+function validateCsrf()
+{
+    // Get
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+        return isset($_GET['__token'], $_COOKIE['__token']) && $_GET['__token'] === $_COOKIE['__token'];
+    }
+
+    // Post
+    return isset($_POST['__token'], $_COOKIE['__token']) && $_POST['__token'] === $_COOKIE['__token'];
+}
+```
+
 ### Is int
 
 `isInt($int)`
