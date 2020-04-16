@@ -9,7 +9,7 @@ class ViewTest extends TestCase
 {
 
     const VIEW_NAME = 'phpunit_testing_view';
-    const PATH = '../app/views/' . self::VIEW_NAME . '.wlf';
+    const FILE = '../app/views/' . self::VIEW_NAME . '.wlf';
     const CONTENT = '<h1>{! $msg !}</h1><br/>';
     const CONTENT_RENDERED = '<h1>Hello world</h1><br/>';
 
@@ -24,7 +24,7 @@ class ViewTest extends TestCase
             'msg' => 'Hello world'
         ];
 
-        $view_file = fopen(self::PATH, "w") or die();
+        $view_file = fopen(self::FILE, "w") or die();
         fwrite($view_file, self::CONTENT);
         fclose($view_file);
     }
@@ -41,6 +41,6 @@ class ViewTest extends TestCase
 
     public function tearDown():void
     {
-        unlink(self::PATH);
+        unlink(self::FILE);
     }
 }

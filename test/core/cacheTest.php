@@ -20,6 +20,7 @@ class CacheTest extends TestCase
     public function testInit()
     {
         $this->assertTrue(Cache::has('phpunit_testing'));
+        $this->assertFalse(Cache::has('non_existent'));
         $this->assertEquals(self::FILE_CONTENT, Cache::get('phpunit_testing'));
         Cache::delete('phpunit_testing');
         $this->assertFalse(Cache::has('phpunit_testing'));
