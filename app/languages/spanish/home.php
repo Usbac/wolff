@@ -8,5 +8,5 @@ return [
     'documentation' => 'documentación',
     'creators_page' => 'página del creador',
     'github'        => 'Github',
-    'version'       => 'Vérsion ' . CORE_CONFIG['version']
+    'version'       => 'Vérsion ' . WOLFF_CONFIG['version']
 ];

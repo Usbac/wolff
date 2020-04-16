@@ -37,10 +37,9 @@ class StdlibTest extends TestCase
         $non_assoc_arr = [ 'Evan You', 'China' ];
 
         $this->assertTrue(isJson(self::JSON));
-        $this->assertEquals(CONFIG['db_password'], config('db_password'));
         $this->assertEquals($arr['user']['name'], val($arr, 'user.name'));
         $this->assertEquals('', getClientIP());
-        $this->assertEquals(CORE_CONFIG['version'], wolffVersion());
+        $this->assertEquals(WOLFF_CONFIG['version'], wolffVersion());
         $this->assertEquals(5.24, average([ 2.5, 5.46, 4, 9 ]));
         $this->assertTrue(isInt('1'));
         $this->assertTrue(isFloat('1.5'));

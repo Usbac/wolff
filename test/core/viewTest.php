@@ -9,7 +9,7 @@ class ViewTest extends TestCase
 {
 
     const VIEW_NAME = 'phpunit_testing_view';
-    const PATH = CONFIG['app_dir'] . '/views/' . self::VIEW_NAME . '.wlf';
+    const PATH = '../app/views/' . self::VIEW_NAME . '.wlf';
     const CONTENT = '<h1>{! $msg !}</h1><br/>';
     const CONTENT_RENDERED = '<h1>Hello world</h1><br/>';
 

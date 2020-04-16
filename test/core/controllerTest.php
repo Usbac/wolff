@@ -10,7 +10,7 @@ class ControllerTest extends TestCase
 
     const METHOD_NAME = 'sayHello';
     const CONTROLLER_NAME = 'phpunit_test';
-    const CONTROLLER_PATH = CONFIG['app_dir'] . '/controllers/' . self::CONTROLLER_NAME . '.php';
+    const CONTROLLER_PATH = '../app/controllers/' . self::CONTROLLER_NAME . '.php';
     const CONTROLLER_CONTENT = '<?php
         namespace Controller;
 
@@ -52,7 +52,11 @@ class ControllerTest extends TestCase
         $this->assertTrue(Controller::hasMethod(self::CONTROLLER_NAME, self::METHOD_NAME));
         $this->assertFalse(Controller::hasMethod(self::CONTROLLER_NAME, 'getOtherMsg'));
         $this->assertEquals('Hello in controller', Controller::method(self::CONTROLLER_NAME, self::METHOD_NAME));
+    }
 
+
+    public function tearDown():void
+    {
         unlink(self::CONTROLLER_PATH);
     }
 }

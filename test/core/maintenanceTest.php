@@ -9,11 +9,12 @@ class MaintenanceTest extends TestCase
 {
 
     const ALLOWED_IP = '192.168.1.2';
-    const MAINTENANCE_FILE = CONFIG['system_dir'] . '/maintenance_whitelist.txt';
+    const MAINTENANCE_FILE = '../system/maintenance_whitelist.txt';
 
 
     public function setUp(): void
     {
+        Maintenance::setFile();
         Maintenance::addAllowedIP(self::ALLOWED_IP);
         Maintenance::addAllowedIP('');
     }

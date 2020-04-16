@@ -8,8 +8,8 @@ use Wolff\Core\Language;
 class LanguageTest extends TestCase
 {
 
-    const FOLDER = CONFIG['app_dir'] . '/languages/phpunit';
-    const PATH = self::FOLDER . '/testing.php';
+    const FOLDER =  '../app/languages/phpunit';
+    const FILE = self::FOLDER . '/testing.php';
     const CONTENT = "<?php
         return [
             'title' => 'Wolff framework',
@@ -23,7 +23,7 @@ class LanguageTest extends TestCase
             mkdir(self::FOLDER);
         }
 
-        $language_file = fopen(self::PATH, "w") or die();
+        $language_file = fopen(self::FILE, "w") or die();
         fwrite($language_file, self::CONTENT);
         fclose($language_file);
     }
@@ -47,7 +47,7 @@ class LanguageTest extends TestCase
 
     public function tearDown():void
     {
-        unlink(self::PATH);
+        unlink(self::FILE);
         rmdir(self::FOLDER);
     }
 }
