@@ -28,10 +28,6 @@
     "phpunit/phpunit": "8.*"
   },
   "autoload": {
-    "files": [
-      "system/config.php",
-      "system/web.php"
-    ],
     "psr-4": {
       "App\\": "app/",
       "Test\\": "test/",
