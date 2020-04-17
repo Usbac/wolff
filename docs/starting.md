@@ -28,21 +28,21 @@ app/controllers/form.php:
 
 namespace Controller;
 
-use Wolff\Core\{Controller, DB, Language, View};
+use Wolff\Core\{DB, Language, View};
 
-class Form extends Controller
+class Form
 {
     // Form view
-    public function index($request)
+    public function index($req, $res)
     {
         $data['lang'] = Language::get('form');
         View::render('form', $data);
     }
 
     // Form submit
-    public function submit($request)
+    public function submit($req, $res)
     {
-        $data = $request->body();
+        $data = $req->body();
         $db = new DB();
         $db->query("INSERT INTO user (name, email, password)
             VALUES (:name, :email, :password)", $data);
@@ -78,10 +78,10 @@ You can replace the code of the `submit` method in the controller with the follo
 app/controllers/form.php:
 ```php
 // Form submit
-public function submit($request)
+public function submit($req, $res)
 {
     $validation = new Validation;
-    $validation->setData($request->body());
+    $validation->setData($req->body());
     $validation->setFields([
         'name' => [
             'minlen' => 4,
@@ -102,7 +102,7 @@ public function submit($request)
 
     $db = new DB();
     $db->query("INSERT INTO user (name, email, password)
-        VALUES (:name, :email, :password)", $request->body());
+        VALUES (:name, :email, :password)", $req->body());
     echo 'Done';
 }
 ```

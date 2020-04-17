@@ -4,27 +4,15 @@ You can know what's happening in your Wolff project using the Logging class.
 
 ## Files
 
-The logging files are located by default in the `system/logs` folder (it's defined in the `system/config.php` file).
+The logging files are located by default in the `system/logs` folder.
 
 Every logging file represents a day and contains logs with the following format:
 
 ```
-[date] [ip] level: message
+[date][ip] Level: message
 ```
 
-### Is enabled
-
-`isEnabled()`
-
-Returns `true` if the log system is enabled, `false` otherwise.
-
-```php
-Log::isEnabled();
-```
-
-If the log system is disabled, nothing will happen when running the common log methods explained below.
-
-### Logging
+## Logging
 
 `{level}(string $msg[, array $values])`
 
@@ -58,10 +46,50 @@ The values to interpolate must be between curly brackets.
 ```php
 $values = [
     'name' => 'Thomas',
-    'page' => getCurrentPage()
+    'page' => 'home/'
 ];
 
 Log::Debug('The current user is {name} in the page {page}', $values);
 ```
 
 As an example, that should log `The current user is Thomas in the page home/`.
+
+## General methods
+
+### Is enabled
+
+`isEnabled()`
+
+Returns `true` if the log system is enabled, `false` otherwise.
+
+```php
+Log::isEnabled();
+```
+
+If the log system is disabled, nothing will happen when running the common log methods explained above.
+
+### Set folder
+
+`setFolder([string $folder])`
+
+Sets the folder where the log files will be stored.
+
+```php
+Log::setFolder('app/logs');
+```
+
+_The given path is relative to the project root folder._
+
+### Set date format
+
+`setDateFormat([string $date_format])`
+
+Sets the date format used internally in the log files.
+
+The PHP [`date`](https://www.php.net/manual/en/function.date.php) function is used internally with the given date format. You can read the function's documentation for better understanding of the string you pass.
+
+```php
+Log::setDateFormat('H:i:s');
+```
+
+That will set the format like this: `Hour:minutes:seconds`.

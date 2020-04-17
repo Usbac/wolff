@@ -2,7 +2,7 @@
 
 namespace Test;
 
-class exampleClass
+class ExampleClass
 {
 
     private $param1;
@@ -38,5 +38,4 @@ class exampleClass
     {
         return $this->param2;
     }
-
 }
