@@ -154,7 +154,7 @@ $validation->isValid();
 
 This is just syntactic sugar for the `setFields`, `setData` and `isValid` methods in that order.
 
-The first parameter is the fields array, the second is the data array. This method returns `true` if the giving data array meets the conditions in the giving fields array.
+The first parameter is the fields array, the second is the data array. This method returns `true` if the given data array meets the conditions in the given fields array.
 
 ```php
 $validation->check($fields, $data);

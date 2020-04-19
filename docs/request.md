@@ -1,6 +1,6 @@
 `Wolff\Core\Http\Request`
 
-Wolff offers you a quite useful and complete request object.
+Wolff offers you a quite useful and complete request object. It implements the `Wolff\Core\Http\RequestInterface` interface.
 
 This can be done to avoid the superglobals of PHP, giving you a more object oriented syntax.
 

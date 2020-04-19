@@ -1,6 +1,6 @@
 `Wolff\Core\Http\Response`
 
-New responses can be made throught the Wolff Response class.
+New responses can be made throught the Wolff Response class. It implements the `Wolff\Core\Http\ResponseInterface` interface.
 
 This can be done to avoid the superglobals of PHP, giving you a more object oriented syntax.
 
