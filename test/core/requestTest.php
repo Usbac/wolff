@@ -4,7 +4,6 @@ namespace Test;
 
 use PHPUnit\Framework\TestCase;
 use Wolff\Core\Http\Request;
-use Wolff\Core\Http\Response;
 
 class RequestTest extends TestCase
 {
@@ -13,8 +12,6 @@ class RequestTest extends TestCase
     const TEST_NAME = 'Evan you';
     const TEST_USERNAME = 'usbac';
     const TEST_PASSWORD = 'notapassword';
-    const TEST_SECOND_MSG = 'Lorem Ipsum';
-    const RESPONSE_CODE = 200;
 
     private $request;
 

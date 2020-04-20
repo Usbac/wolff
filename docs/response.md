@@ -81,6 +81,16 @@ $response->append('How are you?');
 
 _The string value of the given variable is the one that will be returned._
 
+### Get content
+
+`get()`
+
+Returns the current content of the response.
+
+```php
+$response->get();
+```
+
 ### Set HTTP code
 
 `setCode([int $status])`
@@ -129,10 +139,16 @@ $response->unsetCookie('user_session');
 
 ### Send response
 
-`send()`
+`send([bool $return])`
 
 Sends the response with all of its values.
 
 ```php
 $response->send();
+```
+
+If you pass a `true` value as parameter, the method will return the response content instead of printing it out.
+
+```php
+$content = $response->send(true);
 ```
