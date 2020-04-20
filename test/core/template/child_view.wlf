@@ -1,0 +1,10 @@
+@extends('../../test/core/template/parent_view')
+
+{[ block head ]}
+    {[ parent head ]}
+    <title>Tundra</title>
+{[ endblock ]}
+
+{[ block body ]}
+    <div>Hello world</div>
+{[ endblock ]}
