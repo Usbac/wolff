@@ -9,11 +9,14 @@ class RouteTest extends TestCase
 {
 
     const TEST_MSG = 'Parameter: ';
-    const PARAMETER = '15048';
 
 
     public function setUp(): void
     {
+        Route::get('/', function () {
+            return 'in root';
+        });
+
         Route::get('home', function () {
             return 'hello world';
         });
@@ -28,6 +31,10 @@ class RouteTest extends TestCase
 
         Route::get('optional/{id2?}', function () {
             return self::TEST_MSG . ($_GET['id2'] ?? '');
+        });
+
+        Route::any('blog/{page?}/dark', function () {
+            return 'in page ' . $_GET['page'];
         });
     }
 
@@ -50,8 +57,14 @@ class RouteTest extends TestCase
         $this->assertEquals('redirected', @Route::getFunction('home2')());
 
         //Route functions
-        $this->assertEquals(self::TEST_MSG . self::PARAMETER, @Route::getFunction('home/' . self::PARAMETER)());
+        $this->assertEquals('in root', @Route::getFunction('/')());
+        $this->assertEquals(self::TEST_MSG . '15048', @Route::getFunction('home/15048')());
         $this->assertEquals(self::TEST_MSG, @Route::getFunction('optional/')());
+        $this->assertEquals(self::TEST_MSG . '123', @Route::getFunction('optional/123')());
+        $this->assertEquals('in page 12', @Route::getFunction('blog/12/dark')());
+        $this->assertNull(@Route::getFunction('blog/12/'));
+        $this->assertNull(@Route::getFunction('blog/12/white'));
+        $this->assertNull(@Route::getFunction('home/123/another'));
 
         //Blocked
         $this->assertEmpty(Route::getBlocked());
