@@ -1,10 +1,10 @@
 Wolff comes with unit testing in mind, that's why it's extremely easy to test it out of the box.
 
+The tests use [PHPUnit](https://phpunit.de), so you must have it installed for running them.
+
 ## Running tests
 
-First you must have [PHPUnit](https://phpunit.de) installed, once you have it.
-
-Open your terminal, move to your Wolff project folder and run the following command with high privileges:
+First open your terminal, move to your Wolff project folder and run the following command with high privileges:
 
 ```
 vendor/bin/phpunit
@@ -22,7 +22,7 @@ Yes, assigning a specific number or percentage to a test coverage is quite ambig
 
 ### Untested elements
 
-The following elements of Wolff are not present in the tests (maybe due to its nature):
+The following elements of Wolff are not present in the tests (due to its nature):
 
 * Authentication
 * Database

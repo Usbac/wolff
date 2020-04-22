@@ -8,7 +8,7 @@
 
 - Add view inheritance support to the template engine.
 
-- Add `setFile` method to the `Core\Maintenance` class.
+- Add `setFile` and `setStatus` method to the `Core\Maintenance` class.
 
 - Add `view` method to the `Core\Route` class.
 
