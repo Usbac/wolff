@@ -12,10 +12,10 @@ The `any` method let's you add a route that will work in any http method.
 
 The first parameter is the desired route, the second is the function that will be executed when accessing to the route, the third optional parameter is the HTTP code.
 
-The function parameter must take a parameter which is the request object (instance of `Wolff\Core\Http\Request`).
+The function parameter must take two parameters which are the request and response object (instance of `Wolff\Core\Http\Request` and `Wolff\Core\Http\Response`).
 
 ```php
-Route::any('main_page', function($req) {
+Route::any('main_page', function($req, $res) {
     echo 'hello';
 });
 ```
@@ -23,7 +23,7 @@ Route::any('main_page', function($req) {
 The same route but with a HTTP 301 response code:
 
 ```php
-Route::any('main_page', function($req) {
+Route::any('main_page', function($req, $res) {
 	echo 'hello';
 }, 301);
 ```
@@ -42,6 +42,32 @@ Route::patch($uri, $function, $method = 200);
 Route::delete($uri, $function, $method = 200);
 ```
 
+### View routes
+
+`view(string $url, string $view_path[, array $data[, bool $cache]])`
+
+You can add routes that render a view directly using the `view` method.
+
+_Keep in mind that these routes will only be available through the GET method._
+
+The second parameter must be the view path, the third the associative array with the content that will be used in the view, the fourth is to use or not the cache system.
+
+This example will render the view `home` when accessing to the homepage page.
+
+```php
+$data = [
+    'title' => 'Hello world'
+];
+
+Route::view('/', 'home', $data);
+```
+
+This example will render the `blog` view without using the cache system.
+
+```php
+Route::view('blog/list', 'blog', [], false);
+```
+
 ### Specifying content-type
 
 You can specify the content type of the route using one of the following prefixes: `csv:`, `json:`, `pdf:`, `plain:` and `xml:`.
@@ -49,7 +75,7 @@ You can specify the content type of the route using one of the following prefixe
 Example:
 
 ```php
-Route::get('json:users/{id}', function($req) {
+Route::get('json:users/{id}', function($req, $res) {
 	// Code
 });
 ```
@@ -92,7 +118,7 @@ The following block of code
 
 ```php
 Route::get('main_page/{name}', function($req, $res) {
-	echo $req->param('name');
+	echo $req->query('name');
 });
 ```
 
@@ -108,7 +134,7 @@ The following block of code
 
 ```php
 Route::get('main_page/{name?}', function($req, $res) {
-	echo $req->param('name');
+	echo $req->query('name');
 });
 ```
 

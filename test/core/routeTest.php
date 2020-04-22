@@ -47,11 +47,11 @@ class RouteTest extends TestCase
             'code'    => 301
         ];
         $this->assertEquals($redirection, Route::getRedirection('page1'));
-        $this->assertEquals('redirected', @Route::getVal('home2')());
+        $this->assertEquals('redirected', @Route::getFunction('home2')());
 
         //Route functions
-        $this->assertEquals(self::TEST_MSG . self::PARAMETER, @Route::getVal('home/' . self::PARAMETER)());
-        $this->assertEquals(self::TEST_MSG, @Route::getVal('optional/')());
+        $this->assertEquals(self::TEST_MSG . self::PARAMETER, @Route::getFunction('home/' . self::PARAMETER)());
+        $this->assertEquals(self::TEST_MSG, @Route::getFunction('optional/')());
 
         //Blocked
         $this->assertEmpty(Route::getBlocked());
