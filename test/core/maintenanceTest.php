@@ -15,10 +15,12 @@ class MaintenanceTest extends TestCase
 
     public function setUp():void
     {
+        $_SERVER['HTTP_CLIENT_IP'] = self::ALLOWED_IP;
+
+        Maintenance::setStatus(true);
         Maintenance::setFile('system/testing_maintenance_whitelist.txt');
         Maintenance::addAllowedIP(self::ALLOWED_IP);
         Maintenance::addAllowedIP(self::ANOTHER_ALLOWED_IP);
-        Maintenance::addAllowedIP('');
     }
 
 
@@ -28,7 +30,9 @@ class MaintenanceTest extends TestCase
         $this->assertContains(self::ALLOWED_IP, Maintenance::getAllowedIPs());
         $this->assertContains(self::ANOTHER_ALLOWED_IP, Maintenance::getAllowedIPs());
         $this->assertNotContains('192.168.1.3', Maintenance::getAllowedIPs());
+        $this->assertTrue(Maintenance::hasAccess());
         Maintenance::removeAllowedIP(self::ALLOWED_IP);
+        $this->assertFalse(Maintenance::hasAccess());
         $this->assertNotContains(self::ALLOWED_IP, Maintenance::getAllowedIPs());
     }
 
@@ -36,5 +40,6 @@ class MaintenanceTest extends TestCase
     public function tearDown():void
     {
         unlink(self::FILE);
+        unset($_SERVER['HTTP_CLIENT_IP']);
     }
 }

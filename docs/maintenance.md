@@ -6,6 +6,16 @@ The constant `maintenance_on` defined in the `system/config.php` file indicates 
 
 When under maintenance, the function defined with the `set` method will be executed if the client IP address isn't in the white list.
 
+### Set status
+
+`setStatus([bool $enabled])`
+
+Sets the status of the maintenance mode. True to enable it, false to disable it.
+
+```php
+Maintenance::setStatus(true);
+```
+
 ### Use
 
 `set(\Closure $function)`
@@ -72,13 +82,13 @@ Returns all the IP address in the white list:
 Maintenance::getAllowedIPs();
 ```
 
-_This will return the IP list as an array._
+_This will return the IP list as a non-associative array._
 
 ## Client Allowed
 
 `hasAccess()`
 
-Returns true if the current client IP address has access under maintenance mode, false otherwise.
+Returns true if the current client IP address has access under maintenance mode and the maintenance mode is enabled, false otherwise.
 
 ```php
 Maintenance::hasAccess();

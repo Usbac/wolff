@@ -68,6 +68,16 @@ Log::isEnabled();
 
 If the log system is disabled, nothing will happen when running the common log methods explained above.
 
+### Set status
+
+`setStatus([bool $enabled])`
+
+Sets the status of the logging system. True to enable it, false to disable it.
+
+```php
+Log::setStatus(true);
+```
+
 ### Set folder
 
 `setFolder([string $folder])`

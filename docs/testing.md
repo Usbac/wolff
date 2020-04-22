@@ -18,7 +18,7 @@ _Running the command with high privileges is required since some files will be c
 
 Yes, assigning a specific number or percentage to a test coverage is quite ambiguous. So take the following number with a grain of salt.
 
-**Wolff tests cover more or less the ~75% of all the framework.**
+**Wolff tests cover more or less the ~80% of all the framework.**
 
 ### Untested elements
 
@@ -29,10 +29,9 @@ The following elements of Wolff are not present in the tests (maybe due to its n
 
 ### Not fully covered elements
 
-The following elements are available in the tests but are not fully covered:
+The following elements are available in the tests but are not 100% covered:
 
 * Session
-* Maintenance
 * Request
 * Response
 
