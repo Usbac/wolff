@@ -111,7 +111,7 @@ printr($array);
 This function can take any number of parameters.
 
 ```php
-printr($array, $array2, $array3...);
+printr($array, $foo, $foo2...);
 ```
 
 ### Print and die
@@ -128,7 +128,7 @@ printrd($array);
 This function can take any number of parameters.
 
 ```php
-printrd($array, $array2, $array3...);
+printrd($array, $foo, $foo2...);
 ```
 
 ### Var dump and die
@@ -187,7 +187,7 @@ isInt('1');
 isInt(1);
 ```
 
-Both of the calls showed above will return true.
+Both of the calls showed above will return `true`.
 
 ### Is float
 
@@ -200,7 +200,7 @@ isFloat('1.5');
 isFloat(1.5);
 ```
 
-Both of the calls showed above will return true.
+Both of the calls showed above will return `true`.
 
 ### Is bool
 
@@ -213,9 +213,9 @@ isBool(true);
 isBool('1');
 ```
 
-Both of the calls showed above will return true.
+Both of the calls showed above will return `true`.
 
-Only the numeric values 1 and 0, and the strings 'true', 'false', '1' and '0' are counted as boolean.
+Only the numeric values `1` and `0`, and the strings 'true', 'false', '1' and '0' are counted as boolean.
 
 ### Is json
 
@@ -319,17 +319,13 @@ getBenchmark();
 
 `getPublic([string $path])`
 
-Returns the public of the project.
-
-```php
-getPublic();
-```
-
-If you pass a string, it will be concatenated to the public path.
+Returns the absolute public path of the given path.
 
 ```php
 getPublic('favicon.ico');
 ```
+
+If the project is located at `/var/www/html/wolff` that should return `/var/www/html/wolff/public/favicon.ico`.
 
 ### Get config
 
