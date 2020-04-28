@@ -20,7 +20,7 @@
 
 - Add `setDateFormat` and `setFolder` methods to the `Core\Log` class.
 
-- Add `path` and `validateCsrf` functions to the standard library.
+- Add `arrayRemove`, `bytesToString`, `path` and `validateCsrf` functions to the standard library.
 
 ### Changed
 
