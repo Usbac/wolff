@@ -34,6 +34,9 @@ class MaintenanceTest extends TestCase
         Maintenance::removeAllowedIP(self::ALLOWED_IP);
         $this->assertFalse(Maintenance::hasAccess());
         $this->assertNotContains(self::ALLOWED_IP, Maintenance::getAllowedIPs());
+        $this->assertTrue(Maintenance::isEnabled());
+        Maintenance::setStatus(false);
+        $this->assertFalse(Maintenance::isEnabled());
     }
 
 

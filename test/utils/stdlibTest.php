@@ -36,6 +36,18 @@ class StdlibTest extends TestCase
 
         $non_assoc_arr = [ 'Evan You', 'China' ];
 
+        $example_arr = [
+            'mauretania', 'lusitania', 'queen_mary'
+        ];
+
+        $expected_arr = [
+            0 => 'mauretania', 2 => 'queen_mary'
+        ];
+
+        $this->assertTrue(arrayRemove($example_arr, 'lusitania'));
+        $this->assertEquals($expected_arr, $example_arr);
+        $this->assertEquals('527KB', bytesToString('540000'));
+        $this->assertEquals('9.537MB', bytesToString('10000000', 3));
         $this->assertTrue(isJson(self::JSON));
         $this->assertEquals($arr['user']['name'], val($arr, 'user.name'));
         $this->assertEquals('', getClientIP());

@@ -69,6 +69,53 @@ val($arr, 'user.name');
 
 That should be the equivalent to `$arr['user']['name']`.
 
+### Array remove
+
+`arrayRemove(array &$arr, $val)`
+
+Removes an element from the given array, based on its value. 
+
+It returns `true` if the element has been removed, `false` otherwise. 
+
+```php
+$ships = [
+    'mauretania', 'lusitania', 'queen_mary'
+];
+
+arrayRemove($ships, 'lusitania');
+```
+
+After that, the `ships` variable should look like this:
+
+```
+(
+    [0] => mauretania
+    [2] => queen_mary
+)
+```
+
+_Keep in mind that the array's keys are preserved even for non-assosiative arrays._
+
+### Bytes to string
+
+`bytesToString($size[, $precision])`
+
+Returns the given size (in bytes) as a human-readable string. The default precision is `2`.
+
+```php
+bytesToString('540000')
+```
+
+That example should return '527KB'.
+
+```php
+bytesToString('10000000', 3)
+```
+
+That example should return '9.537MB'.
+
+_The human-readable string to return can go from B (byte) to YB (yottabyte)._
+
 ### Average
 
 `average(array $arr)`
