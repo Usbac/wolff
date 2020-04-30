@@ -4,7 +4,7 @@ The tests use [PHPUnit](https://phpunit.de), so you must have it installed for r
 
 ## Running tests
 
-First open your terminal, move to your Wolff project folder and run the following command with high privileges:
+Open your terminal, move to your Wolff project folder and run the following command with high privileges:
 
 ```
 vendor/bin/phpunit
@@ -18,19 +18,19 @@ _Running the command with high privileges is required since some files will be c
 
 Yes, assigning a specific number or percentage to a test coverage is quite ambiguous. So take the following number with a grain of salt.
 
-**Wolff tests cover more or less the ~80% of all the framework.**
+**Wolff tests cover more or less the ~85% of all the framework.**
 
 ### Untested elements
 
 The following elements of Wolff are not present in the tests (due to its nature):
 
 * Authentication
-* Database
 
 ### Not fully covered elements
 
 The following elements are available in the tests but are not 100% covered:
 
+* Database
 * Session
 * Request
 * Response
