@@ -36,6 +36,8 @@ class StrTest extends TestCase
         $this->assertTrue(Str::contains('Lorem ipsum dolor sit amet', 'sit'));
         $this->assertTrue(Str::startsWith('Lorem ipsum dolor sit amet', 'Lorem'));
         $this->assertTrue(Str::endsWith('Lorem ipsum dolor sit amet', 'amet'));
+        $this->assertEquals('Hello world', Str::removeQuotes('"Hello world"'));
+        $this->assertEquals('Hello world', Str::removeQuotes('\'Hello world\''));
 
         $this->assertFalse(Str::isEmail('contactcom'));
         $this->assertFalse(Str::isAlphanumeric('abcdefg1234567$890'));

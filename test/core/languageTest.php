@@ -26,6 +26,8 @@ class LanguageTest extends TestCase
         $language_file = fopen(self::FILE, "w") or die();
         fwrite($language_file, self::CONTENT);
         fclose($language_file);
+
+        Language::setDefault('phpunit');
     }
 
 
@@ -37,6 +39,7 @@ class LanguageTest extends TestCase
             'msg'   => 'hello world'
         ];
 
+        $this->assertTrue(Language::exists('testing'));
         $this->assertTrue(Language::exists('testing', 'phpunit'));
         $this->assertFalse(Language::exists($non_existent, 'phpunit'));
         $this->assertEquals($language_array, Language::get('testing', 'phpunit'));

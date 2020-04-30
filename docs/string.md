@@ -56,6 +56,20 @@ Str::isAlpha('abc def g');
 
 That will return true.
 
+### Remove quotes
+
+`removeQuotes(string $str)`
+
+Returns the given string without the single or double quotes surrounding it.
+
+```php
+Str::removeQuotes('"Hello world"');
+```
+
+That should return the string 'Hello world'.
+
+_Keep in mind that the quotes will be removed only if they surround the string on both sides, meaning that passing a string like 'Hello world"' will make the method return the same string._
+
 ### Token
 
 `token([int $length])`

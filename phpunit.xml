@@ -4,4 +4,11 @@
 			<directory suffix="Test.php">test</directory>
 		</testsuite>
 	</testsuites>
+    <php>
+        <const name="DBMS" value="mysql"/>
+        <const name="SERVER" value="localhost"/>
+        <const name="DB" value="wolff_test"/>
+        <const name="USERNAME" value="root"/>
+        <const name="PASSWORD" value="root"/>
+    </php>
 </phpunit>
