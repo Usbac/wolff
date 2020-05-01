@@ -1,12 +1,12 @@
-The template system of Wolff allows you to write cleaner PHP code in your views, avoiding things like the PHP tags.
+`Wolff\Core\Template`
+
+The template system of Wolff allows you to write cleaner and safer PHP code in your views, avoiding things like the PHP tags and automatically escaping all the variables.
 
 It only works in the views and is completely optional, so you can write normal PHP code if you want to.
 
-The template system can be completely disabled if the `template_on` key in the `system/config.php` file is equal to false.
+The template system can be completely disabled if the `template_on` key in the `system/config.php` file is equal to `false`.
 
-## Variables
-
-### Load 
+## Sending data to views
 
 When loading a view from a controller, you can pass as parameter an associative array with data in it:
 
@@ -15,14 +15,18 @@ $data['message'] = 'Hello world';
 View::render('page', $data);
 ```
 
-### Display
+## Print
 
  Then in the view you can print the variables that are in that array using the brackets tag, this way:
 ```php
 {{ $message }}
 ```
 
-This will print the 'message' key in the data array, keep in mind that the content will be automatically escaped for your safety. 
+This will print the 'message' key in the data array.
+
+_Keep in mind that the content will be automatically escaped for your safety._
+
+### Print raw
 
 If you don't want your data to be escaped use the following tags:
 
@@ -36,11 +40,11 @@ That is the equivalent to:
 <?php echo $data['message']; ?>
 ```
 
-All the variables in the data array are accessible from the view without needing to refer to the data array. This `$variable` is the equivalent to this `$data['variable']`.
+All the variables in the data array are accessible from the view without needing to refer to the given array. This `$variable` is the equivalent to this `$data['variable']`.
 
 ## Comments
 
-The template system have an advantage over the common comments and that is that the comments of the template system aren't included in the final HTML returned to the user.
+The template system comments have an advantage over the common comments and that is that the comments of the template system aren't included in the final HTML returned to the user.
 
 ```html
 {# This is a simple comment #}
@@ -49,7 +53,7 @@ The template system have an advantage over the common comments and that is that 
 You can do multiline comments too.
 
 ```html
-{# This is a 
+{# This is a
 multiline
 comment #}
 ```
@@ -74,57 +78,31 @@ You can do this:
 {% endfor %}
 ```
 
-## Conditionals
-
-To write conditional statements, put your variable/condition before an interrogation symbol, all of this inside brackets. 
-
-```php
-{ $foo? }
-    // code
-{?}
-```
-
-That is the equivalent to this:
-
-```php
-<?php if ($foo): ?>
-    // code
-<?php endif; ?>
-```
-
-To write else if:
-
-```php
-{ $foo? }
-    // code
-{ else $foo2 }
-    // more code
-{?}
-```
-
 ## Loops
 
 You can write traditional for loops in a short way:
 
 ```php
-{ for i in (0, 10) }
+{% for $i in (0, 10) %}
     {{$i}}
-{endfor}
+{% endfor %}
 ```
+
+That should print `012345678910`.
 
 The same but using variables:
 
 ```php
-{ for i in (0, length|$text) }
+{% for $i in (0, length|$text) %}
     {{$i}}
-{endfor}
+{% endfor %}
 ```
 
 ## Functions
 
 The template system of Wolff has some abbreviated functions to make the code cleaner.
 
-To use a function only write its' name followed by a vertical bar and then the variable. 
+To use a function only write its' name followed by a vertical bar and then the variable.
 Like this:
 
 ```php
@@ -159,6 +137,36 @@ This are the available functions and their PHP equivalent:
 | join(var)   | implode          | Join an array by a text (var)                  |
 | repeat(var) | str_repeat       | repeat a string fixed number of times (var)    |
 
+## CSRF
+
+The template engine has a tag which can be used to avoid csrf.
+
+```
+@csrf
+```
+
+Internally it creates a `__token` cookie if it doesn't exists and replaces the csrf tag with a hidden input which value is the same of the cookie.
+
+_Keep in mind that the cookie has a live time of one hour and is http only._
+
+```html
+<form action="theurl" method="post">
+    @csrf
+    <input type="text" name="username"/>
+    <button type="submit">Send</button>
+</form>
+```
+
+Then you can use the `validateCsrf` function of the standard library to verify the incoming form.
+
+```php
+if (validateCsrf()) {
+    echo 'Safe, continue';
+    // Code
+} else {
+    echo 'You shall not pass';
+}
+```
 
 ## Import
 
@@ -167,16 +175,19 @@ Instead of using the html script and link tags for importing external files, you
 ```
 {% style="styles.css" %}
 ```
+
 Equivalent to: `<link rel="stylesheet" type="text/css" href="styles.css"/>`
 
 ```
 {% script="scripts.js" %}
 ```
+
 Equivalent to: `<script type="text/javascript" src="scripts.js"></script>`
 
 ```
 {% icon="img.svg" %}
 ```
+
 Equivalent to: `<link rel="icon" href="img.svg">`
 
 
@@ -196,27 +207,105 @@ That will leave this in the HTML returned to the client:
 
 ## Include
 
-Instead of using the php include function. You can include other views using the `load` method.
+Instead of using the php include function. You can include other views using the `include` method.
 
 Example:
 
 ```html
 <div>
-    @load(header)
+    @include('header')
 </div>
 ```
 
 That will put all the `header.wlf` view content inside the div tags.
 
+The included view has access to all the variables in the current scope.
+
+## View inheritance
+
+View inheritance is a great feature to reduce repeated code.
+
+_Wolff supports view inheritance, but not multiple view inheritance._
+
+### Extending the view
+
+The parent view can have multiple blocks which will be used by the child views to redefine what is inside them.
+
+A child view must extend from a parent, and for that, use the following syntax.
+
+```html
+@extends('parent_view')
+```
+
+### Print parent block
+
+You can print the content of a parent's block anywhere in the child view with the following syntax.
+
+```html
+{[ parent block_name ]}
+```
+
+### Example
+
+app/views/base.wlf:
+
+```html
+<!DOCTYPE html>
+<head>
+    {[ block head ]}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {[ endblock ]}
+</head>
+<body>
+    {[ block body ]}
+    {[ endblock ]}
+</body>
+</html>
+```
+
+app/views/child.wlf:
+
+```html
+@extends('base')
+
+{[ block head ]}
+    {[ parent head ]}
+    <title>Tundra</title>
+{[ endblock ]}
+
+{[ block body ]}
+    <div>Hello world</div>
+{[ endblock ]}
+```
+
+Given the examples of above, the following code:
+
+```php
+View::render('child');
+```
+
+Will render this:
+```html
+<!DOCTYPE html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tundra</title>
+</head>
+<body>
+    <div>Hello world</div>
+</body>
+</html>
+```
+
 ## Extending the template
 
 You can extend the template engine and make your own tags or rules using regular expressions and the `custom` function.
 
-The custom content must be defined in the `system/Definitions/Templates.php` file.
-
 The custom function takes a closure, which must take a parameter that is suposed to be the view content and finally it must return it.
 
-If you add the following code to the `system/Templates.php` file:
+If you add the following code to the `system/web.php` file:
 
 ```php
 Template::custom(function ($content) {

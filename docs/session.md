@@ -1,14 +1,18 @@
+`Wolff\Core\Session`
+
 Instead of managing the `$_SESSION` variable directly, you can use the Wolff Session class.
 
-All the session methods work with the time expressed in minutes (unless it’s specified here).
+It's safer since it's tied to the client's IP address and its user agent, meaning that if the client has a different IP or a different user agent, the session will be destroyed.
 
 ## General methods
 
-Just remember to `use Core\Session`.
+_All the session methods works with the time expressed in minutes (unless it’s specified other way)._
 
 ### Start session
 
-Start the session:
+`start()`
+
+Starts the session.
 
 ```php
 Session::start();
@@ -16,43 +20,45 @@ Session::start();
 
 ### Count session variables
 
-Count the session variables:
+`count()`
+
+Returns the number of elements in the session.
 
 ```php
 Session::count();
 ```
 
+### Add session time
+
+`addTime(int $time)`
+
+Adds time to the session.
+
+```php
+Session::addTime(10);
+```
+
 ### Set session time
 
-Set the session global time:
+`setTime(int $time)`
+
+Sets the session global time.
 
 ```php
 Session::setTime(10);
 ```
 
-### Get starting time
-
-Get the session time (in seconds):
-
-```php
-Session::getStartTime();
-```
-
-Get session time with format (Hours, minutes and seconds):
-
-```php
-Session::getStartTime(true);
-```
-
 ### Get remaining time
 
-Get session remaining time (in seconds):
+`getRemainingTime([bool $gmdate])`
+
+Returns the session remaining time (in seconds).
 
 ```php
 Session::getRemainingTime();
 ```
 
-Get session remaining time with format (Hours, minutes and seconds):
+If `true` is given as parameter, it will return the remaining time with format (Hours, minutes and seconds).
 
 ```php
 Session::getRemainingTime(true);
@@ -60,7 +66,9 @@ Session::getRemainingTime(true);
 
 ### Unset
 
-Unset session:
+`empty()`
+
+Unset the session.
 
 ```php
 Session::empty();
@@ -68,7 +76,9 @@ Session::empty();
 
 ### Destroy
 
-Destroy session:
+`kill()`
+
+Destroys the session.
 
 ```php
 Session::kill();
@@ -78,7 +88,9 @@ Session::kill();
 
 ### Set
 
-Declare a session variable:
+`set(string $key, $value[, int $time])`
+
+Sets a session variable.
 
 ```php
 Session::set('name', $value);
@@ -86,7 +98,9 @@ Session::set('name', $value);
 
 ### Get
 
-Getting a session variable:
+`get(string $key)`
+
+Returns a session variable.
 
 ```php
 Session::get('name');
@@ -94,7 +108,9 @@ Session::get('name');
 
 ### Has
 
-Check if a session variable exists:
+`has(string $key)`
+
+Returns `true` if a session variable exists, false otherwise.
 
 ```php
 Session::has('name');
@@ -102,7 +118,9 @@ Session::has('name');
 
 ### Unset
 
-Unset a session variable:
+`unset(string $key)`
+
+Unset a session variable.
 
 ```php
 Session::unset('name');
@@ -110,13 +128,15 @@ Session::unset('name');
 
 ### Get variable time
 
-Getting variable time (in seconds):
+`getVarTime(string $key[, bool $gmdate])`
+
+Returns the variable time (in seconds).
 
 ```php
 Session::getVarTime('name');
 ```
 
-Getting variable time with format (Hours, minutes and seconds):
+If `true` is given as the second parameter, it will return the time with format (Hours, minutes and seconds).
 
 ```php
 Session::getVarTime('name', true);
@@ -124,7 +144,9 @@ Session::getVarTime('name', true);
 
 ### Set variable time
 
-Set the variable live time:
+`setVarTime(string $key, int $time)`
+
+Sets the variable live time.
 
 ```php
 Session::setVarTime('name', 10);
@@ -132,7 +154,9 @@ Session::setVarTime('name', 10);
 
 ### Add time to variable
 
-Adding time to a variable:
+`addVarTime(string $key, int $time)`
+
+Adds time to a variable.
 
 ```php
 Session::addVarTime('name', 10);

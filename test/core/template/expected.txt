@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Web development made just right</title>
+</head>
+<body>
+
+
+    <p style="font-size:30px">Welcome!</p>            <p>Inside a conditional statement.</p>
+
+
+            <div>
+            <label>name</label>
+            <input type="text" value="wolff"/>
+        </div>
+            <div>
+            <label>language</label>
+            <input type="text" value="php"/>
+        </div>
+            <div>
+            <label>type</label>
+            <input type="text" value="framework"/>
+        </div>
+
+            0            1            2            3            4            5            6            7            8            9            10
+    hellohellohello    How Are You?    11    whitespaces    1, 2, 3
+    {{ 'escaped_tag' }}
+</body>
+</html>

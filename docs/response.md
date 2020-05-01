@@ -1,97 +1,154 @@
-New responses can be made throught the Wolff `Response` class. 
+`Wolff\Core\Http\Response`
 
-Remember to `use Core\Response`.
+New responses can be made throught the Wolff Response class. It implements the `Wolff\Core\Http\ResponseInterface` interface.
+
+This can be done to avoid the superglobals of PHP, giving you a more object oriented syntax.
+
+This response object is the one that must be passed as second parameter to the Controller's public functions, route functions, and middleware functions.
+
+### Route:
+```php
+Route::get('/', function($request, $response) {
+});
+
+Route::code(404, function($request, $response) {
+});
+```
+
+### Middleware:
+```php
+Middleware::before('/', function($request, $response) {
+});
+```
+
+### Controller:
+```php
+namespace Controller;
+
+class Home extends Controller
+{
+    public function index($request, $response)
+    {
+    }
+}
+```
+
+After the current controller method or route function is finished, the `send` method of the response object is called automatically, meaning that you don't have to worry about calling it in your code.
 
 ## Basics
 
-Creating a new Response:
+Creating a new Response.
 
 ```php
-$response = new Response();
+$response = new Wolff\Core\Http\Response();
 ```
 
-The `header`, `remove`, `setCode` and `redirect` methods can be used as chained methods.
-Making the process of creating a new Response easier and quicker.
+All of the response methods can be chained, making the process easier and quicker.
 
 ```php
-$response->header('Content-Type', 'text/html; charset=utf-8')
+$response->setHeader('Content-Type', 'text/html; charset=utf-8')
+         ->write('Hello world')
          ->setCode(200)
-         ->redirect('https://getwolff.com')
-         ->go();
+         ->setCookie('logged_in', 'yes')
+         ->send();
 ```
 
-## Methods
+## General Methods
+
+### Write content
+
+`write($content)`
+
+Sets the content that will be returned by the response.
+
+```php
+$response->write('Hello world');
+```
+
+That would be the equivalent to the classic and ugly: `echo 'hello world';`.
+
+_The string value of the given variable is the one that will be returned._
+
+### Append content
+
+`append($content)`
+
+Appends content to the current content that will be returned by the response.
+
+```php
+$response->append('How are you?');
+```
+
+_The string value of the given variable is the one that will be returned._
+
+### Get content
+
+`get()`
+
+Returns the current content of the response.
+
+```php
+$response->get();
+```
 
 ### Set HTTP code
 
-Set the HTTP status code.
+`setCode([int $status])`
+
+Sets the HTTP status code.
 
 ```php
 $response->setCode(200);
 ```
 
-### Get HTTP code
-
-Returns the response HTTP status code.
-
-```php
-$response->getCode();
-```
-
-### Get redirect url
-
-Returns the response url.
-
-```php
-$response->getRedirect();
-```
-
 ### Add header
 
-Add a new header to the response.
+`setHeader(string $key, string $value)`
+
+Adds a new header to the response.
 
 ```php
-$response->header('Content-Type', 'text/html; charset=utf-8');
+$response->setHeader('Content-Type', 'text/html');
 ```
 
-The first parameter is the header's key, the second is the header's value.
+### Add cookie
 
-### Get headers
+`setCookie(string $key, string $value[, $time[, string $path[, string $domain[, bool $secure[, bool $http_only]]]]])`
 
-Returns all the response headers (as an associative array).
+Adds a new cookie to the response.
 
 ```php
-$response->getHeaders();
+$response->setCookie('has_recent_activity', '1');
 ```
 
-### Remove header
-
-Remove a header if it exists.
+More expresive example.
 
 ```php
-$response->remove('Content-Type');
+$response->setCookie('user_session', 'Zcv6ys3dgluw', 60, '/', true, true);
 ```
 
-The parameter must be the desired header's key to delete.
+### Remove cookie
 
-### Redirect url
+`unsetCookie(string $key)`
 
-Set the Response's url. 
+Removes a cookie.
 
 ```php
-$response->redirect('https://getwolff.com');
+$response->unsetCookie('user_session');
 ```
 
-The HTTP status code can be pass as an optional second parameter (this will overwrite the existing status code).
+### Send response
+
+`send([bool $return])`
+
+Sends the response with all of its values.
 
 ```php
-$response->redirect('https://getwolff.com', 200);
+$response->send();
 ```
 
-### Go
-
-Execute the response with all of its values.
+If you pass a `true` value as parameter, the method will return the response content instead of printing it out.
 
 ```php
-$response->go();
+$content = $response->send(true);
 ```

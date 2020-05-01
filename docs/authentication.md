@@ -1,18 +1,46 @@
-The authentication utility simplifies the process of registering and login users into the database, meaning that you only have to worry about giving it the user data to register and/or login. 
+`Wolff\Utils\Auth`
 
-It's built on top of the `\Core\DB` class so it uses PDO.
+The authentication utility simplifies the process of registering and login users into the database.
 
-Just remember to `use Utilities\Auth`.
+It's built on top of the `Wolff\Core\DB` class so it uses PDO.
+
+## Starting
+
+First you need to instantiate the `Auth` class, its constructor looks like this:
+
+`__construct([array $data = null[, array $options = null ]])`
+
+It takes two parameters, an array with the destination database credentials, and an array which will be used as the options for the `password_hash` function that the utility uses internally.
+
+If no data array is passed, it will use the credentials defined in the `system/config.php` file.
+
+```php
+$credentials = [
+    'dbms'   => 'mysql',
+    'server' => 'localhost',
+    'name'   => 'wolff',
+    'username' => 'root',
+    'password' => '12345'
+];
+
+$options = [
+    'cost' => 16
+];
+
+$auth = new \Wolff\Utils\Auth($credentials, $options);
+```
 
 ## General methods
 
 ### Register
 
+`register(array $data)`
+
 Register a new user into the database.
 
-This method takes as parameter an array which will be the user data to insert. The only required keys that the array must have are `password` and `password_confirm`, both values must be a string and equal.
+The only required keys that the given array must have are `password` and `password_confirm`, both values must be a string and equal.
 
-This method returns true if the user has been successfully inserted into the database, false otherwise.
+This method returns `true` if the user has been successfully inserted into the database, `false` otherwise.
 
 ```php
 $user = [
@@ -22,7 +50,7 @@ $user = [
     'password_confirm' => 'canislupus',
 ];
 
-Auth::register($user);
+$auth->register($user);
 ```
 
 Take in consideration the following points:
@@ -32,6 +60,8 @@ Take in consideration the following points:
 * The array keys are directly maped to the database table (except for the `password_confirm` key). Meaning that an array with the following keys: `name`, `email`, `password` and `phone`, will be inserted into a table that must have a `name`, `email`, `password` and `phone` columns for this to work.
 
 ### Login
+
+`login(array $data)`
 
 Returns true if the given user data exists in the database and is valid, false otherwise.
 
@@ -43,67 +73,79 @@ $user = [
     'password' => 'canislupus'
 ];
 
-Auth::login($user);
+$auth->login($user);
 ```
 
 If a user with the giving email and password exists in the `user` table (in this example), it will return true.
 
 ### Set table
 
-Set the name of the database table that will be used to register and login users. By default its value is `user`.
+`setTable([string $table])`
+
+Sets the name of the database table that will be used to register and login users. By default its value is `user`.
 
 ```php
-Auth::setTable('admin');
+$auth->setTable('admin');
 ```
 
-### Get table
+### Set unique column
 
-Get the name of the database table that will be used to register and login users.
+`setUnique(string $unique_column)`
+
+Sets the name of the unique column that cannot be repeated when registering new users in the table. This function is available to avoid any duplicate entry.
 
 ```php
-Auth::getTable();
+$auth->setUnique('email');
 ```
 
 ### Set options
 
-Set the options that will be used when hashing passwords. The parameter must be an associative array.
+`setOptions(array $options)`
 
-This is the equivalent to defining the third parameter of the `password_hash` function that is used inside the code of this class.
+Set the options that will be used when hashing passwords.
+
+This is the equivalent to defining the third parameter of the `password_hash` function that is used internally in this utility.
 
 ```php
 $options = [
     'cost' => 16
 ];
 
-Auth::setOptions($options);
+$auth->setOptions($options);
 ```
 
 That will set the cost of the pasword hashing function to 16. By default it's 10.
 
 ### Get options
 
+`getOptions()`
+
 Get the options that will be used when hashing passwords.
 
 ```php
-Auth::getOptions();
+$auth->getOptions();
 ```
 
 ### Get last inserted Id
 
-Get the id of the last inserted/registered user into the database.
+`getId()`
+
+Returns the id of the last inserted/registered user into the database.
 
 ```php
-Auth::getId();
+$auth->getId();
 ```
 
 ### Get current user
 
-Get the currently authenticated user data.
+`getUser()`
+
+Returns the currently authenticated user data.
 
 This function returns an associative array with the user data.
 
 ```php
-Auth::getUser();
+$auth->getUser();
 ```
 
 If no user has been logged in previously with the `login` method or if the last login attempt failed this will return `null`.

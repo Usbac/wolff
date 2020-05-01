@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ getPageTitle() }} - Home</title>
-    {% style="{{ getPublic('assets/css/styles.css') }}" %}
-    {% icon="{{ getPublic('favicon.ico') }}" %}
+    <title>{{ $lang['title'] }} - Home</title>
+    {% style="{{ url('assets/css/styles.css') }}" %}
+    {% icon="{{ url('favicon.ico') }}" %}
 </head>
 <body>
 <div class='center'>
     {# Title #}
     <div class='text-center'>
-        <object data="{{ getPublic('logo.svg') }}" type="image/svg+xml" width="130px"></object>
+        <object data="{{ url('logo.svg') }}" type="image/svg+xml" width="130px"></object>
         <h1 class='title'>{{ $lang['title'] }}</h1>
     </div>
 
@@ -22,8 +22,8 @@
     {# Options #}
     <div class='text-center options'>
         <a target='_blank' href='https://www.getwolff.com/doc/2.x/home'>{{ upper|$lang['documentation'] }}</a>
-        <a target='_blank' href='https://github.com/Usbac/Wolff'>{{ upper|$lang['github'] }}</a>
-        <a target='_blank' href='https://github.com/Usbac'>{{ upper|$lang['creators_page'] }}</a>
+        <a target='_blank' href='https://github.com/Usbac/Wolff'>{{ upper|$lang['repo'] }}</a>
+        <a target='_blank' href='https://getwolff.com'>{{ upper|$lang['page'] }}</a>
     </div>
 
     {# Version #}

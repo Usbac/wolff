@@ -1,3 +1,5 @@
+`Wolff\Core\Cache`
+
 The views use by default a cache system.
 
 When loading a view, a file titled `tmp_{fileDirectory}.php` will be created in the cache folder if it doesn't exists already.
@@ -6,7 +8,7 @@ So the view will be loader from that file and any change made to the original fi
 
 You can perfectly refresh the cache deleting the cache folder content or the folder itself.
 
-If you want to force a view to don't use the cache system, you can pass a false value to the render method of the `Core\View` class as the third parameter.
+If you want to force a view to don't use the cache system, you can pass a false value to the `render` method of the `Wolff\Core\View` class as the third parameter.
 
 ```php
 View::render('home', $data, false);
@@ -18,11 +20,11 @@ The default life time for a cache file is One week.
 
 ## Methods
 
-Just remember to `use Core\Cache`.
-
 ### Is enabled
 
-You can check whetever or not the cache system is enabled with the `isEnabled` method.
+`isEnabled()`
+
+Returns `true` if the cache system is enabled, `false` otherwise.
 
 ```php
 Cache::isEnabled();
@@ -30,17 +32,21 @@ Cache::isEnabled();
 
 ### Get cache content
 
-You can get the content of a cache file by using the `getContent` method.
+`get(string $dir)`
+
+Returns the content of the specified cache file.
 
 ```php
-Cache::getContent('home');
+Cache::get('home');
 ```
 
 That will return the content of the home cache file (`tmp_home.php`).
 
 ### Create file
 
-You can manually create a cache file using the `set` method.
+`set(string $dir, string $content)`
+
+Creates a cache file.
 
 ```php
 $file_content = '<h2>Hello</h2>';
@@ -53,7 +59,9 @@ This method returns the path of the created cache file.
 
 ### Create folder
 
-You can manually create the cache folder if it doesn't exists, using the `mkdir` method.
+`mkdir()`
+
+Makes the cache folder if it doesn't already exists.
 
 ```php
 Cache::mkdir();
@@ -61,7 +69,9 @@ Cache::mkdir();
 
 ### Has
 
-If you want to know if a cache file already exists for a view you can use the `has` method.
+`has(string $dir)`
+
+Returns `true` if the given cache key exists, `false` otherwise.
 
 ```php
 Cache::has('home');
@@ -71,17 +81,21 @@ That will return true if the home cache file exists, false otherwise.
 
 ### Delete
 
-You can delete a cache file using the `delete` method.
+`delete(string $dir)`
+
+Deletes the specified cache file.
 
 ```php
 Cache::delete('home');
 ```
 
-That will delete the home cache file.
+That will delete the home cache file (`cache/tmp_home.php`).
 
 ### Clear
 
-You can delete all the cache using the `clear` method.
+`clear`
+
+Deletes all the cache file.
 
 ```php
 Cache::clear();
@@ -89,32 +103,3 @@ Cache::clear();
 
 That will delete all the cache files.
 
-### Expired
-
-You can see if a cache has expired using the `expired` method.
-
-```php
-Cache::expired('home');
-```
-
-This will return true if the home cache file has expired.
-
-### Get Filename
-
-Returns the cache format name applied over the specified file name.
-
-```php
-Cache::getFilename('home');
-```
-
-Will return `tmp_home.php`
-
-### Get path
-
-Returns the complete path of the specified cache file.
-
-```php
-Cache::getPath('home');
-```
-
-As an example, it will return `wolff/cache/tmp_home.php`

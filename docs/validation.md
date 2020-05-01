@@ -1,4 +1,6 @@
-The `\utilities\Validation` class makes incredibly easy the process of validating data.
+`Wolff\Utils\Validation`
+
+The Wolff Validation class makes incredibly easy the process of validating incoming data.
 
 ## Usage
 
@@ -37,7 +39,7 @@ $fields = [
     ]
 ];
 
-$validation = new \Utilities\Validation();
+$validation = new Validation();
 $validation->setData($data);
 $validation->setFields($fields);
 ```
@@ -71,7 +73,7 @@ $fields = [
     ]
 ];
 
-$validation = new \Utilities\Validation();
+$validation = new Validation();
 $validation->setData($data);
 $validation->setFields($fields);
 ```
@@ -80,9 +82,7 @@ In that case the `isValid` method will return true only if the name has a minimu
 
 ## General Methods
 
-In the method examples a `validation` variable will be used which is an instance of `\Utilities\Validation`.
-
-The `setData`, `setType` and `setFields` methods can be chained, so the following code is valid:
+The `setData`, `setType` and `setFields` methods can be chained.
 
 ```php
 $validation->setData($data)->setFields($fields);
@@ -90,37 +90,19 @@ $validation->setData($data)->setFields($fields);
 
 ### Set data
 
-Set the array which will be used to validate.
+`setData(array $arr)`
+
+Sets the array which will be used to validate.
 
 ```php
 $validation->setData($array);
 ```
 
-### Get data
-
-Get the array which will be used to validate. 
-
-```php
-$validation->getData();
-```
-
-### Set type
-
-Set the request array which will be used to validate. This is just syntactic sugar.
-
-```php
-$validation->setType('post');
-```
-
-That is the equivalent to this:
-
-```php
-$validation->setData(Request::post());
-```
-
 ### Set fields
 
-Set the array which contains the fields definitions.
+`setFields(array $fields)`
+
+Sets the array which contains the fields definitions.
 
 ```php
 $validation->setFields($fields);
@@ -128,7 +110,9 @@ $validation->setFields($fields);
 
 ### Get invalid values
 
-Get an array with all the invalid values.
+`getInvalidValues()`
+
+Returns an array with all the invalid values.
 
 ```php
 $validation->getInvalidValues();
@@ -156,7 +140,9 @@ An associative array where every element is an array of conditions that the elem
 
 ### Is valid
 
-Returns true if the array matches with all the conditions, false otherwise.
+`isValid()`
+
+Returns `true` if the array matches with all the conditions, `false` otherwise.
 
 ```php
 $validation->isValid();
@@ -164,9 +150,11 @@ $validation->isValid();
 
 ### Check
 
+`check($fields, $data)`
+
 This is just syntactic sugar for the `setFields`, `setData` and `isValid` methods in that order.
 
-The first parameter is the fields array, the second is the data array. This method returns `true` if the giving data array meets the conditions in the giving fields array.
+The first parameter is the fields array, the second is the data array. This method returns `true` if the given data array meets the conditions in the given fields array.
 
 ```php
 $validation->check($fields, $data);

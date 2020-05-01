@@ -2,21 +2,14 @@
 
 namespace Controller;
 
-use Core\{Controller, Language, View};
+use Wolff\Core\Language;
+use Wolff\Core\View;
 
-class Home extends Controller
+class Home extends \Wolff\Core\Controller
 {
-
-    public function index()
+    public function index($req, $res)
     {
         $data['lang'] = Language::get('home');
         View::render('home', $data);
     }
-
-
-    public function sayHello()
-    {
-        echo 'Hello world';
-    }
-
 }

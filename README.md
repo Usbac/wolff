@@ -1,64 +1,55 @@
 <h1 align="center">
   <br>
-  <img src="http://usbac.com.ve/wp-content/uploads/2019/05/wolff-logo-2.0.png" alt="Wolff logo" width="200">
+  <img src="http://getwolff.com/logo.png" alt="Wolff logo" width="200">
   <br>
   Wolff
   <br>
 </h1>
 
-<h4 align="center">Ridiculously small PHP framework.</h4>
+<h4 align="center">Web development made just right.</h4>
 
 <p align="center">
 <img src="https://img.shields.io/badge/stability-stable-green.svg">
 <a href="https://packagist.org/packages/usbac/wolff"><img src="https://poser.pugx.org/usbac/wolff/d/total.svg"></a>
-<img src="https://img.shields.io/badge/version-2.8.1-blue.svg">
+<img src="https://img.shields.io/badge/version-3.0.0-blue.svg">
 <img src="https://img.shields.io/badge/license-MIT-orange.svg">
 </p>
 
 Wolff is a ridiculously small and lightweight PHP framework.
 
-It is intended for those who want to build lightweight websites without starting from scratch or dealing with large frameworks.
+It is intended for those who want to build ultralight web applications, without starting from scratch or dealing with complexity.
 
 Wolff is small, fast, scalable and easy. The perfect solution for building small and medium-sized web applications.
 
-
 > **Note:** The core code of the framework is available at [Wolff-framework](https://github.com/usbac/wolff-framework).
-
 
 ## Features
 
-* **Clean**: The routes system allows you to have clean and friendly URLs, and the template system makes the php code cleaner while separating the logic from the view.
+* **Extremely easy**: It's simple to use and has a clean documentation and interface. It gives you the opportunity to learn it in just a single night (sleep included).
 
-* **Dynamic**: You can work however you want without strictly following the Wolff design or patterns like the MVC.
+* **Ridiculously fast**: If a resource is not used, it's not loaded. Some elements of the framework can even be disabled. Wolff is very friendly with potato servers and works seamlessly.
 
-* **Extensible**: Take advantage of the custom middlewares, functions and templates you can make in Wolff to expand your page.
-
-* **Fast**: Due to its small size and simplicity, you don’t have to worry about loading times or resource usage.
-
-* **Simple**: It’s not only small, but simple as well; with a clean documentation and an easy way to use.
-
+* **Comprenhensive**: Wolff has elements that cover everything you may ever need for building a web app. Absolutely no initial setup is required. They are ready to use.
 
 ## What's included
 | Element                                                                        | Description                                                                                                                                                                                                                                                                        |
 |--------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | [**Database abstraction layer**](https://github.com/Usbac/wolff/wiki/Database) | Which simplifies the process of running queries and includes useful functions.                                                                                                                                                                                                     |
 | [**DI Container**](https://github.com/Usbac/wolff/wiki/Container)              | For managing class dependencies and performing DI.                                                                                                                                                                                                                                 |
-| [**Language system**](https://github.com/Usbac/wolff/wiki/Language)            | For managing multiple languages easily and quickly.                                                                                                                                                                                                                                |
+| [**Language manager**](https://github.com/Usbac/wolff/wiki/Language)            | For managing multiple languages easily and quickly.                                                                                                                                                                                                                                |
 | [**Middleware system**](https://github.com/Usbac/wolff/wiki/Middleware)        | Which gives you more control over your requests/responses.                                                                                                                                                                                                                         |
 | [**Routing system**](https://github.com/Usbac/wolff/wiki/Routes)               | Have clean URLs, make redirections and block certain pages recursively.                                                                                                                                                                                                            |
-| [**Standard library**](https://github.com/Usbac/wolff/wiki/Standard-library)   | With numerous incredible functions related to strings, numbers, debugging and arrays.                                                                                                                                                                                              |
+| [**Standard library**](https://github.com/Usbac/wolff/wiki/Standard-library)   | With numerous incredible functions related to strings, numbers, arrays and debugging.                                                                                                                                                                                              |
 | [**Template engine**](https://github.com/Usbac/wolff/wiki/Template)            | Which you can use to write cleaner and safer code in your views while avoiding things like the php tags.                                                                                                                                                                           |
-| **Multiple utilities**                                                         | Including a [authentication](https://github.com/Usbac/wolff/wiki/Authentication), [pagination](https://github.com/Usbac/wolff/wiki/Pagination), [uploader](https://github.com/Usbac/wolff/wiki/Uploader) and [validation](https://github.com/Usbac/wolff/wiki/Validation) utility. |
+| **Multiple utilities**                                                         | Including a [authentication](https://github.com/Usbac/wolff/wiki/Authentication), [pagination](https://github.com/Usbac/wolff/wiki/Pagination) and [validation](https://github.com/Usbac/wolff/wiki/Validation) utility. |
 
 And more...
-
 
 ## Requirements
 
 * PHP version 7.0 or higher
 
 * Composer
-
 
 ## Install
 
@@ -90,20 +81,11 @@ _Running the command with high privileges is required since some files will be c
 
 First time using it? Read the [Wiki](https://github.com/Usbac/Wolff/wiki).
 
-### Want to...
-
-Create a route/page? Read the [Route page](https://github.com/Usbac/wolff/wiki/Routes).
-
-Use the database or run queries? Read the [DB Page](https://github.com/Usbac/wolff/wiki/Database).
-
-Use the container? Read the [Container Page](https://github.com/Usbac/wolff/wiki/Container).
-
 ## Contributing
 
 Any contribution or support to this project in the form of a pull request or message will be highly appreciated.
 
 Don't be shy :)
-
 
 ## License
 

@@ -1,6 +1,7 @@
 <?php
 
 return [
-    'title' => 'Under maintenance',
-    'msg'   => 'Come back soon'
+    'title'       => 'Wolff',
+    'maintenance' => 'Under maintenance',
+    'msg'         => 'Come back soon'
 ];

@@ -1,7 +1,15 @@
-<phpunit bootstrap="vendor/autoload.php" colors="true">
+<phpunit bootstrap="test/bootstrap.php" colors="true">
 	<testsuites>
 		<testsuite name="Wolff">
-			<directory suffix="Test.php">tests</directory>
+			<directory suffix="Test.php">test</directory>
 		</testsuite>
 	</testsuites>
+    <!-- Database tests credentials -->
+    <php>
+        <const name="DBMS" value="mysql"/>
+        <const name="SERVER" value="localhost"/>
+        <const name="DB" value="wolff_test"/>
+        <const name="USERNAME" value="root"/>
+        <const name="PASSWORD" value="root"/>
+    </php>
 </phpunit>

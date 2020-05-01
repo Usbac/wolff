@@ -1,31 +1,27 @@
 <?php
 
-define('CONFIG', [
-    //Server
-    'dbms'        => 'mysql',
-    'server'      => 'localhost',
-    'db'          => '',
-    'db_username' => '',
-    'db_password' => '',
+return [
+    //Database
+    'db' => [
+        'dbms'     => 'mysql',
+        'server'   => 'localhost',
+        'name'     => '',
+        'username' => '',
+        'password' => ''
+    ],
 
-    //Directories
-    'root_dir'   => $root = dirname(__DIR__) . '/',
-    'system_dir' => $root . 'system/',
-    'app_dir'    => $root . 'app/',
-    'cache_dir'  => $root . 'cache/',
-    'public_dir' => $root . 'public/',
+    //Environment
+    'env_file'     => 'system/.env.example',
+    'env_override' => true,
 
     //General
-    'title'     => 'Wolff',
-    'main_page' => 'main_page',
-    'language'  => 'english',
+    'language' => 'english',
 
     //Extra
-    'db_on'          => true,
     'log_on'         => true,
     'development_on' => true,
-    'middlewares_on' => true,
     'template_on'    => true,
     'cache_on'       => true,
+    'stdlib_on'      => true,
     'maintenance_on' => false
-]);
+];

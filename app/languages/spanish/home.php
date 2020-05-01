@@ -1,12 +1,12 @@
 <?php
 
 return [
-    'title'         => 'Bienvenido',
-    'description'   => 'Wolff es un framework de PHP ridiculamente pequeño.',
+    'title'         => 'Wolff',
+    'description'   => 'Desarrollo web hecho sencillamente bien.',
     'description_2' => 'Puedes empezar creando tu propia página como esta.',
 
     'documentation' => 'documentación',
-    'creators_page' => 'página del creador',
-    'github'        => 'Github',
-    'version'       => 'Vérsion ' . wolffVersion()
+    'page'          => 'página web',
+    'repo'          => 'repositorio',
+    'version'       => 'Vérsion ' . WOLFF_CONFIG['version']
 ];
