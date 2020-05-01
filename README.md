@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <img src="http://usbac.com.ve/wp-content/uploads/2019/05/wolff-logo-2.0.png" alt="Wolff logo" width="200">
+  <img src="http://getwolff.com/logo.png" alt="Wolff logo" width="200">
   <br>
   Wolff
   <br>

@@ -20,7 +20,7 @@
 
 - Add `setDateFormat` and `setFolder` methods to the `Core\Log` class.
 
-- Add `removeQuotes` methods to the `Utilities\Str` class.
+- Add `removeQuotes` method to the `Utilities\Str` class.
 
 - Add `arrayRemove`, `bytesToString`, `path` and `validateCsrf` functions to the standard library.
 

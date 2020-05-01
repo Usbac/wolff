@@ -6,7 +6,7 @@ return [
     'description_2' => 'You can start by creating your own page like this one.',
 
     'documentation' => 'documentation',
-    'creators_page' => 'creator\'s page',
-    'github'        => 'Github',
+    'page'          => 'web page',
+    'repo'          => 'repository',
     'version'       => 'Version ' . WOLFF_CONFIG['version']
 ];

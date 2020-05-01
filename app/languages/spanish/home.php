@@ -2,11 +2,11 @@
 
 return [
     'title'         => 'Wolff',
-    'description'   => 'Desarrollo web hecho simplemente bien.',
+    'description'   => 'Desarrollo web hecho sencillamente bien.',
     'description_2' => 'Puedes empezar creando tu propia página como esta.',
 
     'documentation' => 'documentación',
-    'creators_page' => 'página del creador',
-    'github'        => 'Github',
+    'page'          => 'página web',
+    'repo'          => 'repositorio',
     'version'       => 'Vérsion ' . WOLFF_CONFIG['version']
 ];

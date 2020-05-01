@@ -11,7 +11,7 @@ return [
     ],
 
     //Environment
-    'env_file'     => 'system/.env',
+    'env_file'     => 'system/.env.example',
     'env_override' => true,
 
     //General
