@@ -157,7 +157,7 @@ Array
 
 ### Var dump
 
-`dumpd()`
+`dump()`
 
 Var dump the query result.
 
