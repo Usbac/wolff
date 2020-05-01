@@ -17,7 +17,7 @@
 
 Wolff is a ridiculously small and lightweight PHP framework.
 
-It is intended for those who want to build lightweight websites without starting from scratch or dealing with large frameworks.
+It is intended for those who want to build ultralight web applications, without starting from scratch or dealing with complexity.
 
 Wolff is small, fast, scalable and easy. The perfect solution for building small and medium-sized web applications.
 
@@ -25,23 +25,23 @@ Wolff is small, fast, scalable and easy. The perfect solution for building small
 
 ## Features
 
-* **Extremely easy**: It's quite simple to use and has a clean documentation. It gives you the opportunity to learn it in just one night (sleep included).
+* **Extremely easy**: It's simple to use and has a clean documentation and interface. It gives you the opportunity to learn it in just a single night (sleep included).
 
-* **Ridiculously fast**: If a resource is not used, it's not loaded. Even some of the elements of the framework can be disabled. Wolff is friendly with potato servers.
+* **Ridiculously fast**: If a resource is not used, it's not loaded. Some elements of the framework can even be disabled. Wolff is very friendly with potato servers and works seamlessly.
 
-* **Comprenhensive**: Wolff elements cover everything you may need for building a web app. No initial setup is required, they are safe and ready to be used.
+* **Comprenhensive**: Wolff has elements that cover everything you may ever need for building a web app. Absolutely no initial setup is required. They are ready to use.
 
 ## What's included
 | Element                                                                        | Description                                                                                                                                                                                                                                                                        |
 |--------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | [**Database abstraction layer**](https://github.com/Usbac/wolff/wiki/Database) | Which simplifies the process of running queries and includes useful functions.                                                                                                                                                                                                     |
 | [**DI Container**](https://github.com/Usbac/wolff/wiki/Container)              | For managing class dependencies and performing DI.                                                                                                                                                                                                                                 |
-| [**Language system**](https://github.com/Usbac/wolff/wiki/Language)            | For managing multiple languages easily and quickly.                                                                                                                                                                                                                                |
+| [**Language manager**](https://github.com/Usbac/wolff/wiki/Language)            | For managing multiple languages easily and quickly.                                                                                                                                                                                                                                |
 | [**Middleware system**](https://github.com/Usbac/wolff/wiki/Middleware)        | Which gives you more control over your requests/responses.                                                                                                                                                                                                                         |
 | [**Routing system**](https://github.com/Usbac/wolff/wiki/Routes)               | Have clean URLs, make redirections and block certain pages recursively.                                                                                                                                                                                                            |
 | [**Standard library**](https://github.com/Usbac/wolff/wiki/Standard-library)   | With numerous incredible functions related to strings, numbers, arrays and debugging.                                                                                                                                                                                              |
 | [**Template engine**](https://github.com/Usbac/wolff/wiki/Template)            | Which you can use to write cleaner and safer code in your views while avoiding things like the php tags.                                                                                                                                                                           |
-| **Multiple utilities**                                                         | Including a [authentication](https://github.com/Usbac/wolff/wiki/Authentication), [pagination](https://github.com/Usbac/wolff/wiki/Pagination), [uploader](https://github.com/Usbac/wolff/wiki/Uploader) and [validation](https://github.com/Usbac/wolff/wiki/Validation) utility. |
+| **Multiple utilities**                                                         | Including a [authentication](https://github.com/Usbac/wolff/wiki/Authentication), [pagination](https://github.com/Usbac/wolff/wiki/Pagination) and [validation](https://github.com/Usbac/wolff/wiki/Validation) utility. |
 
 And more...
 
@@ -86,7 +86,6 @@ First time using it? Read the [Wiki](https://github.com/Usbac/Wolff/wiki).
 Any contribution or support to this project in the form of a pull request or message will be highly appreciated.
 
 Don't be shy :)
-
 
 ## License
 
