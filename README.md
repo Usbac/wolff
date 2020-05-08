@@ -11,7 +11,7 @@
 <p align="center">
 <img src="https://img.shields.io/badge/stability-stable-green.svg">
 <a href="https://packagist.org/packages/usbac/wolff"><img src="https://poser.pugx.org/usbac/wolff/d/total.svg"></a>
-<img src="https://img.shields.io/badge/version-3.0.0-blue.svg">
+<img src="https://img.shields.io/badge/version-3.0.1-blue.svg">
 <img src="https://img.shields.io/badge/license-MIT-orange.svg">
 </p>
 
@@ -83,7 +83,7 @@ First time using it? Read the [Wiki](https://github.com/Usbac/Wolff/wiki).
 
 ## Contributing
 
-Any contribution or support to this project in the form of a pull request or message will be highly appreciated.
+Any contribution or support to this project in the form of a pull request or message will be highly appreciated. ❤️
 
 Don't be shy :)
 

@@ -1,5 +1,11 @@
 # Release Notes
 
+## v3.0.1 (2020-05-08)
+
+### Fixed
+
+- Add multibyte string support for most methods of the `Wolff\Utils\Str` class. 
+
 ## v3.0.0 (2020-05-01)
 
 ### Added
