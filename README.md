@@ -1,5 +1,4 @@
 <h1 align="center">
-  <br>
   <img src="http://getwolff.com/logo.png" alt="Wolff logo" width="200">
   <br>
   Wolff
