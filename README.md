@@ -31,18 +31,20 @@ Wolff is small, fast, scalable and easy. The perfect solution for building small
 * **Comprenhensive**: Wolff has elements that cover everything you may ever need for building a web app. Absolutely no initial setup is required. They are ready to use.
 
 ## What's included
-| Element                                                                        | Description                                                                                                                                                                                                                                                                        |
-|--------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [**Database abstraction layer**](https://github.com/Usbac/wolff/wiki/Database) | Which simplifies the process of running queries and includes useful functions.                                                                                                                                                                                                     |
-| [**DI Container**](https://github.com/Usbac/wolff/wiki/Container)              | For managing class dependencies and performing DI.                                                                                                                                                                                                                                 |
-| [**Language manager**](https://github.com/Usbac/wolff/wiki/Language)            | For managing multiple languages easily and quickly.                                                                                                                                                                                                                                |
-| [**Middleware system**](https://github.com/Usbac/wolff/wiki/Middleware)        | Which gives you more control over your requests/responses.                                                                                                                                                                                                                         |
-| [**Routing system**](https://github.com/Usbac/wolff/wiki/Routes)               | Have clean URLs, make redirections and block certain pages recursively.                                                                                                                                                                                                            |
-| [**Standard library**](https://github.com/Usbac/wolff/wiki/Standard-library)   | With numerous incredible functions related to strings, numbers, arrays and debugging.                                                                                                                                                                                              |
-| [**Template engine**](https://github.com/Usbac/wolff/wiki/Template)            | Which you can use to write cleaner and safer code in your views while avoiding things like the php tags.                                                                                                                                                                           |
-| **Multiple utilities**                                                         | Including a [authentication](https://github.com/Usbac/wolff/wiki/Authentication), [pagination](https://github.com/Usbac/wolff/wiki/Pagination) and [validation](https://github.com/Usbac/wolff/wiki/Validation) utility. |
 
-And more...
+* [**Database abstraction layer**](https://github.com/Usbac/wolff/wiki/Database)
+
+* [**DI Container**](https://github.com/Usbac/wolff/wiki/Container)
+
+* [**Language manager**](https://github.com/Usbac/wolff/wiki/Language)
+
+* [**Routing system**](https://github.com/Usbac/wolff/wiki/Routes)
+
+* [**Standard library**](https://github.com/Usbac/wolff/wiki/Standard-library)
+
+* [**Template engine**](https://github.com/Usbac/wolff/wiki/Template)
+
+And **much** more...
 
 ## Requirements
 
@@ -84,7 +86,7 @@ First time using it? Read the [Wiki](https://github.com/Usbac/Wolff/wiki).
 
 Any contribution or support to this project in the form of a pull request or message will be highly appreciated. ❤️
 
-Don't be shy :)
+You can read more about it [right here](CONTRIBUTING.md). Don't be shy :)
 
 ## License
 
