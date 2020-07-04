@@ -78,7 +78,7 @@ $validation->setData($data);
 $validation->setFields($fields);
 ```
 
-In that case the `isValid` method will return true only if the name has a minimum length of 10 characters and contains only letters, and the age has a minimum value of 18 and is of type int, meaning that a string containing: `18` isn't valid.
+In that case the `isValid` method will return `true` only if the name has a minimum length of 10 characters and contains only letters, and the age has a minimum value of 18 and is of type int, meaning that a string containing: `18` isn't valid.
 
 ## General Methods
 

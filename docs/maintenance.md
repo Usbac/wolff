@@ -20,7 +20,7 @@ Maintenance::isEnabled();
 
 `setStatus([bool $enabled])`
 
-Sets the status of the maintenance mode. True to enable it, false to disable it.
+Sets the status of the maintenance mode. `true` to enable it, `false` to disable it.
 
 ```php
 Maintenance::setStatus(true);
@@ -80,7 +80,7 @@ Deletes the given IP address from the white list:
 Maintenance::removeAllowedIP('127.0.0.1');
 ```
 
-This method returns true if the IP has been removed or doesn't exists in the whitelist, false otherwise.
+This method returns `true` if the IP has been removed or doesn't exists in the whitelist, `false` otherwise.
 
 ### Get IP list
 
@@ -98,7 +98,7 @@ _This will return the IP list as a non-associative array._
 
 `hasAccess()`
 
-Returns true if the current client IP address has access under maintenance mode and the maintenance mode is enabled, false otherwise.
+Returns `true` if the current client IP address has access under maintenance mode and the maintenance mode is enabled, `false` otherwise.
 
 ```php
 Maintenance::hasAccess();

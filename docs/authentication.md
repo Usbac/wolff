@@ -16,9 +16,9 @@ If no data array is passed, it will use the credentials defined in the `system/c
 
 ```php
 $credentials = [
-    'dbms'   => 'mysql',
-    'server' => 'localhost',
-    'name'   => 'wolff',
+    'dbms'     => 'mysql',
+    'server'   => 'localhost',
+    'name'     => 'wolff',
     'username' => 'root',
     'password' => '12345'
 ];
@@ -63,7 +63,7 @@ Take in consideration the following points:
 
 `login(array $data)`
 
-Returns true if the given user data exists in the database and is valid, false otherwise.
+Returns `true` if the given user data exists in the database and is valid, `false` otherwise.
 
 This method takes as parameter an array which will be the user data to validate. The only required key that the array must have is `password`.
 

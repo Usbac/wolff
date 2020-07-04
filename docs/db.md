@@ -18,9 +18,9 @@ $db = new Wolff\Core\DB();
 
 ```php
 $credentials = [
-    'dbms'   => 'mysql',
-    'server' => 'localhost',
-    'name'   => 'wolff',
+    'dbms'     => 'mysql',
+    'server'   => 'localhost',
+    'name'     => 'wolff',
     'username' => 'root',
     'password' => '12345'
 ];
@@ -29,6 +29,19 @@ $db = new Wolff\Core\DB($credentials);
 ```
 
 Both examples are right.
+
+You can also define the connection port with the `port` key, as shown below:
+
+```php
+$credentials = [
+    'dbms'     => 'mysql',
+    'server'   => 'localhost',
+    'name'     => 'wolff',
+    'port'     => '3306',
+    'username' => 'root',
+    'password' => '12345'
+];
+```
 
 ## Running queries
 
@@ -253,7 +266,7 @@ $db->runLastSql();
 
 `tableExists(string $table)`
 
-Returns true if the specified table exists, false otherwise.
+Returns `true` if the specified table exists, `false` otherwise.
 
 ```php
 $db->tableExists('users');
@@ -263,7 +276,7 @@ $db->tableExists('users');
 
 `columnExists(string $table, string $column)`
 
-Returns true if the specified table and column exists, false otherwise.
+Returns `true` if the specified table and column exists, `false` otherwise.
 
 ```php
 $db->columnExists('users', 'user_id');

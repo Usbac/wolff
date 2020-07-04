@@ -110,7 +110,7 @@ Session::get('name');
 
 `has(string $key)`
 
-Returns `true` if a session variable exists, false otherwise.
+Returns `true` if a session variable exists, `false` otherwise.
 
 ```php
 Session::has('name');

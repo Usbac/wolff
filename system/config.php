@@ -5,7 +5,8 @@ return [
     'db' => [
         'dbms'     => 'mysql',
         'server'   => 'localhost',
-        'name'     => '',
+        'name'     => 'wolff',
+        'port'     => '',
         'username' => '',
         'password' => ''
     ],

@@ -76,4 +76,4 @@ Returns `true` if the given view file exists, `false` otherwise.
 View::exists('home');
 ```
 
-That will return true only if the `app/views/home.wlf` file exists, false otherwise.
+That will return `true` only if the `app/views/home.wlf` file exists, `false` otherwise.

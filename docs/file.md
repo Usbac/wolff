@@ -22,7 +22,7 @@ The array can have the following keys:
 
 * **max_size**: The maximum file size allowed (in KB).
 
-* **override**: True for overriding files with the same path in the upload process, false for not overriding them.
+* **override**: `true` for overriding files with the same path in the upload process, `false` for not overriding them.
 
 ```php
 $options = [

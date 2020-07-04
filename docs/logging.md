@@ -72,7 +72,7 @@ If the log system is disabled, nothing will happen when running the common log m
 
 `setStatus([bool $enabled])`
 
-Sets the status of the logging system. True to enable it, false to disable it.
+Sets the status of the logging system. `true` to enable it, `false` to disable it.
 
 ```php
 Log::setStatus(true);

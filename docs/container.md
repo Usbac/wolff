@@ -82,10 +82,10 @@ $user = new \App\User('John doe', 22);
 
 `has(string $key)`
 
-Returns true if the given class name exists, false otherwise.
+Returns `true` if the given class name exists, `false` otherwise.
 
 ```php
 Container::has('user');
 ```
 
-That will return true only if the `user` class has been added to the container.
+That will return `true` only if the `user` class has been added to the container.

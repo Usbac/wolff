@@ -190,13 +190,13 @@ The Route class has some useful methods that you can use.
 
 `exists(string $url)`
 
-Returns true if a view exists, false otherwise.
+Returns `true` if a view exists, `false` otherwise.
 
 ```php
 Route::exists('home');
 ```
 
-That will return true if the home route exists
+That will return `true` if the home route exists
 
 ### Get routes
 

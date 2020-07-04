@@ -1,6 +1,4 @@
-Beside the custom libraries you can use and create in Wolff, there’s the standard library with some useful common functions.
-
-These functions are accessible from anywhere inside Wolff just like the native PHP functions.
+The standard library is a set of multiple functions that are accessible from anywhere inside Wolff just like the native PHP functions.
 
 The standard library can be disabled, meaning that its functions won't be available in the global namespace and won't collide with other functions of the same name. To disable it, set to `false` the `stdlib_on` key in the config array of the `system/config.php` file.
 

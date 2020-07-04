@@ -12,27 +12,29 @@ The config file has the following definitions/keys inside an array that is being
 
     * **name**: the database name.
 
+    * **port**: the connection port (this key is optional).
+
     * **username**: the database username.
 
     * **password**: the database username password.
 
 * **env_file**: The path of the .env file, by default it's `.env`.
 
-* **env_override**: If true the environment variables will override the config data in the `Wolff\Core\Config` class and the `config` function helper. (The environment keys are converted to lowercase in the override proccess).
+* **env_override**: If `true` the environment variables will override the config data in the `Wolff\Core\Config` class and the `config` function helper. (The environment keys are converted to lowercase in the override proccess).
 
 * **language**: the site's main language.
 
-* **log_on**: the log status, true for enabling the use of the log system, false for disabling it.
+* **log_on**: the log status, `true` for enabling the use of the log system, `false` for disabling it.
 
-* **development_on**: the development status, true if the project is in an development environment, false otherwise (in a development environment all the errors will be displayed).
+* **development_on**: the development status, `true` if the project is in an development environment, `false` otherwise (in a development environment all the errors will be displayed).
 
-* **template_on**: the template system status, true for enabling the template in the views, false for disable it.
+* **template_on**: the template system status, `true` for enabling the template in the views, `false` for disable it.
 
-* **cache_on**: the cache status, true for enabling the use of cache, false for disable it.
+* **cache_on**: the cache status, `true` for enabling the use of cache, `false` for disable it.
 
-* **stdlib_on**: the standard library status, true for enabling its functions in the global namespace, false for disable them.
+* **stdlib_on**: the standard library status, `true` for enabling its functions in the global namespace, `false` for disable them.
 
-* **maintenance_on**: the maintenance mode status, true for putting the page in maintenance, false for not.
+* **maintenance_on**: the maintenance mode status, `true` for putting the page in maintenance,` false` for not.
 
 ## Environment
 
@@ -40,7 +42,7 @@ The data of the environment file (defined in the `system/config.php` file) can b
 
 * The `getenv` function.
 * `$_ENV` superglobal array.
-* The `Wolff\Core\Config` array (only if the `env_override` is set to true in the `system/config.php` file).
+* The `Wolff\Core\Config` array (only if the `env_override` is set to `true` in the `system/config.php` file).
 * The `config` function of the standard library.
 
 ## Config class
@@ -53,7 +55,7 @@ The `Wolff\Core\Config` class has the `get` method which can be used to get the 
 Wolff\Core\Config::get('title');
 ```
 
-It returns the config or environment value of the given key (depending if the `env_override` is set to true or not).
+It returns the config or environment value of the given key (depending if the `env_override` is set to` true` or not).
 
 ### Example
 

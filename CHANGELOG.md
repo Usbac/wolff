@@ -1,5 +1,19 @@
 # Release Notes
 
+## v3.1.0 (2020-07-04)
+
+### Added 
+
+- Added `port` option to the database constructor.
+
+### Fixed 
+
+- Fixed bug related to fast queries conditions.
+
+### Changed
+
+- Removed default database encoding.
+
 ## v3.0.1 (2020-05-08)
 
 ### Fixed

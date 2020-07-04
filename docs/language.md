@@ -64,13 +64,13 @@ If the language file or the key don't exist it will return `null`.
 
 `exists(string $dir[, string $language])`
 
-Returns true if the given language file exists, false otherwise.
+Returns `true` if the given language file exists, `false` otherwise.
 
 ```php
 Language::exists('home');
 ```
 
-If the system language is set to english that will return true if the english language of home exists, false otherwise.
+If the system language is set to english that will return `true` if the english language of home exists, `false` otherwise.
 
 But you can specify a language using the second parameter.
 

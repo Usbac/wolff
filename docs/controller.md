@@ -75,13 +75,13 @@ That will call the `getClientById` method of the `client` controller using the t
 
 `exists(string $path)`
 
-Returns true if the specified controller exists, false otherwise.
+Returns `true` if the specified controller exists, `false` otherwise.
 
 ```php
 Controller::exists('home');
 ```
 
-That will return true only if the `app/controllers/home.php` controller exists, false otherwise.
+That will return `true` only if the `app/controllers/home.php` controller exists, `false` otherwise.
 
 ### Has method
 
@@ -95,4 +95,4 @@ The first parameter must be the controller name. The second parameter must be th
 Controller::hasMethod('places/info', 'getInfoById');
 ```
 
-That will return true only if the `places/info` controller class has a `getInfoById` method.
+That will return `true` only if the `places/info` controller class has a `getInfoById` method.
