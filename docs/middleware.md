@@ -1,4 +1,4 @@
-### `Wolff\Core\Middleware`
+`Wolff\Core\Middleware`
 
 The middleware system of Wolff is simple and quite useful. Its routing system works just like the route system.
 
