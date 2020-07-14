@@ -1,6 +1,6 @@
-The standard library is a set of multiple functions that are accessible from anywhere inside Wolff just like the native PHP functions.
+The standard library is a set of multiple functions that are accessible from anywhere inside Wolff and can be called like native PHP functions.
 
-The standard library can be disabled, meaning that its functions won't be available in the global namespace and won't collide with other functions of the same name. To disable it, set to `false` the `stdlib_on` key in the config array of the `system/config.php` file.
+The standard library can be disabled, meaning that its functions won't be available in the global namespace. To disable it, set to `false` the `stdlib_on` key in the configuration array of the `system/config.php` file.
 
 ## General
 
@@ -417,12 +417,12 @@ namespace {
 
 2. Add all the functions you want.
 
-3. After that add the following line to your composer.json file inside the autoload > files array
+3. Add the following line to your composer.json file inside the autoload > files array
 
 ```
 "system/yourfilename.php",
 ```
 
-4. Remember to run `composer dump-autoload` for the changes to take effect.
+And you are done, now your functions should be available inside all of your Wolff project.
 
-And you are done, now your functions are available inside all your Wolff project.
+_Remember to run `composer dump-autoload` for the changes to take effect._

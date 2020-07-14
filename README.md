@@ -80,7 +80,7 @@ _Running the command with high privileges is required since some files will be c
 
 ## Documentation
 
-First time using it? Read the [Wiki](https://github.com/Usbac/Wolff/wiki).
+First time using it? Read the [Wiki](https://getwolff.com/doc/3.x/home).
 
 ## Contributing
 

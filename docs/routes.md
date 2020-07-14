@@ -8,9 +8,9 @@ In the `system/web.php` file you can define routes, its parameters and what to d
 
 `any(string $url, $function[, int $status])`
 
-The `any` method let's you add a route that will work in any http method.
+The `any` method let's you add a route that will work for every HTTP method.
 
-The first parameter is the desired route, the second is the function that will be executed when accessing to the route, the third optional parameter is the HTTP code.
+The first parameter is the desired route, the second is the function that will be executed when accessing to the route, the third and optional parameter is the HTTP code.
 
 The function parameter must take two parameters which are the request and response object (instance of `Wolff\Core\Http\Request` and `Wolff\Core\Http\Response`).
 
@@ -32,7 +32,7 @@ It will display 'hello' when accessing to `example.com/main_page`.
 
 ### Routes methods
 
-You can add routes that will work only for a specific http method.
+You can add routes that will work only for a specific HTTP method.
 
 ```php
 Route::get($uri, $function, $method = 200);
@@ -70,7 +70,7 @@ Route::view('blog/list', 'blog', [], false);
 
 ### Specifying content-type
 
-You can specify the content type of the route using one of the following prefixes: `csv:`, `json:`, `pdf:`, `plain:` and `xml:`.
+You can specify the content type header of the route by using one of the following prefixes: `csv:`, `json:`, `pdf:`, `plain:` and `xml:`.
 
 Example:
 
@@ -86,9 +86,9 @@ That will set the content-type of the route to `application/json`.
 
 `code(int $code, $function)`
 
-You can define routes that will be executed based on an HTTP status code using the `code` method.
+You can define routes that will be executed based on an HTTP status code by using the `code` method.
 
-The function parameter must take two parameters which are the request object and the response object (instance of `Wolff\Core\Http\Request` and `Wolff\Core\Http\Response`).
+The function parameter must take two parameters which are the request and response objects (instance of `Wolff\Core\Http\Request` and `Wolff\Core\Http\Response`).
 
 ```php
 Route::code(404, function($req, $res) {
@@ -112,9 +112,9 @@ It will load the index method of home controller when accessing to `example.com/
 
 ## Route parameters
 
-You can use get parameters in the URL
+You can use get parameters in the URL.
 
-The following block of code
+The following block of code:
 
 ```php
 Route::get('main_page/{name}', function($req, $res) {
@@ -128,9 +128,9 @@ Parameters should be put between brackets and only be alphanumeric characters.
 
 ### Optional parameters
 
-You can also use optional get parameters in the URL
+You can also use optional get parameters in the URL.
 
-The following block of code
+The following block of code:
 
 ```php
 Route::get('main_page/{name?}', function($req, $res) {
@@ -174,13 +174,13 @@ You can redirect one route to another. When doing it, a 301 HTTP response code w
 Route::redirect('page1', 'page2');
 ```
 
-With this the route of page1 will redirect to page2, you can specify an HTTP response code if you want.
+With the above example the route page1 will redirect to page2, you can specify an HTTP response code if you want.
 
 ```php
 Route::redirect('page1', 'page2', 200);
 ```
 
-Will do the same but returning a 200 HTTP response code.
+That will do the same but will return a 200 HTTP response code.
 
 ## General Methods
 

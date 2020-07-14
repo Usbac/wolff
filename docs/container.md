@@ -2,7 +2,9 @@
 
 Wolff includes a container which can be used to perform dependency injection on objects.
 
-This is a great and clean way of defining new classes, since it's dependencies are 'injected' into them and the instantiation only must be defined one time.
+This is a great and clean way of defining new classes, since its dependencies are 'injected' into them and the instantiation only must be defined one time.
+
+The container's methods are static, you can add and get elements anywhere inside Wolff, but it's recommended to add elements in the `system/web.php` file and get them when neccesary in your controllers.
 
 ## General methods
 

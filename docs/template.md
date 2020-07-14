@@ -1,10 +1,12 @@
 `Wolff\Core\Template`
 
-The template system of Wolff allows you to write cleaner and safer PHP code in your views, avoiding things like the PHP tags and automatically escaping all the variables.
+The template system of Wolff allows you to write cleaner and safer PHP code in your views by avoiding things like the PHP tags and automatically escaping all the output.
 
 It only works in the views and is completely optional, so you can write normal PHP code if you want to.
 
 The template system can be completely disabled if the `template_on` key in the `system/config.php` file is equal to `false`.
+
+Views can be rendered anywhere inside your Wolff project.
 
 ## Sending data to views
 
@@ -18,6 +20,7 @@ View::render('page', $data);
 ## Print
 
  Then in the view you can print the variables that are in that array using the brackets tag, this way:
+
 ```php
 {{ $message }}
 ```
@@ -44,13 +47,13 @@ All the variables in the data array are accessible from the view without needing
 
 ## Comments
 
-The template system comments have an advantage over the common comments and that is that the comments of the template system aren't included in the final HTML returned to the user.
+The template comments have an advantage over the common comments and is that the comments of the template system aren't included in the final HTML returned to the user.
 
 ```html
 {# This is a simple comment #}
 ```
 
-You can do multiline comments too.
+You can write multiline comments too:
 
 ```html
 {# This is a
@@ -121,7 +124,7 @@ In this case, that will print the `$title` variable three times.
 
 This are the available functions and their PHP equivalent:
 
-| Template    | PHP Function     | Description                                    |
+| Template    | PHP Equivalent   | Description                                    |
 | ------------|----------------- |------------------------------------------------|
 | e           | htmlspecialchars<br>strip_tags | perfect for avoiding xss         |
 | upper       | strtoupper       | all text to uppercase                          |
@@ -139,13 +142,13 @@ This are the available functions and their PHP equivalent:
 
 ## CSRF
 
-The template engine has a tag which can be used to avoid csrf.
+The template engine has a tag which can be used to avoid CSRF.
 
 ```
 @csrf
 ```
 
-Internally it creates a `__token` cookie if it doesn't exists and replaces the csrf tag with a hidden input which value is the same of the cookie.
+Internally it creates a `__token` cookie if it doesn't exists and replaces the CSRF tag with a hidden input which value is the same of the cookie.
 
 _Keep in mind that the cookie has a live time of one hour and is http only._
 
@@ -193,7 +196,7 @@ Equivalent to: `<link rel="icon" href="img.svg">`
 
 ## Escape
 
-You may want to escape the template tags, in that situation only prefix your text/tag with an `~` symbol, like this:
+For escaping the template tags, only prefix your text/tag with an hypen `~` symbol, like this:
 
 ```
 ~{{ $message }}
@@ -207,7 +210,7 @@ That will leave this in the HTML returned to the client:
 
 ## Include
 
-Instead of using the php include function. You can include other views using the `include` method.
+Instead of using the php include function. You can include other views by using the `include` method.
 
 Example:
 
@@ -301,9 +304,13 @@ Will render this:
 
 ## Extending the template
 
-You can extend the template engine and make your own tags or rules using regular expressions and the `custom` function.
+`custom($function)`
 
-The custom function takes a closure, which must take a parameter that is suposed to be the view content and finally it must return it.
+You can extend the template engine and make your own tags or rules by using the `custom` method.
+
+The method takes a closure, which must take a parameter that is suposed to be the view content and it must return it. What you do with the view content inside the function is up to you.
+
+### Example
 
 If you add the following code to the `system/web.php` file:
 

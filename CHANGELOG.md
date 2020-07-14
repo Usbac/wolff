@@ -13,6 +13,7 @@
 ### Changed
 
 - Removed default database encoding.
+
 ## v3.0.2 (2020-05-13)
 
 ### Fixed

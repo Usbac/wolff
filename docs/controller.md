@@ -8,7 +8,7 @@ The controllers are a great way to keep your code organized instead of defining 
 
 Let's create a controller, it must be in the `Controller` namespace.
 
-Any public method is supposed to be accesible through a route, and it must take two parameters which are the request object and the response object (instance of `Wolff\Core\Http\Request` and `Wolff\Core\Http\Response`).
+Any public method is supposed to be accesible through a route, and it must take two parameters which are the request and response objects (instance of `Wolff\Core\Http\Request` and `Wolff\Core\Http\Response`).
 
 The `index` method will be called by default when no method name is given.
 
