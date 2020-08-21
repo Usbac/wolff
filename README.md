@@ -14,21 +14,19 @@
 <img src="https://img.shields.io/badge/license-MIT-orange.svg">
 </p>
 
-Wolff is a ridiculously small and lightweight PHP framework.
+Wolff is a ridiculously small and lightweight PHP framework, intended for those who want to build web applications without starting from scratch or dealing with complexity. 
 
-It is intended for those who want to build ultralight web applications, without starting from scratch or dealing with complexity.
-
-Wolff is small, fast, scalable and easy. The perfect solution for building small and medium-sized web applications.
+Wolff is the perfect solution for building small and medium-sized web applications.
 
 > **Note:** The core code of the framework is available at [Wolff-framework](https://github.com/usbac/wolff-framework).
 
 ## Features
 
-* **Extremely easy**: It's simple to use and has a clean documentation and interface. It gives you the opportunity to learn it in just a single night (sleep included).
+📓 **Extremely easy**: It's simple to use and has a clean documentation and interface. It gives you the opportunity to learn it in just a single night (sleep included).
 
-* **Ridiculously fast**: If a resource is not used, it's not loaded. Some elements of the framework can even be disabled. Wolff is very friendly with potato servers and works seamlessly.
+🚀 **Ridiculously fast**: If a resource is not used, it's not loaded. Some elements of the framework can even be disabled. Wolff is very friendly with potato servers and works seamlessly.
 
-* **Comprenhensive**: Wolff has elements that cover everything you may ever need for building a web app. Absolutely no initial setup is required. They are ready to use.
+🛠️ **Comprenhensive**: Wolff has elements that cover everything you may ever need for building a web app. Absolutely no initial setup is required. They are ready to use.
 
 ## What's included
 
@@ -54,23 +52,45 @@ And **much** more...
 
 ## Install
 
-You must have [composer](https://getcomposer.org/) in your system for installing Wolff, once you have it.
+[Composer](https://getcomposer.org/) is required for installing Wolff, once you got it...
 
-Open your favorite terminal, move to the folder where you want Wolff to be installed and run the following command:
+Run the following command in the folder where you want Wolff to be installed:
 
 ```
 composer create-project usbac/wolff
 ```
 
-This will download the whole project with everything ready to run (including an example page)!
+This will download the whole project with everything ready to run.
 
 You can see more information about the installation process in the [Wiki - install](https://github.com/Usbac/Wolff/wiki/Installation) page.
 
+_You can also download the last bundle [here](https://github.com/Usbac/wolff/releases/download/v3.1.0/wolff-bundle.zip)._
+
+## Example
+
+app/controllers/home.php:
+```php
+‹?php
+
+namespace Controller;
+
+use Wolff\Core\{Language, View};
+
+class Home
+{
+    public function index($req, $res)
+    {
+        $data = Language::get('home');    
+        View::render('home', $data);
+    }
+}
+```
+
 ## Testing
 
-First you must have [PHPUnit](https://phpunit.de) installed, once you have it.
+[PHPUnit](https://phpunit.de) is required for the tests, once you got it.
 
-Open your favorite terminal, move to your wolff project location and run the following command with high privileges (sudo):
+Run the following command with high privileges (sudo) in your wolff project folder:
 
 ```
 vendor/bin/phpunit
@@ -80,13 +100,13 @@ _Running the command with high privileges is required since some files will be c
 
 ## Documentation
 
-First time using it? Read the [Wiki](https://github.com/Usbac/Wolff/wiki).
+First time using it? Read the [Documentation](https://getwolff.com/doc/3.x/home).
 
 ## Contributing
 
 Any contribution or support to this project in the form of a pull request or message will be highly appreciated. ❤️
 
-You can read more about it [right here](CONTRIBUTING.md). Don't be shy :)
+You can read more about the contribution process [right here](CONTRIBUTING.md). Don't be shy :)
 
 ## License
 

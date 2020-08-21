@@ -2,6 +2,8 @@
 
 You can know what's happening in your Wolff project using the Logging class.
 
+The methods of the Logging class can be called anywhere inside your Wolff project.
+
 ## Files
 
 The logging files are located by default in the `system/logs` folder.
@@ -22,7 +24,7 @@ Logging a simple information:
 Log::info('Welcome to Wolff.');
 ```
 
-Obviously there are different levels for the messages, these are the available:
+There are different levels for the messages, these are the available:
 
 | Levels      |
 | ------------|

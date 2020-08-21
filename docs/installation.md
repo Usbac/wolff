@@ -39,3 +39,9 @@ Another alternative is using the PHP build-in web server, move to your `wolff` f
 `sudo php -S localhost:80 -t public`
 
 Now accessing `localhost` should show you the Wolff welcome page.
+
+## Additional configuration
+
+If you are in a production environment, be sure to set the correct file permissions inside your Wolff project.
+
+The recommended permissions are 0755 for folders and 0655 for PHP source files. For your safety, PHP files should be editable by the owner and readable by a group.

@@ -40,6 +40,12 @@ For running a Wolff project you can use either an Apache server or the common PH
 
 One objective of Wolff is to avoid things like dependency hell or external libraries, the last is not strictly bad, it's just a decision of keeping all of the core functionality in one single module easy to modify, that's why the only dependency of a Wolff project is the framework itself (besides PHPUnit which is used only for the tests). 
 
+**What are the recommended permissions for Wolff?**
+
+The recommended permissions are 0755 for folders and 0655 for PHP source files. For your safety, PHP files should be editable by the owner and readable by a group.
+
+Avoid at any cost complete permissions (0777) in a production environment.
+
 **What template engine is included with the framework?**
 
 Wolff includes its own template engine, it has no name so it can be refered to as `Wolff template`.
