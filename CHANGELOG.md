@@ -1,5 +1,13 @@
 # Release Notes
 
+## v3.2.0 (2020-08-21)
+
+### Added
+
+- Added support for view files with `php` and `html` extensions.
+
+- Added `relativePath` function to the standard library.
+
 ## v3.1.0 (2020-07-04)
 
 ### Added 

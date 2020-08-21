@@ -17,6 +17,19 @@ path('app/controllers');
 
 If the wolff project is located at `/var/www/html/wolff`, it will return `/var/www/html/wolff/app/controllers`.
 
+### Relative path
+
+`relativePath([string $path])`
+
+Returns the given absolute path converted to a relative path.
+The returned path is relative to the project root folder.
+
+```php
+relativePath('/home/usbac/Documents/wolff/app/controllers');
+```
+
+If the wolff project is located at `/home/usbac/Documents/wolff`, it will return `app/controllers`.
+
 ### Is associative
 
 `isAssoc(array $arr)`

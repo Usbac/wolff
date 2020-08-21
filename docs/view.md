@@ -4,6 +4,8 @@ The Wolff view class is the one responsible for rendering and managing views.
 
 ## General methods
 
+_Keep in mind that the below methods can take files with a `php` or `html` extension if you specify it, like in this example: `sub/home.html` or `blog/page.php`._
+
 ### Render
 
 `render(string $dir[, array $data[, bool $cache]])`
