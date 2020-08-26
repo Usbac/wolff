@@ -13,7 +13,7 @@ class MaintenanceTest extends TestCase
     const FILE = '../system/testing_maintenance_whitelist.txt';
 
 
-    public function setUp():void
+    public function setUp(): void
     {
         $_SERVER['HTTP_CLIENT_IP'] = self::ALLOWED_IP;
 
@@ -40,7 +40,7 @@ class MaintenanceTest extends TestCase
     }
 
 
-    public function tearDown():void
+    public function tearDown(): void
     {
         unlink(self::FILE);
         unset($_SERVER['HTTP_CLIENT_IP']);

@@ -8,7 +8,7 @@ use Wolff\Core\Middleware;
 class MiddlewareTest extends TestCase
 {
 
-    public function setUp():void
+    public function setUp(): void
     {
         Middleware::before('user/panel', function ($req, $next) {
             $next();

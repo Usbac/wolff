@@ -16,7 +16,7 @@ class LogTest extends TestCase
     private $expected_content;
 
 
-    public function setUp():void
+    public function setUp(): void
     {
         Log::setFolder(self::FOLDER);
         Log::setDateFormat(self::DATE_FORMAT);
@@ -40,7 +40,7 @@ class LogTest extends TestCase
     }
 
 
-    public function tearDown():void
+    public function tearDown(): void
     {
         unlink($this->file_path);
         rmdir('../' . self::FOLDER);

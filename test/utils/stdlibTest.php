@@ -14,7 +14,7 @@ class StdlibTest extends TestCase
     }';
 
 
-    public function setUp():void
+    public function setUp(): void
     {
         require dirname(__DIR__, 2) . '/vendor/usbac/wolff-framework/src/stdlib.php';
     }

@@ -55,7 +55,7 @@ class ControllerTest extends TestCase
     }
 
 
-    public function tearDown():void
+    public function tearDown(): void
     {
         unlink(self::CONTROLLER_PATH);
     }

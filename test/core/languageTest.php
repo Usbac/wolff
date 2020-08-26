@@ -17,7 +17,7 @@ class LanguageTest extends TestCase
         ];";
 
 
-    public function setUp():void
+    public function setUp(): void
     {
         if (!file_exists(self::FOLDER)) {
             mkdir(self::FOLDER);
@@ -48,7 +48,7 @@ class LanguageTest extends TestCase
     }
 
 
-    public function tearDown():void
+    public function tearDown(): void
     {
         unlink(self::FILE);
         rmdir(self::FOLDER);
