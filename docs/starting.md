@@ -1,10 +1,29 @@
-Supposing that you have installed Wolff, it's time to create your first own page.
 
-That's why there are some useful examples below.
+Once you're done with the Wolff installation, you should have a `wolff` folder, move that folder to your server root (which commonly is `var/www/html` or `C:\xampp\htdocs`).
 
-_Warning: These examples only show how to use the basic components of Wolff, they are NOT supposed to be use as a reference for production code._
+After that, start your local server and go to the link: `localhost/wolff`. You should be able to see the Wolff welcome page :).
 
-## Simple insertion
+### PHP build in server
+
+Another alternative is using the PHP build-in web server, move to your `wolff` folder and run:
+
+`sudo php -S localhost:80 -t public`
+
+Now accessing `localhost` should show you the Wolff welcome page.
+
+## Additional configuration
+
+If you are in a production environment, be sure to set the correct file permissions inside your Wolff project.
+
+The recommended permissions are 0755 for folders and 0655 for PHP source files. For your safety, PHP files should be editable by the owner and readable by a group.
+
+## Examples
+
+It's time to create your first own page. That's why there are some useful examples below.
+
+_Warning: These examples only show how to use the basic components of Wolff, they are NOT supposed to be used as a reference for production code._
+
+### Simple insertion
 
 This example shows a page (available at `localhost/form`) with a simple form that inserts data into the database. Here we will use the controller, language, database and view utilites.
 
@@ -71,7 +90,7 @@ app/views/form.wlf:
 </html>
 ```
 
-## Safer insertion
+### Safer insertion
 
 You can replace the code of the `submit` method in the controller with the following code, which uses the Wolff validation utility.
 

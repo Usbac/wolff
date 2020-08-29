@@ -1,16 +1,14 @@
 ## Prerequisites
 
-Wolff works with composer. In order to use it for the first time you must have Composer installed in your machine.
+Wolff works with composer. In order to use it for the first time you must have Composer installed in your machine, or you can download one of the bundles.
 
 You can see how to install Composer in the [official page](https://getcomposer.org/doc/00-intro.md).
 
-## Starting
-
-Once you have installed Composer, there are two ways to install Wolff:
+## Installation
 
 ### 1.- Clone/Download
 
-Clone or download the Wolff repository, then open your terminal, move to your Wolff folder and run the following command:
+Clone/download the Wolff repository and run the following command in your Wolff folder:
 
 `composer install`
 
@@ -26,22 +24,8 @@ This will download the whole project with everything required to run.
 
 _If you have any problem during the installation, just remember to clear the Composer cache using: `composer clear-cache`._
 
-## Welcome page
+### 3.- Bundle
 
-Once you're done with the Wolff installation, you should have a `wolff` folder, move that folder to your server root (which commonly is `var/www/html` or `C:\xampp\htdocs`).
+You can download the bundles ready to be used which don't require composer.
 
-After that, start your localhost server and go to the link: `localhost/wolff`. You should be able to see the Wolff welcome page :).
-
-### PHP build in server
-
-Another alternative is using the PHP build-in web server, move to your `wolff` folder and run:
-
-`sudo php -S localhost:80 -t public`
-
-Now accessing `localhost` should show you the Wolff welcome page.
-
-## Additional configuration
-
-If you are in a production environment, be sure to set the correct file permissions inside your Wolff project.
-
-The recommended permissions are 0755 for folders and 0655 for PHP source files. For your safety, PHP files should be editable by the owner and readable by a group.
+The bundles can be downloaded in the [Wolff releases page](https://github.com/Usbac/wolff/releases).

@@ -418,8 +418,8 @@ $db->count('users', 'id = ?', 1);
 
 Equivalent to:
 
-`SELECT COUNT(*) * FROM users`  
-`SELECT COUNT(*) * FROM users WHERE id = 1`.
+`SELECT COUNT(*) FROM users`  
+`SELECT COUNT(*) FROM users WHERE id = 1`.
 
 ### Delete
 
