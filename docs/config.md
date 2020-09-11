@@ -42,8 +42,12 @@ The data of the environment file (defined in the `system/config.php` file) can b
 
 * The `getenv` function.
 * `$_ENV` superglobal array.
-* The `Wolff\Core\Config` array (only if the `env_override` is set to `true` in the `system/config.php` file).
-* The `config` function of the standard library.
+* The `Wolff\Core\Config` array. *
+* The `config` function of the standard library. *
+
+\* only accesible if the `env_override` is set to `true` in the `system/config.php` file
+
+_Keep in mind that the environment key must be written in lowercase for the `config` function of the standard library and the `get` method of the `Wolff\Core\Config` class. Meaning that `$_ENV['LANGUAGE']` is equivalent to `config('language')`._
 
 ## Config class
 
@@ -55,7 +59,7 @@ The `Wolff\Core\Config` class has the `get` method which can be used to get the 
 Wolff\Core\Config::get('title');
 ```
 
-It returns the config or environment value of the given key (depending if the `env_override` is set to` true` or not).
+It returns the config or environment value of the given key (depending if the `env_override` is set to `true` or not).
 
 ### Example
 
