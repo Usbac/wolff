@@ -8,14 +8,8 @@ use Wolff\Core\View;
 class ViewTest extends TestCase
 {
 
-    const VIEW_NAME = 'phpunit_testing_view';
-    const VIEW_NAME_2 = 'phpunit_testing_view_ext';
-    const FILE = '../app/views/' . self::VIEW_NAME . '.wlf';
-    const FILE_2 = '../app/views/' . self::VIEW_NAME_2 . '.html';
-    const CONTENT = '<h1>{! $msg !}</h1><br/>';
-    const CONTENT_RENDERED = '<h1>Hello world</h1><br/>';
-
     private $non_existent;
+
     private $data;
 
 
@@ -26,33 +20,40 @@ class ViewTest extends TestCase
             'msg' => 'Hello world'
         ];
 
-        $view_file = fopen(self::FILE, "w") or die();
-        fwrite($view_file, self::CONTENT);
+        $view_file = fopen('../app/views/phpunit_testing_view.wlf', "w") or die();
+        fwrite($view_file, '<h1>{! $msg !}</h1><br/>');
         fclose($view_file);
 
-        $view_file_2 = fopen(self::FILE_2, "w") or die();
-        fwrite($view_file_2, self::CONTENT);
+        $view_file_2 = fopen('../app/views/phpunit_testing_view_ext.html', "w") or die();
+        fwrite($view_file_2, '<h1>{! $msg !}</h1><br/>');
         fclose($view_file_2);
+
+        $view_file_3 = fopen('../app/views/phpunit_testing_view_empty.wlf', "w") or die();
+        fwrite($view_file_3, '');
+        fclose($view_file_3);
     }
 
 
     public function testInit()
     {
-        $this->assertTrue(View::exists(self::VIEW_NAME));
+        $this->assertTrue(View::exists('phpunit_testing_view'));
         $this->assertFalse(View::exists($this->non_existent));
-        $this->assertEquals(self::CONTENT, View::getSource(self::VIEW_NAME, $this->data, false));
-        $this->assertEquals(self::CONTENT_RENDERED, View::getRender(self::VIEW_NAME, $this->data, false));
+        $this->assertEquals('<h1>{! $msg !}</h1><br/>', View::getSource('phpunit_testing_view', $this->data, false));
+        $this->assertEquals('<h1><?php echo $msg ?></h1><br/>', View::get('phpunit_testing_view'));
+        $this->assertEquals('<h1>Hello world</h1><br/>', View::getRender('phpunit_testing_view', $this->data, false));
 
-        $this->assertTrue(View::exists(self::VIEW_NAME_2 . '.html'));
-        $this->assertFalse(View::exists(self::VIEW_NAME_2));
-        $this->assertEquals(self::CONTENT, View::getSource(self::VIEW_NAME_2 . '.html', $this->data, false));
-        $this->assertEquals(self::CONTENT_RENDERED, View::getRender(self::VIEW_NAME_2 . '.html', $this->data, false));
+        $this->assertTrue(View::exists('phpunit_testing_view_ext.html'));
+        $this->assertFalse(View::exists('phpunit_testing_view_ext'));
+        $this->assertEquals('<h1>{! $msg !}</h1><br/>', View::getSource('phpunit_testing_view_ext.html', $this->data, false));
+        $this->assertEquals('<h1>Hello world</h1><br/>', View::getRender('phpunit_testing_view_ext.html', $this->data, false));
+        $this->assertNull(View::render('phpunit_testing_view_empty'));
     }
 
 
     public function tearDown(): void
     {
-        unlink(self::FILE);
-        unlink(self::FILE_2);
+        unlink('../app/views/phpunit_testing_view.wlf');
+        unlink('../app/views/phpunit_testing_view_ext.html');
+        unlink('../app/views/phpunit_testing_view_empty.wlf');
     }
 }

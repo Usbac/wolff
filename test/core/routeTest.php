@@ -8,8 +8,6 @@ use Wolff\Core\Route;
 class RouteTest extends TestCase
 {
 
-    const TEST_MSG = 'Parameter: ';
-
 
     public function setUp(): void
     {
@@ -26,15 +24,20 @@ class RouteTest extends TestCase
         });
 
         Route::get('home/{id}', function () {
-            return self::TEST_MSG . $_GET['id'];
+            return 'Parameter: ' . $_GET['id'];
         });
 
         Route::get('optional/{id2?}', function () {
-            return self::TEST_MSG . ($_GET['id2'] ?? '');
+            return 'Parameter: ' . ($_GET['id2'] ?? '');
         });
 
         Route::any('blog/{page?}/dark', function () {
             return 'in page ' . $_GET['page'];
+        });
+
+        Route::code(404, function ($req, $res) {
+            $req->foo = 'bar';
+            $res->foo = 'bar';
         });
     }
 
@@ -54,17 +57,29 @@ class RouteTest extends TestCase
             'code'    => 301
         ];
         $this->assertEquals($redirection, Route::getRedirection('page1'));
+        $this->assertNull(Route::getRedirection('invalid_redirect'));
         $this->assertEquals('redirected', @Route::getFunction('home2')());
 
         //Route functions
+        $this->assertNull(Route::invalid_method());
         $this->assertEquals('in root', @Route::getFunction('/')());
-        $this->assertEquals(self::TEST_MSG . '15048', @Route::getFunction('home/15048')());
-        $this->assertEquals(self::TEST_MSG, @Route::getFunction('optional/')());
-        $this->assertEquals(self::TEST_MSG . '123', @Route::getFunction('optional/123')());
+        $this->assertEquals('Parameter: ' . '15048', @Route::getFunction('home/15048')());
+        $this->assertEquals('Parameter: ', @Route::getFunction('optional/')());
+        $this->assertEquals('Parameter: ' . '123', @Route::getFunction('optional/123')());
         $this->assertEquals('in page 12', @Route::getFunction('blog/12/dark')());
         $this->assertNull(@Route::getFunction('blog/12/'));
         $this->assertNull(@Route::getFunction('blog/12/white'));
         $this->assertNull(@Route::getFunction('home/123/another'));
+
+        //Code
+        http_response_code(202);
+        $req = new \Wolff\Core\Http\Request([], [], [], [], []);
+        $res = new \Wolff\Core\Http\Response;
+        $this->assertNull(Route::execCode($req, $res));
+        http_response_code(404);
+        Route::execCode($req, $res);
+        $this->assertEquals('bar', $req->foo);
+        $this->assertEquals('bar', $res->foo);
 
         //Blocked
         $this->assertEmpty(Route::getBlocked());

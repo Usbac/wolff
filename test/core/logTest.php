@@ -8,9 +8,6 @@ use Wolff\Core\Log;
 class LogTest extends TestCase
 {
 
-    const FOLDER = 'test/logs';
-    const DATE_FORMAT = 'H:i';
-
     private $created_file;
 
     private $expected_content;
@@ -18,8 +15,8 @@ class LogTest extends TestCase
 
     public function setUp(): void
     {
-        Log::setFolder(self::FOLDER);
-        Log::setDateFormat(self::DATE_FORMAT);
+        Log::setFolder('test/logs');
+        Log::setDateFormat('H:i');
 
         Log::info('Hello world');
         Log::notice('Inside tests');
@@ -28,7 +25,7 @@ class LogTest extends TestCase
             'password' => '123456'
         ]);
 
-        $this->file_path = '../' . self::FOLDER . '/' . date('m-d-Y') . '.log';
+        $this->file_path = '../test/logs/' . date('m-d-Y') . '.log';
         $this->expected_content = $this->getExpectedContent();
     }
 
@@ -37,19 +34,22 @@ class LogTest extends TestCase
     {
         $this->assertFileExists($this->file_path);
         $this->assertEquals($this->expected_content, \file_get_contents($this->file_path));
+        Log::setStatus(false);
+        $this->assertNull(Log::otherStatus());
+        $this->assertNull(Log::notice('inside test'));
     }
 
 
     public function tearDown(): void
     {
         unlink($this->file_path);
-        rmdir('../' . self::FOLDER);
+        rmdir('../test/logs');
     }
 
 
     private function getExpectedContent()
     {
         $expected_content = "[%s][] Info: Hello world\n[%s][] Notice: Inside tests\n[%s][] Warning: The password '123456' is invalid\n";
-        return str_replace('%s', date(self::DATE_FORMAT), $expected_content);
+        return str_replace('%s', date('H:i'), $expected_content);
     }
 }

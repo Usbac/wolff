@@ -4,11 +4,12 @@ namespace Test;
 
 use PHPUnit\Framework\TestCase;
 use Wolff\Core\Middleware;
+use Wolff\Exception\InvalidArgumentException;
 
 class MiddlewareTest extends TestCase
 {
 
-    public function setUp(): void
+    private function addMiddlewares(): void
     {
         Middleware::before('user/panel', function ($req, $next) {
             $next();
@@ -64,10 +65,16 @@ class MiddlewareTest extends TestCase
 
     public function testInit()
     {
+        $this->assertEquals('', Middleware::loadBefore('user'));
+        $this->addMiddlewares();
         $this->assertEquals('inside user panel', Middleware::loadBefore('user/panel'));
         $this->assertEquals('12', Middleware::loadBefore('admin/posts'));
         $this->assertEquals('LoremIpsum', Middleware::loadAfter('posts/start'));
         $this->assertEquals('LoremIpsum', Middleware::loadAfter('posts/page/2'));
         $this->assertEquals('Hello how are you?', Middleware::loadBefore('chain//'));
+        $this->assertNull(Middleware::non_existent_method());
+        $this->expectException(InvalidArgumentException::class);
+        Middleware::before(12345);
+        Middleware::before('url', 'function');
     }
 }

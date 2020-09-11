@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Web development made just right</title>
+    <title>Web development made just right.</title>
+    <custom>foo</custom>
 </head>
 <body>
 

@@ -4,13 +4,11 @@ namespace Test;
 
 use PHPUnit\Framework\TestCase;
 use Wolff\Core\Controller;
+use Wolff\Exception\BadControllerCallException;
 
 class ControllerTest extends TestCase
 {
 
-    const METHOD_NAME = 'sayHello';
-    const CONTROLLER_NAME = 'phpunit_test';
-    const CONTROLLER_PATH = '../app/controllers/' . self::CONTROLLER_NAME . '.php';
     const CONTROLLER_CONTENT = '<?php
         namespace Controller;
 
@@ -24,7 +22,7 @@ class ControllerTest extends TestCase
                 return "from index";
             }
 
-            public function ' . self::METHOD_NAME . '()
+            public function sayHello()
             {
                 return $this->getMsg();
             }
@@ -38,7 +36,7 @@ class ControllerTest extends TestCase
 
     public function setUp(): void
     {
-        $controller_file = fopen(self::CONTROLLER_PATH, "w") or die();
+        $controller_file = fopen('../app/controllers/phpunit_test.php', "w") or die();
         fwrite($controller_file, self::CONTROLLER_CONTENT);
         fclose($controller_file);
     }
@@ -46,17 +44,21 @@ class ControllerTest extends TestCase
 
     public function testInit()
     {
-        $this->assertInstanceOf(\Wolff\Core\Controller::class, Controller::get(self::CONTROLLER_NAME));
-        $this->assertTrue(Controller::exists(self::CONTROLLER_NAME));
+        $this->assertInstanceOf(\Wolff\Core\Controller::class, Controller::get('phpunit_test'));
+        $this->assertTrue(Controller::exists('phpunit_test'));
         $this->assertFalse(Controller::exists('unit_test/sub/anothercontroller'));
-        $this->assertTrue(Controller::hasMethod(self::CONTROLLER_NAME, self::METHOD_NAME));
-        $this->assertFalse(Controller::hasMethod(self::CONTROLLER_NAME, 'getOtherMsg'));
-        $this->assertEquals('Hello in controller', Controller::method(self::CONTROLLER_NAME, self::METHOD_NAME));
+        $this->assertTrue(Controller::hasMethod('phpunit_test', 'sayHello'));
+        $this->assertFalse(Controller::hasMethod('phpunit_test', 'getOtherMsg'));
+        $this->assertFalse(Controller::hasMethod('non_existent_controller', 'get'));
+        $this->assertEquals('Hello in controller', Controller::method('phpunit_test', 'sayHello'));
+
+        $this->expectException(BadControllerCallException::class);
+        Controller::get('non_existent_controller');
     }
 
 
     public function tearDown(): void
     {
-        unlink(self::CONTROLLER_PATH);
+        unlink('../app/controllers/phpunit_test.php');
     }
 }

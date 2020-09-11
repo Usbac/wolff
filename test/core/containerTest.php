@@ -8,42 +8,43 @@ use Wolff\Core\Container;
 class ContainerTest extends TestCase
 {
 
-    const PARAM_1 = 'Hello';
-    const PARAM_2 = 'world';
-    const UNIQUE_PARAM = 'wolff';
-
-
     public function setUp(): void
     {
         Container::add('exampleClass', function ($param1, $param2) {
             return new exampleClass($param1, $param2);
         });
 
+        Container::add('exampleClass2', Container::class);
+
         Container::singleton('singleton', function ($param1, $param2) {
             return new exampleClass($param1, $param2);
         });
+
+        Container::singleton('singleton_2', 'Test\ContainerTest');
     }
 
 
     public function testInit()
     {
-        $instance = Container::get('exampleClass', [ self::PARAM_1, self::PARAM_2 ]);
+        $instance = Container::get('exampleClass', [ 'Hello', 'world' ]);
 
         $this->assertTrue(Container::has('exampleClass'));
         $this->assertFalse(Container::has('anotherClass'));
         $this->assertInstanceOf(exampleClass::class, $instance);
-        $this->assertEquals(self::PARAM_1, $instance->getParam1());
-        $this->assertEquals(self::PARAM_2, $instance->getParam2());
+        $this->assertInstanceOf(Container::class, Container::get('exampleClass2'));
+        $this->assertEquals('Hello', $instance->getParam1());
+        $this->assertEquals('world', $instance->getParam2());
     }
 
 
     public function testSingleton()
     {
-        $singleton_1 = Container::get('singleton', [ self::PARAM_1, self::PARAM_2 ]);
-        $singleton_2 = Container::get('singleton', [ self::PARAM_1, self::PARAM_2 ]);
-        $singleton_1->setParam1(self::UNIQUE_PARAM);
+        $singleton_1 = Container::get('singleton', [ 'Hello', 'world' ]);
+        $singleton_2 = Container::get('singleton', [ 'Hello', 'world' ]);
+        $singleton_1->setParam1('wolff');
 
         $this->assertInstanceOf(exampleClass::class, $singleton_1);
-        $this->assertEquals(self::UNIQUE_PARAM, $singleton_2->getParam1());
+        $this->assertEquals('wolff', $singleton_2->getParam1());
+        $this->assertInstanceOf(ContainerTest::class, Container::get('singleton_2'));
     }
 }

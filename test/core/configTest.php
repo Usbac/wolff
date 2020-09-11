@@ -4,6 +4,7 @@ namespace Test;
 
 use PHPUnit\Framework\TestCase;
 use Wolff\Core\Config;
+use Wolff\Exception\FileNotReadableException;
 
 class ConfigTest extends TestCase
 {
@@ -23,11 +24,17 @@ class ConfigTest extends TestCase
 
     public function testInit()
     {
-        $keys = array_keys($this->data);
-
-        foreach ($keys as $key) {
+        foreach (array_keys($this->data) as $key) {
             $this->assertConfigKey($key);
         }
+
+        $this->assertIsArray(Config::get());
+
+        $this->expectException(FileNotReadableException::class);
+
+        Config::init([
+            'env_file' => 'test/non_existent.env'
+        ]);
     }
 
 
