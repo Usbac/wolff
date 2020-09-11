@@ -1,26 +1,34 @@
 # Release Notes
 
+## v3.2.1 (2020-09-11)
+
+### Fixed
+
+- Fix bug related to the `init` method of the `Wolff\Core\Config` class not throwing the right exception.
+
+- Fix bug related to the `getAllowedIPs` and `removeAllowedIP` methods of the `Wolff\Core\Maintenance` class not throwing the right exception.
+
 ## v3.2.0 (2020-08-21)
 
 ### Added
 
-- Added support for view files with `php` and `html` extensions.
+- Add support for view files with `php` and `html` extensions.
 
-- Added `relativePath` function to the standard library.
+- Add `relativePath` function to the standard library.
 
 ## v3.1.0 (2020-07-04)
 
 ### Added 
 
-- Added `port` option to the database constructor.
+- Add `port` option to the database constructor.
 
 ### Fixed 
 
-- Fixed bug related to fast queries conditions.
+- Fix bug related to fast queries conditions.
 
 ### Changed
 
-- Removed default database encoding.
+- Remove default database encoding.
 
 ## v3.0.2 (2020-05-13)
 
