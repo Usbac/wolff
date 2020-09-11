@@ -18,6 +18,10 @@ class ConfigTest extends TestCase
         $this->data['env_file'] = 'test/.env';
         $this->data['env_override'] = true;
 
+        $env_file = fopen('../test/testing.env', 'w');
+        fwrite($env_file, "LANGUAGE='spanish'\nFOO=null #comment\nTRUE=true");
+        fclose($env_file);
+
         Config::init($this->data);
     }
 
@@ -35,6 +39,25 @@ class ConfigTest extends TestCase
         Config::init([
             'env_file' => 'test/non_existent.env'
         ]);
+    }
+
+
+    public function testEnv()
+    {
+        Config::init([
+            'env_file'     => 'test/testing.env',
+            'env_override' => true
+        ]);
+
+        $this->assertEquals($_ENV['LANGUAGE'], Config::get('language'));
+        $this->assertNull($_ENV['FOO']);
+        $this->assertTrue($_ENV['TRUE']);
+    }
+
+
+    public function tearDown(): void
+    {
+        unlink('../test/testing.env');
     }
 
 

@@ -36,6 +36,7 @@ class RequestTest extends TestCase
 
         $_SERVER['REQUEST_URI'] = 'home';
         $_SERVER['HTTPS'] = false;
+        $_SERVER['HTTP_CONTENT_TYPE'] = 'plain/text';
 
         $this->request = new Request(
             $_GET,
@@ -43,7 +44,7 @@ class RequestTest extends TestCase
             $_FILES,
             $_SERVER,
             [
-                'Content-Type' => 'plain/text'
+                'user_id' => 'wolf123#'
             ]
         );
     }
@@ -86,13 +87,23 @@ class RequestTest extends TestCase
         $this->assertNotEmpty($this->request->file());
         $this->assertNotEmpty($this->request->cookie());
 
-        $this->assertEquals('plain/text', $this->request->cookie()['Content-Type']);
-        $this->assertEquals('plain/text', $this->request->cookie('Content-Type'));
-        $this->assertTrue($this->request->hasCookie('Content-Type'));
+        $this->assertEquals('wolf123#', $this->request->cookie()['user_id']);
+        $this->assertEquals('wolf123#', $this->request->cookie('user_id'));
+        $this->assertTrue($this->request->hasCookie('user_id'));
         $this->assertFalse($this->request->hasCookie('Expires'));
 
+        $this->assertNotEmpty($this->request->getHeader());
+        $this->assertEquals($_SERVER['HTTP_CONTENT_TYPE'], $this->request->getHeader('Content-Type'));
+
+        $this->assertEquals($this->getUri(), $this->request->getUri());
         $this->assertEquals($_SERVER['REQUEST_URI'], $this->request->getFullUri());
         $this->assertEquals($_SERVER['REQUEST_METHOD'], $this->request->getMethod());
         $this->assertFalse($this->request->isSecure());
+    }
+
+
+    private function getUri()
+    {
+        return substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], '?'));
     }
 }

@@ -21,6 +21,8 @@ class ContainerTest extends TestCase
         });
 
         Container::singleton('singleton_2', 'Test\ContainerTest');
+
+        Container::singleton(ContainerTest::class);
     }
 
 
@@ -46,5 +48,6 @@ class ContainerTest extends TestCase
         $this->assertInstanceOf(exampleClass::class, $singleton_1);
         $this->assertEquals('wolff', $singleton_2->getParam1());
         $this->assertInstanceOf(ContainerTest::class, Container::get('singleton_2'));
+        $this->assertNotNull(Container::get(ContainerTest::class));
     }
 }
