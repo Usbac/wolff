@@ -1,8 +1,8 @@
 `Wolff\Core\Controller`
 
-The routing system is tied to the controllers.
-
 The controllers are a great way to keep your code organized instead of defining everything in the `system/web.php` file.
+
+The routing system is tied to the controllers.
 
 ## Usage
 

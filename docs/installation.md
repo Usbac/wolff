@@ -6,7 +6,7 @@ You can see how to install Composer in the [official page](https://getcomposer.o
 
 ## Installation
 
-### 1.- Clone/Download
+### Clone/Download
 
 Clone/download the Wolff repository and run the following command in your Wolff folder:
 
@@ -14,7 +14,7 @@ Clone/download the Wolff repository and run the following command in your Wolff 
 
 This will download the rest of the required files and then you will be done :)
 
-### 2.- Packagist
+### Packagist
 
 The other way to install Wolff is through Packagist: open your terminal, move to the folder where you want Wolff to be installed and run the following command:
 
@@ -24,7 +24,7 @@ This will download the whole project with everything required to run.
 
 _If you have any problem during the installation, just remember to clear the Composer cache using: `composer clear-cache`._
 
-### 3.- Bundle
+### Bundle
 
 You can download the bundles ready to be used which don't require composer.
 

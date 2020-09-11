@@ -2,10 +2,6 @@
 
 The request object of Wolff has an array of uploaded files, each one of the elements in that array is an instance of `Wolff\Core\Http\File`.
 
-```php
-$request->file();
-```
-
 The request object and the file objects have some methods that can simplify the process of uploading files to the server.
 
 ## Setting Options
@@ -106,7 +102,7 @@ Route::post('upload', function ($request) {
 
 So, if the client uploads a file that complies with:
 
-* An `jpg` or `png` extension.
+* A `jpg` or `png` extension.
 * No bigger than 2048KB.
 * Its path is not taken already in the server
 
