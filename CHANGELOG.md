@@ -1,5 +1,11 @@
 # Release Notes
 
+## v3.2.2 (2020-10-05)
+
+### Fixed
+
+- Fix bug related to the fast query methods of the `Wolff\Core\DB` class.
+
 ## v3.2.1 (2020-09-11)
 
 ### Fixed

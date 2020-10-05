@@ -5,7 +5,7 @@
     "framework", "php", "small", "web", "apps", "fast", "full", "db"
   ],
   "type": "project",
-  "version": "3.2.1",
+  "version": "3.2.2",
   "license": "MIT",
   "support": {
     "issues": "https://github.com/Usbac/Wolff/issues",
