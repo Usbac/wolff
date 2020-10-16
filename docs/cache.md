@@ -2,7 +2,7 @@
 
 The views use by default a cache system.
 
-When loading a view, a file titled `tmp_{fileDirectory}.php` will be created in the cache folder if it doesn't exists already.
+When loading a view, a file titled `{fileDirectory}.tmp` will be created in the cache folder if it doesn't exists already.
 
 So the view will be loader from that file and any change made to the original file will not be displayed until the cache file expires or is deleted manually.
 
