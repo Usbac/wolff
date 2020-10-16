@@ -3,10 +3,7 @@
 return [
     //Database
     'db' => [
-        'dbms'     => 'mysql',
-        'server'   => 'localhost',
-        'name'     => 'wolff',
-        'port'     => '',
+        'dsn'      => '',
         'username' => '',
         'password' => ''
     ],
@@ -19,7 +16,6 @@ return [
     'language' => 'english',
 
     //Extra
-    'log_on'         => true,
     'development_on' => true,
     'template_on'    => true,
     'cache_on'       => true,

@@ -21,7 +21,8 @@ Every logging file represents a day and contains logs with the following format:
 Logging a simple information:
 
 ```php
-Log::info('Welcome to Wolff.');
+$log = new Log();
+$log->info('Welcome to Wolff.');
 ```
 
 There are different levels for the messages, these are the available:
@@ -51,7 +52,7 @@ $values = [
     'page' => 'home/'
 ];
 
-Log::Debug('The current user is {name} in the page {page}', $values);
+$log->Debug('The current user is {name} in the page {page}', $values);
 ```
 
 As an example, that should log `The current user is Thomas in the page home/`.
@@ -65,7 +66,7 @@ As an example, that should log `The current user is Thomas in the page home/`.
 Returns `true` if the log system is enabled, `false` otherwise.
 
 ```php
-Log::isEnabled();
+$log->isEnabled();
 ```
 
 If the log system is disabled, nothing will happen when running the common log methods explained above.
@@ -77,7 +78,7 @@ If the log system is disabled, nothing will happen when running the common log m
 Sets the status of the logging system. `true` to enable it, `false` to disable it.
 
 ```php
-Log::setStatus(true);
+$log->setStatus(true);
 ```
 
 ### Set folder
@@ -87,7 +88,7 @@ Log::setStatus(true);
 Sets the folder where the log files will be stored.
 
 ```php
-Log::setFolder('app/logs');
+$log->setFolder('app/logs');
 ```
 
 _The given path is relative to the project root folder._
@@ -101,7 +102,7 @@ Sets the date format used internally in the log files.
 The PHP [`date`](https://www.php.net/manual/en/function.date.php) function is used internally with the given date format. You can read the function's documentation for better understanding of the string you pass.
 
 ```php
-Log::setDateFormat('H:i:s');
+$log->setDateFormat('H:i:s');
 ```
 
 That will set the format like this: `Hour:minutes:seconds`.

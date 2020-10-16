@@ -6,13 +6,7 @@ The config file has the following definitions/keys inside an array that is being
 
 * **db**:
 
-    * **dbms**: the database driver, you can choose between `mysql`, `pgsql` and `sqlite`.
-
-    * **server**: the database host name (usually it’s refered to as localhost).
-
-    * **name**: the database name.
-
-    * **port**: the connection port (this key is optional).
+    * **dsn**: the dsn string.
 
     * **username**: the database username.
 
@@ -23,8 +17,6 @@ The config file has the following definitions/keys inside an array that is being
 * **env_override**: If `true` the environment variables will override the config data in the `Wolff\Core\Config` class and the `config` function helper. (The environment keys are converted to lowercase in the override proccess).
 
 * **language**: the site's main language.
-
-* **log_on**: the log status, `true` for enabling the use of the log system, `false` for disabling it.
 
 * **development_on**: the development status, `true` if the project is in an development environment, `false` otherwise (in a development environment all the errors will be displayed).
 

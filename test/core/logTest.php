@@ -8,19 +8,20 @@ use Wolff\Core\Log;
 class LogTest extends TestCase
 {
 
-    private $created_file;
+    private $log;
 
     private $expected_content;
 
 
     public function setUp(): void
     {
-        Log::setFolder('test/logs');
-        Log::setDateFormat('H:i');
+        $this->log = new Log();
+        $this->log->setFolder('test/logs');
+        $this->log->setDateFormat('H:i');
 
-        Log::info('Hello world');
-        Log::notice('Inside tests');
-        Log::warning('The password \'{password}\' is invalid', [
+        $this->log->info('Hello world');
+        $this->log->notice('Inside tests');
+        $this->log->warning('The password \'{password}\' is invalid', [
             'username' => 'usbac',
             'password' => '123456'
         ]);
@@ -34,9 +35,9 @@ class LogTest extends TestCase
     {
         $this->assertFileExists($this->file_path);
         $this->assertEquals($this->expected_content, \file_get_contents($this->file_path));
-        Log::setStatus(false);
-        $this->assertNull(Log::otherStatus());
-        $this->assertNull(Log::notice('inside test'));
+        $this->log->setStatus(false);
+        $this->assertNull($this->log->otherStatus());
+        $this->assertNull($this->log->notice('inside test'));
     }
 
 

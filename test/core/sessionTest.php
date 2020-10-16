@@ -21,9 +21,6 @@ class SessionTest extends TestCase
         $this->assertFalse(Session::expired());
         $this->assertTrue(Session::has('msg'));
         $this->assertFalse(Session::has('another_msg'));
-        /* 2 because of the msg variable declared and the variable
-           keeping track of the variables time. */
-        $this->assertEquals(2, Session::count());
         $this->assertEquals($_SESSION['msg'], Session::get('msg'));
         $this->assertEquals('Hello world', Session::get('msg'));
         $this->assertEquals((10 + 10) * 60, Session::getVarTime('msg'));

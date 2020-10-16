@@ -18,16 +18,6 @@ Starts the session.
 Session::start();
 ```
 
-### Count session variables
-
-`count()`
-
-Returns the number of elements in the session.
-
-```php
-Session::count();
-```
-
 ### Add session time
 
 `addTime(int $time)`
