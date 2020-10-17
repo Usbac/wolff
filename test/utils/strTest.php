@@ -42,8 +42,6 @@ class StrTest extends TestCase
         $this->assertEquals('Hello world', Str::removeQuotes('"Hello world"'));
         $this->assertEquals('Hello world', Str::removeQuotes('\'Hello world\''));
         $this->assertEquals(20, strlen(Str::token(20)));
-        $this->assertEquals('UTF-8', mb_detect_encoding(Str::toUtf8('hóla')));
-
         $this->assertFalse(Str::isEmail('contactcom'));
         $this->assertFalse(Str::isAlphanumeric('abcdefg1234567$890'));
         $this->assertFalse(Str::isAlpha('abcdef9g'));
