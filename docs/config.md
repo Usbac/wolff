@@ -6,7 +6,7 @@ The config file has the following definitions/keys inside an array that is being
 
 * **db**:
 
-    * **dsn**: the dsn string.
+    * **dsn**: the database dsn string.
 
     * **username**: the database username.
 

@@ -304,7 +304,7 @@ Will render this:
 
 ## Extending the template
 
-`custom($function)`
+`custom($func)`
 
 You can extend the template engine and make your own tags or rules by using the `custom` method.
 

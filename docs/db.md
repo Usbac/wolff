@@ -10,7 +10,7 @@ The database constructor looks like this.
 
 It takes two parameters, an array with the database credentials, and an array which will be used as the options for the `PDO` instance that the utility uses internally.
 
-If no data array is passed, it will use the credentials defined in the `system/config.php` file.
+If no data array is passed, it will use the credentials defined in the `db` key of the `system/config.php` file array.
 
 ```php
 $db = new Wolff\Core\DB();
@@ -18,9 +18,7 @@ $db = new Wolff\Core\DB();
 
 ```php
 $credentials = [
-    'dbms'     => 'mysql',
-    'server'   => 'localhost',
-    'name'     => 'wolff',
+    'dsn'      => 'mysql:host=localhost;dbname=testdb'
     'username' => 'root',
     'password' => '12345'
 ];
@@ -29,19 +27,6 @@ $db = new Wolff\Core\DB($credentials);
 ```
 
 Both examples are right.
-
-You can also define the connection port with the `port` key, as shown below:
-
-```php
-$credentials = [
-    'dbms'     => 'mysql',
-    'server'   => 'localhost',
-    'name'     => 'wolff',
-    'port'     => '3306',
-    'username' => 'root',
-    'password' => '12345'
-];
-```
 
 ## Running queries
 

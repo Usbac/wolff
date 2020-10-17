@@ -8,8 +8,8 @@ There are two types of middlewares, those called before and after the request.
 
 With that in mind, the middleware class has a `before` and `after` method to add respectively a middleware of type `before` and `after`.
 
-`before(string $url, \Closure $function)`  
-`after(string $url, \Closure $function)`
+`before(string $url, \Closure $func)`  
+`after(string $url, \Closure $func)`
 
 The function parameter must take two parameters, the Wolff request object (instance of `Wolff\Core\Http\Request`), and a function that when executed, will call the next middleware. So if this function isn't executed by that middleware, the middleware chain will stop right there.
 

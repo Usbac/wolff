@@ -6,7 +6,7 @@ In the `system/web.php` file you can define routes, its parameters and what to d
 
 ## Adding routes
 
-`any(string $url, $function[, int $status])`
+`any(string $url, $func[, int $status])`
 
 The `any` method let's you add a route that will work for every HTTP method.
 
@@ -35,11 +35,11 @@ It will display 'hello' when accessing to `example.com/main_page`.
 You can add routes that will work only for a specific HTTP method.
 
 ```php
-Route::get($uri, $function, $method = 200);
-Route::post($uri, $function, $method = 200);
-Route::put($uri, $function, $method = 200);
-Route::patch($uri, $function, $method = 200);
-Route::delete($uri, $function, $method = 200);
+Route::get($uri, $func, $method = 200);
+Route::post($uri, $func, $method = 200);
+Route::put($uri, $func, $method = 200);
+Route::patch($uri, $func, $method = 200);
+Route::delete($uri, $func, $method = 200);
 ```
 
 ### View routes
@@ -84,7 +84,7 @@ That will set the content-type of the route to `application/json`.
 
 ## Routes by code
 
-`code(int $code, $function)`
+`code(int $code, $func)`
 
 You can define routes that will be executed based on an HTTP status code by using the `code` method.
 

@@ -28,7 +28,7 @@ Maintenance::setStatus(true);
 
 ### Use
 
-`set(\Closure $function)`
+`set(\Closure $func)`
 
 Defines the function that will be executed under maintenance mode.
 
