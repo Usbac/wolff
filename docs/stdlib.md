@@ -401,17 +401,6 @@ The key accepts dot notation.
 config('db.password');
 ```
 
-### Get Wolff version
-
-`wolffVersion()`
-
-Returns the current version of Wolff.
-
-```php
-wolffVersion();
-//In this case it should return 2.0
-```
-
 ## Adding functions to the Standard library
 
 You can add your own functions to the standard library this way.

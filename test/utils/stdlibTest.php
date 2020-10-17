@@ -51,7 +51,6 @@ class StdlibTest extends TestCase
         $this->assertTrue(isJson(self::JSON));
         $this->assertEquals($arr['user']['name'], val($arr, 'user.name'));
         $this->assertEquals('', getClientIP());
-        $this->assertEquals(WOLFF_CONFIG['version'], wolffVersion());
         $this->assertEquals(5.24, average([ 2.5, 5.46, 4, 9 ]));
         $this->assertTrue(isInt('1'));
         $this->assertTrue(isFloat('1.5'));

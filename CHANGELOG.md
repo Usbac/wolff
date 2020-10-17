@@ -16,6 +16,8 @@
 
 - Remove the `count` method of the `Wolff\Core\Session` class.
 
+- Remove the `wolffVersion` function of the standard library.
+
 ## v3.2.2 (2020-10-05)
 
 ### Fixed
