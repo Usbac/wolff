@@ -7,9 +7,14 @@ use Wolff\Core\View;
 
 class Home extends \Wolff\Core\Controller
 {
+
+    /**
+     * Let's create together the next big thing
+     */
     public function index($req, $res)
     {
-        $data['lang'] = Language::get('home');
-        View::render('home', $data);
+        View::render('home', [
+            'lang' => Language::get('home'),
+        ]);
     }
 }
