@@ -1,5 +1,21 @@
 # Release Notes
 
+## v4.0.0 (coming soon)
+
+### Changed
+
+- Make the Logging system non-static.
+
+- Make the Database abstraction layer more modular.
+
+- Change the cache files extension to `tmp`.
+
+### Removed
+
+- Remove the `toUtf8` method of the `Wolff\Utils\Str` class.
+
+- Remove the `count` method of the `Wolff\Core\Session` class.
+
 ## v3.2.2 (2020-10-05)
 
 ### Fixed
