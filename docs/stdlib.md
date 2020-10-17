@@ -409,7 +409,7 @@ Returns the current version of Wolff.
 
 ```php
 wolffVersion();
-//In this case it should return 2.0
+//In this case it should return 3.0
 ```
 
 ## Adding functions to the Standard library
