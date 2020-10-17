@@ -2,12 +2,13 @@
 <html>
 <head>
     <title>{{ $lang['title'] }} - 404</title>
-    <link href="{{ url('assets/css/styles.css') }}" rel="stylesheet"/>
+    {% style="{{ url('assets/css/styles.css') }}" %}
+    {% icon="{{ url('favicon.ico') }}" %}
 </head>
 <body>
-<div class='center' id='content-404'>
-    <h1 class='title-404 text-center'>404</h1>
-    <p class='text-center'>{{ $lang['msg'] }}</p>
+<div class="center" id="content-404">
+    <h1 class="title-404 text-center">404</h1>
+    <p class="text-center">{{ $lang['msg'] }}</p>
 </div>
 
 </body>
