@@ -50,7 +50,7 @@ Returns the content of the specified cache file.
 Cache::get('home');
 ```
 
-That will return the content of the home cache file (`tmp_home.php`).
+That will return the content of the home cache file (`home.tmp`).
 
 ### Create file
 
@@ -93,13 +93,15 @@ That will return `true` if the home cache file exists, `false` otherwise.
 
 `delete(string $dir)`
 
-Deletes the specified cache file.
+Deletes the specified cache file. 
+
+This method returns `true` if the file has been successfully deleted, `false` otherwise.
 
 ```php
 Cache::delete('home');
 ```
 
-That will delete the home cache file (`cache/tmp_home.php`).
+That will delete the home cache file (`cache/home.tmp`).
 
 ### Clear
 

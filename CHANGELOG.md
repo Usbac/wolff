@@ -4,11 +4,13 @@
 
 ### Added
 
-- Better overall performance.
-
-### Changed
+- Add language tag to the template engine.
 
 - Added optional seconds parameter to the `clear` method of the Cache system.
+
+- Add better overall performance.
+
+### Changed
 
 - Make the Logging system non-static.
 

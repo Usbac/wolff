@@ -43,7 +43,7 @@ That is the equivalent to:
 <?php echo $data['message']; ?>
 ```
 
-All the variables in the data array are accessible from the view without needing to refer to the given array. This `$variable` is the equivalent to this `$data['variable']`.
+All the variables in the data array are accessible from the view without needing to refer to the given array. This `$variable` in the view, is the equivalent to this `$data['variable']`.
 
 ## Comments
 
@@ -65,20 +65,28 @@ comment #}
 
 In Wolff you can use the replacement of the old php tags, which are `{%` for `<?php` and `%}` for `?>`.
 
-Instead of this:
+Original PHP:
 
 ```php
 <?php foreach ($array as $key => $value): ?>
     //code
 <?php endfor ?>
+
+<?php if ($foo): ?>
+    //code
+<?php endif ?>
 ```
 
-You can do this:
+Template:
 
 ```php
 {% foreach ($array as $key => $value): %}
-    // code
+    //code
 {% endfor %}
+
+{% if ($foo): %}
+    //code
+{% endif %}
 ```
 
 ## Loops
@@ -112,13 +120,25 @@ Like this:
 {{ upper|$title }}
 ```
 
-In this case, that will print the `$title` variable in uppercase.
+In that case, it will print the `$title` variable in uppercase.
 
 ```php
 {{ repeat(3)|$title }}
 ```
 
-In this case, that will print the `$title` variable three times.
+In that case, it will print the `$title` variable three times.
+
+## Language
+
+With the `@lang` tag you can print variables of the language system in a short way.
+
+```php
+@lang('home.title')
+```
+
+That code will be replaced by the value of the 'title' key in the 'home' language array.
+
+_Keep in mind that this language tag does NOT escape the content, you are fully responsible for escaping it._
 
 ### List
 
