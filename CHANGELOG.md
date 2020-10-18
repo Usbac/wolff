@@ -2,15 +2,19 @@
 
 ## v4.0.0 (coming soon)
 
+### Added
+
+- Better overall performance.
+
 ### Changed
+
+- Added optional seconds parameter to the `clear` method of the Cache system.
 
 - Make the Logging system non-static.
 
 - Make the Database abstraction layer more modular.
 
 - Change the cache files extension to `tmp`.
-
-- Minor performance improvements.
 
 ### Removed
 
