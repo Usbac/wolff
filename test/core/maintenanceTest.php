@@ -51,6 +51,7 @@ class MaintenanceTest extends TestCase
         Maintenance::call($req, $res);
         $this->assertEquals('bar', $req->foo);
         $this->assertEquals('bar', $res->foo);
+        unlink(self::FILE);
         $this->expectException(FileNotReadableException::class);
         Maintenance::removeAllowedIP('::1');
     }
@@ -58,7 +59,6 @@ class MaintenanceTest extends TestCase
 
     public function tearDown(): void
     {
-        unlink(self::FILE);
         unset($_SERVER['HTTP_CLIENT_IP']);
     }
 }

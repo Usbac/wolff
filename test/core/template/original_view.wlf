@@ -7,7 +7,7 @@
 </head>
 <body>
     {# Simple comment #}
-
+    @lang('testing.language_key')
     {! $html !}
     {% if (true): %}
         <p>Inside a conditional statement.</p>

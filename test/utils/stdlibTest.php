@@ -45,6 +45,7 @@ class StdlibTest extends TestCase
         ];
 
         $this->assertTrue(arrayRemove($example_arr, 'lusitania'));
+        $this->assertFalse(arrayRemove($example_arr, 'another_ship'));
         $this->assertEquals($expected_arr, $example_arr);
         $this->assertEquals('527KB', bytesToString('540000'));
         $this->assertEquals('9.537MB', bytesToString('10000000', 3));

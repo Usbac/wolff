@@ -5,6 +5,7 @@ namespace Test;
 use PHPUnit\Framework\TestCase;
 use Wolff\Core\Http\Request;
 use Wolff\Exception\InvalidArgumentException;
+use Wolff\Exception\FileNotFoundException;
 
 class RequestTest extends TestCase
 {
@@ -55,6 +56,7 @@ class RequestTest extends TestCase
         $this->assertTrue($this->request->hasQuery('msg'));
         $this->assertFalse($this->request->hasQuery('another'));
         $this->assertEquals('Evan you', $this->request->query('name'));
+        $this->assertNull($this->request->query('another_name'));
         $this->assertEquals([
             'name' => 'Evan you',
             'msg'  => 'Hello world'
@@ -73,6 +75,13 @@ class RequestTest extends TestCase
             'extensions' => 'jpg',
             'max_size'   => 1024
         ]));
+
+        $this->expectException(FileNotFoundException::class);
+        $this->request->fileOptions([
+            'dir'        => 'non_existing_dir',
+            'extensions' => 'jpg',
+            'max_size'   => 1024
+        ]);
 
         $this->expectException(InvalidArgumentException::class);
         $this->request->fileOptions([

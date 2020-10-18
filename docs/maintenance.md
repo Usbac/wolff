@@ -62,7 +62,7 @@ _The given path is relative to the project root folder._
 
 `addAllowedIP(string $ip)`
 
-Adds an IP address to the white list:
+Adds an IP address to the white list.
 
 ```php
 Maintenance::addAllowedIP('127.0.0.1');
@@ -74,7 +74,7 @@ _If the white list file doesn't exists, it will be created automatically._
 
 `removeAllowedIP(string $ip)`
 
-Deletes the given IP address from the white list:
+Deletes the given IP address from the white list.
 
 ```php
 Maintenance::removeAllowedIP('127.0.0.1');
@@ -82,17 +82,19 @@ Maintenance::removeAllowedIP('127.0.0.1');
 
 This method returns `true` if the IP has been removed or doesn't exists in the whitelist, `false` otherwise.
 
+This method throws a `\Wolff\Exception\FileNotReadableException` when the whitelist file exists and is unreadable.
+
 ### Get IP list
 
 `getAllowedIPs()`
 
-Returns all the IP address in the white list:
+Returns all the IP address in the white list.
 
 ```php
 Maintenance::getAllowedIPs();
 ```
 
-_This will return the IP list as a non-associative array._
+_This method returns the IP list as a non-associative array._
 
 ## Client Allowed
 

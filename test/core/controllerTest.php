@@ -4,7 +4,7 @@ namespace Test;
 
 use PHPUnit\Framework\TestCase;
 use Wolff\Core\Controller;
-use Wolff\Exception\BadControllerCallException;
+use BadMethodCallException;
 
 class ControllerTest extends TestCase
 {
@@ -44,6 +44,7 @@ class ControllerTest extends TestCase
 
     public function testInit()
     {
+        $this->assertInstanceOf(\Wolff\Core\Controller::class, Controller::get());
         $this->assertInstanceOf(\Wolff\Core\Controller::class, Controller::get('phpunit_test'));
         $this->assertTrue(Controller::exists('phpunit_test'));
         $this->assertFalse(Controller::exists('unit_test/sub/anothercontroller'));
@@ -51,9 +52,10 @@ class ControllerTest extends TestCase
         $this->assertFalse(Controller::hasMethod('phpunit_test', 'getOtherMsg'));
         $this->assertFalse(Controller::hasMethod('non_existent_controller', 'get'));
         $this->assertEquals('Hello in controller', Controller::method('phpunit_test', 'sayHello'));
+        $this->assertNull(Controller::get('non_existent_controller'));
 
-        $this->expectException(BadControllerCallException::class);
-        Controller::get('non_existent_controller');
+        $this->expectException(BadMethodCallException::class);
+        Controller::method('phpunit_test', 'non_existent_method');
     }
 
 
