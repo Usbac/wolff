@@ -2,8 +2,8 @@
 
 return [
     'title'         => 'Wolff',
-    'description'   => 'Desarrollo web hecho sencillamente bien.',
-    'description_2' => 'Puedes empezar creando tu propia página como esta.',
+    'description'   => 'Desarrollo web hecho sencillamente bien',
+    'description_2' => 'Creemos juntos la próxima gran cosa',
 
     'documentation' => 'documentación',
     'page'          => 'página web',

@@ -8,9 +8,6 @@ use Wolff\Core\View;
 class Home extends \Wolff\Core\Controller
 {
 
-    /**
-     * Let's create together the next big thing
-     */
     public function index($req, $res)
     {
         View::render('home', [

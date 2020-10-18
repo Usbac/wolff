@@ -2,8 +2,8 @@
 
 return [
     'title'         => 'Wolff',
-    'description'   => 'Web development made just right.',
-    'description_2' => 'You can start by creating your own page like this one.',
+    'description'   => 'Web development made just right',
+    'description_2' => 'Let\'s create together the next big thing',
 
     'documentation' => 'documentation',
     'page'          => 'web page',
