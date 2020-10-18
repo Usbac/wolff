@@ -260,21 +260,6 @@ isFloat(1.5);
 
 Both of the calls showed above will return `true`.
 
-### Is bool
-
-`isBool($bool)`
-
-Returns `true` if the given parameter complies with an boolean, `false` otherwise.
-
-```php
-isBool(true);
-isBool('1');
-```
-
-Both of the calls showed above will return `true`.
-
-Only the numeric values `1` and `0`, and the strings 'true', 'false', '1' and '0' are counted as boolean.
-
 ### Is json
 
 `isJson(string $str)`
@@ -330,16 +315,6 @@ getClientIP();
 ```
 
 In localhost it will return `::1`.
-
-### Local
-
-`local()`
-
-Returns `true` if the current request is running in localhost, `false` otherwise.
-
-```php
-local();
-```
 
 ### Get current page
 

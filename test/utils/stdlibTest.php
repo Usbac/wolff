@@ -54,8 +54,6 @@ class StdlibTest extends TestCase
         $this->assertEquals(5.24, average([ 2.5, 5.46, 4, 9 ]));
         $this->assertTrue(isInt('1'));
         $this->assertTrue(isFloat('1.5'));
-        $this->assertTrue(isBool('1'));
-        $this->assertTrue(local());
         $this->assertTrue(isAssoc($assoc_arr));
         $this->assertFalse(isAssoc($non_assoc_arr));
     }

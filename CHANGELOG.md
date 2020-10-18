@@ -10,13 +10,15 @@
 
 - Change the cache files extension to `tmp`.
 
+- Minor performance improvements.
+
 ### Removed
 
 - Remove the `toUtf8` method of the `Wolff\Utils\Str` class.
 
 - Remove the `count` method of the `Wolff\Core\Session` class.
 
-- Remove the `wolffVersion` function of the standard library.
+- Remove the `wolffVersion`, `local` and `isBool` functions of the standard library.
 
 ## v3.2.2 (2020-10-05)
 
