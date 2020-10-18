@@ -42,7 +42,7 @@ class MaintenanceTest extends TestCase
         $this->assertFalse(Maintenance::isEnabled());
         Maintenance::setFile('non_existent_file');
         $this->assertFalse(Maintenance::hasAccess());
-        $this->assertFalse(Maintenance::getAllowedIPs());
+        $this->assertEquals(Maintenance::getAllowedIPs(), []);
         $this->assertFalse(Maintenance::addAllowedIP('invalid ip'));
         $this->assertFalse(Maintenance::removeAllowedIP('invalid ip'));
 

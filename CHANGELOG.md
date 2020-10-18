@@ -16,6 +16,8 @@
 
 - Change the cache files extension to `tmp`.
 
+- Change the `getAllowedIPs` method of the `Wolff\Core\Maintenance` to return an empty array instead of false when the whitelist file does not exists.
+
 ### Removed
 
 - Remove the `toUtf8` method of the `Wolff\Utils\Str` class.
