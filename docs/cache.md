@@ -30,6 +30,16 @@ Returns `true` if the cache system is enabled, `false` otherwise.
 Cache::isEnabled();
 ```
 
+### Set status
+
+`setStatus([bool $enabled])`
+
+Sets the status of the cache system. `true` to enable it, `false` to disable it.
+
+```php
+Cache::setStatus(true);
+```
+
 ### Get cache content
 
 `get(string $dir)`
@@ -93,9 +103,9 @@ That will delete the home cache file (`cache/tmp_home.php`).
 
 ### Clear
 
-`clear`
+`clear([int $seconds])`
 
-Deletes all the cache file.
+Deletes the cache files.
 
 ```php
 Cache::clear();
@@ -103,3 +113,10 @@ Cache::clear();
 
 That will delete all the cache files.
 
+This method can take an optional parameter which is the minimum time (in seconds) that a file needs to have since its last creation/modification to be deleted.
+
+```php
+Cache::clear(60);
+```
+
+That will delete any cache file that has been created/modified more than 60 seconds ago.

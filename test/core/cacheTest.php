@@ -11,7 +11,7 @@ class CacheTest extends TestCase
 
     public function setUp(): void
     {
-        Cache::init(true);
+        Cache::setStatus(true);
         Cache::set('phpunit_testing', '<h2>Hello</h2>');
         Cache::set('another_testing_view', '');
     }
