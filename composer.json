@@ -21,7 +21,7 @@
     }
   ],
   "require": {
-    "php": ">=7.0.0",
+    "php": ">=7.1.0",
     "usbac/wolff-framework": "~4.0"
   },
   "require-dev": {
@@ -31,7 +31,6 @@
     "psr-4": {
       "App\\": "app/",
       "Tests\\": "tests/",
-      "Middleware\\": "app/middlewares/",
       "Controller\\": "app/controllers/"
     }
   }
