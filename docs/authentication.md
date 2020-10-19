@@ -8,7 +8,7 @@ It's built on top of the `Wolff\Core\DB` class so it uses PDO.
 
 First you need to instantiate the `Auth` class, its constructor looks like this:
 
-`__construct([array $data = null[, array $options = null ]])`
+`__construct([array $data[, array $options]])`
 
 It takes two parameters, an array with the destination database credentials, and an array which will be used as the options for the `password_hash` function that the utility uses internally.
 
@@ -16,11 +16,9 @@ If no data array is passed, it will use the credentials defined in the `system/c
 
 ```php
 $credentials = [
-    'dbms'     => 'mysql',
-    'server'   => 'localhost',
-    'name'     => 'wolff',
+    'dsn'      => 'sqlite:example.db',
     'username' => 'root',
-    'password' => '12345'
+    'password' => '12345',
 ];
 
 $options = [
