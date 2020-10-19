@@ -17,13 +17,11 @@ $db = new Wolff\Core\DB();
 ```
 
 ```php
-$credentials = [
+$db = new Wolff\Core\DB([
     'dsn'      => 'mysql:host=localhost;dbname=testdb'
     'username' => 'root',
-    'password' => '12345'
-];
-
-$db = new Wolff\Core\DB($credentials);
+    'password' => '12345',
+]);
 ```
 
 Both examples are right.
@@ -257,6 +255,8 @@ Returns `true` if the specified table exists, `false` otherwise.
 $db->tableExists('users');
 ```
 
+_WARNING: This method must NOT be used with user input since it does not escapes the given arguments._
+
 ### Column exists
 
 `columnExists(string $table, string $column)`
@@ -269,84 +269,21 @@ $db->columnExists('users', 'user_id');
 
 The first parameter is the table where the column is, the second is the column name.
 
-### Get schema
+_WARNING: This method must NOT be used with user input since it does not escapes the given arguments._
 
-`getSchema([string $table])`
+### Move rows
 
-Returns the database schema
+`moveRows(string $src_table, string $dest_table[, string $conditions[, $args]])`
 
-```php
-$db->getSchema();
-```
-
-Example result:
-```php
-Array
-(
-    //Table category
-    [category] => Array
-        (
-            [0] => Array
-                (
-                    [Field] => category_id
-                    [Type] => int(11)
-                    [Null] => NO
-                    [Key] => PRI
-                    [Default] =>
-                    [Extra] => auto_increment
-                )
-
-            [1] => Array
-                (
-                    [Field] => name
-                    [Type] => varchar(155)
-                    [Null] => NO
-                    [Key] =>
-                    [Default] =>
-                    [Extra] =>
-                )
-        )
-
-    //Table portfolio
-    [portfolio] => Array
-        (
-            [0] => Array
-                (
-                    [Field] => portfolio_id
-                    [Type] => int(11)
-                    [Null] => NO
-                    [Key] => PRI
-                    [Default] =>
-                    [Extra] => auto_increment
-                )
-
-            [1] => Array
-                (
-                    [Field] => title
-                    [Type] => varchar(150)
-                    [Null] => NO
-                    [Key] =>
-                    [Default] =>
-                    [Extra] =>
-                )
-
-            [2] => Array
-                (
-                    [Field] => category_id
-                    [Type] => int(11)
-                    [Null] => NO
-                    [Key] => MUL
-                    [Default] =>
-                    [Extra] =>
-                )
-        )
-)
-```
-You can pass a table name to get only the schema of that table
+Moves rows from the source table to the destination table.
 
 ```php
-$db->getSchema('portfolio');
+$db->moveRows('customers', 'new_customers', 'WHERE status = 1');
 ```
+
+_In case of errors, the changes are completely rolled back._
+
+_WARNING: This method must NOT be used with user input since it does not escapes the given arguments._
 
 ## Fast methods
 
@@ -374,7 +311,7 @@ That will be the same as `INSERT INTO 'product' (name, model, quantity) VALUES (
 
 ### Select
 
-`select(string $table[, string $conditions[, ...$args ]])`  
+`select(string $table[, string $conditions[, ...$args]])`  
 
 Runs a select query in the specified table. This method returns the result as an associative array, and accepts dot notation.
 
@@ -392,7 +329,7 @@ Equivalent to:
 
 ### Count
 
-`count(string $table[, string $conditions[, ...$args ]])`
+`count(string $table[, string $conditions[, ...$args]])`
 
 Returns the number of rows in the specified table, as an `int`.
 
@@ -408,9 +345,10 @@ Equivalent to:
 
 ### Delete
 
-`delete(string $table[, string $conditions[, ...$args ]])`  
+`delete(string $table[, string $conditions[, ...$args]])`  
 
 Deletes the rows in the specified table.
+
 This method returns `true` in case of success, `false` otherwise.
 
 ```php
