@@ -22,21 +22,20 @@ class DBTest extends TestCase
         ]);
 
         $this->db = new DB();
-
-        $this->db->query('CREATE TABLE customer
-            (customer_id INT PRIMARY KEY,
-            name VARCHAR(255) NOT NULL,
-            email VARCHAR(255) NOT NULL)');
-
-        $this->db->query("INSERT INTO customer (customer_id, name, email) VALUES
-            (1, 'alejandro', 'alejandro@hotmail.com'),
-            (2, 'michelle', 'michelle@gmail.com'),
-            (3, 'taylor', 'taylor@hotmail.com')");
     }
 
 
     public function testInit()
     {
+        $this->assertNull($this->db->getAffectedRows());
+        $this->db->query('CREATE TABLE customer
+            (customer_id INT PRIMARY KEY,
+            name VARCHAR(255) NOT NULL,
+            email VARCHAR(255) NOT NULL)');
+        $this->db->query("INSERT INTO customer (customer_id, name, email) VALUES
+            (1, 'alejandro', 'alejandro@hotmail.com'),
+            (2, 'michelle', 'michelle@gmail.com'),
+            (3, 'taylor', 'taylor@hotmail.com')");
         $this->assertNull((new DB([ 'dsn' => '' ]))->getPdo());
         $this->assertInstanceOf(Query::class, $this->db->query('SELECT * FROM customer'));
         $this->assertInstanceOf(PDOStatement::class, $this->db->getLastStmt());
@@ -62,6 +61,23 @@ class DBTest extends TestCase
         $this->assertFalse($this->db->tableExists('product'));
         $this->assertTrue($this->db->columnExists('customer', 'name'));
         $this->assertFalse($this->db->columnExists('customer', 'phone'));
+        $this->assertEquals([
+            [
+                'customer_id' => 1,
+                'name'        => 'alejandro',
+                'email'       => 'alejandro@hotmail.com',
+            ],
+            [
+                'customer_id' => 2,
+                'name'        => 'michelle',
+                'email'       => 'michelle@gmail.com',
+            ],
+            [
+                'customer_id' => 3,
+                'name'        => 'taylor',
+                'email'       => 'taylor@hotmail.com',
+            ],
+        ], $this->db->select('customer'));
         $this->assertInstanceOf(Query::class, $this->db->insert('customer',
         [
             'customer_id' => 4,
@@ -111,6 +127,8 @@ class DBTest extends TestCase
         $this->assertEquals('[{"customer_id":"1","name":"alejandro","email":"alejandro@hotmail.com"},{"customer_id":"2","name":"michelle","email":"michelle@gmail.com"}]', $this->db->query('SELECT * FROM customer')->getJson());
         $this->expectException(InvalidArgumentException::class);
         $this->db->insert('customer', [ 1,2,3 ]);
+        //Test proxy to PDO methods
+        $this->assertEquals("'text'", $this->db->quote('text'));
     }
 
 }
