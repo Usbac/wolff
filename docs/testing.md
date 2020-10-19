@@ -12,11 +12,4 @@ vendor/bin/phpunit
 
 _High privileges is usually refered as `sudo` in most systems (sudo vendor/bin/phpunit)._
 
-_Running the command with high privileges is required since some files will be created during the testing process._
-
-### Untested elements
-
-The following elements of Wolff are not present in the tests (due to its nature):
-
-* Authentication
-* Database
+_Running the command with high privileges is required since some files will be created and then deleted during the testing process._

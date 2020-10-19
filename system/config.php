@@ -1,24 +1,19 @@
 <?php
 
 return [
-    //Database
     'db' => [
         'dsn'      => '',
         'username' => '',
-        'password' => ''
+        'password' => '',
     ],
+    'env_file'       => 'system/.env.example',
+    'env_override'   => true,
 
-    //Environment
-    'env_file'     => 'system/.env.example',
-    'env_override' => true,
+    'language'       => 'english',
 
-    //General
-    'language' => 'english',
-
-    //Extra
     'development_on' => true,
     'template_on'    => true,
     'cache_on'       => true,
     'stdlib_on'      => true,
-    'maintenance_on' => false
+    'maintenance_on' => false,
 ];
