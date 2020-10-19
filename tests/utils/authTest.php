@@ -14,6 +14,11 @@ class AuthTest extends TestCase
 
     public function setUp(): void
     {
+        global $argv;
+        if (!isset($argv[1]) || $argv[1] !== '-db') {
+            $this->markTestSkipped('Skipped auth test!');
+        }
+
         $this->auth = new Auth([ 'dsn' => 'sqlite::memory:' ], [
             'cost' => '15'
         ]);

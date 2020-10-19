@@ -17,6 +17,11 @@ class DBTest extends TestCase
 
     public function setUp(): void
     {
+        global $argv;
+        if (!isset($argv[1]) || $argv[1] !== '-db') {
+            $this->markTestSkipped('Skipped database test!');
+        }
+
         DB::setCredentials([
             'dsn' => 'sqlite::memory:',
         ]);
