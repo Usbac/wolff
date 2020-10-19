@@ -1,10 +1,9 @@
-<phpunit bootstrap="test/bootstrap.php" colors="true">
+<phpunit bootstrap="tests/bootstrap.php" colors="true">
 	<testsuites>
 		<testsuite name="Wolff">
-			<directory suffix="Test.php">test</directory>
+			<directory suffix="Test.php">tests</directory>
 		</testsuite>
 	</testsuites>
-    <!-- Code coverage -->
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">vendor/usbac/wolff-framework/src</directory>
