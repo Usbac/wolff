@@ -1,6 +1,6 @@
 <?php
 
-namespace Test;
+namespace Tests;
 
 use PHPUnit\Framework\TestCase;
 use Wolff\Core\Container;
@@ -20,7 +20,7 @@ class ContainerTest extends TestCase
             return new exampleClass($param1, $param2);
         });
 
-        Container::singleton('singleton_2', 'Test\ContainerTest');
+        Container::singleton('singleton_2', 'Tests\ContainerTest');
 
         Container::singleton(ContainerTest::class);
     }

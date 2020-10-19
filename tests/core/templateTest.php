@@ -1,6 +1,6 @@
 <?php
 
-namespace Test;
+namespace Tests;
 
 use PHPUnit\Framework\TestCase;
 use Wolff\Core\Template;
@@ -22,16 +22,16 @@ class TemplateTest extends TestCase
     {
         $this->assertTrue(Template::isEnabled());
         $this->assertEquals(
-            $this->getWithoutSpaces(\file_get_contents('../test/core/template/expected.txt')),
-            $this->getWithoutSpaces(Template::getRender('../../test/core/template/original_view', [
+            $this->getWithoutSpaces(\file_get_contents('../tests/core/template/expected.txt')),
+            $this->getWithoutSpaces(Template::getRender('../../tests/core/template/original_view', [
                 'title' => 'Web development made just right.',
                 'html'  => '<p style="font-size:30px">Welcome!</p>'
             ], false))
         );
 
         $this->assertEquals(
-            $this->getWithoutSpaces(\file_get_contents('../test/core/template/expected_extended.txt')),
-            $this->getWithoutSpaces(Template::getRender('../../test/core/template/child_view', [], false))
+            $this->getWithoutSpaces(\file_get_contents('../tests/core/template/expected_extended.txt')),
+            $this->getWithoutSpaces(Template::getRender('../../tests/core/template/child_view', [], false))
         );
 
         $this->expectException(FileNotFoundException::class);

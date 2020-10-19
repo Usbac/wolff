@@ -1,6 +1,6 @@
 <?php
 
-namespace Test;
+namespace Tests;
 
 use PHPUnit\Framework\TestCase;
 use Wolff\Core\Log;
@@ -16,7 +16,7 @@ class LogTest extends TestCase
     public function setUp(): void
     {
         $this->log = new Log();
-        $this->log->setFolder('test/logs');
+        $this->log->setFolder('tests/logs');
         $this->log->setDateFormat('H:i');
 
         $this->log->info('Hello world');
@@ -26,7 +26,7 @@ class LogTest extends TestCase
             'password' => '123456'
         ]);
 
-        $this->file_path = '../test/logs/' . date('m-d-Y') . '.log';
+        $this->file_path = '../tests/logs/' . date('m-d-Y') . '.log';
         $this->expected_content = $this->getExpectedContent();
     }
 
@@ -44,7 +44,7 @@ class LogTest extends TestCase
     public function tearDown(): void
     {
         unlink($this->file_path);
-        rmdir('../test/logs');
+        rmdir('../tests/logs');
     }
 
 
