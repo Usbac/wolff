@@ -48,10 +48,10 @@ Returns the session remaining time (in seconds).
 Session::getRemainingTime();
 ```
 
-If `true` is given as parameter, it will return the remaining time with format (Hours, minutes and seconds).
+If a `string` is given as parameter, it will return the remaining time in the given date format.
 
 ```php
-Session::getRemainingTime(true);
+Session::getRemainingTime('H:m:s');
 ```
 
 ### Unset
@@ -126,10 +126,10 @@ Returns the variable time (in seconds).
 Session::getVarTime('name');
 ```
 
-If `true` is given as the second parameter, it will return the time with format (Hours, minutes and seconds).
+If a `string` is given as the second parameter, it will return the time in the given date format.
 
 ```php
-Session::getVarTime('name', true);
+Session::getVarTime('name', 'H:m:s');
 ```
 
 ### Set variable time

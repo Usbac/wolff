@@ -18,6 +18,8 @@
 
 - Change the cache files extension to `tmp`.
 
+- Change the optional gmdate parameter of the `getRemainingTime` and `getVarTime` methods of the `Wolff\Core\Session` class to a string, containing the format for the time.
+
 - Change the `getAllowedIPs` method of the `Wolff\Core\Maintenance` to return an empty array instead of false when the whitelist file does not exists.
 
 ### Removed
