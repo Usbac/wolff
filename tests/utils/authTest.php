@@ -67,6 +67,10 @@ class AuthTest extends TestCase
         ]));
         $this->assertEquals(1, $this->auth->getLastId());
         $this->assertNull($this->auth->getUser());
+        $this->assertFalse($this->auth->login([
+            'email'    => 'another@hotmail.com',
+            'password' => 'canislupus',
+        ]));
         $this->assertTrue($this->auth->login([
             'email'    => 'alejandro@hotmail.com',
             'password' => 'canislupus',

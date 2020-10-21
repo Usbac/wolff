@@ -3,6 +3,7 @@
 namespace Tests;
 
 use PDO;
+use PDOException;
 use PDOStatement;
 use PHPUnit\Framework\TestCase;
 use Wolff\Core\DB;
@@ -37,6 +38,10 @@ class DBTest extends TestCase
             (customer_id INT PRIMARY KEY,
             name VARCHAR(255) NOT NULL,
             email VARCHAR(255) NOT NULL)');
+        $this->db->query('CREATE TABLE customer_two
+                (customer_id INT PRIMARY KEY,
+                name VARCHAR(255) NOT NULL,
+                email VARCHAR(255) NOT NULL)');
         $this->db->query("INSERT INTO customer (customer_id, name, email) VALUES
             (1, 'alejandro', 'alejandro@hotmail.com'),
             (2, 'michelle', 'michelle@gmail.com'),
@@ -66,6 +71,7 @@ class DBTest extends TestCase
         $this->assertFalse($this->db->tableExists('product'));
         $this->assertTrue($this->db->columnExists('customer', 'name'));
         $this->assertFalse($this->db->columnExists('customer', 'phone'));
+        $this->assertFalse($this->db->columnExists('1 == 1', 'phone'));
         $this->assertEquals([
             [
                 'customer_id' => 1,
@@ -103,6 +109,7 @@ class DBTest extends TestCase
         ], $this->db->select('customer.email', 'name = ?', 'robbie'));
         $this->assertTrue($this->db->delete('customer', 'customer_id > 2'));
         $this->assertEquals(2, $this->db->count('customer', 'customer_id > 0'));
+        $this->assertEquals(0, $this->db->count('customer', 'customer_id = -1'));
         $this->assertEquals([
             'customer_id' => 1,
             'name'        => 'alejandro',
@@ -130,10 +137,12 @@ class DBTest extends TestCase
             ]
         ], $this->db->query('SELECT * FROM customer')->limit(1, 2));
         $this->assertEquals('[{"customer_id":"1","name":"alejandro","email":"alejandro@hotmail.com"},{"customer_id":"2","name":"michelle","email":"michelle@gmail.com"}]', $this->db->query('SELECT * FROM customer')->getJson());
-        $this->expectException(InvalidArgumentException::class);
-        $this->db->insert('customer', [ 1,2,3 ]);
+        $this->assertTrue($this->db->moveRows('customer', 'customer_two'));
+        $this->assertFalse($this->db->moveRows('customer', 'customer_three'));
         //Test proxy to PDO methods
         $this->assertEquals("'text'", $this->db->quote('text'));
+        $this->expectException(InvalidArgumentException::class);
+        $this->db->insert('customer', [ 1,2,3 ]);
     }
 
 }
