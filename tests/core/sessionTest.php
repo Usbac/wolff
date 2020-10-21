@@ -24,9 +24,12 @@ class SessionTest extends TestCase
         $this->assertEquals($_SESSION['msg'], Session::get('msg'));
         $this->assertEquals('Hello world', Session::get('msg'));
         $this->assertEquals((10 + 10) * 60, Session::getVarTime('msg'));
+        $this->assertEquals('20:00', Session::getVarTime('msg', 'i:s'));
         $this->assertEquals($_SESSION, Session::get());
         Session::setTime(10);
-        Session::addTime(10);
+        Session::addTime(20);
+        $this->assertEquals(30 * 60, Session::getRemainingTime());
+        $this->assertEquals('00:30', Session::getRemainingTime('H:i'));
 
         Session::unset('msg');
         $this->assertNull(Session::get('msg'));
