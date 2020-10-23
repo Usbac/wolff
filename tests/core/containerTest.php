@@ -19,9 +19,7 @@ class ContainerTest extends TestCase
         Container::singleton('singleton', function ($param1, $param2) {
             return new exampleClass($param1, $param2);
         });
-
         Container::singleton('singleton_2', 'Tests\ContainerTest');
-
         Container::singleton(ContainerTest::class);
     }
 
