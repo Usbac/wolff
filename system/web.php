@@ -9,16 +9,16 @@ use Wolff\Core\View;
  * Use this file for declaring routes, middlewares and more...
  */
 
-Route::get('/', [
-    'home', 'index'
-]);
+Route::get('/', [ Controller\Home::class, 'index' ]);
 
-Route::code(404, function ($req, $res) {
-    $data['lang'] = Language::get('404');
-    View::render('404', $data);
+Route::code(404, function () {
+    View::render('404', [
+        'lang' => Language::get('404'),
+    ]);
 });
 
-Maintenance::set(function ($req, $res) {
-    $data['lang'] = Language::get('maintenance');
-    View::render('maintenance', $data);
+Maintenance::set(function () {
+    View::render('maintenance', [
+        'lang' => Language::get('maintenance'),
+    ]);
 });

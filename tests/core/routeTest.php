@@ -49,14 +49,21 @@ class RouteTest extends TestCase
         $this->assertNotEmpty(Route::getRoutes());
 
         //Redirects
+        $this->assertNull(Route::getRedirection('invalid_redirect'));
         $this->assertEmpty(Route::getRedirects());
         Route::redirect('page1', 'home2');
         $this->assertNotEmpty(Route::getRedirects());
-        $redirection = [
-            'destiny' => 'home2',
-            'code'    => 301
-        ];
-        $this->assertEquals($redirection, Route::getRedirection('page1'));
+        $this->assertEquals([
+            'from' => 'page1',
+            'to'   => 'home2',
+            'code' => 301,
+        ], Route::getRedirection('page1'));
+        Route::redirect('post/redirect/*', 'home2');
+        $this->assertEquals([
+            'from' => 'post/redirect/*',
+            'to'   => 'home2',
+            'code' => 301,
+        ], Route::getRedirection('post/redirect/sub'));
         $this->assertNull(Route::getRedirection('invalid_redirect'));
         $this->assertEquals('redirected', @Route::getFunction('home2')());
 
