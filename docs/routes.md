@@ -10,9 +10,9 @@ In the `system/web.php` file you can define routes, its parameters and what to d
 
 The `any` method let's you add a route that will work for every HTTP method.
 
-The first parameter is the desired route, the second is the function that will be executed when accessing to the route, the third and optional parameter is the HTTP code.
+A basic route takes the first parameter as the desired route, the second as the `Closure` that will be called, and the third and optional parameter as the HTTP code that will be set when accessing that route.
 
-The function parameter must take two parameters which are the request and response object (instance of `Wolff\Core\Http\Request` and `Wolff\Core\Http\Response`).
+The `Closure` can take two parameters which are the request and response objects (instance of `Wolff\Core\Http\Request` and `Wolff\Core\Http\Response`).
 
 ```php
 Route::any('main_page', function($req, $res) {
@@ -42,6 +42,16 @@ Route::patch($uri, $func, $method = 200);
 Route::delete($uri, $func, $method = 200);
 ```
 
+## Binding methods
+
+You can bind a class method to a route by passing an array as the second parameter. The first element of the array must be a string with the class name, the second must be a string with the method name. 
+
+```php
+Route::get('main_page', [ Controller\Home::class, 'index' ]);
+```
+
+In that case the `index` method of the `Home` controller will be called when accessing to `example.com/main_page`.
+
 ### View routes
 
 `view(string $url, string $view_path[, array $data[, bool $cache]])`
@@ -56,7 +66,7 @@ This example will render the view `home` when accessing to the homepage page.
 
 ```php
 $data = [
-    'title' => 'Hello world'
+    'title' => 'Hello world',
 ];
 
 Route::view('/', 'home', $data);
@@ -88,7 +98,7 @@ That will set the content-type of the route to `application/json`.
 
 You can define routes that will be executed based on an HTTP status code by using the `code` method.
 
-The function parameter must take two parameters which are the request and response objects (instance of `Wolff\Core\Http\Request` and `Wolff\Core\Http\Response`).
+The function parameter can take two parameters which are the request and response objects (instance of `Wolff\Core\Http\Request` and `Wolff\Core\Http\Response`).
 
 ```php
 Route::code(404, function($req, $res) {
@@ -97,18 +107,6 @@ Route::code(404, function($req, $res) {
 ```
 
 That function will be executed only when the current status code is `404`.
-
-## Controller loading
-
-You can load a controller in a easier way if you pass a string as the second parameter.
-
-The string must follow this syntax: `controller_path@method`.
-
-```php
-Route::get('main_page', 'home@index');
-```
-
-It will load the index method of home controller when accessing to `example.com/main_page`.
 
 ## Route parameters
 
@@ -130,6 +128,8 @@ Parameters should be put between brackets and only be alphanumeric characters.
 
 You can also use optional get parameters in the URL.
 
+Parameters should be put between brackets, end with a question mark inside them and only be alphanumeric characters.
+
 The following block of code:
 
 ```php
@@ -139,8 +139,6 @@ Route::get('main_page/{name?}', function($req, $res) {
 ```
 
 Will take the second part of the route as a get variable which you can get from the common `$_GET` array using its name as the key.
-
-Parameters should be put between brackets, end with a question mark inside them and only be alphanumeric characters.
 
 ## Block
 
@@ -154,9 +152,9 @@ Route::block('main_page');
 
 Will block the access to `example.com/main_page` only.
 
-### Block recursively
+### Dynamic block
 
-You can block any sub route using the * symbol
+You can block any sub route using the `*` character.
 
 ```php
 Route::block('main_page/contact/*');
@@ -174,13 +172,23 @@ You can redirect one route to another. When doing it, a 301 HTTP response code w
 Route::redirect('page1', 'page2');
 ```
 
-With the above example the route page1 will redirect to page2, you can specify an HTTP response code if you want.
+With the above example the route `page1` will redirect to `page2`, you can specify an HTTP response code if you want.
 
 ```php
 Route::redirect('page1', 'page2', 200);
 ```
 
 That will do the same but will return a 200 HTTP response code.
+
+### Dynamic redirect 
+
+You can redirect any sub route using the `*` character.
+
+```php
+Route::redirect('posts/*', 'not_found', 200);
+```
+
+This will redirect any sub route of `posts` to `not_found`, keep in mind that `posts` itself won't be redirected.
 
 ## General Methods
 
