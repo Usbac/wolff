@@ -9,7 +9,9 @@ use Wolff\Core\View;
  * Use this file for declaring routes, middlewares and more...
  */
 
-Route::get('/', 'home@index');
+Route::get('/', [
+    'home', 'index'
+]);
 
 Route::code(404, function ($req, $res) {
     $data['lang'] = Language::get('404');
