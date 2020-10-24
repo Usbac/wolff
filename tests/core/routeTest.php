@@ -62,7 +62,7 @@ class RouteTest extends TestCase
 
         //Route functions
         $this->assertNull(Route::invalid_method());
-        $this->assertEquals('in root', @Route::getFunction('/')());
+        $this->assertEquals('in root', @Route::getFunction('')());
         $this->assertEquals('Parameter: ' . '15048', @Route::getFunction('home/15048')());
         $this->assertEquals('Parameter: ', @Route::getFunction('optional/')());
         $this->assertEquals('Parameter: ' . '123', @Route::getFunction('optional/123')());
