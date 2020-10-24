@@ -47,5 +47,6 @@ class ContainerTest extends TestCase
         $this->assertEquals('wolff', $singleton_2->getParam1());
         $this->assertInstanceOf(ContainerTest::class, Container::get('singleton_2'));
         $this->assertNotNull(Container::get(ContainerTest::class));
+        $this->assertTrue(Container::has('singleton'));
     }
 }
