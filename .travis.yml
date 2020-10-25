@@ -5,3 +5,5 @@ php:
 
 before_script:
   - composer update
+
+script: vendor/bin/phpunit -db
