@@ -6,7 +6,9 @@
 
 - Add language tag to the template engine.
 
-- Add optional seconds parameter to the `clear` method of the Cache system.
+- Add optional seconds parameter to the `clear` method of the `Wolff\Core\Cache` class.
+
+- Add `getFilename` method to the `Wolff\Core\Cache` class.
 
 - Add support for dynamic redirections to the Route system.
 

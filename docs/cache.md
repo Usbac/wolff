@@ -89,6 +89,18 @@ Cache::has('home');
 
 That will return `true` if the home cache file exists, `false` otherwise.
 
+### Get filename
+
+`getFilename(string $dir)`
+
+Returns the absolute path of the given cache file.
+
+```php
+Cache::getFilename('home');
+```
+
+That example should return something like `/var/www/html/wolff/cache/home.tmp`.
+
 ### Delete
 
 `delete(string $dir)`
