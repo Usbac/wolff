@@ -2,5 +2,5 @@
 
 return [
     'title' => 'Wolff',
-    'msg'   => 'Esta página no existe :('
+    'msg'   => 'Esta página no existe :(',
 ];

@@ -3,5 +3,5 @@
 return [
     'title'       => 'Wolff',
     'maintenance' => 'Under maintenance',
-    'msg'         => 'Come back soon'
+    'msg'         => 'Come back soon',
 ];
