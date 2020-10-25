@@ -6,7 +6,7 @@ return [
     'description_2' => 'Let\'s create together the next big thing',
 
     'documentation' => 'documentation',
-    'page'          => 'web page',
+    'page'          => 'website',
     'repo'          => 'repository',
-    'version'       => 'Version ' . WOLFF_CONFIG['version']
+    'version'       => 'Version ' . WOLFF_CONFIG['version'],
 ];

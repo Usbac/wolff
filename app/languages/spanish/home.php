@@ -8,5 +8,5 @@ return [
     'documentation' => 'documentación',
     'page'          => 'página web',
     'repo'          => 'repositorio',
-    'version'       => 'Vérsion ' . WOLFF_CONFIG['version']
+    'version'       => 'Versión ' . WOLFF_CONFIG['version'],
 ];
