@@ -4,7 +4,7 @@ A Wolff project can enter into maintenance mode quite easily.
 
 The constant `maintenance_on` defined in the `system/config.php` file indicates if the project is under maintenance or not, just change its value to `true` if you want to activate it.
 
-When under maintenance, the function defined with the `set` method will be executed if the client IP address isn't in the white list.
+When under maintenance, the function defined with the `set` method will be executed if the client IP address isn't in the white list, and its access to the web app will be blocked.
 
 ### Is enabled
 
@@ -42,37 +42,28 @@ Maintenance::set(function($req, $res) {
 
 ## White list
 
-A white list file is the one that defines which IP address will still have access to the web app when it's under maintenance.
+A white list is the one that defines which IP addresses will still have access to the web app when it's under maintenance.
 
-It should be located under the `system/` directory and should be named `maintenance_whitelist.txt`.
+### Set IPs white list
 
-### Set white list file
+`setIPs(iterable $ips)`
 
-`setFile([string $path])`
+Sets the IPs whitelist.
 
-With the `setFile` method you can change the default white list file.
-
-```php
-Maintenance::setFile('system/ips.txt');
-```
-
-_The given path is relative to the project root folder._
-
-### Add IP
-
-`addAllowedIP(string $ip)`
-
-Adds an IP address to the white list.
+The given parameter must be an iterable (meaning it can be an array or an object implementing the Traversable interface).
 
 ```php
-Maintenance::addAllowedIP('127.0.0.1');
+Maintenance::setIPs([
+    '192.168.2.150',
+    '::1',
+]);
 ```
 
-_If the white list file doesn't exists, it will be created automatically._
+Now the IPs `192.168.2.150` and `::1` will have access even on maintenance mode.
 
-### Delete IP
+### Delete white list IP
 
-`removeAllowedIP(string $ip)`
+`removeIP(string $ip)`
 
 Deletes the given IP address from the white list.
 
@@ -80,29 +71,24 @@ Deletes the given IP address from the white list.
 Maintenance::removeAllowedIP('127.0.0.1');
 ```
 
-This method returns `true` if the IP has been removed or doesn't exists in the whitelist, `false` otherwise.
+### Get IP white list
 
-This method throws a `\Wolff\Exception\FileNotReadableException` when the whitelist file exists and is unreadable.
-
-### Get IP list
-
-`getAllowedIPs()`
+`getIPs()`
 
 Returns all the IP address in the white list.
 
 ```php
-Maintenance::getAllowedIPs();
+Maintenance::getIPs();
 ```
 
-_This method returns the IP list as a non-associative array._
+_This method returns the IP list as an indexed array._
 
-## Client Allowed
+## Client has access
 
 `hasAccess()`
 
-Returns `true` if the current client IP address has access under maintenance mode and the maintenance mode is enabled, `false` otherwise.
+Returns `true` if the current client IP address is in the white list, `false` otherwise.
 
 ```php
 Maintenance::hasAccess();
 ```
-

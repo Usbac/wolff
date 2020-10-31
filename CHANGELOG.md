@@ -16,17 +16,17 @@
 
 ### Changed
 
-- Change the function parameter of the `Wolff\Core\Route` from an optional string to an optional array of strings containing the controller and method to call (`'home@index'` now is `[ Controller\Home::class, 'index' ]`).
+- Change the function parameter of the `Wolff\Core\Route` class from an optional string to an optional array of strings containing the class and method to call (`'home@index'` now is `[ Controller\Home::class, 'index' ]`).
 
 - Make the Logging system non-static.
 
 - Make the Database abstraction layer more modular.
 
+- Change the Maintenance system whitelist from a file to an iterable value.
+
 - Change the cache files extension to `tmp`.
 
 - Change the optional gmdate parameter of the `getRemainingTime` and `getVarTime` methods of the `Wolff\Core\Session` class to a string, containing the format for the time.
-
-- Change the `getAllowedIPs` method of the `Wolff\Core\Maintenance` to return an empty array instead of false when the whitelist file does not exists.
 
 ### Removed
 
