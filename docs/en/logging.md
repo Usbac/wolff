@@ -8,43 +8,35 @@ The methods of the Logging class can be called anywhere inside your Wolff projec
 
 The logging files are located by default in the `system/logs` folder.
 
-Every logging file represents a day and contains logs with the following format:
-
-```
-[date][ip] Level: message
-```
+Every logging file represents a day and contains logs with the format `[date][ip] [level]: [message]`.
 
 ## Logging
 
-`{level}(string $msg[, array $values])`
+These are the available logging methods:
 
-Logging a simple information:
+`emergency(string $msg[, array $values])`
+`alert(string $msg[, array $values])`
+`critial(string $msg[, array $values])`
+`error(string $msg[, array $values])`
+`warning(string $msg[, array $values])`
+`notice(string $msg[, array $values])`
+`info(string $msg[, array $values])`
+`debug(string $msg[, array $values])`
+
+The same example showed below can be applied to the other methods.
 
 ```php
 $log = new Log();
 $log->info('Welcome to Wolff.');
 ```
 
-There are different levels for the messages, these are the available:
-
-| Levels      |
-| ------------|
-| Emergency   |
-| Alert       |
-| Critical    |
-| Error       |
-| Warning     |
-| Notice      |
-| Info        |
-| Debug       |
-
-The same example showed above can be applied to those.
+That will log the message 'Welcome to Wolff' as an info.
 
 ### Interpolation
 
-The methods to logging data can take an optional second parameter which must be an associative array with values to interpolate in the string.
+The methods to logging data can take an optional second parameter which is an associative array with values to interpolate in the string.
 
-The values to interpolate must be between curly brackets.
+The values to interpolate must be between curly brackets like `{this}`.
 
 ```php
 $values = [
@@ -52,10 +44,10 @@ $values = [
     'page' => 'home/'
 ];
 
-$log->Debug('The current user is {name} in the page {page}', $values);
+$log->debug('The user is {name} in the page {page}', $values);
 ```
 
-As an example, that should log `The current user is Thomas in the page home/`.
+As an example, that should log `The user is Thomas in the page home/`.
 
 ## General methods
 
@@ -95,7 +87,7 @@ _The given path is relative to the project root folder._
 
 ### Set date format
 
-`setDateFormat([string $date_format])`
+`setDateFormat([string $format])`
 
 Sets the date format used internally in the log files.
 
