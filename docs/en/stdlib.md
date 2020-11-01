@@ -109,18 +109,18 @@ _Keep in mind that the array's keys are preserved even for non-assosiative array
 
 ### Bytes to string
 
-`bytesToString($size[, $precision])`
+`bytesToString(int $size[, int $precision])`
 
 Returns the given size (in bytes) as a human-readable string. The default precision is `2`.
 
 ```php
-bytesToString('540000')
+bytesToString(540000)
 ```
 
 That example should return '527KB'.
 
 ```php
-bytesToString('10000000', 3)
+bytesToString(10000000, 3)
 ```
 
 That example should return '9.537MB'.
