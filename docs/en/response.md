@@ -101,6 +101,18 @@ Sets the HTTP status code.
 $response->setCode(200);
 ```
 
+### Get HTTP Code
+
+`getCode()`
+
+Returns the HTTP status code.
+
+```php
+$response->getCode();
+```
+
+In that example it should return `200`.
+
 ### Add header
 
 `setHeader(string $key, string $value)`

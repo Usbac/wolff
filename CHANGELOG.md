@@ -10,6 +10,8 @@
 
 - Add `getFilename` method to the `Wolff\Core\Cache` class.
 
+- Add `getCode` method to the `Wolff\Core\Http\Response` class.
+
 - Add support for dynamic redirections to the Route system.
 
 - Add better overall performance.
