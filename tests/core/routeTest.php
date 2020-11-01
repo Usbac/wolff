@@ -4,6 +4,7 @@ namespace Tests;
 
 use PHPUnit\Framework\TestCase;
 use Wolff\Core\Route;
+use Wolff\Exception\InvalidArgumentException;
 
 class RouteTest extends TestCase
 {
@@ -15,7 +16,7 @@ class RouteTest extends TestCase
             return 'in root';
         });
 
-        Route::get('home', function () {
+        Route::get('plain:home', function () {
             return 'hello world';
         });
 
@@ -25,7 +26,7 @@ class RouteTest extends TestCase
 
         Route::get('home/{id}', function () {
             return 'Parameter: ' . $_GET['id'];
-        });
+        }, 200);
 
         Route::get('optional/{id2?}', function () {
             return 'Parameter: ' . ($_GET['id2'] ?? '');
@@ -79,12 +80,10 @@ class RouteTest extends TestCase
         $this->assertNull(@Route::getFunction('home/123/another'));
 
         //Code
-        http_response_code(202);
         $req = new \Wolff\Core\Http\Request([], [], [], [], []);
         $res = new \Wolff\Core\Http\Response;
-        $this->assertNull(Route::execCode($req, $res));
-        http_response_code(404);
-        Route::execCode($req, $res);
+        $this->assertNull(Route::execCode(202, $req, $res));
+        Route::execCode(404, $req, $res);
         $this->assertEquals('bar', $req->foo);
         $this->assertEquals('bar', $res->foo);
 
@@ -98,5 +97,8 @@ class RouteTest extends TestCase
         Route::block('*');
         $this->assertTrue(Route::isBlocked('home'));
         $this->assertTrue(Route::isBlocked('another_route'));
+        $this->expectException(InvalidArgumentException::class);
+        Route::get([ 'route' ], []);
+        Route::get('route');
     }
 }
