@@ -16,11 +16,11 @@
 
 ### Changed
 
-- Change the function parameter of the `Wolff\Core\Route` class from an optional string to an optional array of strings containing the class and method to call (`'home@index'` now is `[ Controller\Home::class, 'index' ]`).
+- Change the function parameter of the `Wolff\Core\Route` class to accept an array containing the class and method to call (`'home@index'` now is `[ Controller\Home::class, 'index' ]`).
 
 - Make the Logging system non-static.
 
-- Make the Database abstraction layer more modular.
+- The credential array keys `dbms`, `server` and `name` has been replaced by the key `dsn` in the `Wolff\Core\DB` and `Wolff\Utils\Auth` constructors.
 
 - Change the Maintenance system whitelist from a file to an iterable value.
 
