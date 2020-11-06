@@ -54,7 +54,7 @@ In that case the `index` method of the `Home` controller will be called when acc
 
 ### View routes
 
-`view(string $url, string $view_path[, array $data[, bool $cache]])`
+`view(string $url, string $view[, array $data[, bool $cache]])`
 
 You can add routes that render a view directly using the `view` method.
 
