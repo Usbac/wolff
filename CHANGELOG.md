@@ -16,6 +16,8 @@
 
 - Add support for dynamic redirections to the Route system.
 
+- Add optional whitelist parameter to the `local` function of the standard library.
+
 - Add better overall performance.
 
 ### Changed
@@ -40,7 +42,7 @@
 
 - Remove the `count` method of the `Wolff\Core\Session` class.
 
-- Remove the `wolffVersion`, `local` and `isBool` functions of the standard library.
+- Remove the `wolffVersion` and `isBool` functions of the standard library.
 
 ## v3.2.2 (2020-10-05)
 

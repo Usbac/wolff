@@ -68,6 +68,8 @@ class StdlibTest extends TestCase
         $this->assertEquals('https://localhost/home/page', getPureCurrentPage());
         $this->assertEquals('https://localhost//home', url('home'));
         $this->assertFalse(validateCsrf());
+        $_SERVER['REMOTE_ADDR'] = '127.0.0.2';
+        $this->assertTrue(local(['127.0.0.2']));
         Config::init([
             'db' => [
                 'dsn'      => 'sqlite::memory:',

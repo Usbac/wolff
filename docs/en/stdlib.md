@@ -127,6 +127,24 @@ That example should return '9.537MB'.
 
 _The human-readable string to return can go from B (byte) to YB (yottabyte)._
 
+### Local
+
+`local([array $whitelist])`
+
+Returns `true` if the current script is running in localhost, false otherwise.
+
+```php
+local();
+```
+
+The default IPs used to check that the script is in localhost are: `127.0.0.1` and `::1`.
+
+An array with IPs can be passed to the function to extend it.
+
+```php
+local([ '127.0.0.2', '::2' ]);
+```
+
 ### Average
 
 `average(array $arr)`
