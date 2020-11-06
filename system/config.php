@@ -6,8 +6,11 @@ return [
         'username' => '',
         'password' => '',
     ],
-    'env_file'       => 'system/.env.example',
-    'env_override'   => true,
+
+    'env' => [
+        'file'     => 'system/.env.example',
+        'override' => true,
+    ],
 
     'language'       => 'english',
 

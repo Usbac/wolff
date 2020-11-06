@@ -12,9 +12,11 @@ The config file has the following definitions/keys inside an array that is being
 
     * **password**: the database username password.
 
-* **env_file**: The path of the .env file, by default it's `.env`.
+* **env**:
 
-* **env_override**: If `true` the environment variables will override the config data in the `Wolff\Core\Config` class and the `config` function helper. (The environment keys are converted to lowercase in the override proccess).
+    * **file**: The path of the .env file, by default it's `.env`.
+
+    * **override**: If `true` the environment variables will override the config data in the `Wolff\Core\Config` class and the `config` function helper. (The environment keys are converted to lowercase in the override proccess).
 
 * **language**: the site's main language.
 
@@ -37,7 +39,7 @@ The data of the environment file (defined in the `system/config.php` file) can b
 * The `Wolff\Core\Config` array. *
 * The `config` function of the standard library. *
 
-\* Only accesible if the `env_override` is set to `true` in the `system/config.php` file.
+\* Only accesible if the `env.override` is set to `true` in the `system/config.php` file.
 
 _Keep in mind that the environment key must be written in lowercase for the `config` function of the standard library and the `get` method of the `Wolff\Core\Config` class. Meaning that `$_ENV['LANGUAGE']` is equivalent to `config('language')`._
 
@@ -48,10 +50,16 @@ The `Wolff\Core\Config` class has the `get` method which can be used to get the 
 `get([string $key])`
 
 ```php
-Wolff\Core\Config::get('title');
+Wolff\Core\Config::get('language');
 ```
 
-It returns the config or environment value of the given key (depending if the `env_override` is set to `true` or not).
+It returns the configuration value of the given key (or environment value if the `env.override` is set to `true`).
+
+The key accepts dot notation.
+
+```php
+Wolff\Core\Config::get('db.username'); // Equivalent to Wolff\Core\Config::get('db')['username']
+```
 
 ### Example
 
@@ -61,8 +69,10 @@ system/config.php:
 return [
     'language' => 'english',
 
-    'env_file'     => 'system/.env',
-    'env_override' => false,
+    'env' => [
+        'file'     => 'system/.env',
+        'override' => false,
+    ],
 ];
 ```
 
@@ -72,4 +82,4 @@ system/.env:
 LANGUAGE='spanish'
 ```
 
-In this case `Wolff\Core\Config::get('language')` and `config('language')` will return `english`. If you set `env_override` to `true`, both will return `spanish` instead.
+In this case `Wolff\Core\Config::get('language')` and `config('language')` will return `english`. If you set `env.override` to `true`, both will return `spanish` instead.

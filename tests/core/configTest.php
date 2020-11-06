@@ -15,8 +15,10 @@ class ConfigTest extends TestCase
     public function setUp(): void
     {
         $this->data = include('../system/config.php');
-        $this->data['env_file'] = 'tests/.env';
-        $this->data['env_override'] = true;
+        $this->data['env'] = [
+            'file'     => 'tests/.env',
+            'override' => true,
+        ];
 
         $env_file = fopen('../tests/testing.env', 'w');
         fwrite($env_file, "LANGUAGE='spanish'\nFOO=null #comment\nTRUE=true");
@@ -37,7 +39,9 @@ class ConfigTest extends TestCase
         $this->expectException(FileNotReadableException::class);
 
         Config::init([
-            'env_file' => 'tests/non_existent.env'
+            'env' => [
+                'file' => 'tests/non_existent.env',
+            ],
         ]);
     }
 
@@ -45,11 +49,14 @@ class ConfigTest extends TestCase
     public function testEnv()
     {
         Config::init([
-            'env_file'     => 'tests/testing.env',
-            'env_override' => true
+            'env' => [
+                'file'     => 'tests/testing.env',
+                'override' => true,
+            ],
         ]);
 
         $this->assertEquals($_ENV['LANGUAGE'], Config::get('language'));
+        $this->assertEquals('tests/testing.env', Config::get('env.file'));
         $this->assertNull($_ENV['FOO']);
         $this->assertTrue($_ENV['TRUE']);
     }

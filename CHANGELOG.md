@@ -12,6 +12,8 @@
 
 - Add `getCode` method to the `Wolff\Core\Http\Response` class.
 
+- Add support for dot notation in the `get` method of the `Wolff\Core\Config` class.
+
 - Add support for dynamic redirections to the Route system.
 
 - Add better overall performance.
@@ -24,7 +26,7 @@
 
 - The credential array keys `dbms`, `server` and `name` has been replaced by the key `dsn` in the `Wolff\Core\DB` and `Wolff\Utils\Auth` constructors.
 
-- Change the Maintenance system whitelist from a file to an iterable value.
+- Change the Maintenance system whitelist from a file to a PHP iterable value.
 
 - Change the cache files extension to `tmp`.
 
