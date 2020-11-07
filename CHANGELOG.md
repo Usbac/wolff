@@ -36,6 +36,8 @@
 
 ### Removed
 
+- Remove the automatic controller's routing.
+
 - Remove the `getSchema` method of the `Wolff\Core\DB` class.
 
 - Remove the `toUtf8` method of the `Wolff\Utils\Str` class.
