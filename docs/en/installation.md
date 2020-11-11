@@ -1,8 +1,6 @@
 ## Prerequisites
 
-Wolff works with composer. In order to use it for the first time you must have Composer installed in your machine, or you can download one of the bundles.
-
-You can see how to install Composer in the [official page](https://getcomposer.org/doc/00-intro.md).
+The first two installation methods use Composer, you can see how to install Composer in the [official page](https://getcomposer.org/doc/00-intro.md).
 
 ## Installation
 
@@ -12,7 +10,7 @@ Clone/download the Wolff repository and run the following command in your Wolff 
 
 `composer install`
 
-This will download the rest of the required files and then you will be done :)
+This will download all the required files and then you will be done. :)
 
 ### Packagist
 
@@ -26,6 +24,6 @@ _If you have any problem during the installation, just remember to clear the Com
 
 ### Bundle
 
-You can download the bundles ready to be used which don't require composer.
+You can download the bundles ready to be used, just copy and paste its content in your server root.
 
 The bundles can be downloaded in the [Wolff releases page](https://github.com/Usbac/wolff/releases).

@@ -8,7 +8,7 @@ It's recommended to read the following pages in the specified order to learn the
 
 3.- [Starting](https://getwolff.com/doc/4.x/starting)
 
-4.- [Testing](https://getwolff.com/doc/4.x/testing)
+4.- [Testing](https://getwolff.com/doc/4.x/testing) (optional)
 
 ## 3.x Documentation
 

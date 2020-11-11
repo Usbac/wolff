@@ -24,11 +24,11 @@ But one goal of the framework is to do NOT release a major version unless there'
 
 **What is the framework philosophy?**
 
-The framework philosophy is to keep its simplicity while following good practices, clean code and an object oriented approach. All of this while trying to keep a stable architecture and without relying on 'magic'.
+The framework philosophy is to keep its simplicity while following good practices, clean code and an object oriented approach. All of this while trying to keep a stable architecture without relying on 'magic'.
 
 **What is required to install Wolff?**
 
-Only composer, but you can download the full bundle version that doesn't require it.
+Only composer, but you can download the bundle versions that don't require it.
 
 **What is required to run Wolff?**
 
@@ -38,9 +38,9 @@ For running a Wolff project you can use either an Apache server or the common PH
 
 **What are the dependencies of the framework?**
 
-One objective of Wolff is to avoid things like dependency hell or external libraries, the last is not strictly bad, it's just a decision of keeping all of the core functionality in one single module easy to modify, that's why the only dependency of a Wolff project is the framework itself (besides PHPUnit which is used only for the tests). 
+One objective of Wolff is to avoid things like dependency hell or external libraries, the last is not strictly bad, it's just a decision of keeping all of the core functionality in one single module easy to modify, that's why the only dependency of a Wolff project is the framework itself (besides PHPUnit but it's used only for the tests). 
 
-**What are the recommended permissions for Wolff?**
+**What are the recommended file permissions for Wolff?**
 
 The recommended permissions are 0755 for folders and 0655 for PHP source files. For your safety, PHP files should be editable by the owner and readable by a group.
 

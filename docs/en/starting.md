@@ -1,7 +1,6 @@
+Once you're done with the Wolff installation, you should have a `wolff` folder, move the folder content to your server root (commonly is `var/www/html` or `C:\xampp\htdocs`).
 
-Once you're done with the Wolff installation, you should have a `wolff` folder, move that folder to your server root (which commonly is `var/www/html` or `C:\xampp\htdocs`).
-
-Then, start your local server and go to the link: `localhost/wolff`. You should be able to see the Wolff welcome page :).
+Then, start your local server and go to the link: `localhost/wolff`. You should be able to see the Wolff welcome page.
 
 ### PHP build in server
 
@@ -25,7 +24,7 @@ _Warning: These examples are NOT supposed to be used as a reference for producti
 
 ### Simple insertion
 
-This example shows a page (available at `localhost/form`) with a simple form that inserts data into the database. Here we will use the controller, language, database and view utilites.
+This expressive example shows a page (available at `localhost/form`) with a simple form that inserts data into the database. Here we will use the controller, language, database, router and view modules.
 
 _The database class will use the credentials available in `system/config.php` file._
 
@@ -37,7 +36,7 @@ return [
     'name'       => 'Name',
     'email'      => 'Email address',
     'password'   => 'Password',
-    'btn_submit' => 'Submit'
+    'btn_submit' => 'Submit',
 ];
 ```
 
@@ -61,14 +60,23 @@ class Form
     // Form submit
     public function submit($req, $res)
     {
-        $data = $req->body();
         $db = new DB();
         $db->query("INSERT INTO user (name, email, password)
-            VALUES (:name, :email, :password)", $data);
+            VALUES (:name, :email, :password)", $req->body());
 
         echo 'Done';
     }
 }
+```
+
+system/web.php
+```php
+<?php
+
+use Wolff\Core\Route;
+
+Route::get('/', [ Controller\Home::class, 'index' ]);
+Route::get('form/submit', [ Controller\Home::class, 'submit' ]);
 ```
 
 app/views/form.wlf:
@@ -104,24 +112,23 @@ public function submit($req, $res)
     $validation->setFields([
         'name' => [
             'minlen' => 4,
-            'type'   => 'alpha'
+            'type'   => 'alpha',
         ],
         'email' => [
-            'type' => 'email'
+            'type' => 'email',
         ],
         'password' => [
-            'minlen' => 8
+            'minlen' => 8,
         ]
     ]);
 
-    if (!$validation->isValid()) {
+    if ($validation->isValid()) {
+        $db = new DB();
+        $db->query("INSERT INTO user (name, email, password)
+            VALUES (:name, :email, :password)", $req->body());
+        echo 'Done';
+    } else {
         echo 'Invalid data';
-        return;
     }
-
-    $db = new DB();
-    $db->query("INSERT INTO user (name, email, password)
-        VALUES (:name, :email, :password)", $req->body());
-    echo 'Done';
 }
 ```
