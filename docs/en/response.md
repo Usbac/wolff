@@ -67,7 +67,19 @@ $response->write('Hello world');
 
 That would be the equivalent to the classic and ugly: `echo 'hello world';`.
 
-_The string value of the given variable is the one that will be returned._
+_The string value of the given variable is the one that will be returned by the response._
+
+### Write Json content
+
+`writeJson($content)`
+
+Sets the content that will be returned by the response as a Json.
+
+```php
+$response->writeJson([ 'msg' => 'Hello world' ]);
+```
+
+That would be the equivalent to the classic and ugly: `echo json_encode([ 'msg' => 'Hello world' ]);`.
 
 ### Append content
 

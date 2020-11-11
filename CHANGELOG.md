@@ -10,7 +10,7 @@
 
 - Add `getFilename` method to the `Wolff\Core\Cache` class.
 
-- Add `getCode` method to the `Wolff\Core\Http\Response` class.
+- Add `getCode` and `writeJson` methods to the `Wolff\Core\Http\Response` class.
 
 - Add support for dot notation in the `get` method of the `Wolff\Core\Config` class.
 
