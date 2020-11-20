@@ -13,3 +13,19 @@ vendor/bin/phpunit
 _High privileges is usually refered as `sudo` in most systems (sudo vendor/bin/phpunit)._
 
 _Running the command with high privileges is required since some files will be created and then deleted during the testing process._
+
+### Database tests
+
+To run the tests with the database modules (`Wolff\Core\DB` and `Wolff\Utils\Auth`), just run the command with the `db` flag.
+
+```
+vendor/bin/phpunit -db
+```
+
+_The PDO Sqlite driver (pdo_sqlite) must be enabled for the database tests to run._
+
+## Code coverage
+
+The code coverage of wolff is around eighty-fourth percent (~84%). Keep in mind that this number can slightly change between different versions.
+
+_Coverage based on the result of PHPUnit while using Xdebug as code coverage driver._
