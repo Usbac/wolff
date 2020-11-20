@@ -2,6 +2,8 @@
 
 You can run queries using the Database class of Wolff. It's basically an abstraction layer builded on top of PDO, meaning that it simplifies the process of running queries and is also safe and reliable.
 
+_Keep in mind that the PHP PDO extension must be installed and enabled for the database to work._
+
 ## Configuration
 
 The database constructor looks like this.

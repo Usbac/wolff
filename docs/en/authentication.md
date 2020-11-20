@@ -4,6 +4,8 @@ The authentication utility simplifies the process of registering and login users
 
 It's built on top of the `Wolff\Core\DB` class so it uses PDO.
 
+_Keep in mind that the PHP PDO extension must be installed and enabled for the authentication utility to work._
+
 ## Starting
 
 First you need to instantiate the `Auth` class, its constructor looks like this:
