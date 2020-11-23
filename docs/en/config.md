@@ -2,33 +2,29 @@ Configuration is a vital part of any application, the Wolff configuration can be
 
 ## Config file
 
-The config file has the following definitions/keys inside an array that is being returned by the file itself.
+The config file has the following definitions/keys inside an array that is being returned by the file itself. 
 
-* **db**:
+The file looks like this:
 
-    * **dsn**: the database dsn string.
-
-    * **username**: the database username.
-
-    * **password**: the database username password.
-
-* **env**:
-
-    * **file**: The path of the .env file, by default it's `.env`.
-
-    * **override**: If `true` the environment variables will override the config data in the `Wolff\Core\Config` class and the `config` function helper. (The environment keys are converted to lowercase in the override proccess).
-
-* **language**: the site's main language.
-
-* **development_on**: the development status, `true` if the project is in an development environment, `false` otherwise (in a development environment all the errors will be displayed).
-
-* **template_on**: the template system status, `true` for enabling the template in the views, `false` for disable it.
-
-* **cache_on**: the cache status, `true` for enabling the use of cache, `false` for disable it.
-
-* **stdlib_on**: the standard library status, `true` for enabling its functions in the global namespace, `false` for disable them.
-
-* **maintenance_on**: the maintenance mode status, `true` for putting the page in maintenance,` false` for not.
+```php
+return [
+    'db' => [
+        'dsn'      => 'mysql:host=localhost;dbname=testdb', //The database dsn string
+        'username' => 'wolf', //Database username
+        'password' => '12345', //Database password
+    ],
+    'env' => [
+        'file'     => 'system/.env.example', //Path of the .env file (by default it's .env)
+        'override' => true, // If true the env variables will override the config data in the Config class and the config() function helper
+    ],
+    'language'       => 'english', //The default language
+    'development_on' => true, //The development mode status (in development mode all errors will be displayed)
+    'template_on'    => true, //The template engine status (enabled or not)
+    'cache_on'       => true, //The cache system status (enabled or not)
+    'stdlib_on'      => true, //The standard library status (enabled or not)
+    'maintenance_on' => false, //The maintenance mode status, if true the page will be in maintenance
+];
+```
 
 ## Environment
 
