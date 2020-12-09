@@ -21,11 +21,11 @@ Wolff is the perfect solution for building small and medium-sized web applicatio
 
 ## Features
 
-📓 **Extremely easy**: It's simple to use and has a clean documentation and interface. It gives you the opportunity to learn it in just a single night (sleep included).
+📓 **Extremely easy**: It's simple to use and no initial setup is required, it comes ready to be deployed, giving you the opportunity to learn it in just a single night (sleep included).
 
-🚀 **Ridiculously fast**: If a resource is not used, it's not loaded. Some elements of the framework can even be disabled. Wolff is very friendly with potato servers and works seamlessly.
+🚀 **Ridiculously fast**: Only the resources you need are loaded, the framework is able to handle hundreds of requests per second. It's very friendly with potato servers and works seamlessly.
 
-🛠️ **Comprenhensive**: Wolff has elements that cover everything you may ever need for building a web app. Absolutely no initial setup is required. They are ready to use.
+🛠️ **Comprenhensive**: Wolff has features that cover everything you may ever need for building a web app, from a handy database abstraction to a powerful template engine.
 
 ## What's included
 
@@ -61,7 +61,7 @@ composer create-project usbac/wolff
 
 This will download the whole project with everything ready to run.
 
-More info about the installation process in the [Docs - install page](https://getwolff.com/doc/3.x/installation) page.
+More info about the installation process in the [Docs - install](https://getwolff.com/doc/3.x/installation) page.
 
 _You can also download the last bundle [here](https://github.com/Usbac/wolff/releases/download/v3.1.0/wolff-bundle.zip)._
 
@@ -105,7 +105,7 @@ First time using it? Read the [Documentation](https://getwolff.com/doc/3.x/home)
 
 Any contribution or support to this project in the form of a pull request or message will be highly appreciated. ❤️
 
-You can read more about the contribution process [right here](CONTRIBUTING.md). Don't be shy :)
+You can read more about the contribution process [right here](CONTRIBUTING.md). Don't be shy. :)
 
 ## License
 
