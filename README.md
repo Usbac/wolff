@@ -30,17 +30,17 @@ Wolff is the perfect solution for building small and medium-sized web applicatio
 
 ## What's included
 
-* [**Database abstraction layer**](https://github.com/Usbac/wolff/wiki/Database)
+* [**Database abstraction layer**](https://getwolff.com/doc/3.x/db)
 
-* [**DI Container**](https://github.com/Usbac/wolff/wiki/Container)
+* [**DI Container**](https://getwolff.com/doc/3.x/container)
 
-* [**Language manager**](https://github.com/Usbac/wolff/wiki/Language)
+* [**Language manager**](https://getwolff.com/doc/3.x/language)
 
-* [**Routing system**](https://github.com/Usbac/wolff/wiki/Routes)
+* [**Routing system**](https://getwolff.com/doc/3.x/routes)
 
-* [**Standard library**](https://github.com/Usbac/wolff/wiki/Standard-library)
+* [**Standard library**](https://getwolff.com/doc/3.x/stdlib)
 
-* [**Template engine**](https://github.com/Usbac/wolff/wiki/Template)
+* [**Template engine**](https://getwolff.com/doc/3.x/template)
 
 And **much** more...
 
@@ -62,7 +62,7 @@ composer create-project usbac/wolff
 
 This will download the whole project with everything ready to run.
 
-You can see more information about the installation process in the [Wiki - install](https://github.com/Usbac/Wolff/wiki/Installation) page.
+More info about the installation process in the [Docs - install page](https://getwolff.com/doc/3.x/installation) page.
 
 _You can also download the last bundle [here](https://github.com/Usbac/wolff/releases/download/v3.1.0/wolff-bundle.zip)._
 
