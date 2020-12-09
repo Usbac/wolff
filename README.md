@@ -9,7 +9,6 @@
 
 <p align="center">
 <img src="https://travis-ci.org/Usbac/wolff.svg?branch=master">
-<a href="https://packagist.org/packages/usbac/wolff"><img src="https://poser.pugx.org/usbac/wolff/d/total.svg"></a>
 <img src="https://img.shields.io/badge/stable-3.2.2-blue.svg">
 <img src="https://img.shields.io/badge/license-MIT-orange.svg">
 </p>
