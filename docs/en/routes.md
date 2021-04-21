@@ -236,4 +236,4 @@ Returns all the blocked routes.
 Route::getBlocked();
 ```
 
-_Keep in mind that all these get methods returns an associative array with the results._
+_Keep in mind that all of these 'get' methods return an associative array._

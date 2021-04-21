@@ -13,8 +13,7 @@ Views can be rendered anywhere inside your Wolff project.
 When loading a view from a controller, you can pass as parameter an associative array with data in it:
 
 ```php
-$data['message'] = 'Hello world';
-View::render('page', $data);
+View::render('page', [ 'message' => 'Hello world' ]);
 ```
 
 ## Print
@@ -31,7 +30,7 @@ _Keep in mind that the content will be automatically escaped for your safety._
 
 ### Print raw
 
-If you don't want your data to be escaped use the following tags:
+If you don't want your data to be escaped, use the following tags:
 
 ```php
 {! $message !}
@@ -114,7 +113,6 @@ The same but using variables:
 The template system of Wolff has some abbreviated functions to make the code cleaner.
 
 To use a function only write its' name followed by a vertical bar and then the variable.
-Like this:
 
 ```php
 {{ upper|$title }}
@@ -138,7 +136,7 @@ With the `@lang` tag you can print variables of the language system in a short w
 
 That code will be replaced by the value of the 'title' key in the 'home' language array.
 
-_Keep in mind that this language tag does NOT escape the content, you are fully responsible for escaping it._
+_Keep in mind that this tag does NOT escape the content, you are fully responsible for escaping it._
 
 ### List
 
@@ -157,7 +155,7 @@ This are the available functions and their PHP equivalent:
 | countwords  | str_word_count   | number of words                                |
 | trim        | trim             | whitespace stripped from the beginning and end |
 | nl2br       | nl2br            | insert HTML line breaks before newlines        |
-| join(var)   | implode          | Join an array by a text (var)                  |
+| join(var)   | implode          | join an array by a text (var)                  |
 | repeat(var) | str_repeat       | repeat a string fixed number of times (var)    |
 
 ## CSRF
@@ -168,7 +166,7 @@ The template engine has a tag which can be used to avoid CSRF.
 @csrf
 ```
 
-Internally it creates a `__token` cookie if it doesn't exists and replaces the CSRF tag with a hidden input which value is the same of the cookie.
+Internally it creates a `__token` cookie if it does not exists and replaces the CSRF tag with a hidden input which value is the same of the cookie.
 
 _Keep in mind that the cookie has a live time of one hour and is http only._
 
@@ -335,7 +333,7 @@ The method takes a closure, which must take a parameter that is suposed to be th
 If you add the following code to the `system/web.php` file:
 
 ```php
-Template::custom(function ($content) {
+Wolff\Core\Template::custom(function ($content) {
     return preg_replace('/\!\!(.*?)\!\!/', '<?php echo "message: $1" ?>', $content);
 });
 ```

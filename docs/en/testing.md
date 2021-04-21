@@ -26,11 +26,11 @@ _The PDO Sqlite driver (pdo_sqlite) must be enabled for the database tests to ru
 
 ## Code coverage
 
-The code coverage of wolff is around eighty-fourth percent (~84%). Keep in mind that this number can slightly change between different versions.
+The code coverage of wolff is around *eighty-fourth percent (~84%). Keep in mind that this number can slightly change between different versions.
 
-_Coverage based on the result of PHPUnit while using Xdebug as code coverage driver._
+_\* Coverage based on the result of PHPUnit while using Xdebug as code coverage driver._
 
-To see the code coverage result in the terminal, run the test command with the `coverage-text` flag of PHPUnit.
+To see the code coverage result in the terminal by yourself, run the test command with the `coverage-text` flag of PHPUnit.
 
 ```
 vendor/bin/phpunit --coverage-text

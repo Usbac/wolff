@@ -4,7 +4,7 @@ It's recommended to read the following pages in the specified order to learn the
 
 1.- [Installation](https://getwolff.com/doc/4.x/installation)
 
-2.- [Config](https://getwolff.com/doc/4.x/config)
+2.- [Config](https://getwolff.com/doc/4.x/config) (optional)
 
 3.- [Starting](https://getwolff.com/doc/4.x/starting)
 
