@@ -20,6 +20,10 @@ class RouteTest extends TestCase
             return 'hello world';
         });
 
+        Route::get('418', function () {
+            return '418';
+        });
+
         Route::get('home2', function () {
             return 'redirected';
         });
@@ -46,6 +50,7 @@ class RouteTest extends TestCase
     public function testInit()
     {
         $this->assertTrue(Route::exists('home'));
+        $this->assertTrue(Route::exists('418'));
         $this->assertTrue(Route::exists('home/{}'));
         $this->assertNotEmpty(Route::getRoutes());
 
@@ -71,9 +76,10 @@ class RouteTest extends TestCase
         //Route functions
         $this->assertNull(Route::invalid_method());
         $this->assertEquals('in root', @Route::getFunction('')());
-        $this->assertEquals('Parameter: ' . '15048', @Route::getFunction('home/15048')());
+        $this->assertEquals('418', @Route::getFunction('418')());
+        $this->assertEquals('Parameter: 15048', @Route::getFunction('home/15048')());
         $this->assertEquals('Parameter: ', @Route::getFunction('optional/')());
-        $this->assertEquals('Parameter: ' . '123', @Route::getFunction('optional/123')());
+        $this->assertEquals('Parameter: 123', @Route::getFunction('optional/123')());
         $this->assertEquals('in page 12', @Route::getFunction('blog/12/dark')());
         $this->assertNull(@Route::getFunction('blog/12/'));
         $this->assertNull(@Route::getFunction('blog/12/white'));
