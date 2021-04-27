@@ -43,14 +43,12 @@ The only required keys that the given array must have are `password` and `passwo
 This method returns `true` if the user has been successfully inserted into the database, `false` otherwise.
 
 ```php
-$user = [
+$auth->register([
     'name'             => 'Alejandro',
     'email'            => 'contact@getwolff.com',
     'password'         => 'canislupus',
     'password_confirm' => 'canislupus',
-];
-
-$auth->register($user);
+]);
 ```
 
 Take in consideration the following points:
@@ -68,15 +66,13 @@ Returns `true` if the given user data exists in the database and is valid, `fals
 This method takes as parameter an array which will be the user data to validate. The only required key that the array must have is `password`.
 
 ```php
-$user = [
+$auth->login([
     'email'    => 'contact@getwolff.com',
-    'password' => 'canislupus'
-];
-
-$auth->login($user);
+    'password' => 'canislupus',
+]);
 ```
 
-If a user with the giving email and password exists in the `user` table (in this example), it will return true.
+If a user with the giving email and password exists in the `user` table (like in the example), it will return `true`.
 
 ### Set table
 
@@ -107,11 +103,9 @@ Set the options that will be used when hashing passwords.
 This is the equivalent to defining the third parameter of the `password_hash` function that is used internally in this utility.
 
 ```php
-$options = [
+$auth->setOptions([
     'cost' => 16
-];
-
-$auth->setOptions($options);
+]);
 ```
 
 That will set the cost of the pasword hashing function to 16. By default it's 10.
@@ -148,4 +142,4 @@ This function returns an associative array with the user data.
 $auth->getUser();
 ```
 
-If no user has been logged in previously with the `login` method or if the last login attempt failed this will return `null`.
+This method will return `null` if no user has been logged in previously with the `login` method or if the last login attempt failed.

@@ -39,12 +39,10 @@ Returns `true` if the given array is associative, `false` otherwise.
 _Keep in mind that in the context of the function, an associative array is an array with non-numeric keys._
 
 ```php
-$arr = [
+isAssoc([
     'name' => 'Margaret',
     'age'  => 63
-];
-
-isAssoc($arr);
+]);
 ```
 
 That should return `true`.

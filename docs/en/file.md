@@ -21,14 +21,12 @@ The array can have the following keys:
 * **override**: `true` for overriding files with the same path in the upload process, `false` for not overriding them.
 
 ```php
-$options = [
+$request->fileOptions([
     'dir'        => 'public',
     'extensions' => 'jpg, png, bmp',
     'max_size'   => 1024,
-    'override'   => true
-];
-
-$request->fileOptions($options);
+    'override'   => true,
+]);
 ```
 
 ## File methods
