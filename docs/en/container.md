@@ -10,13 +10,11 @@ The container's methods are static, you can add and get elements anywhere inside
 
 ### Add
 
-`add(string $class, $val)`
+`add(string $class, $val): void`
 
 Adds a new class to the container.
 
-The first parameter is the class name.
-
-The second parameter is the class value. So it can be either a new instantiation of the class, or a function returning the class.
+The first parameter is the class name, the second is the class value, it can be either a new instantiation of the class, or a function returning the class.
 
 ```php
 Container::add('user', function() {
@@ -34,11 +32,11 @@ _If a class with the same name already exists in the container, it will be overw
 
 ### Add singleton
 
-`singleton(string $class, $val)`
+`singleton(string $class, $val): void`
 
 Adds a new singleton class to the container.
 
-When adding a singleton and calling it throught the container, the container will make only one instance no matter how many time it's being called. Just like a singleton or a 'static class'.
+When adding a singleton and calling it throught the container, the container will make only one instance no matter how many times it's being called. Just like a singleton or a 'static class'.
 
 ```php
 Container::singleton('user', function() {
@@ -48,7 +46,7 @@ Container::singleton('user', function() {
 
 ### Get
 
-`get(string $key[, array $args])`
+`get(string $key[, array $args]): mixed`
 
 Returns the specified class instance.
 
@@ -72,17 +70,13 @@ Getting the instance:
 $user = Container::get('user', [
     'John doe', 22
 ]);
-```
 
-That would be the equivalent to this:
-
-```php
-$user = new \App\User('John doe', 22);
+// Equivalent to: $user = new \App\User('John doe', 22);
 ```
 
 ### Has
 
-`has(string $key)`
+`has(string $key): bool`
 
 Returns `true` if the given class name exists, `false` otherwise.
 

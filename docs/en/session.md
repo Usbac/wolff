@@ -10,7 +10,7 @@ _All the session methods works with the time expressed in minutes (unless it’s
 
 ### Start session
 
-`start()`
+`start(): void`
 
 Starts the session.
 
@@ -20,7 +20,7 @@ Session::start();
 
 ### Add session time
 
-`addTime(int $time)`
+`addTime(int $time): void`
 
 Adds time to the session.
 
@@ -30,7 +30,7 @@ Session::addTime(10);
 
 ### Set session time
 
-`setTime(int $time)`
+`setTime(int $time): void`
 
 Sets the session global time.
 
@@ -40,7 +40,7 @@ Session::setTime(10);
 
 ### Get remaining time
 
-`getRemainingTime([bool $gmdate])`
+`getRemainingTime([bool $gmdate]): mixed`
 
 Returns the session remaining time (in seconds).
 
@@ -56,9 +56,9 @@ Session::getRemainingTime('H:m:s');
 
 ### Unset
 
-`empty()`
+`empty(): void`
 
-Unset the session.
+Unsets the session.
 
 ```php
 Session::empty();
@@ -66,7 +66,7 @@ Session::empty();
 
 ### Destroy
 
-`kill()`
+`kill(): void`
 
 Destroys the session.
 
@@ -78,7 +78,7 @@ Session::kill();
 
 ### Set
 
-`set(string $key, $value[, int $time])`
+`set(string $key, $value[, int $time]): void`
 
 Sets a session variable.
 
@@ -88,7 +88,7 @@ Session::set('name', $value);
 
 ### Get
 
-`get(string $key)`
+`get(string $key): mixed`
 
 Returns a session variable.
 
@@ -98,7 +98,7 @@ Session::get('name');
 
 ### Has
 
-`has(string $key)`
+`has(string $key): bool`
 
 Returns `true` if a session variable exists, `false` otherwise.
 
@@ -108,9 +108,9 @@ Session::has('name');
 
 ### Unset
 
-`unset(string $key)`
+`unset(string $key): void`
 
-Unset a session variable.
+Unsets a session variable.
 
 ```php
 Session::unset('name');
@@ -118,7 +118,7 @@ Session::unset('name');
 
 ### Get variable time
 
-`getVarTime(string $key[, bool $gmdate])`
+`getVarTime(string $key[, bool $gmdate]): mixed`
 
 Returns the variable time (in seconds).
 
@@ -134,7 +134,7 @@ Session::getVarTime('name', 'H:m:s');
 
 ### Set variable time
 
-`setVarTime(string $key, int $time)`
+`setVarTime(string $key, int $time): void`
 
 Sets the variable live time.
 
@@ -144,7 +144,7 @@ Session::setVarTime('name', 10);
 
 ### Add time to variable
 
-`addVarTime(string $key, int $time)`
+`addVarTime(string $key, int $time): void`
 
 Adds time to a variable.
 

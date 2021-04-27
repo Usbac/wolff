@@ -14,14 +14,14 @@ Every logging file represents a day and contains logs with the format `[date][ip
 
 These are the available logging methods:
 
-`emergency(string $msg[, array $values])`
-`alert(string $msg[, array $values])`
-`critial(string $msg[, array $values])`
-`error(string $msg[, array $values])`
-`warning(string $msg[, array $values])`
-`notice(string $msg[, array $values])`
-`info(string $msg[, array $values])`
-`debug(string $msg[, array $values])`
+`emergency(string $msg[, array $values]): void`
+`alert(string $msg[, array $values]): void`
+`critial(string $msg[, array $values]): void`
+`error(string $msg[, array $values]): void`
+`warning(string $msg[, array $values]): void`
+`notice(string $msg[, array $values]): void`
+`info(string $msg[, array $values]): void`
+`debug(string $msg[, array $values]): void`
 
 The same example showed below can be applied to the other methods.
 
@@ -53,7 +53,7 @@ As an example, that should log `The user is Thomas in the page home/`.
 
 ### Is enabled
 
-`isEnabled()`
+`isEnabled(): bool`
 
 Returns `true` if the log system is enabled, `false` otherwise.
 
@@ -65,7 +65,7 @@ If the log system is disabled, nothing will happen when running the common log m
 
 ### Set status
 
-`setStatus([bool $enabled])`
+`setStatus([bool $enabled]): void`
 
 Sets the status of the logging system. `true` to enable it, `false` to disable it.
 
@@ -75,7 +75,7 @@ $log->setStatus(true);
 
 ### Set folder
 
-`setFolder([string $folder])`
+`setFolder([string $folder]): void`
 
 Sets the folder where the log files will be stored.
 
@@ -87,7 +87,7 @@ _The given path is relative to the project root folder._
 
 ### Set date format
 
-`setDateFormat([string $format])`
+`setDateFormat([string $format]): void`
 
 Sets the date format used internally in the log files.
 

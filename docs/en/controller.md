@@ -35,7 +35,7 @@ The `Wolff\Core\Controller` class offers some useful static methods you can use.
 
 ### Get controller
 
-`get(string $path)`
+`get(string $path): \Wolff\Core\Controller`
 
 Returns a new instantiated controller.
 
@@ -47,7 +47,7 @@ That will return the home controller.
 
 ### Call controller method
 
-`method(string $path, string $method[, array $args])`
+`method(string $path, string $method[, array $args]): mixed`
 
 Returns the value of a controller method.
 
@@ -63,7 +63,7 @@ That will call the `getClientById` method of the `client` controller using the t
 
 ### Exists
 
-`exists(string $path)`
+`exists(string $path): bool`
 
 Returns `true` if the specified controller exists, `false` otherwise.
 
@@ -75,11 +75,11 @@ That will return `true` only if the `app/controllers/Home.php` controller exists
 
 ### Has method
 
-`hasMethod(string $path, string $method)`
+`hasMethod(string $path, string $method): bool`
 
-Returns `true` if the specified method of the controller exists and is accessible, `false` otherwise.
+Returns `true` if the specified method of the specified controller exists and is accessible, `false` otherwise.
 
-The first parameter must be the controller name. The second parameter must be the method name.
+The first parameter is the controller name, the second is the method name.
 
 ```php
 Controller::hasMethod('places/Info', 'getInfoById');

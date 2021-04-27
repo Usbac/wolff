@@ -24,7 +24,7 @@ return [
 
 In your classes you can access to the content of a language file using the `get` method.
 
-`get(string $dir[, string $language])`
+`get(string $dir[, string $language]): mixed`
 
 ```php
 Language::get('home');
@@ -62,7 +62,7 @@ If the language file or the key don't exist it will return `null`.
 
 ## Language exists
 
-`exists(string $dir[, string $language])`
+`exists(string $dir[, string $language]): bool`
 
 Returns `true` if the given language file exists, `false` otherwise.
 

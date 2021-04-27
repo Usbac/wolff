@@ -6,23 +6,23 @@ When loading a view, a file titled `{fileDirectory}.tmp` will be created in the 
 
 So the view will be loader from that file and any change made to the original file will not be displayed until the cache file expires or is deleted manually.
 
-You can perfectly refresh the cache deleting the cache folder content or the folder itself.
+You can refresh the cache by deleting the cache folder content or the folder itself.
 
-If you want to force a view to don't use the cache system, you can pass a `false` value to the `render` method of the `Wolff\Core\View` class as the third parameter.
+If you want to avoid the use of the cache system for a view, you can pass a `false` value to the `render` method of the `Wolff\Core\View` class as the third parameter.
 
 ```php
 View::render('home', $data, false);
 ```
 
-That will force that view to don't use the cache system, keep in mind that the loading time could increase due to this.
+That will render the view without taking the cache in consideration, keep in mind that the loading time could increase due to this.
 
-The default life time for a cache file is One week.
+The default life time for a cache file is one week.
 
 ## Methods
 
 ### Is enabled
 
-`isEnabled()`
+`isEnabled(): bool`
 
 Returns `true` if the cache system is enabled, `false` otherwise.
 
@@ -32,7 +32,7 @@ Cache::isEnabled();
 
 ### Set status
 
-`setStatus([bool $enabled])`
+`setStatus([bool $enabled]): void`
 
 Sets the status of the cache system. `true` to enable it, `false` to disable it.
 
@@ -42,7 +42,7 @@ Cache::setStatus(true);
 
 ### Get cache content
 
-`get(string $dir)`
+`get(string $dir): string`
 
 Returns the content of the specified cache file.
 
@@ -54,7 +54,7 @@ That will return the content of the home cache file (`home.tmp`).
 
 ### Create file
 
-`set(string $dir, string $content)`
+`set(string $dir, string $content): string`
 
 Creates a cache file.
 
@@ -69,7 +69,7 @@ This method returns the path of the created cache file.
 
 ### Create folder
 
-`mkdir()`
+`mkdir(): bool`
 
 Makes the cache folder if it doesn't already exists.
 
@@ -77,9 +77,11 @@ Makes the cache folder if it doesn't already exists.
 Cache::mkdir();
 ```
 
+This method returns `true` if the cache folder exists or has been created, `false` otherwise.
+
 ### Has
 
-`has(string $dir)`
+`has(string $dir): bool`
 
 Returns `true` if the given cache key exists, `false` otherwise.
 
@@ -91,7 +93,7 @@ That will return `true` if the home cache file exists, `false` otherwise.
 
 ### Get filename
 
-`getFilename(string $dir)`
+`getFilename(string $dir): string`
 
 Returns the absolute path of the given cache file.
 
@@ -103,7 +105,7 @@ That example should return something like `/var/www/html/wolff/cache/home.tmp`.
 
 ### Delete
 
-`delete(string $dir)`
+`delete(string $dir): bool`
 
 Deletes the specified cache file. 
 
@@ -117,7 +119,7 @@ That will delete the home cache file (`cache/home.tmp`).
 
 ### Clear
 
-`clear([int $seconds])`
+`clear([int $seconds]): void`
 
 Deletes the cache files.
 

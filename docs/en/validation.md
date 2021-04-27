@@ -90,7 +90,7 @@ $validation->setData($data)->setFields($fields);
 
 ### Set data
 
-`setData(array $arr)`
+`setData(array $arr): Wolff\Utils\Validation`
 
 Sets the array which will be used to validate.
 
@@ -100,7 +100,7 @@ $validation->setData($array);
 
 ### Set fields
 
-`setFields(array $fields)`
+`setFields(array $fields): Wolff\Utils\Validation`
 
 Sets the array which contains the fields definitions.
 
@@ -110,7 +110,7 @@ $validation->setFields($fields);
 
 ### Get invalid values
 
-`getInvalidValues()`
+`getInvalidValues(): array`
 
 Returns an array with all the invalid values.
 
@@ -140,7 +140,7 @@ An associative array where every element is an array of conditions that the elem
 
 ### Is valid
 
-`isValid()`
+`isValid(): bool`
 
 Returns `true` if the array matches with all the conditions, `false` otherwise.
 
@@ -150,7 +150,7 @@ $validation->isValid();
 
 ### Check
 
-`check($fields, $data)`
+`check($fields, $data): bool`
 
 This is just syntactic sugar for the `setFields`, `setData` and `isValid` methods in that order.
 

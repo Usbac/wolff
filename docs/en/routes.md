@@ -54,7 +54,7 @@ In that case the `index` method of the `Home` controller will be called when acc
 
 ### View routes
 
-`view(string $url, string $view[, array $data[, bool $cache]])`
+`view(string $url, string $view[, array $data[, bool $cache]]): void`
 
 You can add routes that render a view directly using the `view` method.
 
@@ -65,11 +65,7 @@ The second parameter must be the view path, the third the associative array with
 This example will render the view `home` when accessing to the homepage page.
 
 ```php
-$data = [
-    'title' => 'Hello world',
-];
-
-Route::view('/', 'home', $data);
+Route::view('/', 'home', [ 'title' => 'Hello world' ]);
 ```
 
 This example will render the `blog` view without using the cache system.
@@ -94,7 +90,7 @@ That will set the content-type of the route to `application/json`.
 
 ## Routes by code
 
-`code(int $code, $func)`
+`code(int $code, $func): void`
 
 You can define routes that will be executed based on an HTTP status code by using the `code` method.
 
@@ -142,7 +138,7 @@ Will take the second part of the route as a get variable which you can get from 
 
 ## Block
 
-`block(string $url)`
+`block(string $url): void`
 
 Blocks the given route, returning a 404 code when anyone tries to access to it.
 
@@ -164,7 +160,7 @@ This will block any route that has access to any `main_page/contact` subdirector
 
 ## Redirect
 
-`redirect(string $from, string $to[, int $code])`
+`redirect(string $from, string $to[, int $code]): void`
 
 You can redirect one route to another. When doing it, a 301 HTTP response code will be returned.
 
@@ -196,7 +192,7 @@ The Route class has some useful methods that you can use.
 
 ### Route exists
 
-`exists(string $url)`
+`exists(string $url): bool`
 
 Returns `true` if a view exists, `false` otherwise.
 
@@ -208,7 +204,7 @@ That will return `true` if the home route exists
 
 ### Get routes
 
-`getRoutes()`
+`getRoutes(): array`
 
 Returns all the available routes.
 
@@ -218,7 +214,7 @@ Route::getRoutes();
 
 ### Get redirections
 
-`getRedirections()`
+`getRedirections(): array`
 
 Returns all the available redirections.
 
@@ -228,7 +224,7 @@ Route::getRedirects();
 
 ### Get blocked
 
-`getBlocked()`
+`getBlocked(): array`
 
 Returns all the blocked routes.
 

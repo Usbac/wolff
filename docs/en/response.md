@@ -57,7 +57,7 @@ $response->setHeader('Content-Type', 'text/html; charset=utf-8')
 
 ### Write content
 
-`write($content)`
+`write($content): \Wolff\Core\Http\Response`
 
 Sets the content that will be returned by the response.
 
@@ -71,7 +71,7 @@ _The string value of the given variable is the one that will be returned by the 
 
 ### Write Json content
 
-`writeJson($content)`
+`writeJson($content): \Wolff\Core\Http\Response`
 
 Sets the content that will be returned by the response as a Json.
 
@@ -83,7 +83,7 @@ That would be the equivalent to the classic and ugly: `echo json_encode([ 'msg' 
 
 ### Append content
 
-`append($content)`
+`append($content): \Wolff\Core\Http\Response`
 
 Appends content to the current content that will be returned by the response.
 
@@ -95,7 +95,7 @@ _The string value of the given variable is the one that will be returned._
 
 ### Get content
 
-`get()`
+`get(): string`
 
 Returns the current content of the response.
 
@@ -105,7 +105,7 @@ $response->get();
 
 ### Set HTTP code
 
-`setCode([int $status])`
+`setCode([int $status]): \Wolff\Core\Http\Response`
 
 Sets the HTTP status code.
 
@@ -115,7 +115,7 @@ $response->setCode(200);
 
 ### Get HTTP Code
 
-`getCode()`
+`getCode(): int`
 
 Returns the HTTP status code.
 
@@ -127,7 +127,7 @@ In that example it should return `200`.
 
 ### Add header
 
-`setHeader(string $key, string $value)`
+`setHeader(string $key, string $value): \Wolff\Core\Http\Response`
 
 Adds a new header to the response.
 
@@ -137,7 +137,7 @@ $response->setHeader('Content-Type', 'text/html');
 
 ### Add cookie
 
-`setCookie(string $key, string $value[, $time[, string $path[, string $domain[, bool $secure[, bool $http_only]]]]])`
+`setCookie(string $key, string $value[, $time[, string $path[, string $domain[, bool $secure[, bool $http_only]]]]]): \Wolff\Core\Http\Response`
 
 Adds a new cookie to the response.
 
@@ -153,7 +153,7 @@ $response->setCookie('user_session', 'Zcv6ys3dgluw', 60, '/', true, true);
 
 ### Remove cookie
 
-`unsetCookie(string $key)`
+`unsetCookie(string $key): \Wolff\Core\Http\Response`
 
 Removes a cookie.
 
@@ -163,7 +163,7 @@ $response->unsetCookie('user_session');
 
 ### Send response
 
-`send([bool $return])`
+`send([bool $return]): mixed`
 
 Sends the response with all of its values.
 

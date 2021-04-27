@@ -9,20 +9,20 @@ The file looks like this:
 ```php
 return [
     'db' => [
-        'dsn'      => 'mysql:host=localhost;dbname=testdb', //The database dsn string
+        'dsn'      => 'mysql:host=localhost;dbname=testdb', //Database dsn string
         'username' => 'wolf', //Database username
         'password' => '12345', //Database password
     ],
     'env' => [
         'file'     => 'system/.env.example', //Path of the .env file (by default it's .env)
-        'override' => true, // If true the env variables will override the config data in the Config class and the config() function helper
+        'override' => true, //If true the env variables will override the config data
     ],
-    'language'       => 'english', //The default language
-    'development_on' => true, //The development mode status (in development mode all errors will be displayed)
-    'template_on'    => true, //The template engine status (enabled or not)
-    'cache_on'       => true, //The cache system status (enabled or not)
-    'stdlib_on'      => true, //The standard library status (enabled or not)
-    'maintenance_on' => false, //The maintenance mode status, if true the page will be in maintenance
+    'language'       => 'english', //Default language
+    'development_on' => true, //Development mode status (in development mode all errors will be displayed)
+    'template_on'    => true, //Template engine status (enabled or not)
+    'cache_on'       => true, //Cache system status (enabled or not)
+    'stdlib_on'      => true, //Standard library status (enabled or not)
+    'maintenance_on' => false, //Maintenance mode status, If true the page will be in maintenance
 ];
 ```
 
@@ -43,7 +43,7 @@ _Keep in mind that the environment key must be written in lowercase for the `con
 
 The `Wolff\Core\Config` class has the `get` method which can be used to get the current configuration.
 
-`get([string $key])`
+`get([string $key]): mixed`
 
 ```php
 Wolff\Core\Config::get('language');
@@ -54,7 +54,8 @@ It returns the configuration value of the given key (or environment value if the
 The key accepts dot notation.
 
 ```php
-Wolff\Core\Config::get('db.username'); // Equivalent to Wolff\Core\Config::get('db')['username']
+Wolff\Core\Config::get('db.username'); 
+// Equivalent to Wolff\Core\Config::get('db')['username']
 ```
 
 ### Example

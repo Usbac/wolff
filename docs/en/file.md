@@ -6,7 +6,7 @@ The request object and the file objects have some methods that can simplify the 
 
 ## Setting Options
 
-`fileOptions(array $arr)`
+`fileOptions(array $arr): void`
 
 With the `fileOptions` method you can specify the options for uploading files, passing an associative array as parameter.
 
@@ -35,7 +35,7 @@ $request->fileOptions($options);
 
 ### Get
 
-`get(string $key)`
+`get(string $key): mixed`
 
 Returns the value of the specified key.
 
@@ -47,7 +47,7 @@ That would be equivalent to `$_FILES['profile_image']['size']`.
 
 ### Upload
 
-`upload([string $name])`
+`upload([string $name]): bool`
 
 Uploads the file and stores it in the server with the given name.
 

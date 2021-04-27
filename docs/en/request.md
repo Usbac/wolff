@@ -37,7 +37,7 @@ class Home extends Controller
 
 ### Get parameter
 
-`query([string $key])`
+`query([string $key]): mixed`
 
 Returns the requested parameter (usually available in the `$_GET` superglobal array).
 
@@ -53,7 +53,7 @@ _If no parameter is passed, it will return an array with all the parameters._
 
 ### Has parameter
 
-`hasQuery(string $key)`
+`hasQuery(string $key): bool`
 
 Returns `true` if the given parameter key exists, `false` otherwise.
 
@@ -65,7 +65,7 @@ Given the route `localhost/wolff?foo=bar` it should return `true`.
 
 ### Get body parameter
 
-`body([string $key])`
+`body([string $key]): mixed`
 
 Returns the specified body parameter (usually available in the `$_POST` superglobal array).
 
@@ -77,7 +77,7 @@ _If no parameter is passed, it will return an array with all the body parameters
 
 ### Has body parameter
 
-`has(string $key)`
+`has(string $key): bool`
 
 Returns `true` if the given body parameter key exists, `false` otherwise.
 
@@ -87,7 +87,7 @@ $request->has('username');
 
 ### Get file
 
-`file([string $key])`
+`file([string $key]): mixed`
 
 Returns the specified file (usually available in the `$_FILE` superglobal array).
 
@@ -101,7 +101,7 @@ _If no parameter is passed, it will return an array with all the files._
 
 ### Has file
 
-`hasFile(string $key)`
+`hasFile(string $key): bool`
 
 Returns `true` if the given file key exists, `false` otherwise.
 
@@ -111,13 +111,13 @@ $request->hasFile('profile_image');
 
 ### File options
 
-`fileOptions(array $arr)`
+`fileOptions(array $arr): void`
 
 Defines the options for uploading the request files, explained more in the file page of this documentation.
 
 ### Get cookie
 
-`cookie([string $key])`
+`cookie([string $key]): mixed`
 
 Returns the specified cookie (usually available in the `$_COOKIE` superglobal array).
 
@@ -129,7 +129,7 @@ _If no parameter is passed, it will return an array with all the cookies._
 
 ### Has cookie
 
-`hasCookie(string $key)`
+`hasCookie(string $key): bool`
 
 Returns `true` if the given cookie key exists, `false` otherwise.
 
@@ -139,7 +139,7 @@ $request->hasCookie('user_session');
 
 ### Get header
 
-`getHeader([string $key])`
+`getHeader([string $key]): mixed`
 
 Returns the specified request header.
 
@@ -151,7 +151,7 @@ _If no parameter is passed, it will return an array with all the headers._
 
 ### Get method
 
-`getMethod()`
+`getMethod(): string`
 
 Returns the HTTP method.
 
@@ -163,7 +163,7 @@ In a request of type post it will return `POST`.
 
 ### Get Url
 
-`getUri()`
+`getUri(): string`
 
 Returns the request uri (without the query).
 
@@ -173,7 +173,7 @@ $request->getUri();
 
 ### Get full Url
 
-`getFullUri()`
+`getFullUri(): string`
 
 Returns the full request uri.
 
@@ -183,7 +183,7 @@ $request->getUri();
 
 ### Is secure
 
-`isSecure()`
+`isSecure(): bool`
 
 Returns `true` if the current request protocol is secure (HTTPS), `false` otherwise.
 

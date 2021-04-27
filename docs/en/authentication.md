@@ -34,7 +34,7 @@ $auth = new \Wolff\Utils\Auth($credentials, $options);
 
 ### Register
 
-`register(array $data)`
+`register(array $data): bool`
 
 Register a new user into the database.
 
@@ -61,7 +61,7 @@ Take in consideration the following points:
 
 ### Login
 
-`login(array $data)`
+`login(array $data): bool`
 
 Returns `true` if the given user data exists in the database and is valid, `false` otherwise.
 
@@ -80,7 +80,7 @@ If a user with the giving email and password exists in the `user` table (in this
 
 ### Set table
 
-`setTable([string $table])`
+`setTable([string $table]): void`
 
 Sets the name of the database table that will be used to register and login users. By default its value is `user`.
 
@@ -90,7 +90,7 @@ $auth->setTable('admin');
 
 ### Set unique column
 
-`setUnique(string $unique_column)`
+`setUnique(string $unique_column): void`
 
 Sets the name of the unique column that cannot be repeated when registering new users in the table. This function is available to avoid any duplicate entry.
 
@@ -100,7 +100,7 @@ $auth->setUnique('email');
 
 ### Set options
 
-`setOptions(array $options)`
+`setOptions(array $options): void`
 
 Set the options that will be used when hashing passwords.
 
@@ -118,7 +118,7 @@ That will set the cost of the pasword hashing function to 16. By default it's 10
 
 ### Get options
 
-`getOptions()`
+`getOptions(): array`
 
 Get the options that will be used when hashing passwords.
 
@@ -128,7 +128,7 @@ $auth->getOptions();
 
 ### Get last inserted Id
 
-`getId()`
+`getId(): ?int`
 
 Returns the id of the last inserted/registered user into the database.
 
@@ -138,7 +138,7 @@ $auth->getId();
 
 ### Get current user
 
-`getUser()`
+`getUser(): ?array`
 
 Returns the currently authenticated user data.
 

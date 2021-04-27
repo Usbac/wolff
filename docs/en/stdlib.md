@@ -6,7 +6,7 @@ The standard library can be disabled, meaning that its functions won't be availa
 
 ### Path
 
-`path([string $path])`
+`path([string $path]): string`
 
 Returns the absolute path of the given relative path. 
 Keep in mind that the given path is supposed to be relative to the project root folder.
@@ -19,7 +19,7 @@ If the wolff project is located at `/var/www/html/wolff`, it will return `/var/w
 
 ### Relative path
 
-`relativePath([string $path])`
+`relativePath([string $path]): string`
 
 Returns the given absolute path converted to a relative path.
 The returned path is relative to the project root folder.
@@ -32,7 +32,7 @@ If the wolff project is located at `/home/usbac/Documents/wolff`, it will return
 
 ### Is associative
 
-`isAssoc(array $arr)`
+`isAssoc(array $arr): bool`
 
 Returns `true` if the given array is associative, `false` otherwise.
 
@@ -57,7 +57,7 @@ That should return `false`.
 
 ### Value
 
-`val(array $arr[, string $key])`
+`val(array $arr[, string $key]): mixed`
 
 Returns the specified key from the given array. If the given key doesn't exists it will simply return `null`.
 
@@ -82,7 +82,7 @@ That should be the equivalent to `$arr['user']['name']`.
 
 ### Array remove
 
-`arrayRemove(array &$arr, $val)`
+`arrayRemove(array &$arr, $val): bool`
 
 Removes an element from the given array, based on its value. 
 
@@ -109,7 +109,7 @@ _Keep in mind that the array's keys are preserved even for non-assosiative array
 
 ### Bytes to string
 
-`bytesToString(int $size[, int $precision])`
+`bytesToString(int $size[, int $precision]): string`
 
 Returns the given size (in bytes) as a human-readable string. The default precision is `2`.
 
@@ -129,7 +129,7 @@ _The human-readable string to return can go from B (byte) to YB (yottabyte)._
 
 ### Local
 
-`local([array $whitelist])`
+`local([array $whitelist]): bool`
 
 Returns `true` if the current script is running in localhost, false otherwise.
 
@@ -147,7 +147,7 @@ local([ '127.0.0.2', '::2' ]);
 
 ### Average
 
-`average(array $arr)`
+`average(array $arr): float|int`
 
 Returns the average value of the given numbers array.
 
@@ -159,7 +159,7 @@ That should return `5.24`.
 
 ### Echo and die
 
-`echod(...$args)`
+`echod(...$args): void`
 
 Echo a variable and then die (for debugging purposes).
 
@@ -175,7 +175,7 @@ echod('Lorem', 'ipsum', 'dolor');
 
 ### Print
 
-`printr(...$args)`
+`printr(...$args): void`
 
 Prints the given variables in a nice looking way.
 
@@ -192,7 +192,7 @@ printr($array, $foo, $foo2...);
 
 ### Print and die
 
-`printrd(...$args)`
+`printrd(...$args): void`
 
 Prints the given variables in a nice looking way and then die.
 
@@ -209,7 +209,7 @@ printrd($array, $foo, $foo2...);
 
 ### Var dump and die
 
-`dumpd(...$args)`
+`dumpd(...$args): void`
 
 Var dump a variable and then die (for debugging purposes).
 
@@ -220,7 +220,7 @@ dumpd($str);
 
 ### Validate CSRF
 
-`validateCsrf()`
+`validateCsrf(): bool`
 
 Returns `true` if the current request is safe from csrf (cross site request forgery), `false` otherwise.
 
@@ -254,7 +254,7 @@ function validateCsrf()
 
 ### Is int
 
-`isInt($int)`
+`isInt($int): bool`
 
 Returns `true` if the given parameter complies with an integer, `false` otherwise.
 
@@ -267,7 +267,7 @@ Both of the calls showed above will return `true`.
 
 ### Is float
 
-`isFloat($float)`
+`isFloat($float): bool`
 
 Returns `true` if the given parameter complies with a float, `false` otherwise.
 
@@ -280,11 +280,9 @@ Both of the calls showed above will return `true`.
 
 ### Is json
 
-`isJson(string $str)`
+`isJson(string $str): bool`
 
 Returns `true` if the given string is a json, `false` otherwise.
-
-_Notice: This function modifies the `json_last_error` value._
 
 ```php
 $json = '{name: "John", age: 21, city: "New York"}';
@@ -293,9 +291,11 @@ isJson($json);
 
 That will return `true`.
 
+_This function modifies the `json_last_error` value._
+
 ### To array
 
-`toArray($obj)`
+`toArray($obj): mixed`
 
 Returns the given variable as an associative array.
 
@@ -308,7 +308,7 @@ toArray($json);
 
 ### Get url
 
-`url([string $url])`
+`url([string $url]): string`
 
 Returns the given string as a local url. Useful for redirections.
 
@@ -324,7 +324,7 @@ If the project is located at `https://www.getWolff.com`, the function will retur
 
 ### Get client Ip
 
-`getClientIP()`
+`getClientIP(): string`
 
 Returns the current client IP.
 
@@ -336,7 +336,7 @@ In localhost it will return `::1`.
 
 ### Get current page
 
-`getCurrentPage()`
+`getCurrentPage(): string`
 
 Returns the current url.
 
@@ -346,7 +346,7 @@ getCurrentPage();
 
 ### Get pure current page
 
-`getPureCurrentPage()`
+`getPureCurrentPage(): string`
 
 Returns the current url without parameters.
 
@@ -358,7 +358,7 @@ If the current url is `example.com/homepage?id=2` it will return `example.com/ho
 
 ### Get benchmark time
 
-`getBenchmark()`
+`getBenchmark(): float`
 
 Returns the time between the page load start and the current time in seconds as float.
 
@@ -368,7 +368,7 @@ getBenchmark();
 
 ### Get public
 
-`getPublic([string $path])`
+`getPublic([string $path]): string`
 
 Returns the absolute public path of the given path.
 
@@ -380,7 +380,7 @@ If the project is located at `/var/www/html/wolff` that should return `/var/www/
 
 ### Get config
 
-`config(string $key)`
+`config(string $key): mixed`
 
 Returns the specified key value from the `CONFIG` array, or from the environment file if `env_override` is set to `true`.
 
