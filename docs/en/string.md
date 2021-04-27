@@ -8,11 +8,11 @@ In PHP, using functions related to strings is quite common, that's why Wolff inc
 
 Sanitize strings is an important thing to do. So the String class have some functions related to it.
 
-`sanitizeUrl(string $url): string`
-`sanitizeEmail(string $email): string`
-`sanitizeInt(string $int): string`
-`sanitizeFloat(string $float): string`
-`sanitizePath(string $path): string`
+`sanitizeUrl(string $url): string`  
+`sanitizeEmail(string $email): string`  
+`sanitizeInt(string $int): string`  
+`sanitizeFloat(string $float): string`  
+`sanitizePath(string $path): string`  
 
 Example:
 

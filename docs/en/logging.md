@@ -14,14 +14,14 @@ Every logging file represents a day and contains logs with the format `[date][ip
 
 These are the available logging methods:
 
-`emergency(string $msg[, array $values]): void`
-`alert(string $msg[, array $values]): void`
-`critial(string $msg[, array $values]): void`
-`error(string $msg[, array $values]): void`
-`warning(string $msg[, array $values]): void`
-`notice(string $msg[, array $values]): void`
-`info(string $msg[, array $values]): void`
-`debug(string $msg[, array $values]): void`
+`emergency(string $msg[, array $values]): void`  
+`alert(string $msg[, array $values]): void`  
+`critial(string $msg[, array $values]): void`  
+`error(string $msg[, array $values]): void`  
+`warning(string $msg[, array $values]): void`  
+`notice(string $msg[, array $values]): void`  
+`info(string $msg[, array $values]): void`  
+`debug(string $msg[, array $values]): void`  
 
 The same example showed below can be applied to the other methods.
 
