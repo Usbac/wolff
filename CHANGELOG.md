@@ -1,6 +1,6 @@
 # Release Notes
 
-## v4.0.0 (coming soon)
+## v4.0.0 (2021-05-01)
 
 ### Added
 
