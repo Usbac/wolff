@@ -32,7 +32,7 @@ Only composer, but you can download the bundle versions that don't require it.
 
 **What is required to run Wolff?**
 
-You just need to have installed PHP version 7.2 or higher, if you are going to use any database functionality the php-pdo extension needs to be installed and enabled (since the database system is built on top of it). 
+You just need to have installed PHP version 7.1 or higher, if you are going to use any database functionality the php-pdo extension needs to be installed and enabled (since the database system is built on top of it). 
 
 For running a Wolff project you can use either an Apache server or the common PHP built-in web server.
 
