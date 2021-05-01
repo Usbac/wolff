@@ -27,7 +27,7 @@ The following keys can be used in the elements of the fields array.
 ```php
 $data = [
     'name' => 'Thomas Andrews',
-    'age'  => 39
+    'age'  => 39,
 ];
 
 $fields = [
@@ -35,8 +35,8 @@ $fields = [
         'minlen' => 10,
     ],
     'age' => [
-        'minval' => 18
-    ]
+        'minval' => 18,
+    ],
 ];
 
 $validation = new Validation();
@@ -59,17 +59,17 @@ A more expressive example
 ```php
 $data = [
     'name' => 'Thomas Andrews',
-    'age'  => 39
+    'age'  => 39,
 ];
 
 $fields = [
     'name' => [
         'minlen' => 10,
-        'type'   => 'alpha'
+        'type'   => 'alpha',
     ],
     'age' => [
         'minval' => 18,
-        'type'   => 'int'
+        'type'   => 'int',
     ]
 ];
 

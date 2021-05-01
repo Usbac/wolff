@@ -24,7 +24,7 @@ $credentials = [
 ];
 
 $options = [
-    'cost' => 16
+    'cost' => 16,
 ];
 
 $auth = new \Wolff\Utils\Auth($credentials, $options);
@@ -36,21 +36,19 @@ $auth = new \Wolff\Utils\Auth($credentials, $options);
 
 `register(array $data)`
 
-Register a new user into the database.
+Registers a new user into the database.
 
 The only required keys that the given array must have are `password` and `password_confirm`, both values must be a string and equal.
 
 This method returns `true` if the user has been successfully inserted into the database, `false` otherwise.
 
 ```php
-$user = [
-    'name'             => 'Alejandro',
-    'email'            => 'contact@getwolff.com',
-    'password'         => 'canislupus',
-    'password_confirm' => 'canislupus',
-];
-
-$auth->register($user);
+$auth->register([
+    'name'             => 'Alex',
+    'email'            => 'abc@gmail.com',
+    'password'         => 'canis123',
+    'password_confirm' => 'canis123',
+]);
 ```
 
 Take in consideration the following points:
@@ -58,6 +56,12 @@ Take in consideration the following points:
 * The password is hashed before storing it, using the `BCRYPT` algorithm with a default cost of 10.
 
 * The array keys are directly maped to the database table (except for the `password_confirm` key). Meaning that an array with the following keys: `name`, `email`, `password` and `phone`, will be inserted into a table that must have a `name`, `email`, `password` and `phone` columns for this to work.
+
+The example showed above should run a query "similar" to this:
+
+```sql
+INSERT INTO users (name, email, password) VALUES ('Alex', 'abc@gmail.com', 'canis123');
+```
 
 ### Login
 
@@ -68,12 +72,10 @@ Returns `true` if the given user data exists in the database and is valid, `fals
 This method takes as parameter an array which will be the user data to validate. The only required key that the array must have is `password`.
 
 ```php
-$user = [
-    'email'    => 'contact@getwolff.com',
-    'password' => 'canislupus'
-];
-
-$auth->login($user);
+$auth->login([
+    'email'    => 'abc@gmail.com',
+    'password' => 'canis123',
+]);
 ```
 
 If a user with the giving email and password exists in the `user` table (in this example), it will return true.
@@ -107,11 +109,9 @@ Set the options that will be used when hashing passwords.
 This is the equivalent to defining the third parameter of the `password_hash` function that is used internally in this utility.
 
 ```php
-$options = [
+$auth->setOptions([
     'cost' => 16
-];
-
-$auth->setOptions($options);
+]);
 ```
 
 That will set the cost of the pasword hashing function to 16. By default it's 10.

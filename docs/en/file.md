@@ -21,14 +21,12 @@ The array can have the following keys:
 * **override**: `true` for overriding files with the same path in the upload process, `false` for not overriding them.
 
 ```php
-$options = [
+$request->fileOptions([
     'dir'        => 'public',
     'extensions' => 'jpg, png, bmp',
     'max_size'   => 1024,
-    'override'   => true
-];
-
-$request->fileOptions($options);
+    'override'   => true,
+]);
 ```
 
 ## File methods
@@ -79,20 +77,20 @@ system/web.php
 
 ```php
 // Form view
-Route::get('file', function ($request) {
+Route::get('file', function ($req) {
     Wolff\Core\View::render('file_form');
 });
 
 // Upload
-Route::post('upload', function ($request) {
-    $request->fileOptions([
+Route::post('upload', function ($req) {
+    $req->fileOptions([
         'dir'        => 'files',
         'extensions' => 'jpg,png',
         'max_size'   => 2048,
         'override'   => false
     ]);
 
-    if ($request->file('image')->upload()) {
+    if ($req->file('image')->upload()) {
         echo 'File has been successfully uploaded';
     } else {
         echo 'An error has occurred';

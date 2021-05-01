@@ -8,16 +8,16 @@ This response object is the one that must be passed as second parameter to the C
 
 ### Route:
 ```php
-Route::get('/', function($request, $response) {
+Route::get('/', function($req, $res) {
 });
 
-Route::code(404, function($request, $response) {
+Route::code(404, function($req, $res) {
 });
 ```
 
 ### Middleware:
 ```php
-Middleware::before('/', function($request, $response) {
+Middleware::before('/', function($req, $res) {
 });
 ```
 
@@ -27,8 +27,9 @@ namespace Controller;
 
 class Home extends Controller
 {
-    public function index($request, $response)
+    public function index($req, $res)
     {
+        // Code
     }
 }
 ```

@@ -12,11 +12,11 @@ And its main method `get` returns an array with the elements that will be shown 
 
 ```php
 $pagination = new Pagination(
-    50, //Total of elements
-    10, //Elements per page
-    3, //Current page
-    4, //Number of side pages
-    url('blog/{page}') //Url format
+    50, // Total of elements
+    10, // Elements per page
+    3,  // Current page
+    4,  // Number of side pages
+    url('blog/{page}'), // Url format
 );
 ```
 

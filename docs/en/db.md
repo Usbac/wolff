@@ -305,7 +305,7 @@ Take in mind that the array keys will be directly mapped to the column names.
 $db->insert('product', [
     'name'     => 'phone',
     'model'    => 'PHN001',
-    'quantity' => 5
+    'quantity' => 5,
 ]);
 ```
 
