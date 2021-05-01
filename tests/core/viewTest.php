@@ -55,5 +55,6 @@ class ViewTest extends TestCase
         unlink('../app/views/phpunit_testing_view.wlf');
         unlink('../app/views/phpunit_testing_view_ext.html');
         unlink('../app/views/phpunit_testing_view_empty.wlf');
+        unlink('../cache/phpunit_testing_view_empty.tmp');
     }
 }
