@@ -28,7 +28,7 @@ This expressive example shows a page (available at `localhost/form`) with a simp
 
 _The database class will use the credentials available in `system/config.php` file._
 
-app/languages/english/form.php:
+app/languages/en/form.php:
 ```php
 <?php
 

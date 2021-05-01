@@ -17,7 +17,7 @@ return [
         'file'     => 'system/.env.example', // Environment file (.env by default)
         'override' => true, // Override config data with the env data
     ],
-    'language'       => 'english', // Default language
+    'language'       => 'en', // Default language
     'development_on' => true, // Development mode status
     'template_on'    => true, // Template engine status
     'cache_on'       => true, // Cache system status
@@ -63,7 +63,7 @@ system/config.php:
 
 ```php
 return [
-    'language' => 'english',
+    'language' => 'en',
 
     'env' => [
         'file'     => 'system/.env',
@@ -75,7 +75,7 @@ return [
 system/.env:
 
 ```
-LANGUAGE='spanish'
+LANGUAGE='es'
 ```
 
-In this case `Wolff\Core\Config::get('language')` and `config('language')` will return `english`. If you set `env.override` to `true`, both will return `spanish` instead.
+In this case `Wolff\Core\Config::get('language')` and `config('language')` will return `en`. If you set `env.override` to `true`, both will return `es` instead.

@@ -12,7 +12,7 @@ return [
         'override' => true,
     ],
 
-    'language'       => 'english',
+    'language'       => 'en',
 
     'development_on' => true,
     'template_on'    => true,

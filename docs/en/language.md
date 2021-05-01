@@ -10,7 +10,7 @@ Meaning that you can request a text, and depending of the configuration or other
 
 A language file must be inside the `app/languages/{languageOfChoice}` folder and have a php extension, the language file must have an associative array to return.
 
-Basically an `app/languages/english/home.php` file should look like this:
+Basically an `app/languages/en/home.php` file should look like this:
 
 ```php
 return [
@@ -36,7 +36,7 @@ If the language file doesn't exists it will return `null`.
 
 ### Getting an especific language
 
-If the language is set to english in the `system/config.php` file that will return the content of the `app/language/english/home.php` file.
+If the language is set to english in the `system/config.php` file that will return the content of the `app/language/en/home.php` file.
 
 Instead, if the language is set to spanish that will return the content of the `app/language/spanish/home.php` file.
 

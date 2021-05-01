@@ -24,6 +24,8 @@
 
 - Change the function parameter of the `Wolff\Core\Route` class to accept an array containing the class and method to call (`'home@index'` now is `[ Controller\Home::class, 'index' ]`).
 
+- Change the default language from `english` to `en`.
+
 - Make the Logging system non-static.
 
 - The credential array keys `dbms`, `server` and `name` has been replaced by the key `dsn` in the `Wolff\Core\DB` and `Wolff\Utils\Auth` constructors.
