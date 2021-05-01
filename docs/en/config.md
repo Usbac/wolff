@@ -9,20 +9,20 @@ The file looks like this:
 ```php
 return [
     'db' => [
-        'dsn'      => 'mysql:host=localhost;dbname=testdb', //The database dsn string
-        'username' => 'wolf', //Database username
-        'password' => '12345', //Database password
+        'dsn'      => 'mysql:host=localhost;dbname=testdb', // Database dsn string
+        'username' => 'wolf', // Database username
+        'password' => '12345', // Database password
     ],
     'env' => [
-        'file'     => 'system/.env.example', //Path of the .env file (by default it's .env)
-        'override' => true, // If true the env variables will override the config data in the Config class and the config() function helper
+        'file'     => 'system/.env.example', // Environment file (.env by default)
+        'override' => true, // Override config data with the env data
     ],
-    'language'       => 'english', //The default language
-    'development_on' => true, //The development mode status (in development mode all errors will be displayed)
-    'template_on'    => true, //The template engine status (enabled or not)
-    'cache_on'       => true, //The cache system status (enabled or not)
-    'stdlib_on'      => true, //The standard library status (enabled or not)
-    'maintenance_on' => false, //The maintenance mode status, if true the page will be in maintenance
+    'language'       => 'english', // Default language
+    'development_on' => true, // Development mode status
+    'template_on'    => true, // Template engine status
+    'cache_on'       => true, // Cache system status
+    'stdlib_on'      => true, // Standard library status
+    'maintenance_on' => false, // Maintenance mode status
 ];
 ```
 
