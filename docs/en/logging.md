@@ -14,14 +14,16 @@ Every logging file represents a day and contains logs with the format `[date][ip
 
 These are the available logging methods:
 
-`emergency(string $msg[, array $values])`
-`alert(string $msg[, array $values])`
-`critial(string $msg[, array $values])`
-`error(string $msg[, array $values])`
-`warning(string $msg[, array $values])`
-`notice(string $msg[, array $values])`
-`info(string $msg[, array $values])`
-`debug(string $msg[, array $values])`
+```php
+$log->emergency($msg, $values = []);
+$log->alert($msg, $values = []);
+$log->critial($msg, $values = []);
+$log->error($msg, $values = []);
+$log->warning($msg, $values = []);
+$log->notice($msg, $values = []);
+$log->info($msg, $values = []);
+$log->debug($msg, $values = []);
+```
 
 The same example showed below can be applied to the other methods.
 
@@ -39,12 +41,10 @@ The methods to logging data can take an optional second parameter which is an as
 The values to interpolate must be between curly brackets like `{this}`.
 
 ```php
-$values = [
+$log->debug('The user is {name} in the page {page}', [
     'name' => 'Thomas',
-    'page' => 'home/'
-];
-
-$log->debug('The user is {name} in the page {page}', $values);
+    'page' => 'home/',
+]);
 ```
 
 As an example, that should log `The user is Thomas in the page home/`.

@@ -8,7 +8,7 @@ When under maintenance, the function defined with the `set` method will be execu
 
 ### Is enabled
 
-`isEnabled()`
+`isEnabled(): bool`
 
 Returns `true` if the maintenance mode is enabled, `false` otherwise.
 
@@ -18,7 +18,7 @@ Maintenance::isEnabled();
 
 ### Set status
 
-`setStatus([bool $enabled])`
+`setStatus([bool $enabled]): void`
 
 Sets the status of the maintenance mode. `true` to enable it, `false` to disable it.
 
@@ -28,7 +28,7 @@ Maintenance::setStatus(true);
 
 ### Use
 
-`set(\Closure $func)`
+`set(\Closure $func): void`
 
 Defines the function that will be executed under maintenance mode.
 
@@ -46,7 +46,7 @@ A white list is the one that defines which IP addresses will still have access t
 
 ### Set IPs white list
 
-`setIPs(iterable $ips)`
+`setIPs(iterable $ips): void`
 
 Sets the IPs whitelist.
 
@@ -63,7 +63,7 @@ Now the IPs `192.168.2.150` and `::1` will have access even on maintenance mode.
 
 ### Delete white list IP
 
-`removeIP(string $ip)`
+`removeIP(string $ip): void`
 
 Deletes the given IP address from the white list.
 
@@ -73,7 +73,7 @@ Maintenance::removeAllowedIP('127.0.0.1');
 
 ### Get IP white list
 
-`getIPs()`
+`getIPs(): array`
 
 Returns all the IP address in the white list.
 
@@ -85,7 +85,7 @@ _This method returns the IP list as an indexed array._
 
 ## Client has access
 
-`hasAccess()`
+`hasAccess(): bool`
 
 Returns `true` if the current client IP address is in the white list, `false` otherwise.
 

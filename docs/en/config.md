@@ -43,7 +43,7 @@ _Keep in mind that the environment key must be written in lowercase for the `con
 
 The `Wolff\Core\Config` class has the `get` method which can be used to get the current configuration.
 
-`get([string $key])`
+`get([string $key]): mixed`
 
 ```php
 Wolff\Core\Config::get('language');

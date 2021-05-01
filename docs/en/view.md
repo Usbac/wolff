@@ -8,7 +8,7 @@ _Keep in mind that the below methods can take files with a `php` or `html` exten
 
 ### Render
 
-`render(string $dir[, array $data[, bool $cache]])`
+`render(string $dir[, array $data[, bool $cache]]): void`
 
 Renders a view content.
 
@@ -22,7 +22,7 @@ That will basically render the content of the `app/views/sub/home.wlf` file usin
 
 ### Get source file
 
-`getSource(string $dir)`
+`getSource(string $dir): string`
 
 Returns a view content.
 
@@ -36,9 +36,11 @@ That will return the content of the `app/views/sub/home.wlf` file.
 
 ### Get render
 
-`getRender(string $dir[, array $data[, bool $cache]])`
+`getRender(string $dir[, array $data[, bool $cache]]): string`
 
 Returns a view content rendered.
+
+_The content returned by this method is what is rendered when calling the `render` method._
 
 The first parameter must be the view name, the second the associative array with the content that will be used in the view, the third and optional parameter is to use or not the cache file/system.
 
@@ -58,7 +60,7 @@ Take in mind that it can increase the loading time.
 
 ### Get path
 
-`getPath(string $path)`
+`getPath(string $path): string`
 
 Returns the file path of the given view.
 
@@ -70,7 +72,7 @@ By default that will return `app/views/sub/home.wlf`
 
 ### Exists
 
-`exists(string $dir)`
+`exists(string $dir): bool`
 
 Returns `true` if the given view file exists, `false` otherwise.
 

@@ -10,7 +10,7 @@ The container's methods are static, you can add and get elements anywhere inside
 
 ### Add
 
-`add(string $class, $val)`
+`add(string $class, $val): void`
 
 Adds a new class to the container.
 
@@ -34,7 +34,7 @@ _If a class with the same name already exists in the container, it will be overw
 
 ### Add singleton
 
-`singleton(string $class, $val)`
+`singleton(string $class, $val): void`
 
 Adds a new singleton class to the container.
 
@@ -48,7 +48,7 @@ Container::singleton('user', function() {
 
 ### Get
 
-`get(string $key[, array $args])`
+`get(string $key[, array $args]): mixed`
 
 Returns the specified class instance.
 
@@ -82,7 +82,7 @@ $user = new \App\User('John doe', 22);
 
 ### Has
 
-`has(string $key)`
+`has(string $key): bool`
 
 Returns `true` if the given class name exists, `false` otherwise.
 

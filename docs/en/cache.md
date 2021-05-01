@@ -22,7 +22,7 @@ The default life time for a cache file is One week.
 
 ### Is enabled
 
-`isEnabled()`
+`isEnabled(): bool`
 
 Returns `true` if the cache system is enabled, `false` otherwise.
 
@@ -32,7 +32,7 @@ Cache::isEnabled();
 
 ### Set status
 
-`setStatus([bool $enabled])`
+`setStatus([bool $enabled]): void`
 
 Sets the status of the cache system. `true` to enable it, `false` to disable it.
 
@@ -42,7 +42,7 @@ Cache::setStatus(true);
 
 ### Get cache content
 
-`get(string $dir)`
+`get(string $dir): string`
 
 Returns the content of the specified cache file.
 
@@ -54,7 +54,7 @@ That will return the content of the home cache file (`home.tmp`).
 
 ### Create file
 
-`set(string $dir, string $content)`
+`set(string $dir, string $content): string`
 
 Creates a cache file.
 
@@ -69,9 +69,11 @@ This method returns the path of the created cache file.
 
 ### Create folder
 
-`mkdir()`
+`mkdir(): bool`
 
 Makes the cache folder if it doesn't already exists.
+
+This method returns `true` if the cache folder exists or has been created, `false` otherwise.
 
 ```php
 Cache::mkdir();
@@ -79,7 +81,7 @@ Cache::mkdir();
 
 ### Has
 
-`has(string $dir)`
+`has(string $dir): bool`
 
 Returns `true` if the given cache key exists, `false` otherwise.
 
@@ -91,7 +93,7 @@ That will return `true` if the home cache file exists, `false` otherwise.
 
 ### Get filename
 
-`getFilename(string $dir)`
+`getFilename(string $dir): string`
 
 Returns the absolute path of the given cache file.
 
@@ -103,7 +105,7 @@ That example should return something like `/var/www/html/wolff/cache/home.tmp`.
 
 ### Delete
 
-`delete(string $dir)`
+`delete(string $dir): bool`
 
 Deletes the specified cache file. 
 
@@ -117,7 +119,7 @@ That will delete the home cache file (`cache/home.tmp`).
 
 ### Clear
 
-`clear([int $seconds])`
+`clear([int $seconds]): void`
 
 Deletes the cache files.
 

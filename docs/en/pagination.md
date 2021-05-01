@@ -111,7 +111,7 @@ $pagination->setTotal(100)
 
 ### Set total
 
-`setTotal(int $total)`
+`setTotal(int $total): \Wolff\Utils\Pagination`
 
 Sets the total number of elements.
 
@@ -121,7 +121,7 @@ $pagination->setTotal(100);
 
 ### Set page size
 
-`setPageSize(int $per_page)`
+`setPageSize(int $per_page): \Wolff\Utils\Pagination`
 
 Set the total number of elements per page.
 
@@ -131,7 +131,7 @@ $pagination->setPageSize(10);
 
 ### Set current page
 
-`setPage([int $page])`
+`setPage([int $page]): \Wolff\Utils\Pagination`
 
 Set the current page.
 
@@ -143,7 +143,7 @@ By default it's zero `0`.
 
 ### Set number of side pages
 
-`setSidePages([int $side_pages_n])`
+`setSidePages([int $side_pages_n]): \Wolff\Utils\Pagination`
 
 Set the number of pages that will be at the left and right side of the current page.
 
@@ -163,7 +163,7 @@ By default it's five `5`.
 
 ### Set pages url
 
-`setUrl(string $url_format)`
+`setUrl(string $url_format): \Wolff\Utils\Pagination`
 
 Set the url format used for the views.
 
@@ -177,7 +177,7 @@ Giving the example shown above, the page 3 should have the following value in it
 
 ### Set show ends
 
-`showEnds([bool $show_ends])`
+`showEnds([bool $show_ends]): \Wolff\Utils\Pagination`
 
 Set on or off the display of the first and last page.
 

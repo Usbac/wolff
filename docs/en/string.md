@@ -8,11 +8,13 @@ In PHP, using functions related to strings is quite common, that's why Wolff inc
 
 Sanitize strings is an important thing to do. So the String class have some functions related to it.
 
-`sanitizeUrl(string $url)`
-`sanitizeEmail(string $email)`
-`sanitizeInt(string $int)`
-`sanitizeFloat(string $float)`
-`sanitizePath(string $path)`
+```php
+Str::sanitizeUrl($url): string
+Str::sanitizeEmail($email): string
+Str::sanitizeInt($int): string
+Str::sanitizeFloat($float): string
+Str::sanitizePath($path): string
+```
 
 Example:
 
@@ -22,7 +24,7 @@ $url = Str::sanitizeURL($url);
 
 ### Is Email
 
-`isEmail(string $email)`
+`isEmail(string $email): bool`
 
 Returns `true` if the given string complies with an email format, `false` otherwise.
 
@@ -34,7 +36,7 @@ That will return `true`.
 
 ### Is Alphanumeric
 
-`isAlphanumeric(string $str)`
+`isAlphanumeric(string $str): bool`
 
 Returns `true` if the given string contains only alphanumeric characters and whitespaces, `false` otherwise.
 
@@ -46,7 +48,7 @@ That will return `true`.
 
 ### Is Alpha
 
-`isAlpha(string $str)`
+`isAlpha(string $str): bool`
 
 Returns `true` if the given string contains only letters and whitespaces, `false` otherwise.
 
@@ -58,7 +60,7 @@ That will return true.
 
 ### Remove quotes
 
-`removeQuotes(string $str)`
+`removeQuotes(string $str): bool`
 
 Returns the given string without the single or double quotes surrounding it.
 
@@ -72,7 +74,7 @@ _Keep in mind that the quotes will be removed only if they surround the string o
 
 ### Token
 
-`token([int $length])`
+`token([int $length]): bool`
 
 Returns a random generated token.
 
@@ -90,7 +92,7 @@ That will return a token with 24 characters length.
 
 ### Slug
 
-`slug(string $str)`
+`slug(string $str): bool`
 
 Returns a url friendly string.
 
@@ -105,7 +107,7 @@ Basically this function replaces special letters by their normal counterpart, pu
 
 ### Contains
 
-`contains(string $str, string $needle)`
+`contains(string $str, string $needle): bool`
 
 Returns `true` if a string contains a substring, `false` otherwise.
 
@@ -117,7 +119,7 @@ That will return `true`.
 
 ### Interpolate
 
-`interpolate(string $str, array $values)`
+`interpolate(string $str, array $values): string`
 
 Returns a string with its placeholders replaced by context values.
 
@@ -136,7 +138,7 @@ _If the given array is empty, the method will return the original string._
 
 ### Swap
 
-`swap(string $str, string $first_str, string $second_str)`
+`swap(string $str, string $first_str, string $second_str): string`
 
 Returns a string with the two indicated substrings swapped.
 
@@ -148,21 +150,9 @@ That will return `I'm the Omega, the Alpha, everything in between`.
 
 The first parameter is the string, the remaining two are the substrings to be swapped.
 
-### To UTF8
-
-`toUtf8(string $str)`
-
-Returns the given string from any encoding to UTF-8.
-
-Keep in mind that the string encoding detection is not perfect.
-
-```php
-Str::toUtf8($string);
-```
-
 ### Limit
 
-`limit(string $str, int $limit)`
+`limit(string $str, int $limit): string`
 
 Returns a truncated string with the specified length.
 
@@ -174,7 +164,7 @@ That will return `Lore`.
 
 ### Concatenate Path
 
-`concatPath(...$paths)`
+`concatPath(...$paths): string`
 
 Returns all the given strings and/or arrays of strings concatenated as a path.
 
@@ -190,7 +180,7 @@ Both examples are the same and will return `home/public/logo.svg`.
 
 ### Concatenate
 
-`concat(...$strings)`
+`concat(...$strings): string`
 
 Returns all the given strings concatenated into one.
 
@@ -202,7 +192,7 @@ Returns `Lorem ipsum dolor`.
 
 ### To String
 
-`toString($var)`
+`toString($var): string`
 
 Returns the given value as a string.
 
@@ -220,7 +210,7 @@ Numeric values will be converted to a string using the `strval` function.
 
 ### Starts with
 
-`startsWith(string $str, string $needle)`
+`startsWith(string $str, string $needle): bool`
 
 Returns `true` if a string starts with a substring, `false` otherwise.
 
@@ -232,7 +222,7 @@ That will return `true`.
 
 ### Ends with
 
-`endsWith(string $str, string $needle)`
+`endsWith(string $str, string $needle): bool`
 
 Returns `true` if a string ends with a substring, `false` otherwise.
 
@@ -244,7 +234,7 @@ That will return `true`.
 
 ### Remove substring
 
-`remove(string $str, string $needle)`
+`remove(string $str, string $needle): string`
 
 Removes all the ocurrences of a subtring in a string.
 
@@ -258,7 +248,7 @@ That will return `Lorem ipsum dolor  amet`.
 
 ### After substring
 
-`after(string $str, string $needle)`
+`after(string $str, string $needle): string`
 
 Returns everything after the specified substring.
 
@@ -272,7 +262,7 @@ That will return ` sit amet`.
 
 ### Before substring
 
-`before(string $str, string $needle)`
+`before(string $str, string $needle): string`
 
 Returns everything before the specified substring.
 

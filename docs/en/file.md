@@ -33,7 +33,7 @@ $request->fileOptions([
 
 ### Get
 
-`get(string $key)`
+`get(string $key): mixed`
 
 Returns the value of the specified key.
 
@@ -45,7 +45,7 @@ That would be equivalent to `$_FILES['profile_image']['size']`.
 
 ### Upload
 
-`upload([string $name])`
+`upload([string $name]): bool`
 
 Uploads the file and stores it in the server with the given name.
 

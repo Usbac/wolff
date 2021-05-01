@@ -14,9 +14,9 @@ Wolff strictly follows [Semantic Versioning](https://semver.org).
 
 The last 2 major releases are the only ones supposed to get support.
 
-So, if the last version is 3.x, the support will be available for the 2.x and 3.x versions. If the last version is 4.x, the support will be available for the 3.x and 4.x versions.
+So, if the last version is 3.x, support will be available for the 2.x and 3.x versions. If the last version is 4.x, support will be available for the 3.x and 4.x versions.
 
-This condition is ignored only if the major version that is going to be deprecated has been released less than a year ago. 
+This condition is ignored ONLY if the major version that is going to be deprecated has been released less than a year ago. 
 
 Basically any Wolff version will enjoy support for at least one year. 
 
@@ -32,13 +32,13 @@ Only composer, but you can download the bundle versions that don't require it.
 
 **What is required to run Wolff?**
 
-You just need to have installed PHP version 7 or higher, if you are going to use any database functionality the php-pdo extension needs to be installed and enabled (since the database system is built on top of it). 
+You just need to have installed PHP version 7.2 or higher, if you are going to use any database functionality the php-pdo extension needs to be installed and enabled (since the database system is built on top of it). 
 
-For running a Wolff project you can use either an Apache server or the common PHP build-in web server.
+For running a Wolff project you can use either an Apache server or the common PHP built-in web server.
 
 **What are the dependencies of the framework?**
 
-One objective of Wolff is to avoid things like dependency hell or external libraries, the last is not strictly bad, it's just a decision of keeping all of the core functionality in one single module easy to modify, that's why the only dependency of a Wolff project is the framework itself (besides PHPUnit but it's used only for the tests). 
+One objective of Wolff is to avoid things like dependency hell or external libraries, the last is not strictly bad, it's just a decision of keeping all of the core functionality in one single module easy to modify, that's why the only dependency of a Wolff project is the framework itself (besides PHPUnit but it's used only for the tests).
 
 **What are the recommended file permissions for Wolff?**
 

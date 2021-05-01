@@ -27,7 +27,7 @@ class Home
 }
 ```
 
-Now if you want to call the controller method's when accessing some routes, you can add the following code to your web file.
+Now if you want to call the controller's method when accessing some routes, you can add the following code to your web file.
 
 system/web.php
 
@@ -43,7 +43,7 @@ The `Wolff\Core\Controller` class offers some useful static methods you can use.
 
 ### Get controller
 
-`get(string $path)`
+`get(string $path): \Wolff\Core\Controller`
 
 Returns a new instantiated controller.
 
@@ -55,7 +55,7 @@ That will return the home controller.
 
 ### Call controller method
 
-`method(string $path, string $method[, array $args])`
+`method(string $path, string $method[, array $args]): mixed`
 
 Returns the value of a controller method.
 
@@ -71,7 +71,7 @@ That will call the `getClientById` method of the `client` controller using the t
 
 ### Exists
 
-`exists(string $path)`
+`exists(string $path): bool`
 
 Returns `true` if the specified controller exists, `false` otherwise.
 
@@ -83,7 +83,7 @@ That will return `true` only if the `app/controllers/Home.php` controller exists
 
 ### Has method
 
-`hasMethod(string $path, string $method)`
+`hasMethod(string $path, string $method): bool`
 
 Returns `true` if the specified method of the controller exists and is accessible, `false` otherwise.
 

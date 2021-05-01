@@ -30,7 +30,7 @@ Both examples are right.
 
 ## Running queries
 
-`query(string $sql[, ...$args])`
+`query(string $sql[, ...$args]): \Wolff\Core\Query`
 
 The `query` method returns a `Wolff\Core\Query` object.
 
@@ -54,7 +54,7 @@ The `Wolff\Core\Query` object returned by the `query` method has the following m
 
 ### Get
 
-`get()`
+`get(): array`
 
 Returns the query result as an associative array.
 
@@ -64,7 +64,7 @@ $db->query('SELECT * FROM table')->get();
 
 ### Get Json
 
-`getJson()`
+`getJson(): string`
 
 Returns the result as a JSON.
 
@@ -74,7 +74,7 @@ $db->query('SELECT * FROM table')->getJson();
 
 ### Limit
 
-`limit(int $start[, int $end])`
+`limit(int $start[, int $end]): array`
 
 Returns the query result as an associative array sliced.
 
@@ -86,7 +86,7 @@ In that example only 5 rows will be returned.
 
 ### First
 
-`first([string $column])`
+`first([string $column]): array`
 
 Returns the first element of the query result.
 
@@ -102,7 +102,7 @@ $db->query('SELECT * FROM table')->first('column');
 
 ### Count
 
-`count()`
+`count(): int`
 
 Returns the number of query rows.
 
@@ -112,7 +112,7 @@ $db->query('SELECT * FROM table')->count();
 
 ### Pick
 
-`pick(...$columns)`
+`pick(...$columns): array`
 
 Returns the query result only with the specified columns.
 
@@ -155,7 +155,7 @@ Array
 
 ### Var dump
 
-`dump()`
+`dump(): void`
 
 Var dump the query result.
 
@@ -165,7 +165,7 @@ $db->query('SELECT * FROM table')->dump();
 
 ### Var dump and die
 
-`dumpd()`
+`dumpd(): void`
 
 Var dump the query result and die.
 
@@ -175,7 +175,7 @@ $db->query('SELECT * FROM table')->dumpd();
 
 ### Print result
 
-`printr()`
+`printr(): void`
 
 Prints the query result in a nice looking way.
 
@@ -185,7 +185,7 @@ $db->query('SELECT * FROM table')->printr();
 
 ### Print result and die
 
-`printrd()`
+`printrd(): void`
 
 Prints the query result in a nice looking way and die.
 
@@ -197,7 +197,7 @@ $db->query('SELECT * FROM table')->printrd();
 
 ### Get Pdo
 
-`getPdo()`
+`getPdo(): ?\PDO`
 
 Returns the PDO object.
 
@@ -207,7 +207,7 @@ $db->getPdo();
 
 ### Get last id
 
-`getLastId()`
+`getLastId(): ?string`
 
 Returns the last inserted ID in the database.
 
@@ -217,7 +217,7 @@ $db->getLastId();
 
 ### Get last statement
 
-`getLastStmt()`
+`getLastStmt(): \PDOStatement`
 
 Returns the last PDO statement executed.
 
@@ -227,7 +227,7 @@ $db->getLastStmt();
 
 ### Get last query
 
-`getLastSql()`
+`getLastSql(): mixed`
 
 Returns the last query executed.
 
@@ -249,7 +249,7 @@ $db->runLastSql();
 
 ### Table exists
 
-`tableExists(string $table)`
+`tableExists(string $table): bool`
 
 Returns `true` if the specified table exists, `false` otherwise.
 
@@ -261,7 +261,7 @@ _WARNING: This method must NOT be used with user input since it does not escapes
 
 ### Column exists
 
-`columnExists(string $table, string $column)`
+`columnExists(string $table, string $column): bool`
 
 Returns `true` if the specified table and column exists, `false` otherwise.
 
@@ -275,9 +275,11 @@ _WARNING: This method must NOT be used with user input since it does not escapes
 
 ### Move rows
 
-`moveRows(string $src_table, string $dest_table[, string $conditions[, $args]])`
+`moveRows(string $src_table, string $dest_table[, string $conditions[, $args]]): bool`
 
 Moves rows from the source table to the destination table.
+
+This method returns `true` if the transaction has been made successfully, `false` otherwise.
 
 ```php
 $db->moveRows('customers', 'new_customers', 'WHERE status = 1');
@@ -293,7 +295,7 @@ The DB class has some fast methods you can use.
 
 ### Insert
 
-`insert(string $table, array $data)`
+`insert(string $table, array $data): mixed`
 
 Inserts the given data into the specified table.
 
@@ -313,9 +315,11 @@ That will be the same as `INSERT INTO 'product' (name, model, quantity) VALUES (
 
 ### Select
 
-`select(string $table[, string $conditions[, ...$args]])`  
+`select(string $table[, string $conditions[, ...$args]]): array`  
 
-Runs a select query in the specified table. This method returns the result as an associative array, and accepts dot notation.
+Runs a select query in the specified table. 
+
+This method returns the result as an associative array, and accepts dot notation.
 
 ```php
 $db->select('users');
@@ -331,9 +335,9 @@ Equivalent to:
 
 ### Count
 
-`count(string $table[, string $conditions[, ...$args]])`
+`count(string $table[, string $conditions[, ...$args]]): int`
 
-Returns the number of rows in the specified table, as an `int`.
+Returns the number of rows in the specified table.
 
 ```php
 $db->count('users');
@@ -347,7 +351,7 @@ Equivalent to:
 
 ### Delete
 
-`delete(string $table[, string $conditions[, ...$args]])`  
+`delete(string $table[, string $conditions[, ...$args]]): bool`
 
 Deletes the rows in the specified table.
 
