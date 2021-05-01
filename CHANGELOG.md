@@ -1,5 +1,53 @@
 # Release Notes
 
+## v4.0.0 (2021-05-01)
+
+### Added
+
+- Add language tag to the template engine.
+
+- Add optional seconds parameter to the `clear` method of the `Wolff\Core\Cache` class.
+
+- Add `getFilename` method to the `Wolff\Core\Cache` class.
+
+- Add `getCode` and `writeJson` methods to the `Wolff\Core\Http\Response` class.
+
+- Add support for dot notation in the `get` method of the `Wolff\Core\Config` class.
+
+- Add support for dynamic redirections to the Route system.
+
+- Add optional whitelist parameter to the `local` function of the standard library.
+
+- Add better overall performance.
+
+### Changed
+
+- Change the function parameter of the `Wolff\Core\Route` class to accept an array containing the class and method to call (`'home@index'` now is `[ Controller\Home::class, 'index' ]`).
+
+- Change the default language from `english` to `en`.
+
+- Make the Logging system non-static.
+
+- The credential array keys `dbms`, `server` and `name` has been replaced by the key `dsn` in the `Wolff\Core\DB` and `Wolff\Utils\Auth` constructors.
+
+- Change the Maintenance system whitelist from a file to a PHP iterable value.
+
+- Change the cache files extension to `tmp`.
+
+- Change the optional gmdate parameter of the `getRemainingTime` and `getVarTime` methods of the `Wolff\Core\Session` class to a string, containing the format for the time.
+
+### Removed
+
+- Remove the automatic controller's routing.
+
+- Remove the `getSchema` method of the `Wolff\Core\DB` class.
+
+- Remove the `toUtf8` method of the `Wolff\Utils\Str` class.
+
+- Remove the `count` method of the `Wolff\Core\Session` class.
+
+- Remove the `wolffVersion` and `isBool` functions of the standard library.
+
 ## v3.2.2 (2020-10-05)
 
 ### Fixed

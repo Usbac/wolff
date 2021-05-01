@@ -1,28 +1,22 @@
 <?php
 
 return [
-    //Database
     'db' => [
-        'dbms'     => 'mysql',
-        'server'   => 'localhost',
-        'name'     => 'wolff',
-        'port'     => '',
+        'dsn'      => '',
         'username' => '',
-        'password' => ''
+        'password' => '',
     ],
 
-    //Environment
-    'env_file'     => 'system/.env.example',
-    'env_override' => true,
+    'env' => [
+        'file'     => 'system/.env.example',
+        'override' => true,
+    ],
 
-    //General
-    'language' => 'english',
+    'language'       => 'en',
 
-    //Extra
-    'log_on'         => true,
     'development_on' => true,
     'template_on'    => true,
     'cache_on'       => true,
     'stdlib_on'      => true,
-    'maintenance_on' => false
+    'maintenance_on' => false,
 ];

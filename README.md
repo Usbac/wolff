@@ -8,12 +8,12 @@
 <h4 align="center">Web development made just right.</h4>
 
 <p align="center">
-<img src="https://travis-ci.org/Usbac/wolff.svg?branch=master">
-<img src="https://img.shields.io/badge/stable-3.2.2-blue.svg">
+<img src="https://travis-ci.org/Usbac/wolff.svg?branch=4.0">
+<img src="https://img.shields.io/badge/stable-4.0.0-blue.svg">
 <img src="https://img.shields.io/badge/license-MIT-orange.svg">
 </p>
 
-Wolff is a ridiculously small and lightweight PHP framework, intended for those who want to build web applications without starting from scratch or dealing with complexity. 
+Wolff is a ridiculously small and lightweight PHP framework, intended for those who want to build web apps without dealing with complexity. 
 
 Wolff is the perfect solution for building small and medium-sized web applications.
 
@@ -45,9 +45,9 @@ And **much** more...
 
 ## Requirements
 
-* PHP version 7.0 or higher
+* PHP version 7.2 or higher
 
-* Composer
+* Composer (Only for installation)
 
 ## Install
 
@@ -63,7 +63,7 @@ This will download the whole project with everything ready to run.
 
 More info about the installation process in the [Docs - install](https://getwolff.com/doc/3.x/installation) page.
 
-_You can also download the last bundle [here](https://github.com/Usbac/wolff/releases/download/v3.1.0/wolff-bundle.zip)._
+_You can also download the last bundle [here](https://github.com/Usbac/wolff/releases/download/v4.0.0/wolff-bundle.zip)._
 
 ## Example
 
@@ -99,7 +99,7 @@ _Running the command with high privileges is required since some files will be c
 
 ## Documentation
 
-First time using it? Read the [Documentation](https://getwolff.com/doc/3.x/home).
+First time using it? Read the [Documentation](https://getwolff.com/doc/4.x/home).
 
 ## Contributing
 
@@ -109,4 +109,4 @@ You can read more about the contribution process [right here](CONTRIBUTING.md). 
 
 ## License
 
-Wolff is open-source software licensed under the [MIT license](https://github.com/Usbac/Wolff/blob/master/LICENSE).
+Wolff is open-source software licensed under the [MIT license](LICENSE).

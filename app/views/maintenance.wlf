@@ -2,13 +2,13 @@
 <html>
 <head>
     <title>{{ $lang['title'] }} - {{ $lang['maintenance'] }}</title>
-    <link href="{{ url('assets/css/styles.css') }}" rel="stylesheet"/>
+    {% style="{{ url('assets/css/styles.css') }}" %}
+    {% icon="{{ url('favicon.ico') }}" %}
 </head>
 <body>
-<div class='center'>
-    <h1 class='text-center'>{{ upper|$lang['maintenance'] }}</h1>
-    <p class='text-center'>{{ $lang['msg'] }}</p>
-</div>
-
+    <div class="center">
+        <h1 class="text-center">{{ upper|$lang['maintenance'] }}</h1>
+        <p class="text-center">{{ $lang['msg'] }}</p>
+    </div>
 </body>
 </html>
