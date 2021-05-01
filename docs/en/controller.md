@@ -2,15 +2,13 @@
 
 The controllers are a great way to keep your code organized instead of defining everything in the `system/web.php` file.
 
-The routing system is tied to the controllers.
-
 ## Usage
 
 Let's create a controller, it must be in the `Controller` namespace.
 
 Any public method that is supposed to be accesible through a route, can take two parameters which are the request and response objects (instance of `Wolff\Core\Http\Request` and `Wolff\Core\Http\Response`).
 
-app/controllers/home.php:
+app/controllers/Home.php:
 
 ```php
 namespace Controller;
@@ -27,6 +25,16 @@ class Home
         $res->write('hi');
     }
 }
+```
+
+Now if you want to call the controller method's when accessing some routes, you can add the following code to your web file.
+
+system/web.php
+
+```php
+Route::get('/', [ Controller\Home::class, 'index' ]);
+
+Route::get('sayHi', [ Controller\Home::class, 'sayHi' ]);
 ```
 
 ## General methods
