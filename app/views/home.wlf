@@ -21,7 +21,7 @@
 
         {# Options #}
         <div class="text-center options">
-            <a target="_blank" href="https://www.getwolff.com/doc/4.x/home">{{ upper|$lang['documentation'] }}</a>
+            <a target="_blank" href="https://www.getwolff.com/doc/4/home">{{ upper|$lang['documentation'] }}</a>
             <a target="_blank" href="https://github.com/Usbac/Wolff">{{ upper|$lang['repo'] }}</a>
             <a target="_blank" href="https://getwolff.com">{{ upper|$lang['page'] }}</a>
         </div>
