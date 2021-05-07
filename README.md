@@ -45,7 +45,7 @@ And **much** more...
 
 ## Requirements
 
-* PHP version 7.2 or higher
+* PHP version 7.1 or higher
 
 * Composer (Only for installation)
 
