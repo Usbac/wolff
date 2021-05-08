@@ -13,7 +13,7 @@ Views can be rendered anywhere inside your Wolff project.
 When loading a view from a controller, you can pass as parameter an associative array with data in it:
 
 ```php
-View::render('page', [ 'message' => 'Hello world' ]);
+$view->render('page', [ 'message' => 'Hello world' ]);
 ```
 
 ## Print
@@ -303,7 +303,7 @@ app/views/child.wlf:
 Given the examples of above, the following code:
 
 ```php
-View::render('child');
+$view->render('child');
 ```
 
 Will render this:

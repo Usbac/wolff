@@ -36,17 +36,18 @@ class ViewTest extends TestCase
 
     public function testInit()
     {
-        $this->assertTrue(View::exists('phpunit_testing_view'));
-        $this->assertFalse(View::exists($this->non_existent));
-        $this->assertEquals('<h1>{! $msg !}</h1><br/>', View::getSource('phpunit_testing_view', $this->data, false));
-        $this->assertEquals('<h1><?php echo $msg ?></h1><br/>', View::get('phpunit_testing_view'));
-        $this->assertEquals('<h1>Hello world</h1><br/>', View::getRender('phpunit_testing_view', $this->data, false));
+        $view = new View;
+        $this->assertTrue($view->exists('phpunit_testing_view'));
+        $this->assertFalse($view->exists($this->non_existent));
+        $this->assertEquals('<h1>{! $msg !}</h1><br/>', $view->getSource('phpunit_testing_view', $this->data, false));
+        $this->assertEquals('<h1><?php echo $msg ?></h1><br/>', $view->get('phpunit_testing_view'));
+        $this->assertEquals('<h1>Hello world</h1><br/>', $view->getRender('phpunit_testing_view', $this->data, false));
 
-        $this->assertTrue(View::exists('phpunit_testing_view_ext.html'));
-        $this->assertFalse(View::exists('phpunit_testing_view_ext'));
-        $this->assertEquals('<h1>{! $msg !}</h1><br/>', View::getSource('phpunit_testing_view_ext.html', $this->data, false));
-        $this->assertEquals('<h1>Hello world</h1><br/>', View::getRender('phpunit_testing_view_ext.html', $this->data, false));
-        $this->assertNull(View::render('phpunit_testing_view_empty'));
+        $this->assertTrue($view->exists('phpunit_testing_view_ext.html'));
+        $this->assertFalse($view->exists('phpunit_testing_view_ext'));
+        $this->assertEquals('<h1>{! $msg !}</h1><br/>', $view->getSource('phpunit_testing_view_ext.html', $this->data, false));
+        $this->assertEquals('<h1>Hello world</h1><br/>', $view->getRender('phpunit_testing_view_ext.html', $this->data, false));
+        $this->assertNull($view->render('phpunit_testing_view_empty'));
     }
 
 

@@ -10,8 +10,10 @@ class Home extends \Wolff\Core\Controller
 
     public function index($req, $res)
     {
-        View::render('home', [
-            'lang' => Language::get('home'),
+        $view = new View();
+        $lang = new Language();
+        $view->render('home', [
+            'lang' => $lang->get('home'),
         ]);
     }
 }

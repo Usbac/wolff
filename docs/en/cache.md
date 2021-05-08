@@ -11,7 +11,7 @@ You can perfectly refresh the cache deleting the cache folder content or the fol
 If you want to force a view to don't use the cache system, you can pass a `false` value to the `render` method of the `Wolff\Core\View` class as the third parameter.
 
 ```php
-View::render('home', $data, false);
+$view->render('home', $data, false);
 ```
 
 That will force that view to don't use the cache system, keep in mind that the loading time could increase due to this.

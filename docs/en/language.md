@@ -6,6 +6,10 @@ The language system is based on multiple folders, each one representing a specif
 
 Meaning that you can request a text, and depending of the configuration or other facts, you will get the text in one language or another.
 
+```php
+$language = new Wolff\Core\Language();
+```
+
 ## Language files
 
 A language file must be inside the `app/languages/{languageOfChoice}` folder and have a php extension, the language file must have an associative array to return.
@@ -27,7 +31,7 @@ In your classes you can access to the content of a language file using the `get`
 `get(string $dir[, string $language]): mixed`
 
 ```php
-Language::get('home');
+$language->get('home');
 ```
 
 That will basically return the array declared above.
@@ -43,7 +47,7 @@ Instead, if the language is set to spanish that will return the content of the `
 But you can specify the language to get passing it as the second argument.
 
 ```php
-Language::get('home', 'spanish');
+$language->get('home', 'spanish');
 ```
 
 That will return the spanish language of home, regardless of the configuration.
@@ -53,7 +57,7 @@ That will return the spanish language of home, regardless of the configuration.
 You can even get only one key of the language. Using a dot notation.
 
 ```php
-Language::get('home.message');
+$language->get('home.message');
 ```
 
 That will return the message key value of the home language array.
@@ -67,7 +71,7 @@ If the language file or the key don't exist it will return `null`.
 Returns `true` if the given language file exists, `false` otherwise.
 
 ```php
-Language::exists('home');
+$language->exists('home');
 ```
 
 If the system language is set to english that will return `true` if the english language of home exists, `false` otherwise.
@@ -75,5 +79,5 @@ If the system language is set to english that will return `true` if the english 
 But you can specify a language using the second parameter.
 
 ```php
-Language::exists('home', 'spanish');
+$language->exists('home', 'spanish');
 ```

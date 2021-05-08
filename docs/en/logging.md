@@ -4,6 +4,10 @@ You can know what's happening in your Wolff project using the Logging class.
 
 The methods of the Logging class can be called anywhere inside your Wolff project.
 
+```php
+$log = new Wolff\Core\Log();
+```
+
 ## Files
 
 The logging files are located by default in the `system/logs` folder.

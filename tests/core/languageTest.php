@@ -39,19 +39,21 @@ class LanguageTest extends TestCase
 
     public function testInit()
     {
-        $this->assertTrue(Language::exists('testing'));
-        $this->assertTrue(Language::exists('testing', 'phpunit'));
-        $this->assertFalse(Language::exists('testing_non_existent', 'phpunit'));
+        $lang = new Language;
+
+        $this->assertTrue($lang->exists('testing'));
+        $this->assertTrue($lang->exists('testing', 'phpunit'));
+        $this->assertFalse($lang->exists('testing_non_existent', 'phpunit'));
         $this->assertEquals([
             'title' => 'Wolff framework',
             'msg'   => 'hello world',
-        ], Language::get('testing'));
-        $this->assertEquals('Wolff framework', Language::get('testing.title', 'phpunit'));
-        $this->assertNull(Language::get('testing2', 'phpunit'));
-        $this->assertNull(Language::get('testing.title2', 'phpunit'));
+        ], $lang->get('testing'));
+        $this->assertEquals('Wolff framework', $lang->get('testing.title', 'phpunit'));
+        $this->assertNull($lang->get('testing2', 'phpunit'));
+        $this->assertNull($lang->get('testing.title2', 'phpunit'));
 
         $this->expectException(InvalidLanguageException::class);
-        Language::get('testing_invalid');
+        $lang->get('testing_invalid');
     }
 
 

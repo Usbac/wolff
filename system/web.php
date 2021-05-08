@@ -12,13 +12,13 @@ use Wolff\Core\View;
 Route::get('/', [ Controller\Home::class, 'index' ]);
 
 Route::code(404, function () {
-    View::render('404', [
-        'lang' => Language::get('404'),
+    (new View)->render('404', [
+        'lang' => (new Language)->get('404'),
     ]);
 });
 
 Maintenance::set(function () {
-    View::render('maintenance', [
-        'lang' => Language::get('maintenance'),
+    (new View)->render('maintenance', [
+        'lang' => (new Language)->get('maintenance'),
     ]);
 });

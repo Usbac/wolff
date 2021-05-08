@@ -69,7 +69,7 @@ That array now can be printed in the view like this:
 Controller:
 ```php
 $data['pages'] = $pagination->get();
-View::render('home', $data);
+(new Wolff\Core\View)->render('home', $data);
 ```
 
 View:

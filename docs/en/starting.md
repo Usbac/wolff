@@ -53,8 +53,11 @@ class Form
     // Form view
     public function index($req, $res)
     {
-        $data['lang'] = Language::get('form');
-        View::render('form', $data);
+        $lang = new Wolff\Core\Language;
+        $view = new Wolff\Core\View;
+        $view->render('form', [
+            'lang' => $lang->get('form');
+        ]);
     }
 
     // Form submit

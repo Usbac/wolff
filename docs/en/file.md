@@ -78,7 +78,7 @@ system/web.php
 ```php
 // Form view
 Route::get('file', function ($req) {
-    Wolff\Core\View::render('file_form');
+    (new Wolff\Core\View)->render('file_form');
 });
 
 // Upload
