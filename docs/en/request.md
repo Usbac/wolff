@@ -9,15 +9,18 @@ This request object is the one that must be passed as parameter to the Controlle
 ### Route:
 ```php
 Route::get('/', function($request) {
+    ...
 });
 
 Route::code(404, function($request) {
+    ...
 });
 ```
 
 ### Middleware:
 ```php
 Middleware::before('/', function($request) {
+    ...
 });
 ```
 
@@ -90,13 +93,13 @@ $request->has('username');
 
 `file([string $key]): mixed`
 
-Returns the specified file (usually available in the `$_FILE` superglobal array).
+Returns the specified file (usually available in the `$_FILE` superglobal array). Returns 'false' if there is no `$key` specified, and no files are attached.
 
 ```php
 $request->file('profile')
 ```
 
-Keep in mind that these files are an instance of `Wolff\Core\Http\File` (builded on top of the `$_FILE` array). You can look at the `File` page of this documentation for more information.
+Keep in mind that these files are instances of `Wolff\Core\Http\File` (built from the `$_FILE` array). You can look at the `File` page of this documentation for more information.
 
 _If no parameter is passed, it will return an array with all the files._
 
@@ -105,6 +108,8 @@ _If no parameter is passed, it will return an array with all the files._
 `hasFile(string $key): bool`
 
 Returns `true` if the given file key exists, `false` otherwise.
+
+**Note**: This is not the filename, but the form field name where the file was uploaded.
 
 ```php
 $request->hasFile('profile_image');

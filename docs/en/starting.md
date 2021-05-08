@@ -100,7 +100,7 @@ app/views/form.wlf:
 
 ### Safer insertion
 
-You can replace the code of the `submit` method in the controller with the following code, which uses the Wolff validation utility.
+You can replace the code of the `submit` method in the controller with the following code, which uses the [Wolff validation utility](https://www.getwolff.com/doc/4/validation).
 
 app/controllers/form.php:
 ```php

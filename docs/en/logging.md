@@ -25,7 +25,7 @@ $log->info($msg, $values = []);
 $log->debug($msg, $values = []);
 ```
 
-The same example showed below can be applied to the other methods.
+The example below can be applied to any of the other methods.
 
 ```php
 $log = new Log();

@@ -50,7 +50,9 @@ $db->query('SELECT * FROM user WHERE name = ? and email = ?', $name, $email);
 
 ## Query
 
-The `Wolff\Core\Query` object returned by the `query` method has the following method.
+The `Wolff\Core\Query` object returned by the `query` method has the following methods.
+
+**Note**: This retrieves the full query from the database, and processes the results in PHP. To have the databse perform the operation, pass it in a database-appropriate syntax as part of the query.
 
 ### Get
 
@@ -312,6 +314,8 @@ $db->insert('product', [
 ```
 
 That will be the same as `INSERT INTO 'product' (name, model, quantity) VALUES ('phone', 'PHN001', '5')`.
+
+Note that this method only allows for one row of data to be inserted per call.
 
 ### Select
 

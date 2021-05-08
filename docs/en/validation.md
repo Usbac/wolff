@@ -118,7 +118,7 @@ Returns an array with all the invalid values.
 $validation->getInvalidValues();
 ```
 
-If the `age` key doesn't not meet the minimum value condition and the `name` key doesn't not meet the minimum length, it should return this:
+If the `age` key doesn't meet the minimum value condition and the `name` key doesn't meet the minimum length, it should return this:
 
 ```php
 Array
@@ -156,7 +156,7 @@ This is just syntactic sugar for the call to `setFields`, `setData` and `isValid
 
 The first parameter is the fields array, the second is the data to validate array. 
 
-This method returns `true` if the given data array meets the conditions in the given fields array.
+This method returns `true` if the given data array meets the conditions in the given fields array, or `false` if it doesn't.
 
 ```php
 $validation->check($fields, $data);

@@ -2,13 +2,13 @@
 
 Routes can be managed in a clean and modern way with the Wolff route class.
 
-In the `system/web.php` file you can define routes, its parameters and what to do.
+In the `system/web.php` file you can define routes, their parameters and what they do.
 
 ## Adding routes
 
 `any(string $url, $func[, int $status])`
 
-The `any` method let's you add a route that will work for every HTTP method.
+The `any` method lets you add a route that will work for every HTTP method.
 
 A basic route takes the first parameter as the desired route, the second as the `Closure` that will be called, and the third and optional parameter as the HTTP code that will be set when accessing that route.
 
@@ -202,13 +202,13 @@ Returns `true` if a view exists, `false` otherwise.
 Route::exists('home');
 ```
 
-That will return `true` if the home route exists
+That will return `true` if the home route exists.
 
 ### Get routes
 
 `getRoutes(): array`
 
-Returns all the available routes.
+Returns all available routes.
 
 ```php
 Route::getRoutes();

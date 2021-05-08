@@ -59,7 +59,7 @@ That will return the home controller.
 
 Returns the value of a controller method.
 
-The first parameter must be the controller name, the second and optional parameter must be the method name, the third and optional parameter must be an array with the arguments that will be used for the method.
+The first parameter must be the controller name, the second parameter must be the method name, and the third (optional) parameter must be an array with the arguments that will be used for the method.
 
 This method throws a `BadMethodCallException` when the method does not exists.
 
