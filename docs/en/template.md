@@ -126,18 +126,6 @@ In that case, it will print the `$title` variable in uppercase.
 
 In that case, it will print the `$title` variable three times.
 
-## Language
-
-With the `@lang` tag you can print variables of the language system in a short way.
-
-```php
-@lang('home.title')
-```
-
-That code will be replaced by the value of the 'title' key in the 'home' language array.
-
-_Keep in mind that this tag does NOT escape the content, you are fully responsible for escaping it._
-
 ### List
 
 This are the available functions and their PHP equivalent:
