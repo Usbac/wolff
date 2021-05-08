@@ -16,7 +16,7 @@ Adds a new class to the container.
 
 The first parameter is the class name.
 
-The second parameter is the class value. So it can be either a new instantiation of the class, or a function returning the class.
+The second parameter is the class value. This can be either a new instantiation of the class, or a function returning the class.
 
 ```php
 Container::add('user', function() {
@@ -38,7 +38,7 @@ _If a class with the same name already exists in the container, it will be overw
 
 Adds a new singleton class to the container.
 
-When adding a singleton and calling it throught the container, the container will make only one instance no matter how many time it's being called. Just like a singleton or a 'static class'.
+When adding a singleton and calling it through the container, the container will make only one instance no matter how many time it's being called. Just like a singleton or a 'static class'.
 
 ```php
 Container::singleton('user', function() {

@@ -34,11 +34,11 @@ That will basically return the array declared above.
 
 If the language file doesn't exists it will return `null`.
 
-### Getting an especific language
+### Getting a specific language
 
-If the language is set to english in the `system/config.php` file that will return the content of the `app/language/en/home.php` file.
+If the language is set to English ('en') in `system/config.php` that will return the content of the `app/language/en/home.php` file.
 
-Instead, if the language is set to spanish that will return the content of the `app/language/spanish/home.php` file.
+Instead, if the language is set to Spanish ('es') that will return the content of the `app/language/es/home.php` file.
 
 But you can specify the language to get passing it as the second argument.
 
@@ -46,7 +46,7 @@ But you can specify the language to get passing it as the second argument.
 Language::get('home', 'spanish');
 ```
 
-That will return the spanish language of home, regardless of the configuration.
+That will return the Spanish language version of 'home', regardless of the configuration.
 
 ### Getting only one key
 
@@ -58,7 +58,7 @@ Language::get('home.message');
 
 That will return the message key value of the home language array.
 
-If the language file or the key don't exist it will return `null`.
+If the language file or the key doesn't exist it will return `null`.
 
 ## Language exists
 
@@ -75,5 +75,5 @@ If the system language is set to english that will return `true` if the english 
 But you can specify a language using the second parameter.
 
 ```php
-Language::exists('home', 'spanish');
+Language::exists('home', 'es');
 ```

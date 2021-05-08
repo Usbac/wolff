@@ -102,7 +102,7 @@ Str::slug(' Hola cómo estás? Bien');
 
 That will return `hola-como-estas-bien`.
 
-Basically this function replaces special letters by their normal counterpart, puts everything lowercase and replaces the remaining characters with an hyphen `-`.
+Basically this function replaces special letters by their normal counterpart, puts everything lowercase and replaces the remaining characters with a hyphen `-`.
 
 
 ### Contains
@@ -134,7 +134,7 @@ Str::interpolate('Your firstname is {first} and your lastname is {last}', $value
 
 That will return `Your firstname is john and your lastname is doe`.
 
-_If the given array is empty, the method will return the original string._
+**Note**: This method will only replace placeholders in the `$values` array.
 
 ### Swap
 
