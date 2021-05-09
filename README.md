@@ -45,7 +45,7 @@ And **much** more...
 
 ## Requirements
 
-* PHP version 7.2 or higher
+* PHP version 7.1 or higher
 
 * Composer (Only for installation)
 
@@ -99,7 +99,7 @@ _Running the command with high privileges is required since some files will be c
 
 ## Documentation
 
-First time using it? Read the [Documentation](https://getwolff.com/doc/4.x/home).
+First time using it? Read the [Documentation](https://getwolff.com/doc/4/home).
 
 ## Contributing
 

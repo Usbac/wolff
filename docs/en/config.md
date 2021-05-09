@@ -1,4 +1,4 @@
-Configuration is a vital part of any application, the Wolff configuration can be defined in two ways, a `system/config.php` file and an environment file.
+Configuration is a vital part of any application. The Wolff configuration can be defined in two ways: a `system/config.php` file and an environment file.
 
 ## Config file
 

@@ -9,15 +9,18 @@ This response object is the one that must be passed as second parameter to the C
 ### Route:
 ```php
 Route::get('/', function($req, $res) {
+    ...
 });
 
 Route::code(404, function($req, $res) {
+    ...
 });
 ```
 
 ### Middleware:
 ```php
 Middleware::before('/', function($req, $res) {
+    ...
 });
 ```
 
@@ -80,7 +83,7 @@ Sets the content that will be returned by the response as a Json.
 $response->writeJson([ 'msg' => 'Hello world' ]);
 ```
 
-That would be the equivalent to the classic and ugly: `echo json_encode([ 'msg' => 'Hello world' ]);`.
+That would be the equivalent to: `echo json_encode([ 'msg' => 'Hello world' ]);`.
 
 ### Append content
 

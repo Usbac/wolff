@@ -78,7 +78,7 @@ $auth->login([
 ]);
 ```
 
-If a user with the giving email and password exists in the `user` table (in this example), it will return true.
+If a user with the given email and password exists in the `user` table (in this example), it will return true.
 
 ### Set table
 

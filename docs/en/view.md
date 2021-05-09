@@ -60,7 +60,7 @@ This will do the same as above but will ignore the cache file:
 $view->getRender('sub/home', $data, false);
 ```
 
-Take in mind that it can increase the loading time.
+Keep in mind that it can increase the loading time.
 
 ### Get path
 

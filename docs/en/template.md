@@ -1,6 +1,6 @@
 `Wolff\Core\Template`
 
-The template system of Wolff allows you to write cleaner and safer PHP code in your views by avoiding things like the PHP tags and automatically escaping all the output.
+The template system of Wolff allows you to write cleaner and safer PHP code in your views by avoiding PHP tags and automatically escaping all output.
 
 It only works in the views and is completely optional, so you can write normal PHP code if you want to.
 
@@ -26,7 +26,7 @@ $view->render('page', [ 'message' => 'Hello world' ]);
 
 This will print the 'message' key in the data array.
 
-_Keep in mind that the content will be automatically escaped for your safety._
+_Keep in mind that the content will be automatically escaped for safety._
 
 ### Print raw
 
@@ -62,7 +62,7 @@ comment #}
 
 ## Tags
 
-In Wolff you can use the replacement of the old php tags, which are `{%` for `<?php` and `%}` for `?>`.
+In Wolff you can use the replacement of php tags, which are `{%` for `<?php` and `%}` for `?>`.
 
 Original PHP:
 
@@ -112,7 +112,7 @@ The same but using variables:
 
 The template system of Wolff has some abbreviated functions to make the code cleaner.
 
-To use a function only write its' name followed by a vertical bar and then the variable.
+To use a function only write its name followed by a vertical bar and then the variable.
 
 ```php
 {{ upper|$title }}
@@ -216,7 +216,7 @@ That will leave this in the HTML returned to the client:
 
 ## Include
 
-Instead of using the php include function. You can include other views by using the `include` method.
+Instead of using the php include function, you can include other views by using the `include` method.
 
 Example:
 

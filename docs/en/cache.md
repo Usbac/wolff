@@ -8,13 +8,13 @@ So the view will be loader from that file and any change made to the original fi
 
 You can perfectly refresh the cache deleting the cache folder content or the folder itself.
 
-If you want to force a view to don't use the cache system, you can pass a `false` value to the `render` method of the `Wolff\Core\View` class as the third parameter.
+If you want to force a view to not use the cache system, you can pass a `false` value to the `render` method of the `Wolff\Core\View` class as the third parameter.
 
 ```php
 $view->render('home', $data, false);
 ```
 
-That will force that view to don't use the cache system, keep in mind that the loading time could increase due to this.
+That will force that view to not use the cache system. Keep in mind that the loading time could increase due to this.
 
 The default life time for a cache file is One week.
 
