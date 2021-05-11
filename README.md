@@ -9,7 +9,7 @@
 
 <p align="center">
 <img src="https://travis-ci.org/Usbac/wolff.svg?branch=4.0">
-<img src="https://img.shields.io/badge/stable-4.0.0-blue.svg">
+<img src="https://img.shields.io/badge/stable-4.0.1-blue.svg">
 <img src="https://img.shields.io/badge/license-MIT-orange.svg">
 </p>
 
@@ -21,11 +21,11 @@ Wolff is the perfect solution for building small and medium-sized web applicatio
 
 ## Features
 
-📓 **Extremely easy**: It's simple to use and no initial setup is required, it comes ready to be deployed, giving you the opportunity to learn it in just a single night (sleep included).
+📓 **Extremely easy**: It's simple to use and comes ready to be deployed, giving you the opportunity to learn it in just a single night (sleep included).
 
-🚀 **Ridiculously fast**: Only the resources you need are loaded, the framework is able to handle hundreds of requests per second. It's very friendly with potato servers and works seamlessly.
+🚀 **Ridiculously fast**: Due to its simplicity, the framework is able to handle hundreds of requests per second. It's very friendly with potato servers.
 
-🛠️ **Comprenhensive**: Wolff has features that cover everything you may ever need for building a web app, from a handy database abstraction to a powerful template engine.
+🛠️ **Comprenhensive**: It has everything you may need for building a web app, from a handy database abstraction layer to a dynamic template engine.
 
 ## What's included
 
@@ -63,7 +63,7 @@ This will download the whole project with everything ready to run.
 
 More info about the installation process in the [Docs - install](https://getwolff.com/doc/3.x/installation) page.
 
-_You can also download the last bundle [here](https://github.com/Usbac/wolff/releases/download/v4.0.0/wolff-bundle.zip)._
+_You can also download the last bundle [here](https://github.com/Usbac/wolff/releases/download/v4.0.1/wolff-bundle.zip)._
 
 ## Example
 

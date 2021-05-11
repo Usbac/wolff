@@ -1,5 +1,11 @@
 # Release Notes
 
+## v4.0.1 (2021-05-10)
+
+### Fixed
+
+- Fix incompatibility of the `count` method of the `Wolff\Core\DB` class with some DB drivers.
+
 ## v4.0.0 (2021-05-01)
 
 ### Added
