@@ -26,6 +26,14 @@ But one goal of the framework is to do NOT release a major version unless there'
 
 The framework philosophy is to keep its simplicity while following good practices, clean code and an object oriented approach. All of this while trying to keep a stable architecture without relying on 'magic'.
 
+**How does the framework compare with other alternatives**
+
+Wolff stands between small frameworks like Slim and Lumen and big frameworks like Laravel, Codeigniter and Yii. It can be fast and small while having the right amount of functionality for building a web app. The utilities like the template engine, database abstraction layer and the standard library differentiates Wolff from micro frameworks (which commonly only have a router system and not much more).
+
+Wolff doesn't follow the 'convenion over configuration' paradigm like Ruby on Rails or Laravel but it comes ready to be used and deployed due to its simplicity.
+
+On the other hand, Wolff has a similarity with small open source projects and that's its lack of external dependencies.
+
 **What is required to install Wolff?**
 
 Only composer, but you can download the bundle versions that don't require it.
