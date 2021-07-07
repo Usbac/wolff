@@ -2,13 +2,13 @@
 
 It's recommended to read the following pages in the specified order to learn the basics of the framework and make your first page.
 
-1.- [Installation](https://getwolff.com/doc/4.x/installation)
+1.- [Installation](https://getwolff.com/doc/4/installation)
 
-2.- [Config](https://getwolff.com/doc/4.x/config) (optional)
+2.- [Config](https://getwolff.com/doc/4/config) (optional)
 
-3.- [Starting](https://getwolff.com/doc/4.x/starting)
+3.- [Starting](https://getwolff.com/doc/4/starting)
 
-4.- [Testing](https://getwolff.com/doc/4.x/testing) (optional)
+4.- [Testing](https://getwolff.com/doc/4/testing) (optional)
 
 ## 3.x Documentation
 
