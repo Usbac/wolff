@@ -8,7 +8,7 @@
 <h4 align="center">Web development made just right.</h4>
 
 <p align="center">
-<img src="https://travis-ci.org/Usbac/wolff.svg?branch=4.0">
+<img src="https://travis-ci.org/Usbac/wolff.svg?branch=master">
 <img src="https://img.shields.io/badge/stable-4.0.1-blue.svg">
 <img src="https://img.shields.io/badge/license-MIT-orange.svg">
 </p>
@@ -26,6 +26,8 @@ Wolff is the perfect solution for building small and medium-sized web applicatio
 🚀 **Ridiculously fast**: Due to its simplicity, the framework is able to handle hundreds of requests per second. It's very friendly with potato servers.
 
 🛠️ **Comprenhensive**: It has everything you may need for building a web app, from a handy database abstraction layer to a dynamic template engine.
+
+🦄 **Elegant**: Its source code and interface has been meticulously written, it's expressive and elegant, without depending on a single external dependency.
 
 ## What's included
 
@@ -84,6 +86,8 @@ class Home
     }
 }
 ```
+
+More examples available [here](http://getwolff.com/doc/4/starting).
 
 ## Testing
 
