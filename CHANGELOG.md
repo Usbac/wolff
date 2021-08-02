@@ -1,5 +1,11 @@
 # Release Notes
 
+## v4.0.2 (2021-08-01)
+
+### Fixed
+
+- Fix given uncaught error when entering in a redirection.
+
 ## v4.0.1 (2021-05-10)
 
 ### Fixed
