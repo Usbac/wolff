@@ -4,7 +4,7 @@ The Wolff view class is the one responsible for rendering and managing views.
 
 ## General methods
 
-_Keep in mind that the below methods can take files with a `php` or `html` extension if you specify it, like in this example: `sub/home.html` or `blog/page.php`._
+_Keep in mind that the below methods can take files' paths with a `php` or `html` extension if you specify it, like: `sub/home.html` or `blog/page.php`. If none of those extensions is specified, the `.wlf` extension will be appended to the given path._
 
 ### Render
 
