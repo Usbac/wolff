@@ -1,5 +1,11 @@
 # Release Notes
 
+## v4.0.3 (2021-08-03)
+
+### Fixed
+
+- Fix template blocks not working when they are not followed by a whitespace character.
+
 ## v4.0.2 (2021-08-01)
 
 ### Fixed

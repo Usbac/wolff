@@ -9,7 +9,7 @@
 
 <p align="center">
 <img src="https://travis-ci.org/Usbac/wolff.svg?branch=master">
-<img src="https://img.shields.io/badge/stable-4.0.2-blue.svg">
+<img src="https://img.shields.io/badge/stable-4.0.3-blue.svg">
 <img src="https://img.shields.io/badge/license-MIT-orange.svg">
 </p>
 
@@ -63,9 +63,11 @@ composer create-project usbac/wolff
 
 This will download the whole project with everything ready to run.
 
-More info about the installation process in the [Docs - install](https://getwolff.com/doc/3.x/installation) page.
+More info about the installation process in the [Docs - install](https://getwolff.com/doc/4/installation) page.
 
-_You can also download the last bundle [here](https://github.com/Usbac/wolff/releases/download/v4.0.2/wolff-bundle.zip)._
+### Bundle
+
+_You can also download [here](https://github.com/Usbac/wolff/releases/download/v4.0.3/wolff-bundle.zip) the last bundle ready to be used._
 
 ## Example
 
