@@ -9,7 +9,7 @@
 
 <p align="center">
 <img src="https://travis-ci.org/Usbac/wolff.svg?branch=master">
-<img src="https://img.shields.io/badge/stable-4.0.3-blue.svg">
+<img src="https://img.shields.io/badge/stable-4.1.0-blue.svg">
 <img src="https://img.shields.io/badge/license-MIT-orange.svg">
 </p>
 
@@ -67,7 +67,7 @@ More info about the installation process in the [Docs - install](https://getwolf
 
 ### Bundle
 
-_You can also download [here](https://github.com/Usbac/wolff/releases/download/v4.0.3/wolff-bundle.zip) the last bundle ready to be used._
+_You can also download [here](https://github.com/Usbac/wolff/releases/download/v4.1.0/wolff-bundle.zip) the last bundle ready to be used._
 
 ## Example
 

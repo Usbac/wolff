@@ -1,5 +1,15 @@
 # Release Notes
 
+## v4.1.0 (2021-09-14)
+
+### Added
+
+- Add optional parameter to Middleware closures with the `Wolff\Core\Http\Response` object.
+
+### Fixed
+
+- Environment override of some configuration values not working.
+
 ## v4.0.3 (2021-08-03)
 
 ### Fixed
