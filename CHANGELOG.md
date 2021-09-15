@@ -1,5 +1,17 @@
 # Release Notes
 
+## v5.0.0 ()
+
+### Changed
+
+- Change the `Wolff\Core\View` functionality to non-static.
+
+- Change the `Wolff\Core\Language` functionality to non-static.
+
+### Removed
+
+- Remove the `lang` tag from the template engine.
+
 ## v4.1.0 (2021-09-14)
 
 ### Added
