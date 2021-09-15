@@ -11,13 +11,19 @@ With that in mind, the middleware class has a `before` and `after` method to add
 `before(string $url, \Closure $func): void`  
 `after(string $url, \Closure $func): void`
 
-The function parameter must take two parameters, the Wolff request object (instance of `Wolff\Core\Http\Request`), and a function that when executed, will call the next middleware. So if this function isn't executed by that middleware, the middleware chain will stop right there.
+The function parameter can take up to three arguments:
+
+1. A Wolff request object (instance of `Wolff\Core\Http\Request`).
+2. A function that when executed, will call the next middleware. So if this function isn't executed by that middleware, the middleware chain will stop right there.
+3. A Wolff response object (instance of `Wolff\Core\Http\Response`).
 
 The function parameter can return a string which will be appended to the response.
 
 _Keep in mind that the middlewares are executed in the order they are added._
 
 ## Examples
+
+### Simple message in all admin pages
 
 ```php
 Middleware::before('admin/*', function($req, $next) {
@@ -28,6 +34,17 @@ Middleware::before('admin/*', function($req, $next) {
 
 That will render the text 'Entering in an admin page' for every page inside `admin`, like `admin/settings`, `admin/panel` or `admin/product/info`.
 
+### Setting content type in page
+
+```php
+Middleware::before('/api', function($req, $next, $res) {
+    $res->setHeader('Content-Type', 'application/json');
+});
+```
+
+That will set the content-type header to `application/json` when accessing to the `api` page.
+
+### Showing Hello world everywhere
 
 ```php
 Middleware::before('*', function($req, $next) {

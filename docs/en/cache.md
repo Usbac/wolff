@@ -6,9 +6,9 @@ When loading a view, a file titled `{fileDirectory}.tmp` will be created in the 
 
 So the view will be loader from that file and any change made to the original file will not be displayed until the cache file expires or is deleted manually.
 
-You can perfectly refresh the cache deleting the cache folder content or the folder itself.
+You can perfectly refresh the cache by deleting the cache folder content or the folder itself.
 
-If you want to force a view to not use the cache system, you can pass a `false` value to the `render` method of the `Wolff\Core\View` class as the third parameter.
+If you want to force a view to avoid the use of the cache system, you can pass a `false` value to the `render` method of the `Wolff\Core\View` class as the third parameter.
 
 ```php
 $view->render('home', $data, false);
@@ -56,7 +56,7 @@ That will return the content of the home cache file (`home.tmp`).
 
 `set(string $dir, string $content): string`
 
-Creates a cache file.
+Creates a cache file, only if it does not exists.
 
 ```php
 $file_content = '<h2>Hello</h2>';

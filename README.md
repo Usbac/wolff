@@ -8,8 +8,8 @@
 <h4 align="center">Web development made just right.</h4>
 
 <p align="center">
-<img src="https://travis-ci.org/Usbac/wolff.svg?branch=4.0">
-<img src="https://img.shields.io/badge/stable-4.0.0-blue.svg">
+<img src="https://travis-ci.org/Usbac/wolff.svg?branch=master">
+<img src="https://img.shields.io/badge/stable-4.1.0-blue.svg">
 <img src="https://img.shields.io/badge/license-MIT-orange.svg">
 </p>
 
@@ -21,11 +21,13 @@ Wolff is the perfect solution for building small and medium-sized web applicatio
 
 ## Features
 
-📓 **Extremely easy**: It's simple to use and no initial setup is required, it comes ready to be deployed, giving you the opportunity to learn it in just a single night (sleep included).
+📓 **Extremely easy**: It's simple to use and comes ready to be deployed, giving you the opportunity to learn it in just a single night (sleep included).
 
-🚀 **Ridiculously fast**: Only the resources you need are loaded, the framework is able to handle hundreds of requests per second. It's very friendly with potato servers and works seamlessly.
+🚀 **Ridiculously fast**: Due to its simplicity, the framework is able to handle hundreds of requests per second. It's very friendly with potato servers.
 
-🛠️ **Comprenhensive**: Wolff has features that cover everything you may ever need for building a web app, from a handy database abstraction to a powerful template engine.
+🛠️ **Comprenhensive**: It has everything you may need for building a web app, from a handy database abstraction layer to a dynamic template engine.
+
+🦄 **Elegant**: Its source code and interface has been meticulously written, it's expressive and elegant, without depending on a single external dependency.
 
 ## What's included
 
@@ -61,9 +63,11 @@ composer create-project usbac/wolff
 
 This will download the whole project with everything ready to run.
 
-More info about the installation process in the [Docs - install](https://getwolff.com/doc/3.x/installation) page.
+More info about the installation process in the [Docs - install](https://getwolff.com/doc/4/installation) page.
 
-_You can also download the last bundle [here](https://github.com/Usbac/wolff/releases/download/v4.0.0/wolff-bundle.zip)._
+### Bundle
+
+_You can also download [here](https://github.com/Usbac/wolff/releases/download/v4.1.0/wolff-bundle.zip) the last bundle ready to be used._
 
 ## Example
 
@@ -84,6 +88,8 @@ class Home
     }
 }
 ```
+
+More examples available [here](http://getwolff.com/doc/4/starting).
 
 ## Testing
 

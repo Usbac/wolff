@@ -1,5 +1,33 @@
 # Release Notes
 
+## v4.1.0 (2021-09-14)
+
+### Added
+
+- Add optional parameter to middleware closures with the `Wolff\Core\Http\Response` object.
+
+### Fixed
+
+- Fix environment override of some configuration values not working.
+
+## v4.0.3 (2021-08-03)
+
+### Fixed
+
+- Fix template blocks not working when they are not followed by a whitespace character.
+
+## v4.0.2 (2021-08-01)
+
+### Fixed
+
+- Fix given uncaught error when entering in a redirection.
+
+## v4.0.1 (2021-05-10)
+
+### Fixed
+
+- Fix incompatibility of the `count` method of the `Wolff\Core\DB` class with some DB drivers.
+
 ## v4.0.0 (2021-05-01)
 
 ### Added
